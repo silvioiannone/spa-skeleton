@@ -1,0 +1,38 @@
+{
+  "_from": "spa-skeleton@0.0.1",
+  "_id": "spa-skeleton@0.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-9RDPpzkeSPTgFphY2WBA5ij8jAmgZgyDyOb0npVhkQXSs2Y1mCmYgAhLXmx82EgUXfV7jwOrHrbxnn4M/Uvzew==",
+  "_location": "/spa-skeleton",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "spa-skeleton@0.0.1",
+    "name": "spa-skeleton",
+    "escapedName": "spa-skeleton",
+    "rawSpec": "0.0.1",
+    "saveSpec": null,
+    "fetchSpec": "0.0.1"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.1.tgz",
+  "_shasum": "0ef6b81bb86ec3b6581b4efb0f17a3fb8c8d04cd",
+  "_spec": "spa-skeleton@0.0.1",
+  "_where": "/Users/silvioiannone/Programming/Projects/Cluster/Cluster",
+  "author": {
+    "name": "Silvio Iannone"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A VueJS based SPA skeleton",
+  "license": "ISC",
+  "main": "src/index.js",
+  "name": "spa-skeleton",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.2"
+}
