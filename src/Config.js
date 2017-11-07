@@ -1,7 +1,11 @@
 /**
  * Central client configuration
  */
-export default {
+
+let appConfig = require('resources/assets/js/Config.js');
+
+const defaultConfig = {
+
     /**
      * This is the selector that identifies where the app should be attached to
      * the DOM.
@@ -132,4 +136,8 @@ export default {
          */
         dsn: SENTRY_DSN_JS
     }
-};
+}
+
+appConfig = Object.assign(defaultConfig, appConfig);
+
+export default appConfig;
