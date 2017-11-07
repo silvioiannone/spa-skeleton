@@ -35,19 +35,12 @@ Bootstrap the SPA simply using:
 
     (new SPASkeleton).boot();
 
-At the moment this package needs to be compiled from the sources, using Webpack, and it requires to
-access the Laravel resources folder in order to retrieve the application resources (such as 
-additional component, language files etc...). This means that you have to add this to your Webpack
-configuration:
+Add the following to you *webpack.mix.js* in order to build the SPA-Skeleton:
 
-    resolve: {
-        modules: [
-            path.resolve('./resources'),
-            path.resolve('./node_modules')
-        ]
-    }
+      const mix = require('laravel-mix'),
+            SPASkeletonMix = require('spa-skeleton/webpack.mix.js');
 
-In the future I will provide a dist ready version.
+      SPASkeletonMix.build(mix);
 
 ### Directives
 
