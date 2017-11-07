@@ -271,10 +271,3 @@ New routes can be defined in the *resources/assets/js/App/Routes.js*:
     ]
     
 [More info about the routes](https://router.vuejs.org/en/).
-
----
-
-##### TODO:
-
- 1. Add a configuration file
- 2. Provide a dist ready version
