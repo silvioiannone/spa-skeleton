@@ -22,8 +22,8 @@
 
 <script>
 
-    import FormPasswordReset from "../Forms/PasswordReset";
-    import ToolbarMain        from '../Toolbars/Main.vue';
+    import FormPasswordReset from "../Forms/PasswordReset.vue";
+    import ToolbarMain       from '../Toolbars/Main.vue';
 
     export default
     {
