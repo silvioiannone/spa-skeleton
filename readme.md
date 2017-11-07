@@ -21,6 +21,7 @@ moment.
  - API client library
  - Route guards
  - Form validation
+ - Vuetify support out of the box
 
 ## Usage
 
