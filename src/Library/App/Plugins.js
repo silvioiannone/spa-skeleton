@@ -6,7 +6,6 @@ import EventHub           from './Plugins/EventHub';
 import Vuetify            from 'vuetify';
 import VueI18N            from 'vue-i18n';
 import VueRouter          from 'vue-router';
-import VueVirtualScroller from 'vue-virtual-scroller';
 import WebSocket          from './Plugins/WebSocket';
 
 const SkeletonPlugins = {
@@ -14,7 +13,6 @@ const SkeletonPlugins = {
     Vuetify,
     VueI18N,
     VueRouter,
-    VueVirtualScroller,
     WebSocket
 }
 
