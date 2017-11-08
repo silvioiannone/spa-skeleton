@@ -2,7 +2,7 @@
  * Central client configuration
  */
 
-let appConfig = require('resources/assets/js/Config.js');
+import AppConfig from 'assets/js/Config.js';
 
 const defaultConfig = {
 
@@ -138,6 +138,6 @@ const defaultConfig = {
     }
 }
 
-appConfig = Object.assign(defaultConfig, appConfig);
+appConfig = Object.assign(defaultConfig, AppConfig);
 
 export default appConfig;
