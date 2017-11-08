@@ -7,8 +7,7 @@ import AppConfig from 'assets/js/Config.js';
 const defaultConfig = {
 
     /**
-     * This is the selector that identifies where the app should be attached to
-     * the DOM.
+     * This is the selector that identifies where the app should be attached to the DOM.
      */
     appSelector: '#app',
 
@@ -83,8 +82,7 @@ const defaultConfig = {
     /**
      * Router settings.
      *
-     * These settings change the way the router (in this case vue-router)
-     * behaves.
+     * These settings change the way the router (in this case vue-router) behaves.
      */
     router:
     {
@@ -94,8 +92,8 @@ const defaultConfig = {
         mode: 'history',
 
         /**
-         * Class that will be applied to the elements holding the 'v-link' or
-         * 'v-link-active' directive.
+         * Class that will be applied to the elements holding the 'v-link' or 'v-link-active'
+         * directive.
          */
         linkActiveClass: 'active',
     },
@@ -138,6 +136,7 @@ const defaultConfig = {
     }
 }
 
-appConfig = Object.assign(defaultConfig, AppConfig);
+let config = {}
+config = Object.assign(config, defaultConfig, AppConfig);
 
-export default appConfig;
+export default config;
