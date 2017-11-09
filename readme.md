@@ -37,10 +37,10 @@ Bootstrap the SPA simply using:
 
 Add the following to you *webpack.mix.js* in order to build the SPA-Skeleton:
 
-      const mix = require('laravel-mix'),
-            SPASkeletonMix = require('spa-skeleton/webpack.mix.js');
+    const mix = require('laravel-mix'),
+          SPASkeletonMix = require('spa-skeleton/webpack.mix.js');
 
-      SPASkeletonMix.build(mix);
+    SPASkeletonMix.build(mix);
 
 ### Directives
 
@@ -65,11 +65,11 @@ Import the directive:
         'on-click': OnClick
     }
     
-[More about directves](https://vuejs.org/v2/guide/custom-directive.html).
+[More about directives](https://vuejs.org/v2/guide/custom-directive.html).
     
 ### State machine modules
 
-New state machine modules can be defined in *resources/assets/js/App/State/Modules* and impoted in
+New state machine modules can be defined in *resources/assets/js/App/State/Modules* and imported in
 *resources/assets/js/App/State.js*.
 
 State machine module example:
@@ -182,7 +182,7 @@ Import the state machine module:
 The validator dictionary allows to change the error messages returned by the form validator.
 
 The dictionary is defined in *resources/assets/js/App/Validator/Dictionary.js* and it follows the
-[same format](http://vee-validate.logaretm.com/rules.html#field-sepecific-messages) of defined by
+[same format](http://vee-validate.logaretm.com/rules.html#field-sepecific-messages) defined by
 [VeeValidate](http://vee-validate.logaretm.com/).
 
 ### Components
