@@ -101,14 +101,7 @@
                             .get('me')
                             .then(response =>
                             {
-                                if(response.body.data.role.name === 'administrator')
-                                {
-                                    self.$router.push('/admin');
-                                }
-                                else
-                                {
-                                    self.$router.push('/home');
-                                }
+                                self.$router.push('/home');
                             });
 
                         this.formError = false;
