@@ -36,9 +36,9 @@
 
     let api = new BloomEstateAPI();
 
-    export default
-    {
-        selector : 'form-login',
+    export default {
+
+        name : 'FormLogin',
 
         data()
         {
