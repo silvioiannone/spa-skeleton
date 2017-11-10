@@ -1,13 +1,9 @@
 <template>
     <form @submit.prevent>
-        <v-container grid-list-lg fluid>
-            <v-layout row>
-                <v-flex xs12>
-                    <v-alert error :value="formError">
-                        Log in failed. Please check your credentials and try again.
-                    </v-alert>
-                </v-flex>
-            </v-layout>
+        <v-alert error :value="formError">
+            Log in failed. Please check your credentials and try again.
+        </v-alert>
+        <v-container fluid>
             <v-layout row>
                 <v-flex xs12>
                     <v-text-field v-model="email" label="Email"></v-text-field>
