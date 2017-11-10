@@ -26,22 +26,18 @@
 
         computed: {
 
-            user()
+            user ()
             {
                 return this.$store.getters.app.user;
             },
 
-            theme()
+            theme ()
             {
-                return this.user.settings.ui.theme;
-            }
-        },
-
-        methods: {
-
-            showNavigationDrawer()
-            {
-                //this.$store.commit('ui/SET_SIDEBAR_VISIBILITY', true);
+                try {
+                    return this.user.settings.ui.theme;
+                } catch (error) {
+                    return 'light';
+                }
             }
         }
     }
