@@ -1,6 +1,7 @@
 const path = require('path'),
       nodeEnvFile = require('node-env-file'),
-      webpack = require('webpack');
+      webpack = require('webpack'),
+      mix = require('laravel-mix');
 
 nodeEnvFile('./.env');
 
@@ -15,6 +16,18 @@ module.exports = {
     },
     output: {
         chunkFilename
+    },
+    module: {
+        rules: [
+            {
+                test: /\.jsx?$/,
+                exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: mix.config.babel()
+                }]
+            }
+        ]
     },
     plugins: [
         new webpack.DefinePlugin({
