@@ -138,6 +138,8 @@ export default class WebSocket
      */
     disconnect()
     {
-        this.echo.disconnect();
+        if (this.echo) {
+            this.echo.disconnect();
+        }
     }
 }
