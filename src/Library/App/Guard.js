@@ -40,11 +40,14 @@ export default class Guard
      */
     run()
     {
+        let ready = true;
+
         this.router.beforeEach((to, from, next) =>
         {
+            ready = true;
             Log.debug('Loading ' + to.path + '...');
 
-            this.store.commit('app/SET_STATE_LOADING');
+            this.store.commit('app/SET_STATUS', 'loading');
 
             // Fetch all the needed data for the current view
             this.runRouteActions(to)
@@ -55,29 +58,37 @@ export default class Guard
                         .then(() => next())
                         .catch(error =>
                         {
-                            this.router.replace('/error/unauthorized');
+                            this.store.commit('app/SET_STATUS', 'error');
+                            ready = false;
+                            next();
                         });
                 })
                 .catch(error =>
                 {
+                    ready = false;
+
                     if(error.statusCode === 401)
                     {
-                        this.router.replace('/error/unauthorized');
+                        this.store.commit('app/SET_STATUS', 'unauthenticated');
+                        next();
                         return;
                     }
 
-                    this.router.replace('/error/serverError');
-
                     Log.error('View ' + to.path + ' failed to load.');
                     Log.error(error);
+
+                    this.store.commit('app/SET_STATUS', 'error');
+                    next();
                 });
         });
 
         this.router.afterEach((to, from) =>
         {
-            this.store.commit('app/SET_STATE_READY');
+            if (ready) {
+                this.store.commit('app/SET_STATUS', 'ready');
 
-            Log.info('Loaded ' + to.path + '.');
+                Log.info('Loaded ' + to.path + '.');
+            }
         });
     }
 

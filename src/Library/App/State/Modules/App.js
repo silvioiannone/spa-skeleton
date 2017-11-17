@@ -154,28 +154,15 @@ export default class APP extends AbstractModule
         return {
 
             /**
-             * Set the APP state to "failed".
+             * Set the app's status.
              */
-            'app/SET_STATE_FAILED'(state)
+            'app/SET_STATUS'(state, status)
             {
-                state.status = 'failed';
-            },
+                state.status = status;
 
-            /**
-             * Set the APP state to "loading".
-             */
-            'app/SET_STATE_LOADING'(state)
-            {
-                state.status = 'loading';
-            },
-
-            /**
-             * Set the APP state to "ready".
-             */
-            'app/SET_STATE_READY'(state)
-            {
-                state.status = 'ready';
-                state.fresh = false;
+                if (status === 'ready') {
+                    state.fresh = false;
+                }
             },
 
             /**
