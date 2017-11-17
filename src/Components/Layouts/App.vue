@@ -1,11 +1,13 @@
 <template>
     <v-app :light="theme === 'light'" :dark="theme === 'dark'">
-        <slot name="navigationDrawer"></slot>
-        <slot name="navigationDrawerRight"></slot>
+        <slot name="navigationDrawer" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
+        <slot name="navigationDrawerRight" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
         <slot name="toolbar"></slot>
         <main>
             <v-content>
-                <slot></slot>
+                <slot  v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
+                <error-server-error v-if="status === 'error'"></error-server-error>
+                <error-not-found v-if="status === 'notFound'"></error-not-found>
             </v-content>
         </main>
         <snackbar-global></snackbar-global>
@@ -15,16 +17,25 @@
 <script>
 
     import SnackbarGlobal from "../Snackbars/Global.vue";
+    import ErrorServerError from '../Views/Errors/Unauthorized.vue';
+    import ErrorNotFound from '../Views/Errors/NotFound.vue';
 
     export default
     {
         name: 'LayoutApp',
 
         components: {
+            ErrorNotFound,
+            ErrorServerError,
             SnackbarGlobal
         },
 
         computed: {
+
+            status ()
+            {
+                return this.$store.getters.app.status;
+            },
 
             user ()
             {

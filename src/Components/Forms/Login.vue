@@ -36,6 +36,14 @@
 
         name : 'FormLogin',
 
+        props: {
+
+            reload: {
+                type: Boolean,
+                default: false
+            }
+        },
+
         data()
         {
             return {
@@ -56,13 +64,13 @@
             }
         },
 
-        computed:
+        computed: {
+
+            user()
             {
-                user()
-                {
-                    return this.$store.getters.app.user;
-                }
-            },
+                return this.$store.getters.app.user;
+            }
+        },
 
         mounted()
         {
@@ -101,7 +109,14 @@
                             .get('me')
                             .then(response =>
                             {
-                                self.$router.push('/home');
+                                if (this.reload) {
+                                    self.$router.go({
+                                        path: self.$route.path,
+                                        force: true
+                                    });
+                                } else {
+                                    self.$router.push('/home');
+                                }
                             });
 
                         this.formError = false;

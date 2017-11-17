@@ -9,13 +9,13 @@
                     <h3 class="text-xs-center">Unauthorized.</h3>
                 </v-flex>
                 <v-flex xs12 offset-md3 md6 offset-lg4 lg4 class="mt-5">
-                    <p>You are not authorized to view this page.</p>
-                    <div class="mt-5 text-xs-center">
-                        <v-btn class="mt-3" large color="primary" to="/login"
-                               v-if="!userIsAuthenticated">
-                            LOG IN
-                        </v-btn>
-                    </div>
+                    <v-card>
+                        <v-alert icon="warning" color="warning" :value="true">
+                            You are not authorized to view this page.
+                            Authenticate in order to continue.
+                        </v-alert>
+                        <form-login :reload="true"></form-login>
+                    </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -25,12 +25,14 @@
 <script>
 
     import Error from "./Main.vue";
+    import FormLogin from '../../Forms/Login.vue';
 
     export default
     {
         name: 'ErrorServerError',
 
         components: {
+            FormLogin,
             Error
         },
 

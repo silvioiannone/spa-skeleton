@@ -1,21 +1,18 @@
 <template>
-    <v-app>
-        <toolbar-main></toolbar-main>
-        <main>
+    <v-container>
+        <v-layout>
             <slot></slot>
-            <v-container>
-                <v-layout>
-                    <v-flex xs12>
-                        <div class="text-xs-center">
-                            <v-btn color="primary" large @click="goBack()" v-if="backButton">
-                                <v-icon left>arrow_back</v-icon>Go back
-                            </v-btn>
-                        </div>
-                    </v-flex>
-                </v-layout>
-            </v-container>
-        </main>
-    </v-app>
+        </v-layout>
+        <v-layout>
+            <v-flex xs12>
+                <div class="text-xs-center">
+                    <v-btn color="primary" large @click="goBack()" v-if="backButton">
+                        <v-icon left>arrow_back</v-icon>Go back
+                    </v-btn>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
