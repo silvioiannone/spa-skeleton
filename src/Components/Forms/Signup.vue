@@ -57,13 +57,6 @@
 
 <script>
 
-    import API from '../../Library/API';
-
-    /**
-     * App API interface.
-     */
-    let api = new API();
-
     export default
     {
         name : 'FormSignup',
@@ -124,12 +117,13 @@
             {
                 let self = this;
 
-                api.users.signup({
-                    email: this.email,
-                    first_name: this.firstName,
-                    last_name: this.lastName,
-                    password: this.password
-                })
+                this.$api.users
+                    .signup({
+                        email: this.email,
+                        first_name: this.firstName,
+                        last_name: this.lastName,
+                        password: this.password
+                    })
                     .then(response =>
                     {
                         self.formSuccess = true;

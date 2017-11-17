@@ -58,13 +58,6 @@
 
 <script>
 
-    import API from '../../Library/API';
-
-    /**
-     * App API interface.
-     */
-    let api = new API();
-
     export default
     {
         selector : 'form-activate',
@@ -153,7 +146,7 @@
             {
                 let self = this;
 
-                api.users.activate({
+                this.$api.users.activate({
                     email: this.email,
                     first_name: this.firstName,
                     last_name: this.lastName,

@@ -22,9 +22,6 @@ export default class API
         for (let key in availableAPIResources) {
             let accessorName = key.charAt(0).toLowerCase() + key.slice(1);
             this[accessorName] = new availableAPIResources[key];
-
-            Log.debug('API resource "' + key + '" registered (accessible using "'
-                + accessorName + '").');
         }
     }
 }

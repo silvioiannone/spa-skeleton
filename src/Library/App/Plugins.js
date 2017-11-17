@@ -2,13 +2,15 @@ import Log         from 'loglevel';
 import PluginsList from 'assets/js/App/Plugins'
 
 // Skeleton plugins
-import EventHub           from './Plugins/EventHub';
-import Vuetify            from 'vuetify';
-import VueI18N            from 'vue-i18n';
-import VueRouter          from 'vue-router';
-import WebSocket          from './Plugins/WebSocket';
+import API       from './Plugins/API';
+import EventHub  from './Plugins/EventHub';
+import Vuetify   from 'vuetify';
+import VueI18N   from 'vue-i18n';
+import VueRouter from 'vue-router';
+import WebSocket from './Plugins/WebSocket';
 
 const SkeletonPlugins = {
+    API,
     EventHub,
     Vuetify,
     VueI18N,

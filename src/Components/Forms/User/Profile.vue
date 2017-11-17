@@ -28,8 +28,6 @@
 
 <script>
 
-    import API from '../../../Library/API';
-
     export default
     {
         name: 'FormUserProfile',

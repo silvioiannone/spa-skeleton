@@ -9,10 +9,6 @@
 
 <script>
 
-    import API from '../../../Library/API';
-
-    let api = new API();
-
     export default
     {
         selector: 'button-user-invite',
@@ -53,7 +49,7 @@
             {
                 return (resolve, reject) =>
                 {
-                    api.users.invite(this.user)
+                    this.$api.users.invite(this.user)
                         .then(response =>
                         {
                             this.$eh.$emit('SnackbarDisplayMessage', {

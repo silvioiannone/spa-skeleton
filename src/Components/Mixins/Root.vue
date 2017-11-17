@@ -4,11 +4,8 @@
      * This mixin adds multilanguage support to every component.
      */
 
-    import API     from '../../Library/API';
     import Config  from '../../Config';
     import VueI18N from 'vue-i18n';
-
-    let api = new API;
 
     export default
     {
@@ -32,7 +29,7 @@
             userLanguage()
             {
                 // Request a new locale file from the server...
-                api.app
+                this.$api.app
                     .getLocale(this.userLanguage)
                     .then(response =>
                     {

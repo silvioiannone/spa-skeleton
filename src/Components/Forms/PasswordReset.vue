@@ -41,10 +41,6 @@
 
 <script>
 
-    import API from '../../Library/API';
-
-    let api = new API;
-
     export default
     {
         name: 'FormPasswordReset',
@@ -81,7 +77,7 @@
              */
             changePassword(resolve, reject)
             {
-                api.users.changePassword({
+                this.$api.users.changePassword({
                     token: this.token,
                     password: this.password,
                     password_confirmation: this.passwordConfirmation
@@ -102,7 +98,7 @@
              */
             resetPassword(resolve, reject)
             {
-                api.users.resetPassword(this.email)
+                this.$api.users.resetPassword(this.email)
                     .then(() =>
                     {
                         this.passwordResetSuccessful = true;

@@ -27,11 +27,8 @@
 
 <script>
 
-    import API          from '../../../Library/API';
     import FormActivate from '../../Forms/Activate.vue';
     import ToolbarMain   from '../../Toolbars/Main.vue';
-
-    let api = new API();
 
     export default
     {
@@ -62,8 +59,10 @@
 
         mounted()
         {
-            api.users.getActivation( this.$route.params.activationId)
+            this.$api.users
+                .getActivation( this.$route.params.activationId)
                 .then((response) => this.user = response.body.data);
         }
     }
+
 </script>
