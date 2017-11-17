@@ -4,25 +4,19 @@
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
-        <v-slide-x-transition mode="out-in">
-            <v-toolbar-title :key="mounted" v-if="showingTitle" class="slide-x-transition-enter">
-                <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
-            </v-toolbar-title>
-        </v-slide-x-transition>
+        <v-toolbar-title v-if="showingTitle">
+            <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
+        </v-toolbar-title>
         <v-spacer v-if="showingTitle"></v-spacer>
         <partial-local-search :subject="searchSubject" v-if="showingSearch">
         </partial-local-search>
-        <v-slide-x-transition mode="out-in">
-            <div :key="mounted" class="slide-x-transition-enter">
-                <v-btn icon @click="hideSearch" v-show="showingSearch">
-                    <v-icon>close</v-icon>
-                </v-btn>
-                <v-btn icon @click="showSearch" v-if="search" v-show="!showingSearch">
-                    <v-icon>search</v-icon>
-                </v-btn>
-                <slot name="toolbar" v-if="!showingSearch"></slot>
-            </div>
-        </v-slide-x-transition>
+        <v-btn icon @click="hideSearch" v-show="showingSearch">
+            <v-icon>close</v-icon>
+        </v-btn>
+        <v-btn icon @click="showSearch" v-if="search" v-show="!showingSearch">
+            <v-icon>search</v-icon>
+        </v-btn>
+        <slot name="toolbar" v-if="!showingSearch"></slot>
         <v-toolbar-items>
             <slot name="toolbar-items"></slot>
         </v-toolbar-items>
@@ -112,11 +106,6 @@
                 return this.$store.getters.ui;
             },
 
-            loading()
-            {
-                return this.$store.getters.app.status === 'loading';
-            },
-
             user()
             {
                 return this.$store.getters.app.user;
@@ -152,22 +141,6 @@
                 {
                     this.$el.querySelector('input').focus();
                 })
-            }
-        },
-
-        mounted()
-        {
-            this.mounted = true;
-        },
-
-        watch: {
-
-            loading()
-            {
-                if (this.loading)
-                {
-                    this.mounted = false;
-                }
             }
         }
     }

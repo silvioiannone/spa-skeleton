@@ -33,8 +33,9 @@
                 <v-list-tile-avatar>
                     <v-icon>home</v-icon>
                 </v-list-tile-avatar>
-                <v-list-tile-title to="/home">Home</v-list-tile-title>
+                <v-list-tile-title>Home</v-list-tile-title>
             </v-list-tile>
+            <slot></slot>
         </v-list>
     </navigation-drawer-main>
 </template>
