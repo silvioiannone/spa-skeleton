@@ -271,3 +271,54 @@ New routes can be defined in the *resources/assets/js/App/Routes.js*:
     ]
     
 [More info about the routes](https://router.vuejs.org/en/).
+
+### WebSocket: Events & subscriptions
+
+#### Connection
+
+Connecting to the WebSocket server is needed in order to receive real time events, and it's simple
+as calling the following from inside a component:
+
+    mounted()
+    {
+        this.$ws.subscribe(this);
+    }
+    
+The possibility to specify to which events to subscribe to for each view will be made available in
+the future.
+
+#### Events
+
+The events the SPA should listen must be defined in *resources/assets/js/App/Subscriptions.js*.
+
+    import App from './Channels/App';
+
+    export default [
+        {
+            event: 'Models.CompanyCreated',
+            channels: [App]
+        },
+        ...
+        
+Every event can be fired on multiple channel. A new channel can be created within the
+*resources/assets/js/App/Channels* folder. Here's an example:
+
+    import AbstractChannel from 'spa-skeleton/src/Library/WebSocket/AbstractChannel';
+        
+    /**
+     * Global App WS channel.
+     */
+    export default class App extends AbstractChannel
+    {
+        /**
+         * Get the channel name.
+         */
+        name()
+        {
+            return 'App';
+        }
+    }
+
+Each channel has access to the store (using `this.store`) in order to access the needed data. The
+`name()` method must return the channel name (For example: **App**, **User.1**, **Company.4** are
+valid channel names.).
