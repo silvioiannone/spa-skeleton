@@ -52,16 +52,10 @@ export default class State
         // Register all the modules with the state machine
         let availableModules = {};
         let vuexModules = {};
+        availableModules = Object.assign(availableModules, SkeletonModules, Modules);
 
-        for (let key in SkeletonModules) {
-            let module = (new SkeletonModules[key]()).get();
-
-            // See if there are app modules defined with the same key. If that's the case we need to
-            // merge the app module with its skeleton module counterpart.
-            if (typeof Modules[key] !== 'undefined') {
-                let appModule = (new Modules[key]());
-                module = Object.assign(module, appModule.get());
-            }
+        for (let key in availableModules) {
+            let module = (new availableModules[key]()).get();
 
             Log.debug('State machine "' + key + '" module registered.');
             vuexModules[key] = module;
