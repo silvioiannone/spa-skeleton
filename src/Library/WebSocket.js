@@ -1,10 +1,10 @@
-import Echo         from 'laravel-echo';
-import IO           from 'socket.io-client';
-import Log          from 'loglevel';
-import Config       from '../Config';
-import Events       from 'assets/js/App/Events';
-import ModelHandler from './Events/ModelHandler';
-import Token        from './API/Token';
+import Echo          from 'laravel-echo';
+import IO            from 'socket.io-client';
+import Log           from 'loglevel';
+import Config        from '../Config';
+import Subscriptions from 'assets/js/App/Subscriptions';
+import ModelHandler  from './Events/ModelHandler';
+import Token         from './API/Token';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -28,7 +28,7 @@ export default class WebSocket
         /**
          * Event subscriptions.
          */
-        this.subscriptions = Events;
+        this.subscriptions = Subscriptions;
 
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
         window.io = IO;
@@ -38,45 +38,42 @@ export default class WebSocket
      * Subscribe the client.
      *
      * @param vue Needed in order to access the root component and use it to fire events.
-     * @param {Object} [user] If specified will also subscribe to private channels.
      */
-    subscribe(vue, user)
+    subscribe(vue)
     {
         this.vue = vue;
-        this.user = user || null;
 
         this.connect();
 
         this.subscriptions.forEach(subscription =>
         {
-            subscription.channels.forEach(channel =>
-            {
-                this.listen(channel, subscription.event);
-            });
+            this.listen(subscription);
         });
     }
 
     /**
      * Subscribe to a channel and listen to an event.
      *
-     * @param {string} channel
-     * @param {string} event
+     * @param {object} subscription
      */
-    listen(channel, event)
+    listen(subscription)
     {
         let self = this;
+        let event = subscription.event;
 
-        if (channel === 'App.User')
+        subscription.channels.forEach(channel =>
         {
-            let user = this.vue.$store.getters.app.user;
+            let channelInstance = new channel(this.vue.$store);
 
-            Log.info('Entering the room: ' + channel + '. Listening to: ' + event + '.');
+            Log.info('Listening to: ' + event + ' in the room ' + channelInstance.name());
 
-            this.echo.private(channel + '.' + user.id).listen(event, function (payload)
-            {
-                self.broadcast(event, payload);
-            });
-        }
+            this.echo
+                .private(channelInstance.name())
+                .listen(event, function (payload)
+                {
+                    self.broadcast(event, payload);
+                });
+        })
     }
 
     /**
@@ -96,7 +93,7 @@ export default class WebSocket
     }
 
     /**
-     * Handle an even received from the WebSocket server.
+     * Handle an event received from the WebSocket server.
      *
      * @param event
      * @param message
@@ -107,7 +104,7 @@ export default class WebSocket
         let handlers = subscription.handlers ? subscription.handlers : [];
 
         // If it's an model related event...
-        if (event.startsWith('Models\\')) {
+        if (event.startsWith('Models.')) {
             // ...let it be handled by the model handler.
             handlers.push(new ModelHandler(this.vue));
         }

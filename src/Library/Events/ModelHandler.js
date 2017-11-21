@@ -22,7 +22,7 @@ export default class GenericHandler extends AbstractHandler
         /**
          * @type {string[]} A list of state modules that should be ignored.
          */
-        this.excluded = ['User', 'Company']
+        this.excluded = []
     }
 
     /**
