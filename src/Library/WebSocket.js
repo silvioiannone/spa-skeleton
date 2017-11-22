@@ -30,6 +30,11 @@ export default class WebSocket
          */
         this.subscriptions = Subscriptions;
 
+        /**
+         * List of current subscriptions.
+         */
+        this.currentSubscriptions = [];
+
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
         window.io = IO;
     }
@@ -58,6 +63,8 @@ export default class WebSocket
      */
     listen(subscription)
     {
+        if (this.currentSubscriptions.indexOf(subscription) >= 0) return;
+
         let self = this;
         let event = subscription.event;
 
@@ -73,7 +80,10 @@ export default class WebSocket
                 {
                     self.broadcast(event, payload);
                 });
-        })
+        });
+
+        // Add the subscription to the current subscriptions.
+        this.currentSubscriptions = this.currentSubscriptions.concat(subscription);
     }
 
     /**
