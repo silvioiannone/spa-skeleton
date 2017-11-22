@@ -221,6 +221,31 @@ Import the plugin:
    
 [More about Vue plugins](https://vuejs.org/v2/guide/plugins.html).
 
+### Filters
+
+Filters can be imported using *resources/assets/js/App/Filters.js*.
+
+Example filter:
+
+    export default function (value)
+    {
+        return value + value;
+    }
+    
+Import the filter:
+
+    import ShinyFilter from './Filters/ShinyFilter'
+        
+    export default {
+        shiny: ShinyFilter
+    }
+    
+The filter can be used in any component simply by using:
+
+    <p>{{ model.value | shiny }}</p>
+    
+[More about Vue filters](https://vuejs.org/v2/guide/filters.html).
+
 ### Translations
 
 Translations files can be defined in *resources/assets/locales/<locale>.json*.

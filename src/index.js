@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Config from './Config';
 import Components from './Library/App/Components';
 import Directives from './Library/App/Directives';
+import Filters from './Library/App/Filters';
 import Plugins from './Library/App/Plugins';
 import Router from './Library/App/Router';
 import StateMachine from './Library/App/StateMachine';
@@ -40,6 +41,9 @@ export default class Main
 
         // Init the validator
         (new Validator(this.vue)).boot();
+
+        // Init the filters
+        (new Filters(this.vue)).boot();
 
         // Init the global components
         (new Components(this.vue)).boot();

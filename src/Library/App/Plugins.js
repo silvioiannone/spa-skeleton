@@ -38,8 +38,7 @@ export default class Plugins
         let availablePlugins = {};
         Object.assign(availablePlugins, SkeletonPlugins, PluginsList);
 
-        for (let key in availablePlugins)
-        {
+        for (let key in availablePlugins) {
             this.vue.use(availablePlugins[key]);
 
             Log.debug('Plugin "' + key + '" registered.')
