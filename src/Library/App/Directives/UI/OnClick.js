@@ -5,6 +5,8 @@ export default {
 
     bind: (el, binding) =>
     {
+        el.classList.add('clickable');
+
         el.addEventListener('click', event =>
         {
             binding.value();
