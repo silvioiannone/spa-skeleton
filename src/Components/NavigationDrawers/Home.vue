@@ -13,7 +13,7 @@
                 <v-list-tile-action>
                     <v-menu left>
                         <v-btn icon slot="activator">
-                            <v-icon>account_circle</v-icon>
+                            <v-icon>more_vert</v-icon>
                         </v-btn>
                         <v-list>
                             <v-list-tile to="/settings/account">
