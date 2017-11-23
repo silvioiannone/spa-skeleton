@@ -131,6 +131,8 @@ export default class WebSocket
      */
     connect()
     {
+        if (this.echo) return;
+
         this.echo = new Echo({
             broadcaster: 'socket.io',
             host: Config.webSocket.host + ':' + Config.webSocket.port
@@ -147,6 +149,7 @@ export default class WebSocket
     {
         if (this.echo) {
             this.echo.disconnect();
+            this.echo = null;
         }
     }
 }
