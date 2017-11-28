@@ -1,6 +1,6 @@
 <template>
     <v-navigation-drawer v-model="visible" class="scroll-y" persistent :right="right" app clipped
-                         :enable-resize-watcher="!right">
+                         fixed :enable-resize-watcher="!right">
         <slot></slot>
     </v-navigation-drawer>
 </template>

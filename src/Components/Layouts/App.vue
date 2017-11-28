@@ -3,13 +3,11 @@
         <slot name="navigationDrawer" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
         <slot name="navigationDrawerRight" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
         <slot name="toolbar"></slot>
-        <main>
-            <v-content>
-                <slot  v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
-                <error-server-error v-if="status === 'error'"></error-server-error>
-                <error-not-found v-if="status === 'notFound'"></error-not-found>
-            </v-content>
-        </main>
+        <v-content>
+            <slot  v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
+            <error-server-error v-if="status === 'error'"></error-server-error>
+            <error-not-found v-if="status === 'notFound'"></error-not-found>
+        </v-content>
         <snackbar-global></snackbar-global>
     </v-app>
 </template>
