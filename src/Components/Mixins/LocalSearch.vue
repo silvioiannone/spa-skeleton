@@ -43,20 +43,14 @@
 
         mounted()
         {
-            this.$eh.$on('search-completed', this.searchCompleted);
-        },
+            this.searchSubject = this[this.subjectName];
 
-        watch: {
-
-            tasks()
+            this.$watch(this.subjectName, (newValue, oldValue) =>
             {
                 this.searchSubject = this[this.subjectName];
-            }
-        },
+            });
 
-        mounted()
-        {
-            this.searchSubject = this[this.subjectName];
+            this.$eh.$on('search-completed', this.searchCompleted);
         }
     }
 
