@@ -6,21 +6,22 @@
      *
      * Usage:
      *
-     * The only thing you need to do is to assign the resource to the searchSubject in the `mounted`
-     * method:
+     * The only thing you need to do is to assign the name of the property that will be searched:
      *
-     *     mounted()
+     *     data()
      *     {
-     *         this.searchSubject = this.deals;
+     *         return {
+     *             subjectName: 'tasks'
+     *         }
      *     }
      */
-
     export default
     {
         data()
         {
             return {
-                searchSubject: []
+                searchSubject: [],
+                subjectName: ''
             }
         },
 
@@ -43,6 +44,19 @@
         mounted()
         {
             this.$eh.$on('search-completed', this.searchCompleted);
+        },
+
+        watch: {
+
+            tasks()
+            {
+                this.searchSubject = this[this.subjectName];
+            }
+        },
+
+        mounted()
+        {
+            this.searchSubject = this[this.subjectName];
         }
     }
 
