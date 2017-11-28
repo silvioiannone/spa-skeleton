@@ -14,7 +14,8 @@
         props: {
 
             size: {
-                type: String
+                type: String,
+                default: '48px'
             },
 
             user: {
