@@ -5,19 +5,21 @@ import ComponentsList from 'assets/js/App/Components';
 import AnimatedRouterView   from '../../Components/Misc/AnimatedRouterView.vue';
 import ButtonConfirm        from '../../Components/Buttons/Confirm.vue';
 import ButtonSubmit         from '../../Components/Buttons/Submit.vue';
+import FormMain             from '../../Components/Forms/Main.vue';
 import LayoutRoot           from '../../Components/Mixins/Root.vue';
 import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
 import PartialFooter        from '../../Components/Partials/Footer.vue';
 import ToolbarMain          from '../../Components/Toolbars/Main.vue';
 
 const SkeletonComponents = {
-  'animated-router-view': AnimatedRouterView,
-  'button-confirm': ButtonConfirm,
-  'button-submit': ButtonSubmit,
-  'navigation-drawer-main': NavigationDrawerMain,
-  'layout-root': LayoutRoot,
-  'partial-footer': PartialFooter,
-  'toolbar-main': ToolbarMain
+    'animated-router-view': AnimatedRouterView,
+    'button-confirm': ButtonConfirm,
+    'button-submit': ButtonSubmit,
+    'form-main': FormMain,
+    'navigation-drawer-main': NavigationDrawerMain,
+    'layout-root': LayoutRoot,
+    'partial-footer': PartialFooter,
+    'toolbar-main': ToolbarMain
 }
 
 /**
