@@ -1,11 +1,9 @@
 <script>
 
     /*
-     * This mixin adds some functionality to dialogs that are only supposed to display an edit form.
+     * This mixin adds some functionality to dialogs that are only supposed to display a form.
      */
     export default {
-
-        name: 'DialogEdit',
 
         props: {
 
