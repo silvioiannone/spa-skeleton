@@ -124,7 +124,9 @@
             if (this.multiple) {
                 this.$data._selected = this.selected.map(model => this._transformModel(model));
             } else {
-                this.$data._selected = this._transformModel(this.selected);
+                if (typeof this.selected !== 'undefined') {
+                    this.$data._selected = this._transformModel(this.selected);
+                }
             }
 
             this.$data.value = this.$data._selected;
