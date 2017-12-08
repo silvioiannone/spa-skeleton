@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="value" max-width="500">
+    <v-dialog v-model="model" max-width="500">
         <slot></slot>
     </v-dialog>
 </template>
@@ -18,11 +18,17 @@
             }
         },
 
-        watch: {
-
-            value(value)
-            {
-                this.$emit('input', value);
+        /**
+         * Determines the dialog's visibility.
+         */
+        computed: {
+            model: {
+                get() {
+                    return this.value;
+                },
+                set(value) {
+                    this.$emit('input', value);
+                }
             }
         }
     }
