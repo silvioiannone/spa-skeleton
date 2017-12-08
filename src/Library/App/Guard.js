@@ -1,6 +1,5 @@
-import Log         from 'loglevel';
-import RouteParser from 'route-parser';
-import Guards      from 'assets/js/App/Guards';
+import Log    from 'loglevel';
+import Guards from 'assets/js/App/Guards';
 
 // Skeleton guards
 import Auth from './Guards/Auth';
@@ -33,6 +32,8 @@ export default class Guard
 
         // The state machine store
         this.store = store;
+
+        this.maxDepth = 0;
     }
 
     /**
@@ -106,8 +107,18 @@ export default class Guard
     {
         return new Promise((resolve, reject) =>
         {
-            let actions = this.buildActionsList(to.path);
+            let matched = this.router.matcher.match(this.routes, to).matched;
+            let actions = [];
             let actionPromises = [];
+
+            matched.forEach(match =>
+            {
+                if (typeof match.meta.actions !== 'undefined') {
+                    actions = actions.concat(match.meta.actions);
+                }
+            });
+
+            Log.debug('Executing actions: ' + actions.join(', ') + '.');
 
             actions.forEach(action =>
             {
@@ -118,7 +129,10 @@ export default class Guard
             });
 
             Promise.all(actionPromises)
-                .then(() => resolve())
+                .then(() => {
+                    resolve();
+                    Log.debug('Actions executed.');
+                })
                 .catch(error => reject(error))
         });
     }
@@ -133,9 +147,18 @@ export default class Guard
      */
     runRouteGuards(to, from)
     {
-        let guards = this.buildGuardsList(to.path);
+        let matched = this.router.matcher.match(this.routes, to).matched;
+        let guards = [];
         let guardPromises = [];
         let availableGuards = {};
+
+        matched.forEach(match =>
+        {
+            if (typeof match.meta.guards !== 'undefined') {
+                guards = guards.concat(match.meta.guards);
+            }
+        });
+
         Object.assign(availableGuards, SkeletonGuards, Guards);
 
         guards.forEach(guard =>
@@ -149,81 +172,5 @@ export default class Guard
                 .then(() => resolve())
                 .catch(error => reject(error));
         });
-    }
-
-    /**
-     * Build a list of actions that needs to be run for the current route.
-     *
-     * @param {String} targetPath
-     * @return {*}
-     */
-    buildActionsList(targetPath)
-    {
-        return this.r_buildRouterPropertyList('actions', this.routes, targetPath);
-    }
-
-    /**
-     * Build a list of guards that needs to be run for the current route.
-     *
-     * @param {String} targetPath
-     * @protected
-     */
-    buildGuardsList(targetPath)
-    {
-        return this.r_buildRouterPropertyList('guards', this.routes, targetPath);
-    }
-
-    /**
-     * Recursively build the list of specified properties set in the router.
-     *
-     * This can be used to retrieve a liest of guards or a list of actions from the routes
-     * structure.
-     *
-     * @param {String} property
-     * @param {Array} routes
-     * @param {String} targetPath
-     * @param {String} [basePath]
-     * @protected
-     */
-    r_buildRouterPropertyList(property, routes, targetPath, basePath)
-    {
-        basePath = basePath || '';
-
-        let items = [];
-        let self = this;
-
-        routes.forEach(route =>
-        {
-            let currentPath = basePath + route.path;
-            let routeParser = RouteParser(currentPath + '(/*a)');
-
-            // The following condition is needed in order to make sure that the default "path: ''"
-            // in the routes definition is also matched. So for example when visiting /home/deal/1
-            // even if the last match is reached (/home/deal/:id) is reached we go one level deeper
-            // in order to fetch the action for the children "path: ''".
-            //
-            // It's easier to just give a look to the routes definition file.
-            if(!routeParser.match(targetPath) && !routeParser.match(targetPath + '/'))
-            {
-                return false;
-            }
-
-            // Add the found guards
-            if(route[property])
-            {
-                items = items.concat(route[property]);
-            }
-
-            // If there are other children...
-            if(route.children)
-            {
-                // ...go deeper
-                items = items.concat(self.r_buildRouterPropertyList(
-                    property, route.children, targetPath, currentPath + '/'
-                ));
-            }
-        });
-
-        return items;
     }
 }

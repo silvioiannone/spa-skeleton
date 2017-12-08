@@ -276,11 +276,13 @@ New routes can be defined in the *resources/assets/js/App/Routes.js*:
         // Component that should render the view.
         component: resolve => { require(['../Components/Views/Home.vue'], resolve); },
 
-        // List of guards that will be run before running the view actions.
-        guards: ['Auth'],
-
-        // Actions that should be run before displaying the view.
-        actions: ['view/HOME'],
+        meta: {
+            // List of guards that will be run before running the view actions.
+            guards: ['Auth'],
+        
+            // Actions that should be run before displaying the view.
+            actions: ['view/HOME']
+        },
 
         // Children routes definition
         children: [
