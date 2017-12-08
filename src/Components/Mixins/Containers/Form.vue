@@ -24,6 +24,14 @@
             cancel()
             {
                 this.$emit('cancel');
+            },
+
+            /**
+             * Fire the submitted event.
+             */
+            submitted()
+            {
+                this.$emit('submitted');
             }
         },
 
@@ -32,9 +40,14 @@
             let self = this;
 
             // When the form-main emits a "cancelled" event...
-            this.$children[0].$on('cancelled', function ()
+            this.$children[0].$on('cancelled', () =>
             {
                 self.cancel();
+            });
+
+            this.$children[0].$on('submitted', () =>
+            {
+                self.submitted();
             });
         }
     }
