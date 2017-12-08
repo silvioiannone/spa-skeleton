@@ -58,7 +58,10 @@
             handleSubmit(resolve, reject)
             {
                 this.submit()
-                    .then(() => resolve())
+                    .then(() => {
+                        this.$emit('submitted');
+                        resolve();
+                    })
                     .catch(error => reject(error));
             }
         }
