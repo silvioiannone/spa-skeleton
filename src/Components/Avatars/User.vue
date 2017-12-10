@@ -1,23 +1,48 @@
 <template>
-    <v-avatar :size="size">
+    <v-avatar :size="size + 'px'" v-if="user.settings.avatar.small !== 'avatar.png'">
         <img :src="'storage/' + user.settings.avatar.small"
              :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
     </v-avatar>
+    <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size"></vue-avatar>
 </template>
 
+<style>
+
+    .vue-avatar--wrapper {
+        display: inline-flex;
+        vertical-align: middle;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
+</style>
+
 <script>
+
+    import VueAvatar from 'vue-avatar';
 
     export default
     {
         name: 'AvatarUser',
 
+        components: {
+            VueAvatar
+        },
+
         props: {
 
+            /**
+             * Avatar's size.
+             */
             size: {
-                type: String,
-                default: '48px'
+                type: Number,
+                default: 48
             },
 
+            /**
+             * User whose avatar will be displayed.
+             */
             user: {
                 type: Object
             }
