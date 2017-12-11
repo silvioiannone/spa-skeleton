@@ -16,6 +16,11 @@
         justify-content: center;
     }
 
+    .chip .vue-avatar--wrapper {
+        margin-left: -12px;
+        margin-right: 4px;
+    }
+
 </style>
 
 <script>
