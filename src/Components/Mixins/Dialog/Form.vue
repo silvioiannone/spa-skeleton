@@ -32,18 +32,34 @@
             }
         },
 
+        methods: {
+
+            /**
+             * Focus the first input of the dialog.
+             */
+            focus()
+            {
+                this.$nextTick(() =>
+                {
+                    document.querySelector('.dialog__content__active form input:first-child')
+                        .focus();
+                });
+            }
+        },
+
+        mounted()
+        {
+            if (this.value) {
+                this.focus();
+            }
+        },
+
         watch: {
 
             value()
             {
-                // If the dialog is displayed...
                 if (this.value) {
-                    // ... focus the first input.
-                    this.$nextTick(() =>
-                    {
-                        document.querySelector('.dialog__content__active form input:first-child')
-                            .focus();
-                    });
+                    this.focus();
                 }
             }
         }
