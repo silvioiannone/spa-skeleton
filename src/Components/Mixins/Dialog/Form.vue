@@ -30,6 +30,22 @@
                     this.$emit('dialog-hidden');
                 }
             }
+        },
+
+        watch: {
+
+            value()
+            {
+                // If the dialog is displayed...
+                if (this.value) {
+                    // ... focus the first input.
+                    this.$nextTick(() =>
+                    {
+                        document.querySelector('.dialog__content__active form input:first-child')
+                            .focus();
+                    });
+                }
+            }
         }
     }
 
