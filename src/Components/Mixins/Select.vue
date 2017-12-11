@@ -131,6 +131,14 @@
 
             this.$data.value = this.$data._selected;
             this.$data._models = this.models.map(model => this._transformModel(model));
+        },
+
+        watch: {
+
+            models()
+            {
+                this.$data._models = this.models.map(model => this._transformModel(model));
+            }
         }
     }
 
