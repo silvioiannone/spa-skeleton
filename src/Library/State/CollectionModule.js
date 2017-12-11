@@ -86,6 +86,8 @@ export default class CollectionModule extends AbstractModule
         {
             let index = state.collection.findIndex(item => item.id === element.id);
 
+            if (index === -1) return;
+
             state.collection.splice(index, 1);
         };
 
