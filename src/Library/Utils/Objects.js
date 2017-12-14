@@ -21,7 +21,12 @@ export default {
             uniques = uniques.flatten();
         }
 
-        return uniques.uniqBy(item => item.id)
+        return uniques.uniqBy(item => {
+            if (typeof item !== 'object') {
+                return item;
+            }
+            return item.id;
+        })
             .value();
     },
 
