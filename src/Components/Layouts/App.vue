@@ -4,7 +4,7 @@
         <slot name="navigationDrawerRight" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
         <slot name="toolbar"></slot>
         <v-content>
-            <slot  v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
+            <slot v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
             <error-server-error v-if="status === 'error'"></error-server-error>
             <error-not-found v-if="status === 'notFound'"></error-not-found>
         </v-content>
