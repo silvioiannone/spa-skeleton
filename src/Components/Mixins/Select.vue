@@ -36,6 +36,14 @@
             },
 
             /**
+             * Tagging functionality, allows you to enter/navigate/delete items.
+             */
+            tags: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
              * Selectbox label.
              */
             label: {
@@ -71,8 +79,7 @@
         {
             return {
                 _selected: [],
-                _models: [],
-                value: null
+                _models: []
             }
         },
 
@@ -89,12 +96,25 @@
             /**
              * Fire the needed event.
              */
-            fire(models)
+            fire(selected)
             {
-                if (models === null) {
-                    models = { id: null }
-                }
-                this.$emit('selected', models);
+                this.$data._selected = selected;
+                let selectedCopy = JSON.parse(JSON.stringify(selected));
+                selectedCopy = selectedCopy.map(item => {
+                    if (typeof item === 'string') {
+                        return {
+                            name: item
+                        }
+                    }
+
+                    delete item['pivot'];
+                    delete item['text'];
+                    delete item['value'];
+
+                    return item;
+                });
+
+                this.$emit('selected', selectedCopy);
             },
 
             /**
@@ -121,23 +141,26 @@
 
         mounted()
         {
+            this.$data._models = this.models.map(model => this._transformModel(model));
+
             if (this.multiple) {
-                this.$data._selected = this.selected.map(model => this._transformModel(model));
+                this.$data._selected = this.selected.map(selected => {
+                    return this.$data._models.find(model => model.id === selected.id);
+                });
             } else {
                 if (typeof this.selected !== 'undefined') {
                     this.$data._selected = this._transformModel(this.selected);
                 }
             }
-
-            this.$data.value = this.$data._selected;
-            this.$data._models = this.models.map(model => this._transformModel(model));
         },
 
         watch: {
 
             models()
             {
-                this.$data._models = this.models.map(model => this._transformModel(model));
+                this.$data._models = this.models.map(model => {
+                    return this._transformModel(model)
+                });
             }
         }
     }
