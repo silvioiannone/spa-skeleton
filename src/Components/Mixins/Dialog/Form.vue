@@ -41,8 +41,12 @@
             {
                 this.$nextTick(() =>
                 {
-                    document.querySelector('.dialog__content__active form input:first-child')
-                        .focus();
+                    let firstFormInput = document
+                        .querySelector('.dialog__content__active form input:first-child');
+
+                    if (firstFormInput) {
+                        firstFormInput.focus();
+                    }
                 });
             }
         },
