@@ -10,18 +10,8 @@
             Select
         ],
 
-        computed: {
-
-            hasSlots()
-            {
-                return !!this.$scopedSlots.selection || !!this.$scopedSlots.item;
-            }
-        },
-
         render(createElement)
         {
-            let self = this;
-
             return createElement(
                 'v-select',
                 {
@@ -31,14 +21,14 @@
                         clearable: this.clearable,
                         items: this.$data._models,
                         label: this.label,
+                        tags: this.tags,
                         multiple: this.multiple,
                         returnObject: true,
                         value: this.$data._selected
                     },
                     on: {
                         input: value => {
-                            //this.$emit('selected', value);
-                            this.fire(value)
+                            this.fire(value);
                         }
                     },
                     scopedSlots: this.$vnode.data.scopedSlots
