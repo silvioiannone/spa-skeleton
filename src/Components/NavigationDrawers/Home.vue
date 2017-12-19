@@ -3,7 +3,7 @@
         <v-list class="pa-0">
             <v-list-tile avatar>
                 <v-list-tile-avatar>
-                    <avatar-user :user="user"></avatar-user>
+                    <avatar-user :size="38" :user="user"></avatar-user>
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                     <v-list-tile-title>
