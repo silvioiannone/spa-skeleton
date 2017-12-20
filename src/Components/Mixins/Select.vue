@@ -1,5 +1,7 @@
 <script>
 
+    import _ from 'lodash';
+
     /**
      * This mixin can be used in order to bootstrap the creation of a select box.
      *
@@ -99,22 +101,30 @@
             fire(selected)
             {
                 this.$data._selected = selected;
-                let selectedCopy = JSON.parse(JSON.stringify(selected));
-                selectedCopy = selectedCopy.map(item => {
-                    if (typeof item === 'string') {
-                        return {
-                            name: item
-                        }
-                    }
+                let selectedCopy = _.clone(selected);
 
-                    delete item['pivot'];
-                    delete item['text'];
-                    delete item['value'];
-
-                    return item;
-                });
+                selectedCopy = this.multiple ?
+                    selectedCopy.map(item => this.cleanItem(item)) : this.cleanItem(selectedCopy);
 
                 this.$emit('selected', selectedCopy);
+            },
+
+            /**
+             * Clean an item.
+             */
+            cleanItem(item)
+            {
+                if (typeof item === 'string') {
+                    return {
+                        name: item
+                    }
+                }
+
+                delete item['pivot'];
+                delete item['text'];
+                delete item['value'];
+
+                return item;
             },
 
             /**
@@ -131,6 +141,22 @@
                 }
 
                 return model;
+            },
+
+            /**
+             * Init the selected items.
+             */
+            initSelected()
+            {
+                if (this.multiple) {
+                    this.$data._selected = this.selected.map(selected => {
+                        return this.$data._models.find(model => model.id === selected.id);
+                    });
+                } else {
+                    if (typeof this.selected !== 'undefined') {
+                        this.$data._selected = this._transformModel(this.selected);
+                    }
+                }
             }
         },
 
@@ -143,15 +169,7 @@
         {
             this.$data._models = this.models.map(model => this._transformModel(model));
 
-            if (this.multiple) {
-                this.$data._selected = this.selected.map(selected => {
-                    return this.$data._models.find(model => model.id === selected.id);
-                });
-            } else {
-                if (typeof this.selected !== 'undefined') {
-                    this.$data._selected = this._transformModel(this.selected);
-                }
-            }
+            this.initSelected();
         },
 
         watch: {
@@ -161,6 +179,11 @@
                 this.$data._models = this.models.map(model => {
                     return this._transformModel(model)
                 });
+            },
+
+            selected()
+            {
+                this.initSelected();
             }
         }
     }
