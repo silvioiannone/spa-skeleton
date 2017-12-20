@@ -1,5 +1,7 @@
 <script>
 
+    import _ from 'lodash';
+
     /**
      * This mixin helps wrapping forms that are making use of the FormMain component.
      */
@@ -13,6 +15,20 @@
             cancellable: {
                 type: Boolean,
                 default: false
+            },
+
+            /**
+             * The company that will be edited.
+             */
+            subject: {
+                type: Object,
+                default: () => { return {} }
+            }
+        },
+
+        data() {
+            return {
+                model: {}
             }
         },
 
@@ -35,6 +51,14 @@
             }
         },
 
+        watch: {
+
+            subject()
+            {
+                this.model = _.clone(this.subject);
+            }
+        },
+
         mounted()
         {
             let self = this;
@@ -49,6 +73,8 @@
             {
                 self.submitted();
             });
+
+            this.model = _.clone(this.subject);
         }
     }
 
