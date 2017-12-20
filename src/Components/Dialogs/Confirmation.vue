@@ -1,5 +1,5 @@
 <template>
-    <dialog-main v-model="value">
+    <dialog-main v-model="model">
         <v-card>
             <v-card-title class="headline">{{ title }}</v-card-title>
             <slot></slot>
@@ -52,9 +52,24 @@
                 default: ''
             },
 
+            /**
+             * Control the dialog's visibility.
+             */
             value: {
                 type: Boolean,
                 default: false
+            }
+        },
+
+        computed: {
+
+            model: {
+                get() {
+                    return this.value;
+                },
+                set(value) {
+                    this.$emit('input', value);
+                }
             }
         },
 
@@ -68,14 +83,6 @@
                 this.confirm()
                     .then(() => resolve())
                     .catch(error => reject(error));
-            }
-        },
-
-        watch: {
-
-            value(value)
-            {
-                this.$emit('input', value);
             }
         }
     }

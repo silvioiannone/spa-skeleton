@@ -22,6 +22,7 @@
          * Determines the dialog's visibility.
          */
         computed: {
+
             model: {
                 get() {
                     return this.value;
