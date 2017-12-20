@@ -4,8 +4,9 @@
             <slot></slot>
             <v-layout row>
                 <v-flex xs12>
-                    <v-btn v-if="localCancellable" flat @click="cancel">Cancel</v-btn>
-                    <button-submit :on-click="handleSubmit" color="primary">
+                    <v-btn v-if="_cancellable" flat @click="cancel">Cancel</v-btn>
+                    <button-submit :on-click="handleSubmit" color="primary"
+                                   :disabled="$parent.errors.any()">
                         {{ submitText }}
                     </button-submit>
                 </v-flex>
