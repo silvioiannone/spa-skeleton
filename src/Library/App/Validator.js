@@ -22,7 +22,7 @@ export default class Validator
     {
         Log.debug('Booting validator...');
 
-        VeeValidate.Validator.updateDictionary(ValidatorDictionary);
+        VeeValidate.Validator.localize(ValidatorDictionary);
         this.vue.use(VeeValidate);
 
         Log.debug('Validator ready.');
