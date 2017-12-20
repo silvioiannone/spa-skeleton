@@ -33,7 +33,7 @@
 
         computed: {
 
-            localCancellable()
+            _cancellable()
             {
                 return this.$parent.cancellable || this.cancellable;
             }
@@ -46,6 +46,7 @@
              */
             cancel()
             {
+                this.$parent.$validator.reset();
                 this.$emit('cancelled')
             },
 
@@ -57,12 +58,24 @@
              */
             handleSubmit(resolve, reject)
             {
-                this.submit()
-                    .then(() => {
-                        this.$emit('submitted');
-                        resolve();
-                    })
-                    .catch(error => reject(error));
+                // Before submitting make sure that the form is valid.
+                this.$parent.$validator
+                    .validateAll()
+                    .then(result =>
+                    {
+                        if (!result) {
+                            reject();
+                            return;
+                        }
+
+                        this.submit()
+                            .then(() =>
+                            {
+                                this.$emit('submitted');
+                                resolve();
+                            })
+                            .catch(error => reject(error));
+                    });
             }
         }
     }
