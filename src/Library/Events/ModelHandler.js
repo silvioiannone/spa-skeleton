@@ -1,4 +1,4 @@
-import AbstractHandler from './abstractHandler';
+import AbstractHandler from './AbstractHandler';
 import Pluralize       from 'pluralize';
 
 /**
