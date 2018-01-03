@@ -1,7 +1,5 @@
 <script>
 
-    import _ from 'lodash';
-
     /**
      * This mixin helps wrapping forms that are making use of the FormMain component.
      */
@@ -18,7 +16,7 @@
             },
 
             /**
-             * The company that will be edited.
+             * The form's subject.
              */
             subject: {
                 type: Object,
@@ -55,7 +53,7 @@
 
             subject()
             {
-                this.model = _.clone(this.subject);
+                this.model = JSON.parse(JSON.stringify(this.subject));
             }
         },
 
@@ -74,7 +72,7 @@
                 self.submitted();
             });
 
-            this.model = _.clone(this.subject);
+            this.model = JSON.parse(JSON.stringify(this.subject));
         }
     }
 
