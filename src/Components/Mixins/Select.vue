@@ -80,7 +80,20 @@
         data()
         {
             return {
+
+                /**
+                 * Contains the list of the manually newly created tags.
+                 */
+                addedTags: [],
+
+                /**
+                 * Selected items.
+                 */
                 _selected: [],
+
+                /**
+                 * Items available for selection.
+                 */
                 _models: []
             }
         },
@@ -100,7 +113,17 @@
              */
             fire(selected)
             {
-                this.$data._selected = selected;
+                if (this.tags) {
+                    // Each tag created by Vuetify needs to be transformed and added to the
+                    // `addedTags` data property.
+                    this.$data._selected = selected.forEach(model =>
+                    {
+                        if (typeof model === 'string') {
+                            this.addedTags.push(this.transformModel({name: model}));
+                        }
+                    });
+                }
+
                 let selectedCopy = _.clone(selected);
 
                 selectedCopy = this.multiple ?
@@ -128,11 +151,19 @@
             },
 
             /**
+             * Transform the models.
+             */
+            transformModels()
+            {
+                this.$data._models = this.models.map(model => this._transformModel(model));
+            },
+
+            /**
              * Transform a model so that it can be used by the select box.
              */
             _transformModel(model)
             {
-                if (typeof this.transformModel !== 'undefined') {
+                if (typeof this.transformModel === 'function') {
                     let localModel = JSON.parse(JSON.stringify(model));
 
                     if (localModel) {
@@ -152,6 +183,9 @@
                     this.$data._selected = this.selected.map(selected => {
                         return this.$data._models.find(model => model.id === selected.id);
                     });
+                    if (this.tags) {
+                        this.$data._selected = this.$data._selected.concat(this.addedTags)
+                    }
                 } else {
                     if (typeof this.selected !== 'undefined') {
                         this.$data._selected = this._transformModel(this.selected);
@@ -167,8 +201,7 @@
 
         mounted()
         {
-            this.$data._models = this.models.map(model => this._transformModel(model));
-
+            this.transformModels();
             this.initSelected();
         },
 
@@ -176,13 +209,12 @@
 
             models()
             {
-                this.$data._models = this.models.map(model => {
-                    return this._transformModel(model)
-                });
+                this.transformModels();
             },
 
             selected()
             {
+                this.transformModels();
                 this.initSelected();
             }
         }
