@@ -116,10 +116,12 @@
                 if (this.tags) {
                     // Each tag created by Vuetify needs to be transformed and added to the
                     // `addedTags` data property.
-                    this.$data._selected = selected.forEach(model =>
+                    selected.forEach(model =>
                     {
                         if (typeof model === 'string') {
-                            this.addedTags.push(this.transformModel({name: model}));
+                            this.addedTags.push(this.transformModel({
+                                name: model
+                            }));
                         }
                     });
                 }
