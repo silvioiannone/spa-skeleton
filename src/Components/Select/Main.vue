@@ -27,9 +27,7 @@
                         value: this.$data._selected
                     },
                     on: {
-                        input: value => {
-                            this.fire(value);
-                        }
+                        input: value => this.fire(value)
                     },
                     scopedSlots: this.$vnode.data.scopedSlots
                 }
