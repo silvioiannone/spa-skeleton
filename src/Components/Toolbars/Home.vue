@@ -1,5 +1,8 @@
 <template>
     <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject">
+        <template slot="title">
+            <slot name="title"></slot>
+        </template>
         <template slot="toolbar">
             <slot name="toolbar" v-show="!showingSearch"></slot>
         </template>
@@ -35,7 +38,7 @@
             user()
             {
                 return this.$store.getters.app.user;
-            },
+            }
         }
     }
 </script>
