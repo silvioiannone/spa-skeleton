@@ -5,7 +5,7 @@
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle">
-            <router-link :to="toolbarTitleRedirectUrl" class="white--text">{{ title }}</router-link>
+            <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
         </v-toolbar-title>
         <v-spacer v-if="showingTitle"></v-spacer>
         <partial-local-search :subject="searchSubject" v-if="showingSearch">
