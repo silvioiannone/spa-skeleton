@@ -45,7 +45,16 @@
              */
             submitted()
             {
+                this.resetForm();
                 this.$emit('submitted');
+            },
+
+            /**
+             * Reset the form to its original state.
+             */
+            resetForm()
+            {
+                this.model = JSON.parse(JSON.stringify(this.subject));
             }
         },
 
@@ -53,7 +62,7 @@
 
             subject()
             {
-                this.model = JSON.parse(JSON.stringify(this.subject));
+                this.resetForm();
             }
         },
 
@@ -72,7 +81,7 @@
                 self.submitted();
             });
 
-            this.model = JSON.parse(JSON.stringify(this.subject));
+            this.resetForm();
         }
     }
 
