@@ -54,7 +54,11 @@
              */
             resetForm()
             {
-                this.model = JSON.parse(JSON.stringify(this.subject));
+                try {
+                    this.model = JSON.parse(JSON.stringify(this.subject));
+                } catch (error) {
+                    this.model = {};
+                }
             }
         },
 

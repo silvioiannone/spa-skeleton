@@ -25,8 +25,7 @@
         computed: {
 
             visible: {
-
-                get: function()
+                get()
                 {
                     if (this.right)
                     {
@@ -35,8 +34,7 @@
 
                     return this.$store.getters.ui.navigationDrawerVisible;
                 },
-
-                set: function(value)
+                set(value)
                 {
                     if (this.right)
                     {

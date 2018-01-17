@@ -1,7 +1,9 @@
 <template>
     <v-app :light="theme === 'light'" :dark="theme === 'dark'">
-        <slot name="navigationDrawer" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
-        <slot name="navigationDrawerRight" v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
+        <slot name="navigationDrawer" v-if="status !== 'error' && status !== 'unauthenticated'">
+        </slot>
+        <slot name="navigationDrawerRight" v-if="status !== 'error' && status !== 'unauthenticated'">
+        </slot>
         <slot name="toolbar"></slot>
         <v-content>
             <slot v-if="status !== 'error' && status !== 'unauthenticated'"></slot>
