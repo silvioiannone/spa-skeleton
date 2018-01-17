@@ -1,19 +1,21 @@
 import Vuex from 'vuex';
-import Log  from 'loglevel';
+import Log from 'loglevel';
 import Modules from 'assets/js/App/State'
 
 // Skeleton modules
-import App   from './State/Modules/App';
+import App from './State/Modules/App';
+import Notifications from './State/Modules/Notifications';
 import Users from './State/Modules/Users';
-import UI    from './State/Modules/UI';
-import View  from './State/Modules/View';
+import UI from './State/Modules/UI';
+import View from './State/Modules/View';
 
 const SkeletonModules = {
     App,
+    Notifications,
     Users,
     UI,
     View
-}
+};
 
 /**
  * Initialize and manage the state machine.

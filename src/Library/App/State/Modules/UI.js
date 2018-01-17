@@ -55,6 +55,17 @@ export default class UI extends AbstractModule
             'ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY'(state, value)
             {
                 state.rightNavigationDrawerVisible = value;
+            },
+
+            /**
+             * Show or hide the notifications drawer.
+             *
+             * @param state
+             * @param value
+             */
+            'ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY'(state, value)
+            {
+                state.notificationsDrawerVisible = value;
             }
         }
     }
@@ -68,7 +79,9 @@ export default class UI extends AbstractModule
 
             navigationDrawerVisible: true,
 
-            rightNavigationDrawerVisible: false
+            rightNavigationDrawerVisible: false,
+
+            notificationsDrawerVisible: false
         }
     }
 }

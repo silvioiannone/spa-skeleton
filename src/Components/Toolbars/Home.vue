@@ -5,6 +5,14 @@
         </template>
         <template slot="toolbar">
             <slot name="toolbar" v-show="!showingSearch"></slot>
+            <v-btn icon @click="toggleNotificationsDrawer">
+                <v-badge color="red">
+                    <span slot="badge" v-if="unreadNotificationsCount">
+                        {{ unreadNotificationsCount }}
+                    </span>
+                    <v-icon>notifications</v-icon>
+                </v-badge>
+            </v-btn>
         </template>
     </toolbar-main>
 </template>
@@ -33,11 +41,31 @@
             }
         },
 
-        computed:
-        {
+        computed: {
+
             user()
             {
                 return this.$store.getters.app.user;
+            },
+
+            unreadNotificationsCount()
+            {
+                return this.$store.getters.notifications
+                    .filter(notification => notification.read_at === null)
+                    .length;
+            }
+        },
+
+        methods: {
+
+            /**
+             * Toggle the notifications drawer.
+             */
+            toggleNotificationsDrawer()
+            {
+                let visibility = this.$store.getters.ui.notificationsDrawerVisible;
+
+                this.$store.commit('ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY', !visibility);
             }
         }
     }

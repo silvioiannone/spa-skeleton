@@ -8,6 +8,7 @@ import ButtonSubmit         from '../../Components/Buttons/Submit.vue';
 import FormMain             from '../../Components/Forms/Main.vue';
 import LayoutRoot           from '../../Components/Mixins/Root.vue';
 import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
+import PartialTimeFromNow   from '../../Components/Partials/TimeFromNow';
 import PartialFooter        from '../../Components/Partials/Footer.vue';
 import ToolbarMain          from '../../Components/Toolbars/Main.vue';
 
@@ -19,8 +20,9 @@ const SkeletonComponents = {
     'navigation-drawer-main': NavigationDrawerMain,
     'layout-root': LayoutRoot,
     'partial-footer': PartialFooter,
-    'toolbar-main': ToolbarMain
-}
+    'toolbar-main': ToolbarMain,
+    'time-from-now': PartialTimeFromNow
+};
 
 /**
  * This class is used to register all the Vue components that should be available globally.

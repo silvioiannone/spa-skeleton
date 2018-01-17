@@ -1,10 +1,11 @@
-import Echo          from 'laravel-echo';
-import IO            from 'socket.io-client';
-import Log           from 'loglevel';
-import Config        from '../Config';
+import Echo from 'laravel-echo';
+import IO  from 'socket.io-client';
+import Log from 'loglevel';
+import Config from '../Config';
 import Subscriptions from 'assets/js/App/Subscriptions';
-import ModelHandler  from './Events/ModelHandler';
-import Token         from './API/Token';
+import UserChannel from './WebSocket/Channels/User';
+import ModelHandler from './Events/ModelHandler';
+import Token from './API/Token';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -13,6 +14,18 @@ export default class WebSocket
 {
     constructor()
     {
+        /**
+         * The Skeleton's subscriptions.
+         *
+         * @type {[]}
+         */
+        this.skeletonSubscriptions = [
+            {
+                event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
+                channels: [UserChannel],
+            }
+        ];
+
         /**
          * Laravel Passport access token.
          *
@@ -50,7 +63,9 @@ export default class WebSocket
 
         this.connect();
 
-        this.subscriptions.forEach(subscription =>
+        let subscriptions = Object.assign(this.subscriptions, this.skeletonSubscriptions);
+
+        subscriptions.forEach(subscription =>
         {
             this.listen(subscription);
         });
@@ -72,13 +87,17 @@ export default class WebSocket
         {
             let channelInstance = new channel(this.vue.$store);
 
-            Log.info('Listening to: ' + event + ' in the room ' + channelInstance.name());
+            Log.info('Listening to: ' + event + ' in the room ' + channelInstance.name() + '.');
 
             this.echo
                 .private(channelInstance.name())
                 .listen(event, function (payload)
                 {
-                    self.broadcast(event, payload);
+                    if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
+                        self.handleNotification(payload.response);
+                    } else {
+                        self.broadcast(event, payload);
+                    }
                 });
         });
 
@@ -103,6 +122,18 @@ export default class WebSocket
     }
 
     /**
+     * Handle a notification.
+     *
+     * @param notification
+     */
+    handleNotification(notification)
+    {
+        this.vue.$store.commit('notifications/ADD', notification);
+
+        Log.debug('Notification received: ' + notification.type + '.');
+    }
+
+    /**
      * Handle an event received from the WebSocket server.
      *
      * @param event
@@ -113,7 +144,7 @@ export default class WebSocket
         let subscription = this.subscriptions.find(subscription => subscription.event === event);
         let handlers = subscription.handlers ? subscription.handlers : [];
 
-        // If it's an model related event...
+        // If it's a model related event...
         if (event.startsWith('Models.')) {
             // ...let it be handled by the model handler.
             handlers.push(new ModelHandler(this.vue));
