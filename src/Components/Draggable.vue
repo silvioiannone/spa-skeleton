@@ -82,7 +82,7 @@
                     // Get all the previous items and decrease their position by one.
                     this.model
                         .filter(_item => {
-                            return (_item.position >= oldPosition)
+                            return (_item.position > oldPosition)
                                 && (_item.position <= item.position)
                                 && (_item.id !== item.id);
                         })
@@ -92,7 +92,7 @@
                     this.model
                         .filter(_item => {
                             return (_item.position >= item.position)
-                                && (_item.position <= oldPosition)
+                                && (_item.position < oldPosition)
                                 && (_item.id !== item.id);
                         })
                         .map(_item => _item.position++);

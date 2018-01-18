@@ -18,7 +18,7 @@ const SkeletonPlugins = {
     VueRouter,
     Vue2Filters,
     WebSocket
-}
+};
 
 /**
  * This class binds all the needed plugins to Vue.
@@ -37,8 +37,7 @@ export default class Plugins
     {
         Log.debug('Loading plugins...');
 
-        let availablePlugins = {};
-        Object.assign(availablePlugins, SkeletonPlugins, PluginsList);
+        let availablePlugins = Object.assign(SkeletonPlugins, PluginsList);
 
         for (let key in availablePlugins) {
             this.vue.use(availablePlugins[key]);

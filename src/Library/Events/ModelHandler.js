@@ -5,7 +5,7 @@ import Pluralize       from 'pluralize';
  * This handler performs basic tasks such as firing mutations for the right
  * state machine module.
  */
-export default class GenericHandler extends AbstractHandler
+export default class ModelHandler extends AbstractHandler
 {
     /**
      * @param vue
@@ -15,14 +15,18 @@ export default class GenericHandler extends AbstractHandler
         super(vue);
 
         /**
-         * @type {string[]} A list of events that should be handled.
+         * A list of events that should be handled.
+         *
+         * @type {string[]}
          */
         this.knownEvents = ['Created', 'Updated', 'Deleted'];
 
         /**
-         * @type {string[]} A list of state modules that should be ignored.
+         * A list of state modules that should be ignored.
+         *
+         * @type {string[]}
          */
-        this.excluded = []
+        this.excluded = [];
     }
 
     /**
