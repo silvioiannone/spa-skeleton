@@ -26,7 +26,9 @@
 
         data() {
             return {
-                model: {}
+                model: {
+                    name: ''
+                }
             }
         },
 
@@ -54,11 +56,7 @@
              */
             resetForm()
             {
-                try {
-                    this.model = JSON.parse(JSON.stringify(this.subject));
-                } catch (error) {
-                    this.model = {};
-                }
+                this.model = Object.assign(this.model, this.subject);
             }
         },
 
@@ -67,6 +65,11 @@
             subject()
             {
                 this.resetForm();
+            },
+
+            model: {
+                handler: () => {},
+                deep: true
             }
         },
 
@@ -84,8 +87,6 @@
             {
                 self.submitted();
             });
-
-            this.resetForm();
         }
     }
 

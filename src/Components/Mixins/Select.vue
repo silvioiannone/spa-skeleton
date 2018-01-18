@@ -166,7 +166,8 @@
             _transformModel(model)
             {
                 if (typeof this.transformModel === 'function') {
-                    let localModel = JSON.parse(JSON.stringify(model));
+                    let localModel = {};
+                    Object.assign(localModel, model);
 
                     if (localModel) {
                         return this.transformModel(localModel)
