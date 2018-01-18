@@ -317,7 +317,6 @@ export default class AbstractResource
             request.set('Authorization', 'Bearer ' + this.token.getAccessToken());
         }
 
-        console.log(this.socketId);
         // Include the socket ID if it is set.
         if (this.socketId) {
             request.set('X-Socket-ID', this.socketId);
