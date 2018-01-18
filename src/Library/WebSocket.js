@@ -169,6 +169,12 @@ export default class WebSocket
             host: Config.webSocket.host + ':' + Config.webSocket.port
         });
         this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` + this.token;
+        this.echo.connector.socket._callbacks.$connect.push(() =>
+        {
+            // Set the socket ID in the API
+            this.vue.$api.setSocketId(this.echo.socketId());
+            Log.debug('Connected to the WebSocket server (ID: ' + this.echo.socketId() + ')');
+        });
 
         return this;
     }

@@ -2,6 +2,7 @@ import Config     from '../../Config';
 import httpClient from 'superagent';
 import Token      from './Token';
 import URLPattern from 'url-pattern';
+import Echo from 'laravel-echo';
 
 /**
  * Paths that should be ignored.
@@ -54,6 +55,17 @@ export default class AbstractResource
         this.httpClient = httpClient;
         this.parameters = {};
         this.resourceName = '';
+        this.socketId = '';
+    }
+
+    /**
+     * Set the socket ID that will be send with the headers.
+     *
+     * @param socketId
+     */
+    setSocketId(socketId)
+    {
+        this.socketId = socketId;
     }
 
     /**
@@ -303,6 +315,12 @@ export default class AbstractResource
         if (this.token.getAccessToken())
         {
             request.set('Authorization', 'Bearer ' + this.token.getAccessToken());
+        }
+
+        console.log(this.socketId);
+        // Include the socket ID if it is set.
+        if (this.socketId) {
+            request.set('X-Socket-ID', this.socketId);
         }
 
         return request;
