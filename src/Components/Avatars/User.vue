@@ -1,9 +1,12 @@
 <template>
-    <v-avatar :size="size + 'px'" v-if="user.settings.avatar.small !== 'avatar.png'">
-        <img :src="'storage/' + user.settings.avatar.small"
-             :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
-    </v-avatar>
-    <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size"></vue-avatar>
+    <router-link :to="'/users/' + user.id" tag="span" class="clickable">
+        <v-avatar :size="size + 'px'" v-if="user.settings.avatar.small !== 'avatar.png'">
+            <img :src="'storage/' + user.settings.avatar.small"
+                 :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
+        </v-avatar>
+        <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size">
+        </vue-avatar>
+    </router-link>
 </template>
 
 <style>
