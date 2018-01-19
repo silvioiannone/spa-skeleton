@@ -87,6 +87,8 @@
             {
                 self.submitted();
             });
+
+            this.resetForm();
         }
     }
 
