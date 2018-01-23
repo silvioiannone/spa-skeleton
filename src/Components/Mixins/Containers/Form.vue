@@ -26,9 +26,7 @@
 
         data() {
             return {
-                model: {
-                    name: ''
-                }
+                model: {}
             }
         },
 
@@ -56,7 +54,7 @@
              */
             resetForm()
             {
-                this.model = Object.assign(this.model, this.subject);
+                this.model = Object.assign({}, this.subject);
             }
         },
 
