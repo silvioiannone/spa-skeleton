@@ -8,9 +8,9 @@
 
     import Objects from '../../Library/Utils/Objects';
 
-    export default
-    {
-        selector: 'partial-local-search',
+    export default {
+
+        name: 'PartialLocalSearch',
 
         props: {
 
