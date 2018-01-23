@@ -16,7 +16,7 @@
         <v-btn icon @click="showSearch" v-if="search" v-show="!showingSearch">
             <v-icon>search</v-icon>
         </v-btn>
-        <slot name="toolbar" v-if="!showingSearch"></slot>
+        <slot name="toolbar" v-show="!showingSearch"></slot>
         <v-toolbar-items>
             <slot name="toolbar-items"></slot>
         </v-toolbar-items>

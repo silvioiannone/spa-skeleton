@@ -4,7 +4,7 @@
             <slot name="title"></slot>
         </template>
         <template slot="toolbar">
-            <slot name="toolbar" v-show="!showingSearch"></slot>
+            <slot name="toolbar"></slot>
             <v-btn icon @click="toggleNotificationsDrawer">
                 <v-badge color="red">
                     <span slot="badge" v-if="unreadNotificationsCount">
