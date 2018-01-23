@@ -28,17 +28,15 @@ module.exports = {
             'public/css/app.css'
         ], 'public/css/all.css');
 
-        if (process.env.APP_ENV !== 'local')
-        {
+        if (process.env.APP_ENV !== 'local') {
             mix.version();
         }
 
         mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
         mix.copy('node_modules/mdi/fonts', 'public/fonts');
 
-        if (process.env.APP_ENV !== 'production')
-        {
+        if (process.env.APP_ENV !== 'production') {
             mix.sourceMaps();
         }
     }
-}
+};
