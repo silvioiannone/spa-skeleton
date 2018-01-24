@@ -17,7 +17,8 @@ module.exports = {
                 'loglevel',
                 'moment',
                 'lodash',
-                'raven-js'
+                'raven-js',
+                'vue-markdown'
             ], './public/js/vendor.js');
 
         mix.stylus('resources/assets/stylus/app.styl', 'public/css');

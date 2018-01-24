@@ -11,6 +11,7 @@ import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
 import PartialTimeFromNow   from '../../Components/Partials/TimeFromNow';
 import PartialFooter        from '../../Components/Partials/Footer.vue';
 import ToolbarMain          from '../../Components/Toolbars/Main.vue';
+import VueMarkdown          from 'vue-markdown';
 
 const SkeletonComponents = {
     'animated-router-view': AnimatedRouterView,
@@ -21,7 +22,8 @@ const SkeletonComponents = {
     'layout-root': LayoutRoot,
     'partial-footer': PartialFooter,
     'toolbar-main': ToolbarMain,
-    'time-from-now': PartialTimeFromNow
+    'time-from-now': PartialTimeFromNow,
+    'markdown': VueMarkdown
 };
 
 /**
