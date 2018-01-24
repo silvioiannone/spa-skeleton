@@ -37,6 +37,7 @@
              */
             cancel()
             {
+                this.resetForm();
                 this.$emit('cancel');
             },
 
@@ -54,6 +55,7 @@
              */
             resetForm()
             {
+                this.$validator.errors.clear();
                 this.model = Object.assign({}, this.subject);
             }
         },
