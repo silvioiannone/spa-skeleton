@@ -33,7 +33,9 @@
              */
             options: {
                 type: Object,
-                default: () => { return {}; }
+                default: () => { return {
+                    scrollSensitivity: 120
+                }}
             }
         },
 
