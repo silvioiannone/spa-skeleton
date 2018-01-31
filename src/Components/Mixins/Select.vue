@@ -166,8 +166,7 @@
             _transformModel(model)
             {
                 if (typeof this.transformModel === 'function') {
-                    let localModel = {};
-                    Object.assign(localModel, model);
+                    let localModel = Object.assign({}, model);
 
                     if (localModel) {
                         return this.transformModel(localModel)
@@ -183,12 +182,10 @@
             initSelected()
             {
                 if (this.multiple) {
-                    this.$data._selected = this.selected.map(selected => {
-                        return this.$data._models.find(model => model.id === selected.id);
-                    });
-                    if (this.tags) {
-                        this.$data._selected = this.$data._selected.concat(this.addedTags)
-                    }
+                    this.$data._selected = this.selected
+                        .filter(selected => typeof selected !== 'undefined')
+                        .map(selected =>
+                            this.$data._models.find(model => model.id === selected.id) || selected);
                 } else {
                     if (typeof this.selected !== 'undefined') {
                         this.$data._selected = this._transformModel(this.selected);
