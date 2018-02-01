@@ -1,6 +1,6 @@
 <template>
     <v-toolbar :fixed="this.fixed" class="elevation-0" app clipped-left color="blue darken-3" dark
-               :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
+               :scroll-off-screen="$vuetify.breakpoint.mdAndDown" clipped-right>
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
