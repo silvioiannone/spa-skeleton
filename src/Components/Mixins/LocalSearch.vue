@@ -33,11 +33,6 @@
             searchCompleted(subject)
             {
                 this.searchSubject = subject;
-
-                // Hack to make the Vue Virtual Scroll display the correct number of elements after
-                // a search has been completed with no results returned (for some reason it only
-                // displays the first 3 items).
-                setTimeout(() => window.dispatchEvent(new Event('resize')));
             }
         },
 
@@ -45,7 +40,7 @@
         {
             this.searchSubject = this[this.subjectName];
 
-            this.$watch(this.subjectName, (newValue, oldValue) =>
+            this.$watch(this.subjectName, () =>
             {
                 this.searchSubject = this[this.subjectName];
             });
