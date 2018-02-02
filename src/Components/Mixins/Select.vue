@@ -113,6 +113,11 @@
              */
             fire(selected)
             {
+                if (selected === null) {
+                    this.$emit('selected', {});
+                    return;
+                }
+
                 if (this.tags) {
                     // Each tag created by Vuetify needs to be transformed and added to the
                     // `addedTags` data property.
