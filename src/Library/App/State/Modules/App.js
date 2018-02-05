@@ -2,7 +2,7 @@ import AbstractModule from '../../../State/AbstractModule';
 import Token          from '../../../API/Token';
 
 /**
- * State machine user module.
+ * State machine App module.
  */
 export default class APP extends AbstractModule
 {
@@ -218,6 +218,11 @@ export default class APP extends AbstractModule
     state()
     {
         return {
+
+            /**
+             * The application name.
+             */
+            name: APP_NAME,
 
             /*
              * Marks whether the app just finished loading or not.
