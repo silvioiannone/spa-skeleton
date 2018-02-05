@@ -68,7 +68,8 @@ export default class Router
 
             i18n: this.translator,
 
-            template: '<animated-router-view></animated-router-view>'
+            // The root `div` is needed in order for the Vue devtools to work properly.
+            template: '<div><animated-router-view></animated-router-view></div>'
         });
 
         App.$mount(Config.appSelector);
