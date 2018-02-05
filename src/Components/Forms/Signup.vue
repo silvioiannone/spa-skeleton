@@ -35,17 +35,16 @@
                         </v-text-field>
                     </v-flex>
                     <v-flex xs6>
-                        <v-text-field v-model="passwordConfirmation" label="Repeat password"
-                                      type="password" v-validate="'required|matchingPasswords:password'"
+                        <v-text-field v-model="passwordConfirmation" label="Repeat password" type="password"
+                                      v-validate="'required|matchingPasswords:password'" required
                                       :error-messages="errors.collect('passwordConfirmation')"
-                                      data-vv-name="passwordConfirmation" required>
+                                      data-vv-name="passwordConfirmation">
                         </v-text-field>
                     </v-flex>
                 </v-layout>
                 <v-layout row>
                     <v-flex xs12 class="text-xs-center">
-                        <button-submit :on-click="submit" color="primary"
-                                       v-show="passwordsAreMatching">
+                        <button-submit :on-click="submit" color="primary" v-show="passwordsAreMatching">
                             Sign up
                         </button-submit>
                     </v-flex>
