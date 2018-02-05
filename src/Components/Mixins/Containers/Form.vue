@@ -56,7 +56,9 @@
             resetForm()
             {
                 this.$validator.errors.clear();
-                this.model = Object.assign({}, this.subject);
+
+                let parentModel = this.$parent.model || {};
+                this.model = Object.assign(parentModel, this.subject);
             }
         },
 
