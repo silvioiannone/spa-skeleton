@@ -44,10 +44,18 @@
             /**
              * Fire the submitted event.
              */
-            submitted()
+            submitted(response)
             {
                 this.resetForm();
-                this.$emit('submitted');
+                this.$emit('submitted', response);
+            },
+
+            /**
+             * Fire the error event.
+             */
+            onError(response)
+            {
+                this.$emit('error', response)
             },
 
             /**
@@ -85,10 +93,15 @@
                 self.cancel();
             });
 
-            this.$children[0].$on('submitted', () =>
+            this.$children[0].$on('submitted', response =>
             {
-                self.submitted();
+                self.submitted(response);
             });
+
+            this.$children[0].$on('error', response =>
+            {
+                self.onError(response);
+            })
 
             this.resetForm();
         }
