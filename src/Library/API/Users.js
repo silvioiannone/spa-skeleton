@@ -89,10 +89,10 @@ export default class Users extends AbstractResource
     {
         let parameters = userCredentials;
 
-        parameters['grant_type'] = 'password';
-        parameters['client_id'] = Config.client.id;
-        parameters['client_secret'] = Config.client.secret;
-        parameters['scope'] = '*';
+        parameters.grant_type = 'password';
+        parameters.client_id = Config.client.id;
+        parameters.client_secret = Config.client.secret;
+        parameters.scope = '*';
 
         let request = this.httpClient
             .post('/oauth/token')
