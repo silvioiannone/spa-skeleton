@@ -69,12 +69,15 @@
                         }
 
                         this.submit()
-                            .then(() =>
+                            .then(response =>
                             {
-                                this.$emit('submitted');
+                                this.$emit('submitted', response);
                                 resolve();
                             })
-                            .catch(error => reject(error));
+                            .catch(error => {
+                                this.$emit('error', error);
+                                reject(error);
+                            });
                     });
             }
         }
