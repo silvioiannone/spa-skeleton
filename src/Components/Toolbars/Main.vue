@@ -9,6 +9,7 @@
         </v-toolbar-title>
         <slot name="toolbar-text" v-show="showingTitle"></slot>
         <v-spacer v-if="showingTitle"></v-spacer>
+        <slot name="toolbar-text-right" v-show="showingTitle"></slot>
         <partial-local-search :subject="searchSubject" v-if="showingSearch">
         </partial-local-search>
         <v-btn icon @click="hideSearch" v-show="showingSearch">
