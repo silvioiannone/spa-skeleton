@@ -4,9 +4,10 @@
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
-        <v-toolbar-title v-if="showingTitle">
+        <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
         </v-toolbar-title>
+        <slot name="toolbar-text" v-show="showingTitle"></slot>
         <v-spacer v-if="showingTitle"></v-spacer>
         <partial-local-search :subject="searchSubject" v-if="showingSearch">
         </partial-local-search>
