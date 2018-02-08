@@ -3,9 +3,11 @@ import AppFilters from 'assets/js/App/Filters';
 
 // Skeleton filters
 import OrganizationNumber from './Filters/OrganizationNumber';
+import Phone from './Filters/Phone';
 
 const SkeletonFilters = {
-    organizationNumber: OrganizationNumber
+    organizationNumber: OrganizationNumber,
+    phone: Phone
 };
 
 /**
