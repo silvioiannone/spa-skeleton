@@ -13,6 +13,14 @@
             },
 
             /**
+             * Whether the buttons should be centered or not.
+             */
+            centerActions: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
              * Submit action.
              *
              * It needs to be a function returning a promise.

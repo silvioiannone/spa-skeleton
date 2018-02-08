@@ -16,6 +16,14 @@
             },
 
             /**
+             * Whether the buttons should be centered or not.
+             */
+            centerActions: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
              * The form's subject.
              */
             subject: {
