@@ -24,6 +24,14 @@
             },
 
             /**
+             * Whether the form should be focused.
+             */
+            focus: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
              * The form's subject.
              */
             subject: {
