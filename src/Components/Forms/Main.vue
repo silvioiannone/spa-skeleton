@@ -1,6 +1,6 @@
 <template>
     <v-form @submit.prevent>
-        <v-container fluid class="pa-0">
+        <v-container fluid grid-list-lg class="pa-0">
             <slot></slot>
             <v-layout row :justify-space-around="centerActions">
                 <slot name="actions"></slot>
