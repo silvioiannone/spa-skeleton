@@ -1,4 +1,5 @@
 import AbstractModule from '../../../State/AbstractModule';
+import Config         from '../../../../Config';
 import Token          from '../../../API/Token';
 
 /**
@@ -218,6 +219,8 @@ export default class APP extends AbstractModule
     state()
     {
         return {
+
+            config: Config,
 
             /**
              * The application name.
