@@ -157,6 +157,10 @@ export default class AbstractResource
             request.attach(attachment.name, attachment.file);
         });
 
+        if (this.attachments.length) {
+            return this.dispatchRequest(request);
+        }
+        
         request.send(data);
 
         return this.dispatchRequest(request);
