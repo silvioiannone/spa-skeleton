@@ -1,8 +1,7 @@
 <template>
-    <v-toolbar :fixed="this.fixed" class="elevation-0" app clipped-left color="blue darken-3" dark
-               :scroll-off-screen="$vuetify.breakpoint.mdAndDown" clipped-right>
-        <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
-                             v-if="navigationDrawer">
+    <v-toolbar :fixed="this.fixed" class="elevation-0" app clipped-left color="blue darken-3" dark clipped-right
+               :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
+        <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up" v-if="navigationDrawer">
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
@@ -30,8 +29,8 @@
     import Config             from '../../Config';
     import PartialLocalSearch from '../Partials/LocalSearch.vue';
 
-    export default
-    {
+    export default {
+
         name: 'ToolbarMain',
 
         components: {
