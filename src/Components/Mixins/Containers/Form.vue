@@ -88,6 +88,13 @@
 
         watch: {
 
+            focus()
+            {
+                if (focus) {
+                    this.$el.querySelector('input').focus();
+                }
+            },
+
             subject()
             {
                 this.resetForm();
