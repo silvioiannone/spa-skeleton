@@ -27,7 +27,10 @@
                 },
                 set(value) {
                     this.$emit('input', value);
-                    this.$emit('dialog-hidden');
+
+                    if (! value) {
+                        this.$emit('hidden');
+                    }
                 }
             }
         },
