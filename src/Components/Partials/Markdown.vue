@@ -1,7 +1,5 @@
 <template>
-    <vue-markdown class="markdown-body">
-        <slot></slot>
-    </vue-markdown>
+    <vue-markdown class="markdown-body" :source="source"></vue-markdown>
 </template>
 
 <script>
@@ -14,6 +12,17 @@
 
         components: {
             VueMarkdown
+        },
+
+        props: {
+
+            /**
+             * Markdown to be displayed.
+             */
+            source: {
+                type: String,
+                default: ''
+            }
         }
     }
 
