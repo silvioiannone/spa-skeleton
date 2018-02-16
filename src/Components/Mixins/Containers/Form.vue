@@ -90,7 +90,7 @@
 
             focus()
             {
-                if (focus) {
+                if (this.focus) {
                     this.$el.querySelector('input').focus();
                 }
             },
@@ -111,7 +111,7 @@
             let self = this;
 
             // When the form-main emits a "cancelled" event...
-            this.$children[0].$on('cancelled', () =>
+            this.$children[0].$on('cancel', () =>
             {
                 self.cancel();
             });
@@ -127,6 +127,13 @@
             })
 
             this.resetForm();
+
+            if (this.focus) {
+                let firstInput = this.$el.querySelector('input');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }
         }
     }
 
