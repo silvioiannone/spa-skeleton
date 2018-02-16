@@ -3,9 +3,11 @@ import Guards from 'assets/js/App/Guards';
 
 // Skeleton guards
 import Auth from './Guards/Auth';
+import UserIsAdmin from './Guards/UserIsAdmin';
 
 const SkeletonGuards = {
-    Auth
+    Auth,
+    UserIsAdmin
 }
 
 /**
