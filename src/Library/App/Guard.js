@@ -165,7 +165,15 @@ export default class Guard
 
         guards.forEach(guard =>
         {
-            guardPromises.push(new availableGuards[guard](this.store).execute());
+            let guardPromise = new availableGuards[guard](this.store).execute();
+
+            guardPromise.catch(error =>
+            {
+                Log.error('The guard ' + guard + ' blocked the loading of the view.');
+                console.error(error);
+            });
+
+            guardPromises.push(guardPromise);
         });
 
         return new Promise((resolve, reject) =>
