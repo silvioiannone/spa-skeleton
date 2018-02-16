@@ -26,6 +26,7 @@ module.exports = {
         mix.styles([
             'node_modules/material-design-icons/iconfont/material-icons.css',
             'node_modules/mdi/css/materialdesignicons.css',
+            'node_modules/github-markdown-css/github-markdown.css',
             'public/css/app.css'
         ], 'public/css/all.css');
 
