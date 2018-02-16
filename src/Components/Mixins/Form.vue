@@ -55,7 +55,7 @@
             cancel()
             {
                 this.$parent.$validator.reset();
-                this.$emit('cancelled')
+                this.$emit('cancel')
             },
 
             /**
