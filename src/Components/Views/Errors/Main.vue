@@ -1,25 +1,23 @@
 <template>
-    <layout-app>
-        <v-container>
-            <v-layout>
-                <slot></slot>
-            </v-layout>
-            <v-layout>
-                <v-flex xs12>
-                    <div class="text-xs-center">
-                        <v-btn color="primary" large @click="goBack()" v-if="backButton">
-                            <v-icon left>arrow_back</v-icon>Go back
-                        </v-btn>
-                    </div>
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </layout-app>
+    <v-container>
+        <v-layout>
+            <slot></slot>
+        </v-layout>
+        <v-layout>
+            <v-flex xs12>
+                <div class="text-xs-center">
+                    <v-btn color="primary" large @click="goBack()" v-if="backButton">
+                        <v-icon left>arrow_back</v-icon>Go back
+                    </v-btn>
+                </div>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
 
-    import LayoutApp from 'spa-skeleton/src/Components/Layouts/App'
+    import LayoutApp from 'spa-skeleton/src/Components/Layouts/App';
 
     export default
     {
