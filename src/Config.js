@@ -31,6 +31,14 @@ const defaultConfig = {
      */
     locale: 'en',
 
+    app: {
+
+        /**
+         * Pagination size.
+         */
+        paginationSize: parseInt(PAGINATION_DEFAULT_SIZE)
+    },
+
     /**
      * API settings.
      */
