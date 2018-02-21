@@ -22,10 +22,10 @@ export default class CollectionModule extends AbstractModule
         let getters = {};
 
         // Getter: <module> (E.g.: estates, viewings, deals)
-        getters[this.getModuleName()] = state =>
-        {
-            return state.collection;
-        };
+        getters[this.getModuleName()] = state => state.data;
+
+        // Getter: <module>Meta
+        getters[this.getModuleName() + 'Meta'] = state => state.meta;
 
         return getters;
     }
@@ -43,53 +43,14 @@ export default class CollectionModule extends AbstractModule
             addMutationName    = this.getModuleName() + '/ADD',
             deleteMutationName = this.getModuleName() + '/DELETE';
 
-        // <module>/STORE mutation definition
-        mutations[storeMutationName] = (state, elements) =>
-        {
-            state.collection = elements;
-        };
+        // <module>/STORE mutation
+        mutations[storeMutationName] = this.storeMutation;
 
         // <module>/ADD mutation definition
-        mutations[addMutationName] = (state, elements) =>
-        {
-            if(elements.constructor !== Array)
-            {
-                elements = [elements];
-            }
-
-            // This collection buffer will be used in order to improve performances.
-            // The changes to the state will be applied (triggering Vue to re-render) only when all
-            // the elements have been added to the state.
-            let collectionBuffer = state.collection.slice(0);
-
-            elements.forEach(element =>
-            {
-                if(!element.id) return;
-
-                let index = collectionBuffer.findIndex(item => item.id === element.id);
-
-                if(index < 0)
-                {
-                    collectionBuffer.push(element);
-                }
-                else
-                {
-                    collectionBuffer[index] = Object.assign(collectionBuffer[index], element);
-                }
-            });
-
-            state.collection = collectionBuffer.slice(0);
-        };
+        mutations[addMutationName] = this.addMutation;
 
         // <module>/DELETE mutation definition
-        mutations[deleteMutationName] = (state, element) =>
-        {
-            let index = state.collection.findIndex(item => item.id === element.id);
-
-            if (index === -1) return;
-
-            state.collection.splice(index, 1);
-        };
+        mutations[deleteMutationName] = this.deleteMutation;
 
         return mutations;
     }
@@ -100,12 +61,85 @@ export default class CollectionModule extends AbstractModule
     state()
     {
         return {
-            collection: []
+
+            // The items.
+            data: [],
+            // Meta regarding the items.
+            meta: {}
         };
     }
 
     /**
-     * Get the module name (based on the class name).
+     * The <module>/STORE mutation.
+     *
+     * @protected
+     * @param state
+     * @param body
+     */
+    storeMutation(state, body)
+    {
+        state.data = body.data;
+        state.meta = body.meta;
+    }
+
+    /**
+     * The <module>/ADD mutation.
+     *
+     * @protected
+     * @param state
+     * @param body
+     */
+    addMutation(state, body)
+    {
+        let items = body.data;
+        state.meta = body.meta;
+
+        items = items.constructor !== Array ? [items] : items;
+
+        // This collection buffer will be used in order to improve performances.
+        // The changes to the state will be applied (triggering Vue to re-render) only when all the elements have been
+        // added to the state.
+        let buffer = state.data.slice(0);
+
+        items.forEach(currentItem =>
+        {
+            if(!currentItem.id) return;
+
+            // Find the index where the current item (element) is located.
+            let index = buffer.findIndex(item => item.id === currentItem.id);
+
+            // If the item is not found...
+            if(index < 0) {
+                // ...add it to the store only if there's space left.
+                if (state.meta.pagination.count < state.meta.pagination.per_page) {
+                    buffer.push(currentItem);
+                }
+            } else {
+                buffer[index] = Object.assign(buffer[index], currentItem);
+            }
+        });
+
+        state.data = buffer.slice(0);
+    }
+
+    /**
+     * The <module>/DELETE mutation.
+     *
+     * @protected
+     * @param state
+     * @param item
+     */
+    deleteMutation(state, item)
+    {
+        let index = state.data.findIndex(item => item.id === item.id);
+
+        if (index === -1) return;
+
+        state.data.splice(index, 1);
+    }
+
+    /**
+     * Get the module name.
      *
      * @protected
      */
