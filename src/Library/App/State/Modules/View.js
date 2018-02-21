@@ -1,4 +1,5 @@
 import AbstractModule from '../../../State/AbstractModule';
+import Config from 'spa-skeleton/src/Config'
 
 /**
  * State machine view module.
@@ -20,19 +21,20 @@ export default class View extends AbstractModule
         /**
          * /home route
          */
-        actions['view/HOME'] = store =>
+        actions['view/HOME'] = (store, payload) =>
         {
             return new Promise((resolve, reject) =>
             {
-                if(store.getters.app.user.id)
-                {
+                let userId = store.getters.app.user.id;
+
+                if(userId) {
                     resolve();
                     return;
                 }
 
                 self.api.users
                     .setParameters({
-                        'with': 'role'
+                        include: 'role'
                     })
                     .get('me')
                     .then(response =>
@@ -53,7 +55,7 @@ export default class View extends AbstractModule
             {
                 self.api.users
                     .setParameters({
-                        'with': 'role'
+                        include: 'role'
                     })
                     .get('me')
                     .then(response =>
@@ -66,5 +68,21 @@ export default class View extends AbstractModule
         };
 
         return actions;
+    }
+
+    /**
+     * Get the parameters that should be passed to the API if the view will display paginated data (a list of users for
+     * example).
+     *
+     * @param payload
+     * @return {Object}
+     */
+    getPaginationParameters (payload)
+    {
+        return {
+            'page[number]': payload.route.query.page || 1,
+            'page[size]': payload.route.query.size || Config.app.paginationSize,
+            'sort': payload.route.query.sort || ''
+        }
     }
 }
