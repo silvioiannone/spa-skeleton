@@ -74,15 +74,18 @@ export default class View extends AbstractModule
      * Get the parameters that should be passed to the API if the view will display paginated data (a list of users for
      * example).
      *
+     * @param defaultParameters
      * @param payload
      * @return {Object}
      */
-    getPaginationParameters (payload)
+    getPaginationParameters(payload, defaultParameters)
     {
+        defaultParameters = defaultParameters || {};
+
         return {
             'page[number]': payload.route.query.page || 1,
             'page[size]': payload.route.query.size || Config.app.paginationSize,
-            'sort': payload.route.query.sort || ''
+            'sort': payload.route.query.sort || defaultParameters.sort || ''
         }
     }
 }
