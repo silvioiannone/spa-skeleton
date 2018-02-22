@@ -5,6 +5,10 @@
     /*
      * This mixin can be used by all the views that need to display paginated data. E.g.: a view displaying a table with
      * a list of users.
+     *
+     * How to use it:
+     *
+     * Override the meta computed value with the pagination object.
      */
     export default {
 
@@ -53,10 +57,14 @@
             /**
              * Whenever the pagination changes we need to redirect the router to the right view.
              */
-            pagination()
+            pagination(newPagination, oldPagination)
             {
                 // Do not redirect if the user is looking at the first page and the query doesn't have any page set.
-                if (! this.$route.query.page && ! this.pagination.sortBy) return;
+                if (newPagination.page === oldPagination.page &&
+                    newPagination.rowsPerPage === oldPagination.rowsPerPage &&
+                    ! this.pagination.sortBy) {
+                    return;
+                }
 
                 let query = {
                     page: this.pagination.page
