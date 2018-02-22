@@ -78,8 +78,8 @@ export default class CollectionModule extends AbstractModule
      */
     storeMutation(state, body)
     {
-        state.data = body.data;
-        state.meta = body.meta;
+        state.data = Array.isArray(body.data) ? body.data : [body.data];
+        state.meta = body.meta || {};
     }
 
     /**
