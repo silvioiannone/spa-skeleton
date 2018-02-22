@@ -1,34 +1,34 @@
 {
   "_args": [
     [
-      "spa-skeleton@0.0.8",
-      "/Users/silvioiannone/Programming/Projects/BloomManager"
+      "spa-skeleton@0.0.35",
+      "/Users/silvioiannone/Programming/Projects/Guldbit"
     ]
   ],
-  "_from": "spa-skeleton@^0.0.34",
-  "_id": "spa-skeleton@0.0.34",
+  "_from": "spa-skeleton@0.0.35",
+  "_id": "spa-skeleton@0.0.35",
   "_inBundle": false,
-  "_integrity": "sha512-J/eyXtbFyMtixiSgxwIvsgidP5P9fjrsjl3nLtHYj5d2RD+C6CK17io103rx9RI22LskoqeBCzr25XenfBC9oQ==",
+  "_integrity": "sha512-GMYFiXnsO3NOyIulpX0/1IMfm/1hDyVFqACPHfqT8COEg/I9ZEAOQFU6vij14yqvyAr9WGx9cxndaj2d5tFxSA==",
   "_location": "/spa-skeleton",
   "_phantomChildren": {
     "ms": "2.0.0"
   },
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "spa-skeleton@^0.0.34",
+    "raw": "spa-skeleton@0.0.35",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "^0.0.34",
+    "rawSpec": "0.0.35",
     "saveSpec": null,
-    "fetchSpec": "^0.0.34"
+    "fetchSpec": "0.0.35"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.34.tgz",
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.35.tgz",
   "_shasum": "47b21907dd95e0cdc203c25ee609997d4bd28d1d",
-  "_spec": "spa-skeleton@^0.0.34",
+  "_spec": "0.0.35",
   "_where": "/Users/silvioiannone/Programming/Projects/Guldbit",
   "author": {
     "name": "Silvio Iannone"
@@ -62,7 +62,7 @@
     "vue-router": "^3.0.1",
     "vue2-filters": "^0.2.2",
     "vuedraggable": "^2.16.0",
-    "vuetify": "^1.0.1",
+    "vuetify": "^1.0.3",
     "vuex": "^3.0.1",
     "vuex-router-sync": "^5.0.0"
   },
