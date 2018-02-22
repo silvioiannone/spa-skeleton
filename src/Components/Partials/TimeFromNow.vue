@@ -6,6 +6,8 @@
 
     import Moment from 'moment';
 
+    let interval = null;
+
     export default {
 
         name: 'TimeFromNow',
@@ -36,10 +38,23 @@
             }
         },
 
+        watch: {
+
+            time()
+            {
+                this.update();
+            }
+        },
+
         mounted()
         {
             this.update();
-            setInterval(this.update, 1000);
+            interval = setInterval(this.update, 1000);
+        },
+
+        destroyed()
+        {
+            clearInterval(interval);
         }
     }
 
