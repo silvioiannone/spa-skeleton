@@ -126,6 +126,34 @@ export default class WebSocket
 
         this.listen(subscription);
     }
+
+    /**
+     * Leave a channel.
+     *
+     * @param {AbstractChannel} channel
+     */
+    leave(channel)
+    {
+        let channelInstance = new channel(this.vue.$store);
+
+        this.currentSubscriptions.forEach(subscription =>
+        {
+            let index = subscription.channels.findIndex(channel =>
+            {
+                let currentChannel = new channel(this.vue.$store);
+                return currentChannel.name() === channelInstance.name();
+            });
+
+            if (index >= 0) {
+                subscription.channels.splice(index, 1);
+            }
+        });
+
+        this.echo.leave(channelInstance.name());
+        Log.debug('Channel ' + channelInstance.name() + ' left.');
+    }
+
+    /**
      * Broadcast an event to all vue components and execute the state mutations needed.
      *
      * @param event
