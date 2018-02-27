@@ -41,7 +41,7 @@ export default class WebSocket
         /**
          * Event subscriptions.
          */
-        this.subscriptions = Subscriptions;
+        this.subscriptions = [];
 
         /**
          * List of current subscriptions.
@@ -50,6 +50,8 @@ export default class WebSocket
 
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
         window.io = IO;
+
+        this.subscriptions = this.subscriptions.concat(Subscriptions);
     }
 
     /**
@@ -63,12 +65,11 @@ export default class WebSocket
 
         this.connect();
 
-        let subscriptions = Object.assign(this.subscriptions, this.skeletonSubscriptions);
+        let subscriptions = []
+            .concat(this.subscriptions)
+            .concat(this.skeletonSubscriptions);
 
-        subscriptions.forEach(subscription =>
-        {
-            this.listen(subscription);
-        });
+        subscriptions.forEach(subscription => this.listen(subscription));
     }
 
     /**
@@ -106,6 +107,25 @@ export default class WebSocket
     }
 
     /**
+     * Add an additional subscription that will be processed as soon as the connection to the WS socket is established.
+     *
+     * The format of the subscription is the following:
+     *     {
+     *         event: {String},
+     *         channels: {Array}
+     *     }
+     *
+     * @param {Object} subscription
+     */
+    listenTo(subscription)
+    {
+        if (! this.echo) {
+            this.subscriptions.push(subscription);
+            return;
+        }
+
+        this.listen(subscription);
+    }
      * Broadcast an event to all vue components and execute the state mutations needed.
      *
      * @param event
