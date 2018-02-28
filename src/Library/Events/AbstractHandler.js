@@ -4,6 +4,18 @@
 export default class AbstractHandler
 {
     /**
+     * Constructor.
+     *
+     * @param vue
+     */
+    constructor(vue)
+    {
+        this.vue = vue;
+
+        return this;
+    }
+
+    /**
      * Handle the event.
      *
      * @param {String} event
@@ -15,19 +27,7 @@ export default class AbstractHandler
         {
             throw 'The event handler method cannot be found. Event: ' + event + '.';
         }
-        
+
         this[event](message);
-    }
-
-    /**
-     * Set the Vue context.
-     *
-     * @param vueContext
-     */
-    setVueContext(vueContext)
-    {
-        this.vue = vueContext;
-
-        return this;
     }
 }
