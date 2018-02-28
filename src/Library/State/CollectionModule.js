@@ -92,9 +92,8 @@ export default class CollectionModule extends AbstractModule
     addMutation(state, body)
     {
         let items = body.data;
-        state.meta = body.meta;
 
-        items = items.constructor !== Array ? [items] : items;
+        items = Array.isArray(items) ? items : [items];
 
         // This collection buffer will be used in order to improve performances.
         // The changes to the state will be applied (triggering Vue to re-render) only when all the elements have been
@@ -103,7 +102,7 @@ export default class CollectionModule extends AbstractModule
 
         items.forEach(currentItem =>
         {
-            if(!currentItem.id) return;
+            if(! currentItem.id) return;
 
             // Find the index where the current item (element) is located.
             let index = buffer.findIndex(item => item.id === currentItem.id);
@@ -111,7 +110,9 @@ export default class CollectionModule extends AbstractModule
             // If the item is not found...
             if(index < 0) {
                 // ...add it to the store only if there's space left.
-                if (state.meta.pagination.count < state.meta.pagination.per_page) {
+                if (state.meta && state.meta.pagination.count < state.meta.pagination.per_page) {
+                    buffer.push(currentItem);
+                } else {
                     buffer.push(currentItem);
                 }
             } else {
@@ -120,6 +121,7 @@ export default class CollectionModule extends AbstractModule
         });
 
         state.data = buffer.slice(0);
+        state.meta = body.meta || {};
     }
 
     /**
