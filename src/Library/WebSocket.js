@@ -190,16 +190,16 @@ export default class WebSocket
     handleEvent(event, message)
     {
         let subscription = this.subscriptions.find(subscription => subscription.event === event);
-        let handlers = subscription.handlers ? subscription.handlers : [];
+        let handlers = (subscription && subscription.handlers) ? subscription.handlers : [];
 
         // If it's a model related event...
-        if (event.startsWith('Models.')) {
+        if (event.startsWith('Models.') || event.indexOf('App\\Events\\Models') >= 0) {
             // ...let it be handled by the model handler.
             handlers.push(new ModelHandler(this.vue));
         }
 
         handlers.forEach(handler => {
-            handler.setVueContext(this.vue).handle(event, message);
+            handler.handle(event, message);
         });
     }
 
