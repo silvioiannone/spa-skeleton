@@ -59,10 +59,11 @@
              */
             pagination(newPagination, oldPagination)
             {
-                // Do not redirect if the user is looking at the first page and the query doesn't have any page set.
+                // Do not redirect the user if the pagination parameters are the same.
                 if (newPagination.page === oldPagination.page &&
                     newPagination.rowsPerPage === oldPagination.rowsPerPage &&
-                    ! this.pagination.sortBy) {
+                    newPagination.sortBy === oldPagination.sortBy &&
+                    newPagination.descending === oldPagination.descending) {
                     return;
                 }
 
