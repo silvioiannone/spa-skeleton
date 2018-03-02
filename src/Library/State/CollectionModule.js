@@ -110,7 +110,7 @@ export default class CollectionModule extends AbstractModule
             // If the item is not found...
             if(index < 0) {
                 // ...add it to the store only if there's space left.
-                if (state.meta && state.meta.pagination.count < state.meta.pagination.per_page) {
+                if (state.meta.pagination && state.meta.pagination.count < state.meta.pagination.per_page) {
                     buffer.push(currentItem);
                 } else {
                     buffer.push(currentItem);
