@@ -34,12 +34,15 @@ export default class View extends AbstractModule
 
                 self.api.users
                     .setParameters({
-                        include: 'role'
+                        include: 'role,unread_notifications'
                     })
                     .get('me')
                     .then(response =>
                     {
-                        store.commit('user/STORE_AUTHENTICATED_USER', response.body.data);
+                        let user = response.body.data;
+
+                        store.commit('user/STORE_AUTHENTICATED_USER', user);
+                        store.commit('notifications/STORE', {data: user.unread_notifications});
                         resolve();
                     })
                     .catch(error => reject(error));
