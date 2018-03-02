@@ -176,7 +176,7 @@ export default class WebSocket
      */
     handleNotification(notification)
     {
-        this.vue.$store.commit('notifications/ADD', notification);
+        this.vue.$store.commit('notifications/ADD', {data: notification});
 
         Log.debug('Notification received: ' + notification.type + '.');
     }

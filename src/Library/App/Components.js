@@ -12,7 +12,7 @@ import PartialTimeFromNow   from '../../Components/Partials/TimeFromNow';
 import PartialFooter        from '../../Components/Partials/Footer.vue';
 import PartialMarkdown      from '../../Components/Partials/Markdown.vue';
 import ToolbarMain          from '../../Components/Toolbars/Main.vue';
-import VueMarkdown          from 'vue-markdown';
+import ToolbarHome          from '../../Components/Toolbars/Home.vue';
 
 const SkeletonComponents = {
     'animated-router-view': AnimatedRouterView,
@@ -24,6 +24,7 @@ const SkeletonComponents = {
     'partial-footer': PartialFooter,
     'partial-markdown': PartialMarkdown,
     'toolbar-main': ToolbarMain,
+    'toolbar-home': ToolbarHome,
     'time-from-now': PartialTimeFromNow
 };
 
@@ -51,8 +52,7 @@ export default class Components
         Log.debug('Registering global components...');
 
         // Register the skeleton components
-        let availableComponents = {};
-        Object.assign(availableComponents, SkeletonComponents, ComponentsList);
+        let availableComponents = Object.assign(SkeletonComponents, ComponentsList);
 
         for(let key in availableComponents)
         {

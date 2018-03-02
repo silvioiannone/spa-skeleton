@@ -1,8 +1,8 @@
 <template>
     <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject">
-        <template slot="title">
-            <slot name="title"></slot>
-        </template>
+        <slot slot="title" name="title"></slot>
+        <slot slot="toolbar-text" name="toolbar-text"></slot>
+        <slot slot="toolbar-text-right" name="toolbar-text-right"></slot>
         <template slot="toolbar">
             <slot name="toolbar"></slot>
             <v-btn icon @click="toggleNotificationsDrawer">
@@ -19,8 +19,10 @@
 
 <script>
 
-    export default
-    {
+    import NotificationHandler from 'assets/js/App/Notifications/Handler';
+
+    export default {
+
         name : 'ToolbarHome',
 
         props: {
@@ -50,8 +52,15 @@
 
             unreadNotificationsCount()
             {
-                return this.$store.getters.notifications
-                    .filter(notification => notification.read_at === null)
+                return this.$store.getters.notifications.filter(notification =>
+                {
+                    let handler = NotificationHandler[notification.type];
+                    if (handler) {
+                        (new handler(this)).handle(notification);
+                    }
+
+                    return notification.read_at === null
+                })
                     .length;
             }
         },
@@ -69,4 +78,5 @@
             }
         }
     }
+
 </script>
