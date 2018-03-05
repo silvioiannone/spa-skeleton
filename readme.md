@@ -44,4 +44,5 @@ Add the following to your *webpack.mix.js* in order to build the SPA-Skeleton:
     
 ## Documentation
 
-The documentation is available in the [repository wiki](https://github.com/silvioiannone/spa-skeleton/docs).
+Read [the documentation ](https://github.com/silvioiannone/spa-skeleton/blob/master/docs/Readme.md) in order to learn
+more about the project.
