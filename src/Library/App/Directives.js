@@ -2,10 +2,8 @@ import Log            from 'loglevel';
 import DirectivesList from 'assets/js/App/Directives';
 
 // Skeleton directives
-import OnClick from './Directives/UI/OnClick';
 
 const SkeletonDirectives = {
-    'on-click': OnClick
 }
 
 /**
@@ -28,8 +26,7 @@ export default class Directives
     {
         Log.debug('Booting directives...');
 
-        let availableDirectives = {};
-        Object.assign(availableDirectives, SkeletonDirectives, DirectivesList);
+        let availableDirectives = Object.assign(SkeletonDirectives, DirectivesList);
 
         for(let key in availableDirectives)
         {
