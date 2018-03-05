@@ -20,7 +20,6 @@ const SkeletonComponents = {
     'button-submit': ButtonSubmit,
     'form-main': FormMain,
     'navigation-drawer-main': NavigationDrawerMain,
-    'layout-root': LayoutRoot,
     'partial-footer': PartialFooter,
     'partial-markdown': PartialMarkdown,
     'toolbar-main': ToolbarMain,

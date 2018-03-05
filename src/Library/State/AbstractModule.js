@@ -1,4 +1,3 @@
-import Log from 'loglevel';
 import API from '../API';
 
 /**
