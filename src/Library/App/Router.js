@@ -41,22 +41,53 @@ export default class Router
     {
         Log.debug('Booting router...');
 
+        let guard = new Guard();
+        let scrollPromise = new Promise((resolve, reject) =>
+        {
+            guard.onComplete((to, from) =>
+            {
+                if (to.hash) {
+                    resolve({ selector: to.hash });
+                    return;
+                }
+
+                resolve({});
+            });
+        });
+
         // Create a new router instance
         let router = new VueRouter({
             linkActiveClass: Config.router.linkActiveClass,
             mode : Config.router.mode,
             routes: Routes,
-            scrollBehavior: (to, from, savedPosition) =>
+            scrollBehavior(to, from, savedPosition)
             {
-                return savedPosition || { x: 0, y: 0 }
-            },
+                return new Promise((resolve, reject) =>
+                {
+                    scrollPromise
+                        .then(solution => {
+                            // The timeout is needed because we need to wait for the view animation to finish.
+                            setTimeout(() => resolve(solution), 500);
+                        })
+                        .catch(reason => {
+                            if (reason !== {}) {
+                                Log.error('Scroll behaviour failed.');
+                                Log.error(reason);
+                                reject(reason);
+                                return;
+                            }
+
+                            resolve(savedPosition || { x: 0, y: 0 })
+                        })
+                })
+            }
         });
 
         // Execute the guard before loading each route
-        (new Guard(router, store)).run();
+        guard.init(router, store).run();
 
         // Router root component
-        let App = new this.vue({
+        let app = new this.vue({
 
             // Bind the router to the root component
             router,
@@ -72,7 +103,7 @@ export default class Router
             template: '<div><animated-router-view></animated-router-view></div>'
         });
 
-        App.$mount(Config.appSelector);
+        app.$mount(Config.appSelector);
 
         // Synchronize the router with the store. Allows to save the router state in the state
         // machine store.

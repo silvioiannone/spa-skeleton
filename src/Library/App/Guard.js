@@ -18,24 +18,34 @@ const SkeletonGuards = {
  */
 export default class Guard
 {
+    constructor()
+    {
+        // The router
+        this.router = null;
+
+        // The routes containing also the guard definitions
+        this.routes = null;
+
+        // The state machine store
+        this.store = null;
+
+        // Completed hooks
+        this.completedHooks = [];
+    }
+
     /**
-     * Constructor.
+     * Initializes the guard.
      *
      * @param router A vue router instance.
      * @param store Store instance.
      */
-    constructor(router, store)
+    init(router, store)
     {
-        // The router
         this.router = router;
-
-        // The routes containing also the guard definitions
         this.routes = router.options.routes;
-
-        // The state machine store
         this.store = store;
 
-        this.maxDepth = 0;
+        return this;
     }
 
     /**
@@ -92,7 +102,23 @@ export default class Guard
 
                 Log.info('Loaded ' + to.path + '.');
             }
+
+            // Execute the completed hooks
+            this.router.app.$nextTick(() =>
+            {
+                this.completedHooks.forEach(hook => hook(to, from));
+            })
         });
+    }
+
+    /**
+     * Register a completed hook.
+     *
+     * @param callback
+     */
+    onComplete(callback)
+    {
+        this.completedHooks.push(callback);
     }
 
     /**
