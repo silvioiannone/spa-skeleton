@@ -79,6 +79,7 @@
                         this.submit()
                             .then(response =>
                             {
+                                this.$parent.$validator.pause();
                                 this.$emit('submitted', response);
                                 resolve();
                             })
