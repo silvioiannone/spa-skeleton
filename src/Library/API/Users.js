@@ -29,7 +29,7 @@ export default class Users extends AbstractResource
      *
      * @return {Promise}
      */
-    all()
+    get()
     {
         return this._get('');
     }
@@ -52,7 +52,7 @@ export default class Users extends AbstractResource
      * @param userId If no id is specified the logged in user will be returned.
      * @return {Promise}
      */
-    get(userId)
+    find(userId)
     {
         return this._get(userId);
     }

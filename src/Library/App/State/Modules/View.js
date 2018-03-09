@@ -36,7 +36,7 @@ export default class View extends AbstractModule
                     .setParameters({
                         include: 'role,unread_notifications'
                     })
-                    .get('me')
+                    .find('me')
                     .then(response =>
                     {
                         let user = response.body.data;
@@ -60,7 +60,7 @@ export default class View extends AbstractModule
                     .setParameters({
                         include: 'role'
                     })
-                    .get('me')
+                    .find('me')
                     .then(response =>
                     {
                         store.commit('user/STORE_AUTHENTICATED_USER', response.body.data);

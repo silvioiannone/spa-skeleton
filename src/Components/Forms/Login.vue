@@ -106,7 +106,7 @@
                             .setParameters({
                                 with: 'role'
                             })
-                            .get('me')
+                            .find('me')
                             .then(response =>
                             {
                                 if (this.reload) {
