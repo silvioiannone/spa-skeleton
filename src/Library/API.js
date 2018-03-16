@@ -3,11 +3,13 @@ import AppAPIResources from 'assets/js/App/API';
 // Skeleton API resources
 import App from './API/App';
 import Notifications from './API/Notifications';
+import Roles from './API/Roles';
 import Users from './API/Users';
 
 const APIResources = {
     App,
     Notifications,
+    Roles,
     Users
 };
 
