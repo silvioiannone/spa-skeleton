@@ -1,5 +1,5 @@
 <template>
-    <v-snackbar v-model="visible" class="mb-3" :error="error">
+    <v-snackbar v-model="visible" class="mb-3" :error="error" :timeout="timeout" :color="color">
         {{ message }}
         <v-btn flat class="white--text" @click="visible = false" :dark="error">Close</v-btn>
     </v-snackbar>
@@ -19,6 +19,11 @@
                  * Display an error snackbar.
                  */
                 error: false,
+
+                /**
+                 * The color of the message.
+                 */
+                color: 'primary',
 
                 /**
                  * Message.
@@ -50,6 +55,7 @@
                     this.message = event.message;
                 }
 
+                this.color = event.color || 'primary';
                 this.timeout = event.timeout || 2000;
                 this.visible = true;
                 this.error = !!event.error;
