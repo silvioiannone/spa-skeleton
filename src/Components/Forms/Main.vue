@@ -4,12 +4,12 @@
             <slot></slot>
             <v-layout row>
                 <v-flex :class="{'text-xs-center': centerActions}">
-                    <slot name="actions"></slot>
-                    <v-btn v-if="_cancellable" flat @click="cancel">Cancel</v-btn>
                     <button-submit :on-click="handleSubmit" color="primary"
                                    :disabled="$parent.errors.any() || !canSubmit">
                         {{ submitText }}
                     </button-submit>
+                    <slot name="actions"></slot>
+                    <v-btn v-if="_cancellable" flat @click="cancel">Cancel</v-btn>
                 </v-flex>
             </v-layout>
         </v-container>
