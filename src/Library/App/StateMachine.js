@@ -5,6 +5,7 @@ import Modules from 'assets/js/App/State'
 // Skeleton modules
 import App from './State/Modules/App';
 import Notifications from './State/Modules/Notifications';
+import Roles from './State/Modules/Roles';
 import Users from './State/Modules/Users';
 import UI from './State/Modules/UI';
 import View from './State/Modules/View';
@@ -12,6 +13,7 @@ import View from './State/Modules/View';
 const SkeletonModules = {
     App,
     Notifications,
+    Roles,
     Users,
     UI,
     View
