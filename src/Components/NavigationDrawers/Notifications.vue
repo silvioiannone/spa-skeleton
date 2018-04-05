@@ -84,7 +84,7 @@
                             .setParameters({
                                 include: 'unread_notifications'
                             })
-                            .get('me')
+                            .find('me')
                             .then(response =>
                             {
                                 this.$store.commit('notifications/STORE', {data: []});
