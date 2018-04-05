@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="model" max-width="500">
+    <v-dialog v-model="model" :max-width="maxWidth">
         <slot></slot>
     </v-dialog>
 </template>
@@ -15,6 +15,11 @@
             value: {
                 type: Boolean,
                 default: false
+            },
+
+            maxWidth: {
+                type: Number,
+                default: 500
             }
         },
 
