@@ -108,7 +108,7 @@ export default class CollectionModule extends AbstractModule
             let index = buffer.findIndex(item => item.id === currentItem.id);
 
             // If the item is not found...
-            if(index < 0) {
+            if(index < 0 || !state) {
                 buffer.push(currentItem);
             } else {
                 buffer[index] = Object.assign(buffer[index], currentItem);
@@ -116,7 +116,10 @@ export default class CollectionModule extends AbstractModule
         });
 
         state.data = buffer.slice(0);
-        state.meta = body.meta || {};
+
+        if (body.meta) {
+            state.meta = body.meta;
+        }
     }
 
     /**
