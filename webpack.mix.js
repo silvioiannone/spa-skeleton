@@ -2,24 +2,43 @@ const config = require('spa-skeleton/webpack.config');
 
 module.exports = {
 
+    /**
+     * Extract additional vendor modules.
+     *
+     * @param {Array<String>} modules
+     */
+    extract: function(modules)
+    {
+        this.additionalModulesToExtract = modules;
+
+        return this;
+    },
+
+    /**
+     * Build.
+     *
+     * @param mix
+     */
     build: function (mix)
     {
         // Load the Configuration from SPA-Skeleton
         mix.webpackConfig(config);
 
+        let modulesToExtract = [
+            'vue',
+            'vue-router',
+            'vuex',
+            'vuetify',
+            'vee-validate',
+            'loglevel',
+            'moment',
+            'lodash',
+            'raven-js',
+            'vue-markdown'
+        ].concat(this.additionalModulesToExtract);
+
         mix.js('resources/assets/js/App.js', './public/js/app.js')
-            .extract([
-                'vue',
-                'vue-router',
-                'vuex',
-                'vuetify',
-                'vee-validate',
-                'loglevel',
-                'moment',
-                'lodash',
-                'raven-js',
-                'vue-markdown'
-            ], './public/js/vendor.js');
+            .extract(modulesToExtract, './public/js/vendor.js');
 
         mix.stylus('resources/assets/stylus/app.styl', 'public/css');
 
