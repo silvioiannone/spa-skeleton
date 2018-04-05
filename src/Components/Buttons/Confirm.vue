@@ -1,18 +1,24 @@
 <template>
-    <div>
-        <v-btn v-if="confirmed" error @click="abort" class="white--text">
-            Abort ({{ countdown }})
-        </v-btn>
-        <v-btn v-if="!showConfirmation" success :disabled="disabled" class="white--text"
-               @click.stop="handleConfirmation()">
+    <div class="button--submit">
+        <v-btn v-if="confirmed" error @click="abort" color="error">Abort ({{ countdown }})</v-btn>
+        <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color"
+               @click.stop="handleConfirmation">
             <slot></slot>
         </v-btn>
-        <button-submit v-if="showConfirmation && !confirmed" :on-click="handleClick" warning
-                       class="white--text">
+        <button-submit v-if="showConfirmation && !confirmed" :on-click="handleClick"
+                       color="warning">
             {{ verificationText }}
         </button-submit>
     </div>
 </template>
+
+<style>
+
+    .button--submit {
+        display: inline;
+    }
+
+</style>
 
 <script>
 
@@ -22,7 +28,9 @@
 
     export default
     {
-        mixins: [ButtonSubmit],
+        mixins: [
+            ButtonSubmit
+        ],
 
         props: {
 
