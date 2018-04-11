@@ -34,8 +34,8 @@
             // Initialize the pagination
             this.pagination.page = parseInt(this.$route.query.page) || 1;
             this.pagination.rowsPerPage = parseInt(this.$route.query.size) || Config.app.paginationSize;
-            this.pagination.totalItems = this.meta.pagination.total;
-            this.pagination.totalPages = this.meta.pagination.total_pages;
+            this.pagination.totalItems = this.meta.total;
+            this.pagination.totalPages = this.meta.last_page;
 
             let sortQueryParam = this.$route.query.sort;
 

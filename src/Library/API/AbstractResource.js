@@ -160,7 +160,7 @@ export default class AbstractResource
         if (this.attachments.length) {
             return this.dispatchRequest(request);
         }
-        
+
         request.send(data);
 
         return this.dispatchRequest(request);
@@ -310,10 +310,7 @@ export default class AbstractResource
     setHeaders(request)
     {
         // Set the API header on every request
-        request.set(
-            'Accept',
-            'application/vnd.' + Config.api.subtype + '.' + Config.api.version + '+json'
-        );
+        request.set('Accept', 'json');
 
         // Include the bearer header if the JWT cookie is set
         if (this.token.getAccessToken())

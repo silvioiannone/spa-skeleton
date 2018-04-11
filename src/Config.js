@@ -47,17 +47,7 @@ const defaultConfig = {
         /**
          * Base URL that will be used when sending API requests.
          */
-        basePath: '/api/',
-
-        /**
-         * Shortname of the project.
-         */
-        subtype: 'be',
-
-        /**
-         * API version.
-         */
-        version: 'v1'
+        basePath: '/api/v1/'
     },
 
     /**
