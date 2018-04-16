@@ -27,13 +27,6 @@ export default class WebSocket
         ];
 
         /**
-         * Laravel Passport access token.
-         *
-         * @type {string}
-         */
-        this.token = (new Token).getAccessToken();
-
-        /**
          * The Laravel echo server.
          */
         this.echo = null;
@@ -216,7 +209,7 @@ export default class WebSocket
             broadcaster: 'socket.io',
             host: Config.webSocket.host + ':' + Config.webSocket.port
         });
-        this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` + this.token;
+        this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` + (new Token).getAccessToken();
         this.echo.connector.socket._callbacks.$connect.push(() =>
         {
             // Set the socket ID in the API

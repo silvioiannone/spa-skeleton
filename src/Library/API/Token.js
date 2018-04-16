@@ -30,7 +30,6 @@ export default class Token
      */
     getRefreshToken()
     {
-
         return document.cookie.replace(/(?:(?:^|.*;\s*)refresh_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 
