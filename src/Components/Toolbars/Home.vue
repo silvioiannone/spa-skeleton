@@ -1,5 +1,6 @@
 <template>
-    <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject">
+    <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject"
+                  :tabs="tabs">
         <slot slot="title" name="title"></slot>
         <slot slot="toolbar-text" name="toolbar-text"></slot>
         <slot slot="toolbar-text-right" name="toolbar-text-right"></slot>
@@ -14,6 +15,7 @@
                 </v-badge>
             </v-btn>
         </template>
+        <slot slot="tabs" name="tabs"></slot>
     </toolbar-main>
 </template>
 
@@ -33,6 +35,14 @@
             search: {},
             searchSubject: {},
             title: {},
+
+            /**
+             * Display a toolbar with tabs.
+             */
+            tabs: {
+                type: Boolean,
+                default: false
+            },
 
             /*
              * Whether or not we're showing the search bar.

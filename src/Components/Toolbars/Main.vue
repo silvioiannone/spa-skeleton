@@ -1,6 +1,6 @@
 <template>
-    <v-toolbar :fixed="this.fixed" class="elevation-0" app clipped-left color="blue darken-3" dark clipped-right
-               :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
+    <v-toolbar :fixed="this.fixed" class="elevation-0" app clipped-left color="blue darken-3" dark
+               clipped-right :tabs="tabs" :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up" v-if="navigationDrawer">
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
@@ -21,6 +21,7 @@
         <v-toolbar-items>
             <slot name="toolbar-items"></slot>
         </v-toolbar-items>
+        <slot name="tabs" slot="extension"></slot>
     </v-toolbar>
 </template>
 
@@ -76,8 +77,16 @@
              * Toolbar title.
              */
             title: {
-                Type: String,
+                type: String,
                 default: () => Config.name
+            },
+
+            /**
+             * Display a toolbar with tabs.
+             */
+            tabs: {
+                type: Boolean,
+                default: false
             }
         },
 
