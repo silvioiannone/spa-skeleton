@@ -40,7 +40,7 @@ module.exports = {
         mix.js('resources/assets/js/App.js', './public/js/app.js')
             .extract(modulesToExtract, './public/js/vendor.js');
 
-        mix.stylus('resources/assets/stylus/App.styl', 'public/css/app.css');
+        mix.stylus('resources/assets/stylus/app.styl', 'public/css');
 
         mix.styles([
             'node_modules/material-design-icons/iconfont/material-icons.css',
