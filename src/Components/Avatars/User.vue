@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/users/' + user.id" tag="span" class="clickable">
+    <router-link :to="_to" tag="span" class="clickable">
         <v-avatar :size="size + 'px'" v-if="user.settings.avatar.small !== 'avatar.png'">
             <img :src="'storage/' + user.settings.avatar.small"
                  :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
@@ -30,8 +30,8 @@
 
     import VueAvatar from 'vue-avatar';
 
-    export default
-    {
+    export default {
+
         name: 'AvatarUser',
 
         components: {
@@ -52,7 +52,24 @@
              * User whose avatar will be displayed.
              */
             user: {
-                type: Object
+                type: Object,
+                required: true
+            },
+
+            /**
+             * Link of the router.
+             */
+            to: {
+                type: String,
+                default: ''
+            }
+        },
+
+        computed: {
+
+            _to()
+            {
+                return this.to.length ? this.to : '/users/' + this.user.id;
             }
         }
     }
