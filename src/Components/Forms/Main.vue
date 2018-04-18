@@ -1,9 +1,9 @@
 <template>
     <v-form @submit.prevent>
         <v-container fluid grid-list-lg class="pa-0">
-            <slot></slot>
-            <v-layout row>
-                <v-flex :class="{'text-xs-center': centerActions}">
+            <v-layout row wrap>
+                <slot></slot>
+                <v-flex xs12 :class="{'text-xs-center': centerActions}">
                     <button-submit :on-click="handleSubmit" color="primary"
                                    :disabled="$parent.errors.any() || !canSubmit">
                         {{ submitText }}
@@ -32,7 +32,8 @@
 
             canSubmit()
             {
-                return (typeof this.$parent.canSubmit !== 'undefined') ? this.$parent.canSubmit : true;
+                return (typeof this.$parent.canSubmit !== 'undefined') ?
+                    this.$parent.canSubmit : true;
             }
         }
     }
