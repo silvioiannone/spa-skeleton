@@ -1,6 +1,7 @@
 <template>
     <router-link :to="_to" tag="span" class="clickable">
-        <v-avatar :size="size + 'px'" v-if="user.settings.avatar.small !== 'avatar.png'">
+        <v-avatar :size="size + 'px'"
+                  v-if="user.settings && user.settings.avatar.small !== 'avatar.png'">
             <img :src="'storage/' + user.settings.avatar.small"
                  :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
         </v-avatar>
