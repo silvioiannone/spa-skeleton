@@ -1,18 +1,12 @@
 const config = require('spa-skeleton/webpack.config');
+const merge = require('webpack-merge');
 
 module.exports = {
 
     /**
-     * Extract additional vendor modules.
-     *
-     * @param {Array<String>} modules
+     * User defined Webpack config.
      */
-    extract: function(modules)
-    {
-        this.additionalModulesToExtract = modules;
-
-        return this;
-    },
+    userWebpackConfig: {},
 
     /**
      * Build.
@@ -22,7 +16,7 @@ module.exports = {
     build: function (mix)
     {
         // Load the Configuration from SPA-Skeleton
-        mix.webpackConfig(config);
+        mix.webpackConfig(merge(config, this.userWebpackConfig));
 
         let modulesToExtract = [
             'vue',
@@ -59,5 +53,29 @@ module.exports = {
         if (process.env.APP_ENV !== 'production') {
             mix.sourceMaps();
         }
+    },
+
+    /**
+     * Extract additional vendor modules.
+     *
+     * @param {Array<String>} modules
+     */
+    extract: function (modules)
+    {
+        this.additionalModulesToExtract = modules;
+
+        return this;
+    },
+
+    /**
+     * Merge the spa-skeleton's Webpack's config with the given config.
+     *
+     * @param {Object} config
+     */
+    mergeWebpack: function (config)
+    {
+        this.userWebpackConfig = config;
+
+        return this;
     }
 };
