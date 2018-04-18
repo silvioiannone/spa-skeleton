@@ -1,5 +1,5 @@
 <template>
-    <error :back-button="userIsAuthenticated">
+    <error :back-button="false">
         <v-container class="mt-5">
             <v-layout wrap>
                 <v-flex xs12>
@@ -14,7 +14,7 @@
                             You are not authorized to view this page.
                             Authenticate in order to continue.
                         </v-alert>
-                        <form-login :reload="true"></form-login>
+                        <slot></slot>
                     </v-card>
                 </v-flex>
             </v-layout>
@@ -25,23 +25,13 @@
 <script>
 
     import Error from "./Main.vue";
-    import FormLogin from '../../Forms/Login.vue';
 
-    export default
-    {
-        name: 'ErrorServerError',
+    export default {
+
+        name: 'ErrorUnauthorized',
 
         components: {
-            FormLogin,
             Error
-        },
-
-        computed: {
-
-            userIsAuthenticated()
-            {
-                return typeof this.$store.getters.app.user.id !== 'undefined';
-            }
         }
     }
 
