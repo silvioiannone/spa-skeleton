@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent>
-        <v-layout wrap v-if="!token">
+        <template v-if="!token">
             <v-flex xs12>
                 <v-alert success :value="passwordResetSuccessful">
                     Reset email sent.
@@ -14,8 +14,8 @@
             <v-flex xs12>
                 <button-submit color="primary" :on-click="resetPassword">Reset</button-submit>
             </v-flex>
-        </v-layout>
-        <v-layout wrap v-else>
+        </template>
+        <template v-else>
             <v-flex xs12>
                 <v-alert success :value="passwordChangeSuccessful">
                     The password has been successfully changed. You can now log in.
@@ -35,7 +35,7 @@
             <v-flex xs12>
                 <button-submit color="primary" :on-click="changePassword">Change</button-submit>
             </v-flex>
-        </v-layout>
+        </template>
     </form>
 </template>
 
