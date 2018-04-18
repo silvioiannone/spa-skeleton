@@ -9,8 +9,6 @@
 
     export default
     {
-        name: 'LayoutRoot',
-
         computed: {
 
             userLanguage()
