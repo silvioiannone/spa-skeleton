@@ -68,7 +68,10 @@ export default class Guard
                 {
                     // Once all the data has been loaded run the guards
                     this.runRouteGuards(to, from)
-                        .then(() => next())
+                        .then(() => {
+                            this.store.commit('app/SET_STATUS', 'ready');
+                            next();
+                        })
                         .catch(error =>
                         {
                             this.store.commit('app/SET_STATUS', 'error');

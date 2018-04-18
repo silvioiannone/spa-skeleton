@@ -66,7 +66,8 @@ export default class Router
                 {
                     scrollPromise
                         .then(solution => {
-                            // The timeout is needed because we need to wait for the view animation to finish.
+                            // The timeout is needed because we need to wait for the view animation
+                            // to finish.
                             setTimeout(() => resolve(solution), 500);
                         })
                         .catch(reason => {
