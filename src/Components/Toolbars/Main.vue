@@ -82,6 +82,14 @@
             },
 
             /**
+             * Toolbar title link.
+             */
+            titleTo: {
+                type: String,
+                default: ''
+            },
+
+            /**
              * Display a toolbar with tabs.
              */
             tabs: {
@@ -103,6 +111,10 @@
 
             toolbarTitleRedirectUrl()
             {
+                if (this.titleTo.length) {
+                    return this.titleTo;
+                }
+
                 return (this.user.id) ? '/home' : '/';
             },
 
