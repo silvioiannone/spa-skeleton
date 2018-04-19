@@ -81,7 +81,7 @@
                             {
                                 this.$parent.$validator.pause();
                                 this.$emit('submitted', response);
-                                resolve();
+                                resolve(response);
                             })
                             .catch(error => {
                                 console.error(error);
