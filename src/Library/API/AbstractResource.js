@@ -310,7 +310,7 @@ export default class AbstractResource
     setHeaders(request)
     {
         // Set the API header on every request
-        request.set('Accept', 'json');
+        request.set('Accept', 'application/json');
 
         // Include the bearer header if the JWT cookie is set
         if (this.token.getAccessToken())
