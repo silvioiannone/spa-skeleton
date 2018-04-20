@@ -5,7 +5,7 @@
                 <slot></slot>
                 <v-flex xs12 :class="{'text-xs-center': centerActions}">
                     <button-submit :on-click="handleSubmit" color="primary"
-                                   :disabled="$parent.errors.any() || !canSubmit">
+                                   :disabled="hasErrors || !canSubmit">
                         {{ submitText }}
                     </button-submit>
                     <slot name="actions"></slot>

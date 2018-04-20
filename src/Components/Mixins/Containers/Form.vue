@@ -1,5 +1,7 @@
 <script>
 
+    import _ from 'lodash';
+
     /**
      * This mixin helps wrapping forms that are making use of the FormMain component.
      */
@@ -71,7 +73,16 @@
              */
             onError(response)
             {
-                this.$emit('error', response)
+                this.$emit('error', response);
+
+                // Assign the errors to the validator.
+                for (let error in response.body.errors) {
+                    this.$validator.errors.add({
+                        field: error,
+                        msg: response.body.errors[error][0],
+                        scope: 'server'
+                    });
+                };
             },
 
             /**
@@ -100,7 +111,8 @@
             },
 
             model: {
-                handler: () => {},
+                handler: () => {
+                },
                 deep: true
             }
         },
@@ -123,7 +135,7 @@
             this.$children[0].$on('error', response =>
             {
                 self.onError(response);
-            })
+            });
 
             this.resetForm();
 
@@ -133,6 +145,15 @@
                     firstInput.focus();
                 }
             }
+
+            // Whenever an input is focused we need to remove the server errors associated with it.
+            this.$el.querySelectorAll('input').forEach(element => {
+                element.addEventListener('focusin', event =>
+                {
+                    let field = event.target.getAttribute('data-vv-name');
+                    this.$validator.errors.remove(field, 'server');
+                });
+            });
         }
     }
 

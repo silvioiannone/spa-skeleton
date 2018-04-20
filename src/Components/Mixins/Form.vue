@@ -44,6 +44,11 @@
             _cancellable()
             {
                 return this.$parent.cancellable || this.cancellable;
+            },
+
+            hasErrors()
+            {
+                return this.$parent.errors.any(null);
             }
         },
 
