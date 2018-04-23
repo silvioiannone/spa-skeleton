@@ -112,8 +112,15 @@ export default class WebSocket
      */
     listenTo(subscription)
     {
-        if (! this.echo) {
+        let found = this.subscriptions.indexOf(subscription);
+
+        if (found < 0) {
             this.subscriptions.push(subscription);
+        }
+
+        // If the WS clienthasn't connected yet to the server, we don't need to explicitly call the
+        // listen function since it will be called automatically once the booting is done.
+        if (! this.vue) {
             return;
         }
 
@@ -184,6 +191,10 @@ export default class WebSocket
     {
         let subscription = this.subscriptions.find(subscription => subscription.event === event);
         let handlers = [];
+
+        if (!subscription) {
+            throw new Error('Event ' + event + ' cannot be handled.');
+        }
 
         // If it's a model related event...
         if (event.startsWith('Models.') || event.indexOf('App\\Events\\Models') >= 0) {
