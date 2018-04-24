@@ -27,4 +27,13 @@ export default class AbstractChannel
     {
         return this.private;
     }
+
+    /**
+     * Get the channel name.
+     *
+     * @abstract
+     */
+    name() {
+        return '';
+    }
 }

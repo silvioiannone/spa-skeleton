@@ -45,19 +45,17 @@ export default class WebSocket
         this.echo = null;
 
         /**
-         * Event subscriptions.
+         * Pending subscriptions.
          */
-        this.subscriptions = [];
+        this.pendingSubscriptions = [];
 
         /**
-         * List of current subscriptions.
+         * List of active subscriptions.
          */
-        this.currentSubscriptions = [];
+        this.activeSubscriptions = [];
 
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
         window.io = IO;
-
-        this.subscriptions = this.subscriptions.concat(Subscriptions);
     }
 
     /**
@@ -71,102 +69,118 @@ export default class WebSocket
 
         this.connect();
 
-        this.subscriptions = this.subscriptions.concat(this.skeletonSubscriptions);
-        this.subscriptions.forEach(subscription => this.listen(subscription));
+        let subscriptions = this.skeletonSubscriptions
+            .concat(Subscriptions)
+            .concat(this.pendingSubscriptions);
+
+        this.listen(subscriptions);
     }
 
     /**
      * Subscribe to a channel and listen to an event.
      *
-     * @param {object} subscription
+     * @param {Array} subscriptions
      */
-    listen(subscription)
+    listen(subscriptions)
     {
-        if (this.currentSubscriptions.indexOf(subscription) >= 0) return;
-
-        let self = this;
-        let event = subscription.event;
-
-        subscription.channels.forEach(channel =>
-        {
-            let channelInstance = new channel(this.vue.$store);
-
-            Log.info('Listening to: ' + event + ' in the room ' + channelInstance.name() + '.');
-
-            let echo = this.echo;
-
-            if (channelInstance.isPrivate()) {
-                echo = echo.private(channelInstance.name());
-            } else {
-                echo = echo.channel(channelInstance.name());
-            }
-
-            echo.listen(event, function (payload)
-            {
-                if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
-                    self.handleNotification(payload.response);
-                } else {
-                    self.broadcast(event, payload);
-                }
-            });
-        });
-
-        // Add the subscription to the current subscriptions.
-        this.currentSubscriptions = this.currentSubscriptions.concat(subscription);
-    }
-
-    /**
-     * Add an additional subscription that will be processed as soon as the connection to the WS socket is established.
-     *
-     * The format of the subscription is the following:
-     *     {
-     *         event: {String},
-     *         channels: {Array}
-     *     }
-     *
-     * @param {Object} subscription
-     */
-    listenTo(subscription)
-    {
-        let found = this.subscriptions.indexOf(subscription);
-
-        if (found < 0) {
-            this.subscriptions.push(subscription);
-        }
-
-        // If the WS clienthasn't connected yet to the server, we don't need to explicitly call the
-        // listen function since it will be called automatically once the booting is done.
         if (! this.echo) {
+            this.pendingSubscriptions = this.pendingSubscriptions.concat(subscriptions);
             return;
         }
 
-        this.listen(subscription);
+        subscriptions.forEach(subscription =>
+        {
+            if (this.activeSubscriptions.indexOf(subscription) >= 0) return;
+
+            subscription.channels.forEach(channel => this.join(channel, subscription.event));
+
+            // Add the subscription to the active subscriptions.
+            this.activeSubscriptions = this.activeSubscriptions.concat(subscription);
+        });
     }
 
     /**
-     * Leave a channel.
+     * Remove the subscriptions.
      *
-     * @param {AbstractChannel} channel
+     * @param subscriptions
      */
-    leave(channel)
+    silence(subscriptions)
     {
-        let channelInstance = new channel(this.vue.$store);
-
-        this.currentSubscriptions.forEach(subscription =>
+        subscriptions.forEach(subscription =>
         {
-            let index = subscription.channels.findIndex(channel =>
-            {
-                let currentChannel = new channel(this.vue.$store);
-                return currentChannel.name() === channelInstance.name();
-            });
+            let index = this.activeSubscriptions.indexOf(subscription);
+            this.activeSubscriptions.splice(index, 1);
 
-            if (index >= 0) {
-                subscription.channels.splice(index, 1);
+            let channels = subscription.channels.map(channel => {
+                let channelName = (new channel(this.vue.$store)).name();
+
+                Log.info('No longer listening to ' + subscription.event + ' in ' + channelName
+                    + ' room.');
+
+                this.leaveChannelIfUnused(channel);
+            });
+        });
+    }
+
+    /**
+     * Leave a channel if it's not used by any event.
+     *
+     * @param {String} channel
+     */
+    leaveChannelIfUnused(channel)
+    {
+        let channelName = (new channel(this.vue.$store)).name();
+        let channelInUse = false;
+        this.activeSubscriptions.forEach(subscription =>
+        {
+            if (channelInUse) {
+                return;
+            }
+
+            let found = subscription.channels
+                .find(channel => (new channel(this.vue.$store)).name() === channelName);
+
+            if (found) {
+                channelInUse = true;
             }
         });
 
-        this.echo.leave(channelInstance.name());
-        Log.debug('Channel ' + channelInstance.name() + ' left.');
+        if (! channelInUse) {
+            this.echo.leave(channelName);
+            Log.debug('Channel ' + channelName + ' left.');
+        }
+    }
+
+    /**
+     * Listen for an event on a channel.
+     *
+     * @param {} channel
+     * @param {} event
+     * @protected
+     */
+    join(channel, event)
+    {
+        let self = this;
+        let channelInstance = new channel(this.vue.$store);
+
+        Log.info('Listening to ' + event + ' in the ' + channelInstance.name() + ' room.');
+
+        let echo = this.echo;
+
+        if (channelInstance.isPrivate()) {
+            echo = echo.private(channelInstance.name());
+        } else {
+            echo = echo.channel(channelInstance.name());
+        }
+
+        echo.listen(event, payload =>
+        {
+            if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
+                self.handleNotification(payload.response);
+            } else {
+                self.broadcast(event, payload);
+            }
+        });
     }
 
     /**
@@ -205,7 +219,7 @@ export default class WebSocket
      */
     handleEvent(event, message)
     {
-        let subscription = this.subscriptions.find(subscription => subscription.event === event);
+        let subscription = this.pendingSubscriptions.find(subscription => subscription.event === event);
         let handlers = [];
 
         if (!subscription) {
