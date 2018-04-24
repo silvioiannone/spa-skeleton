@@ -136,7 +136,7 @@ export default class WebSocket
 
         // If the WS clienthasn't connected yet to the server, we don't need to explicitly call the
         // listen function since it will be called automatically once the booting is done.
-        if (! this.vue) {
+        if (! this.echo) {
             return;
         }
 
