@@ -11,8 +11,8 @@
                 <v-flex xs12 offset-md3 md6 offset-lg4 lg4 class="mt-5">
                     <p>Something went wrong while loading this page.</p>
                     <p>
-                        The BloomEstate team has already been informed about the issue and will
-                        start investigating and fixing the problem as soon as possible.
+                        The {{ config.name }} team has already been informed about the issue and
+                        will start investigating and fixing the problem as soon as possible.
                     </p>
                 </v-flex>
             </v-layout>
@@ -30,6 +30,14 @@
 
         components: {
             Error
+        },
+
+        computed: {
+
+            config()
+            {
+                return this.$store.getters.app.config;
+            }
         }
     }
 
