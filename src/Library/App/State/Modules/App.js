@@ -155,6 +155,17 @@ export default class APP extends AbstractModule
         return {
 
             /**
+             * Set the app settings.
+             *
+             * @param state
+             * @param settings
+             */
+            'app/SET_SETTINGS'(state, settings)
+            {
+                state.settings = settings;
+            },
+
+            /**
              * Set the app's status.
              */
             'app/SET_STATUS'(state, status)
@@ -220,7 +231,15 @@ export default class APP extends AbstractModule
     {
         return {
 
+            /**
+             * App configuration.
+             */
             config: Config,
+
+            /**
+             * App settings.
+             */
+            settings: null,
 
             /**
              * The application name.

@@ -3,7 +3,10 @@ import IO  from 'socket.io-client';
 import Log from 'loglevel';
 import Config from '../Config';
 import Subscriptions from 'assets/js/App/Subscriptions';
+import AdminChannel from './WebSocket/Channels/Admin';
+import AppChannel from './WebSocket/Channels/App';
 import UserChannel from './WebSocket/Channels/User';
+import AppHandler from './Events/AppHandler';
 import ModelHandler from './Events/ModelHandler';
 import Token from './API/Token';
 
@@ -21,8 +24,18 @@ export default class WebSocket
          */
         this.skeletonSubscriptions = [
             {
+                event: 'Models.UserUpdated',
+                channels: [AdminChannel, UserChannel],
+                handlers: {AppHandler}
+            },
+            {
                 event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
                 channels: [UserChannel],
+            },
+            {
+                event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated',
+                channels: [AppChannel],
+                handlers: {AppHandler}
             }
         ];
 
@@ -58,11 +71,8 @@ export default class WebSocket
 
         this.connect();
 
-        let subscriptions = []
-            .concat(this.subscriptions)
-            .concat(this.skeletonSubscriptions);
-
-        subscriptions.forEach(subscription => this.listen(subscription));
+        this.subscriptions = this.subscriptions.concat(this.skeletonSubscriptions);
+        this.subscriptions.forEach(subscription => this.listen(subscription));
     }
 
     /**
@@ -83,16 +93,22 @@ export default class WebSocket
 
             Log.info('Listening to: ' + event + ' in the room ' + channelInstance.name() + '.');
 
-            this.echo
-                .private(channelInstance.name())
-                .listen(event, function (payload)
-                {
-                    if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
-                        self.handleNotification(payload.response);
-                    } else {
-                        self.broadcast(event, payload);
-                    }
-                });
+            let echo = this.echo;
+
+            if (channelInstance.isPrivate()) {
+                echo = echo.private(channelInstance.name());
+            } else {
+                echo = echo.channel(channelInstance.name());
+            }
+
+            echo.listen(event, function (payload)
+            {
+                if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
+                    self.handleNotification(payload.response);
+                } else {
+                    self.broadcast(event, payload);
+                }
+            });
         });
 
         // Add the subscription to the current subscriptions.

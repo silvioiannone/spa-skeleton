@@ -35,4 +35,25 @@ export default class App extends AbstractResource
             });
         });
     }
+
+    /**
+     * Get the application settings.
+     *
+     * @returns {Promise}
+     */
+    getSettings()
+    {
+        return this._get('settings');
+    }
+
+    /**
+     * Save the application settings.
+     *
+     * @param settings
+     * @returns {Promise}
+     */
+    saveSettings(settings)
+    {
+        return this._patch('settings', settings);
+    }
 }
