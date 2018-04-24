@@ -12,6 +12,35 @@
                 </div>
             </v-flex>
         </v-layout>
+        <v-layout wrap>
+            <v-flex xs12 class="my-5">
+                <v-divider></v-divider>
+            </v-flex>
+            <v-flex xs12>
+                <v-expansion-panel>
+                    <v-expansion-panel-content>
+                        <div slot="header">Details</div>
+                        <v-card>
+                            <v-card-title class="headline">
+                                {{ error.status }} - {{ error.body.message }}
+                            </v-card-title>
+                            <v-card-text>
+                                <h5>
+                                    On line
+                                    <span class="monospaced">{{ error.body.line }}</span> in
+                                    <span class="monospaced">{{ error.body.file }}</span>.
+                                </h5>
+                            </v-card-text>
+                            <v-card-text class="monospaced">
+                                <pre>
+                                    <code>{{ error.body.trace | json }}</code>
+                                </pre>
+                            </v-card-text>
+                        </v-card>
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-flex>
+        </v-layout>
     </v-container>
 </template>
 
@@ -43,7 +72,13 @@
             app()
             {
                 return this.$store.getters.app;
+            },
+
+            error()
+            {
+                return this.app.error;
             }
+
         },
 
         methods: {
