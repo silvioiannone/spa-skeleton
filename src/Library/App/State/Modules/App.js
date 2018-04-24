@@ -155,6 +155,17 @@ export default class APP extends AbstractModule
         return {
 
             /**
+             * Set the error preventing the app from loading.
+             *
+             * @param state
+             * @param setting
+             */
+            'app/SET_ERROR'(state, error)
+            {
+                state.error = error;
+            },
+
+            /**
              * Set the app settings.
              *
              * @param state
@@ -255,6 +266,11 @@ export default class APP extends AbstractModule
              * The app status.
              */
             status: null,
+
+            /*
+             * The error preventing the app from loading.
+             */
+            error: null,
 
             /*
              * The currently logged in user.
