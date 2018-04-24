@@ -60,12 +60,12 @@
 
                 this.status = 'loading';
 
-                new Promise(this.onClick)
-                    .then(function()
+                this.onClick()
+                    .then(() =>
                     {
                         self.status = 'ready';
                     })
-                    .catch(function()
+                    .catch(() =>
                     {
                         self.status = 'ready';
                     });

@@ -69,31 +69,34 @@
              * @param resolve
              * @param reject
              */
-            handleSubmit(resolve, reject)
+            handleSubmit()
             {
-                // Before submitting make sure that the form is valid.
-                this.$parent.$validator
-                    .validateAll()
-                    .then(result =>
-                    {
-                        if (!result) {
-                            reject();
-                            return;
-                        }
+                return new Promise((resolve, reject) =>
+                {
+                    // Before submitting make sure that the form is valid.
+                    this.$parent.$validator
+                        .validateAll()
+                        .then(result =>
+                        {
+                            if (!result) {
+                                reject();
+                                return;
+                            }
 
-                        this.submit()
-                            .then(response =>
-                            {
-                                this.$parent.$validator.pause();
-                                this.$emit('submitted', response);
-                                resolve(response);
-                            })
-                            .catch(error => {
-                                console.error(error);
-                                this.$emit('error', error);
-                                reject(error);
-                            });
-                    });
+                            this.submit()
+                                .then(response =>
+                                {
+                                    this.$parent.$validator.pause();
+                                    this.$emit('submitted', response);
+                                    resolve(response);
+                                })
+                                .catch(error => {
+                                    console.error(error);
+                                    this.$emit('error', error);
+                                    reject(error);
+                                });
+                        });
+                });
             }
         }
     }
