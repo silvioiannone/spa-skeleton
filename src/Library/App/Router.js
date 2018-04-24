@@ -59,7 +59,19 @@ export default class Router
         let router = new VueRouter({
             linkActiveClass: Config.router.linkActiveClass,
             mode : Config.router.mode,
-            routes: Routes,
+            routes: [
+                {
+                    path: '',
+                    meta: {
+                        actions: ['view/ROOT']
+                    },
+                    component: {
+                        template: '<router-view></router-view>',
+                        name: 'RootRouterView'
+                    },
+                    children: Routes
+                }
+            ],
             scrollBehavior(to, from, savedPosition)
             {
                 return new Promise((resolve, reject) =>
