@@ -6,7 +6,7 @@
                     <div class="text-xs-center mb-5">
                         <v-icon x-large>error_outline</v-icon>
                     </div>
-                    <h3 class="text-xs-center">Page not found</h3>
+                    <h1 class="text-xs-center">Page not found.</h1>
                 </v-flex>
             </v-layout>
         </v-container>

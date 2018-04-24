@@ -85,9 +85,14 @@ export default class Guard
 
                     this.store.commit('app/SET_ERROR', error);
 
-                    if(error.statusCode === 401)
-                    {
+                    if(error.statusCode === 401) {
                         this.store.commit('app/SET_STATUS', 'unauthenticated');
+                        next();
+                        return;
+                    }
+
+                    if(error.statusCode === 404) {
+                        this.store.commit('app/SET_STATUS', 'notFound');
                         next();
                         return;
                     }

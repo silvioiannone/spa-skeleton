@@ -12,7 +12,7 @@
                 </div>
             </v-flex>
         </v-layout>
-        <v-layout wrap>
+        <v-layout wrap v-if="app.config.env !== 'production'">
             <v-flex xs12 class="my-5">
                 <v-divider></v-divider>
             </v-flex>
