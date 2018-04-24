@@ -27,7 +27,7 @@ export default class View extends AbstractModule
             {
                 let userId = store.getters.app.user.id;
 
-                if(userId) {
+                if (userId) {
                     resolve();
                     return;
                 }
@@ -56,6 +56,13 @@ export default class View extends AbstractModule
         {
             return new Promise((resolve, reject) =>
             {
+                let userId = store.getters.app.user.id;
+
+                if (userId) {
+                    resolve();
+                    return;
+                }
+
                 self.api.users
                     .setParameters({
                         include: 'role'
