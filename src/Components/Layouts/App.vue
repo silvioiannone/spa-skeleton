@@ -1,12 +1,12 @@
 <template>
     <v-app :light="theme === 'light'" :dark="theme === 'dark'">
-        <template v-if="status === 'ready'">
+        <template v-if="status === 'ready' || status === 'loading'">
             <slot name="navigationDrawer"></slot>
             <slot name="navigationDrawerRight"></slot>
             <slot name="toolbar"></slot>
         </template>
         <v-content>
-            <slot v-if="status === 'ready'"></slot>
+            <slot v-if="status === 'ready' || status === 'loading'"></slot>
             <error-unauthorized v-if="status === 'unauthenticated'">
                 <slot name="errorUnauthenticated"></slot>
             </error-unauthorized>
