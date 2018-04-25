@@ -58,6 +58,17 @@ export default class Users extends AbstractResource
     }
 
     /**
+     * Get the user email using the password reset token.
+     *
+     * @param token
+     * @return {Promise}
+     */
+    findFromPasswordResetToken(token)
+    {
+        return this._get('resetToken/' + token);
+    }
+
+    /**
      * Get the activation basic data.
      *
      * @param activationId
