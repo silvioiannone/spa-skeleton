@@ -75,6 +75,10 @@
             {
                 this.$emit('error', response);
 
+                if (! response.body.errors) {
+                    return;
+                }
+
                 // Assign the errors to the validator.
                 for (let error in response.body.errors) {
                     this.$validator.errors.add({
