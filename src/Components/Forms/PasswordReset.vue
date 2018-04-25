@@ -1,110 +1,76 @@
 <template>
-    <form @submit.prevent>
-        <template v-if="!token">
-            <v-flex xs12>
-                <v-alert success :value="passwordResetSuccessful">
-                    Reset email sent.
-                </v-alert>
-                <p>
-                    Please enter the email address that was used to create your account. We'll send
-                    an email with a reset link where you can set a new password.
-                </p>
-                <v-text-field label="E-mail" v-model="email"></v-text-field>
-            </v-flex>
-            <v-flex xs12>
-                <button-submit color="primary" :on-click="resetPassword">Reset</button-submit>
-            </v-flex>
-        </template>
-        <template v-else>
-            <v-flex xs12>
-                <v-alert success :value="passwordChangeSuccessful">
-                    The password has been successfully changed. You can now log in.
-                </v-alert>
-                <p>Enter a new password</p>
-            </v-flex>
-            <v-flex xs12>
-                <v-text-field label="New password" type="password"
-                              v-model="password">
-                </v-text-field>
-            </v-flex>
-            <v-flex xs12>
-                <v-text-field label="Repeat password" type="password"
-                              v-model="passwordConfirmation">
-                </v-text-field>
-            </v-flex>
-            <v-flex xs12>
-                <button-submit color="primary" :on-click="changePassword">Change</button-submit>
-            </v-flex>
-        </template>
-    </form>
+    <form-main :submit="change" submit-text="Change">
+        <v-flex xs12>
+            <v-text-field label="New password" type="password" v-model="model.password">
+            </v-text-field>
+        </v-flex>
+        <v-flex xs12>
+            <v-text-field label="Repeat password" type="password"
+                          v-model="model.password_confirmation">
+            </v-text-field>
+        </v-flex>
+    </form-main>
 </template>
 
 <script>
 
-    export default
-    {
+    import MixinContainerForm from '../Mixins/Containers/Form';
+
+    export default {
+
         name: 'FormPasswordReset',
 
-        data()
-        {
-            return {
-                email: '',
-                password: '',
-                passwordConfirmation:  '',
-                passwordChangeSuccessful: false,
-                passwordResetSuccessful: false
-            }
-        },
+        mixins: [
+            MixinContainerForm
+        ],
 
         props: {
 
             /**
-             * The reset token.
+             * User email.
+             */
+            email: {
+                type: String,
+                required: true
+            },
+
+            /**
+             * Password reset token.
              */
             token: {
                 type: String,
-                default: ''
+                required: true
+            }
+        },
+
+        data()
+        {
+            return {
+                model: {
+                    password: '',
+                    passwordConfirmation: ''
+                }
             }
         },
 
         methods: {
 
             /**
-             * Change the user password.
-             *
-             * @param resolve
-             * @param reject
+             * Change the password.
              */
-            changePassword(resolve, reject)
+            change()
             {
-                this.$api.users.changePassword({
-                    token: this.token,
-                    password: this.password,
-                    password_confirmation: this.passwordConfirmation
-                })
-                    .then(() =>
-                    {
-                        this.passwordChangeSuccessful = true;
-                        resolve();
+                return new Promise((resolve, reject) =>
+                {
+                    this.$api.users.resetPassword({
+                        token: this.token,
+                        password: this.model.password,
+                        password_confirmation: this.model.password_confirmation,
+                        email: this.email
                     })
-                    .catch(() => reject());
-            },
-
-            /**
-             * Reset the user password.
-             *
-             * @param resolve
-             * @param reject
-             */
-            resetPassword(resolve, reject)
-            {
-                this.$api.users.resetPassword(this.email)
-                    .then(() =>
-                    {
-                        this.passwordResetSuccessful = true;
-                        resolve();
-                    })
-                    .catch(() => reject());
+                        .then(() => resolve())
+                        .catch(() => reject())
+                });
             }
         }
     }

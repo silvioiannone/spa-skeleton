@@ -133,14 +133,25 @@ export default class Users extends AbstractResource
     }
 
     /**
+     * Reset the user password.
+     *
+     * @param data
+     * @returns {Promise}
+     */
+    resetPassword(data)
+    {
+        return this._post('resetPassword', data);
+    }
+
+    /**
      * Reset the user's password.
      *
      * @param {string} email
      * @return {Promise}
      */
-    resetPassword(email)
+    sendPasswordResetEmail(email)
     {
-        return this._post('resetPassword', {
+        return this._post('sendPasswordResetEmail', {
             'email': email
         });
     }
