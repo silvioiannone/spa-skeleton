@@ -1,7 +1,5 @@
 <script>
 
-    import _ from 'lodash';
-
     /**
      * This mixin helps wrapping forms that are making use of the FormMain component.
      */
@@ -71,7 +69,7 @@
             /**
              * Fire the error event.
              */
-            onError(response)
+            onError(response, validator)
             {
                 this.$emit('error', response);
 
@@ -80,12 +78,29 @@
                 }
 
                 // Assign the errors to the validator.
-                for (let error in response.body.errors) {
-                    this.$validator.errors.add({
-                        field: error,
-                        msg: response.body.errors[error][0],
-                        scope: 'server'
-                    });
+                for (let index in response.body.errors) {
+
+                    // If the error's index is a number then it is a server error not linked to a
+                    // form input.
+                    let parsedIndex = parseInt(index);
+                    if (parsedIndex !== NaN && ! typeof parsedIndex === 'string') {
+                        this.$validator.errors.add({
+                            field: '_server',
+                            msg: response.body.errors[index]['details'],
+                            scope: '_server'
+                        });
+                    } else {
+                        this.$validator.errors.add({
+                            field: index,
+                            msg: response.body.errors[index][0],
+                            scope: 'server'
+                        });
+                        this.$validator.errors.add({
+                            field: '_server',
+                            msg: response.body.message,
+                            scope: '_server'
+                        });
+                    }
                 };
             },
 
@@ -156,6 +171,7 @@
                 {
                     let field = event.target.getAttribute('data-vv-name');
                     this.$validator.errors.remove(field, 'server');
+                    this.$validator.errors.clear('_server');
                 });
             });
         }
