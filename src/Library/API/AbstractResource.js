@@ -158,6 +158,13 @@ export default class AbstractResource
         });
 
         if (this.attachments.length) {
+            // Attach any data as a field so we can send a multipart form.
+            for (let key in data) {
+                if (data[key]) {
+                    request.field(key, data[key]);
+                }
+            }
+
             return this.dispatchRequest(request);
         }
 
