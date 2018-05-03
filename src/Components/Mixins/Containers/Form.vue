@@ -83,7 +83,7 @@
                     // If the error's index is a number then it is a server error not linked to a
                     // form input.
                     let parsedIndex = parseInt(index);
-                    if (parsedIndex !== NaN && ! typeof parsedIndex === 'string') {
+                    if (parsedIndex !== NaN && typeof parsedIndex === 'number') {
                         this.$validator.errors.add({
                             field: '_server',
                             msg: response.body.errors[index]['details'],
