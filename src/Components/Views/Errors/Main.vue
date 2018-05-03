@@ -12,7 +12,7 @@
                 </div>
             </v-flex>
         </v-layout>
-        <v-layout wrap v-if="app.config.env !== 'production'">
+        <v-layout wrap v-if="app.config.env !== 'production' && error">
             <v-flex xs12 class="my-5">
                 <v-divider></v-divider>
             </v-flex>
@@ -22,7 +22,8 @@
                         <div slot="header">Details</div>
                         <v-card>
                             <v-card-title class="headline">
-                                {{ error.status }} - {{ error.body.message }}
+                                <span v-if="error.status">{{ error.status }}</span>
+                                - {{ error.body.message }}
                             </v-card-title>
                             <v-card-text>
                                 <h5>

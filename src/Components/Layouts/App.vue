@@ -7,8 +7,8 @@
         </template>
         <v-content>
             <slot v-if="status === 'ready' || status === 'loading'"></slot>
-            <error-unauthorized v-if="status === 'unauthenticated'">
-                <slot name="errorUnauthenticated"></slot>
+            <error-unauthorized v-if="status === 'unauthorized'">
+                <slot name="errorUnauthorized"></slot>
             </error-unauthorized>
             <error-server-error v-if="status === 'error'"></error-server-error>
             <error-not-found v-if="status === 'notFound'"></error-not-found>

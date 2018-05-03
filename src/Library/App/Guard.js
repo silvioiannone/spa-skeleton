@@ -74,7 +74,7 @@ export default class Guard
                         })
                         .catch(error =>
                         {
-                            this.store.commit('app/SET_STATUS', 'error');
+                            this.store.commit('app/SET_STATUS', 'unauthorized');
                             ready = false;
                             next();
                         });
@@ -86,7 +86,7 @@ export default class Guard
                     this.store.commit('app/SET_ERROR', error);
 
                     if(error.statusCode === 401) {
-                        this.store.commit('app/SET_STATUS', 'unauthenticated');
+                        this.store.commit('app/SET_STATUS', 'unauthorized');
                         next();
                         return;
                     }
