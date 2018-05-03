@@ -219,7 +219,7 @@ export default class WebSocket
      */
     handleEvent(event, message)
     {
-        let subscription = this.pendingSubscriptions.find(subscription => subscription.event === event);
+        let subscription = this.activeSubscriptions.find(subscription => subscription.event === event);
         let handlers = [];
 
         if (!subscription) {
