@@ -9,18 +9,22 @@ Connecting to the WebSocket server is needed in order to receive real time event
         this.$ws.subscribe(this);
     }
 
-This will subscribe to all the events defined in *resources/assets/js/App/Subscriptions.js*.
+This will subscribe to all the events defined in *resources/assets/js/App/Subscriptions.js* and the
+default ones defined by `spa-skeleton`. If you're using the `layout-app` component it will
+automatically try to connect to the WS server when it's mounted.
 
 ## Events
 
 The events the SPA should listen must be defined in *resources/assets/js/App/Subscriptions.js*.
 
     import App from './Channels/App';
+    import AppHandler form './Events/Handlers';
 
     export default [
         {
             event: 'Models.CompanyCreated',
-            channels: [App]
+            channels: [App],
+            handlers: {AppHandler}
         },
         ...
     ]
@@ -46,13 +50,13 @@ Every event can be fired on multiple channel. A new channel (room) can be create
         }
     }
 
-Each channel has access to the store (using `this.store`) in order to access the needed data. The `name()` function must
-return the channel name (For example: **App**, **User.1**, **Company.4**).
+Each channel has access to the store (using `this.store`) in order to access the needed data. The 
+`name()` function must return the channel name (For example: **App**, **User.1**, **Company.4**).
 
 ## Usage
 
-It's a good idea to not add all the possible events to *resources/assets/js/App/Subscriptions.js*. View specific events
-should be specified inside the view's component:
+It's a good idea to not add all the possible events to *resources/assets/js/App/Subscriptions.js*. 
+View specific events should be specified inside the view's component:
 
     mounted()
     {
@@ -70,3 +74,36 @@ should be specified inside the view's component:
     {
         this.$ws.leave(ConversationChannel);
     }
+
+## Event handlers
+
+Event handlers are responsible for performing certain actions when an event occurs.
+
+Each event handler must have a function with the same name as the event they are handling. E.g.:
+
+This subscriptions definition
+
+    export default [
+        {
+            event: 'Models.CompanyCreated',
+            channels: [App],
+            handlers: {AppHandler}
+        },
+        ...
+    ]
+    
+    // resources/assets/js/App/Subscriptions.js
+
+will require the `AppHander` to be defined like this:
+
+    import AbstractHandler from 'spa-skeleton/src/Library/Events/AbstractHandler';
+
+    export default class AppHandler extends AbstractHandler
+    {
+        'Models.CompanyCreated'(event)
+        {
+
+        }
+    }
+
+    // resources/assets/js/App/Events/AppHandler.js

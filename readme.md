@@ -14,21 +14,21 @@ moment.
 
 ## Features
 
- - VueJS 2 core
- - State machine (Vuex)
- - Realtime translations (VueI18n)
- - Realtime WS events and global event hub
- - API client library
- - Route guards
- - Form validation
- - Vuetify support out of the box
+- VueJS 2 core
+- State machine (Vuex)
+- Realtime translations (VueI18n)
+- Realtime WS events and global event hub
+- API client library
+- Route guards
+- Form validation
+- Vuetify support out of the box
 
 ## Usage
 
 Require the package using **npm**:
 
     npm install spa-skeleton --save
-    
+
 Bootstrap the SPA simply using:
 
     import SPASkeleton from 'spa-skeleton';
@@ -41,8 +41,8 @@ Add the following to your *webpack.mix.js* in order to build the SPA-Skeleton:
     const SPASkeletonMix = require('spa-skeleton/webpack.mix.js');
 
     SPASkeletonMix.build(mix);
-    
+
 ## Documentation
 
-Read [the documentation ](https://github.com/silvioiannone/spa-skeleton/blob/master/docs/Readme.md) in order to learn
-more about the project.
+Read [the documentation ](https://github.com/silvioiannone/spa-skeleton/blob/master/docs/Readme.md) 
+in order to learn more about the project.

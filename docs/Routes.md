@@ -34,7 +34,8 @@ New routes must be defined in the *resources/assets/js/App/Routes.js*:
 
 ## Route guards
 
-Route guards act as a middleware while loading the view. They allow to stop or allow the loading of the view.
+Route guards act as a middleware while loading the view. They allow to stop or allow the loading of 
+the view.
 
 Here is an example of a Guard that checks if the user is authenticated:
 
@@ -90,11 +91,11 @@ After the guard is imported it can be used to protect a route:
 
 ## Route actions
 
-Route actions define the steps to execute before a view is loaded. This usually includes querying the data needed and
-committing it to the state machine.
+Route actions define the steps to execute before a view is loaded. This usually includes querying 
+the data needed and committing it to the state machine.
 
-As you can see from the first example the route definition's `meta` has a `actions` property. This just the state
-machine module action that will be executed.
+As you can see from the first example the route definition's `meta` has a `actions` property. This 
+just the state machine module action that will be executed.
 
 You can define an action for each view. For example, using the *View.js* state machine module:
 

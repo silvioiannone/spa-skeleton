@@ -2,7 +2,8 @@
 
 State machine modules define the functionality of each Vuex module in a class format.
 
-Each module should extend the *spa-skeleton/src/Library/State/AbstractModule.js* class and define in its constructor the name of the module itself by setting the `moduleName` property.
+Each module should extend the *spa-skeleton/src/Library/State/AbstractModule.js* class and define in 
+its constructor the name of the module itself by setting the `moduleName` property.
 
     import AbstractModule from `spa-skeleton/src/Library/State/AbstractModule.js`
 
@@ -13,8 +14,8 @@ Each module should extend the *spa-skeleton/src/Library/State/AbstractModule.js*
         this.moduleName = 'users';
     }
 
-The `AbstractModule` class has functions which allow you to specify the structure and functionality of the module. 
-It's enough to override these methods when needed.
+The `AbstractModule` class has functions which allow you to specify the structure and functionality 
+of the module. It's enough to override these methods when needed.
 
 Here is an example:
 
@@ -92,7 +93,8 @@ Here is an example:
 
     // resources/assets/js/App/State/Modules/App.js
 
-Once you have defined your state machine module you can import it in *resources/assets/js/App/State.js*
+Once you have defined your state machine module you can import it in 
+*resources/assets/js/App/State.js*
 
     import App from './State/Modules/App'
 
@@ -107,7 +109,8 @@ New state machine modules can be defined in *resources/assets/js/App/State/Modul
 
 ## The Collection module
 
-The `spa-skeleton` ships with a `CollectionModule` which handles collections of items and allows you to easily store models in the state machine.
+The `spa-skeleton` ships with a `CollectionModule` which handles collections of items and allows you
+to easily store models in the state machine.
 
 It defines the following mutations:
 
