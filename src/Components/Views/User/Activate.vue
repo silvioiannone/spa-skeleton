@@ -27,7 +27,6 @@
 
 <script>
 
-    import FormActivate from '../../Forms/Activate.vue';
     import ToolbarMain   from '../../Toolbars/Main.vue';
 
     export default

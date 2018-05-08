@@ -21,8 +21,6 @@
 
 <script>
 
-    import NotificationHandler from 'assets/js/App/Notifications/Handler';
-
     export default {
 
         name : 'ToolbarHome',
@@ -70,15 +68,8 @@
 
             unreadNotificationsCount()
             {
-                return this.$store.getters.notifications.filter(notification =>
-                {
-                    let handler = NotificationHandler[notification.type];
-                    if (handler) {
-                        (new handler(this)).handle(notification);
-                    }
-
-                    return notification.read_at === null
-                })
+                return this.$store.getters.notifications
+                    .filter(notification => notification.read_at === null)
                     .length;
             }
         },
