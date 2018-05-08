@@ -246,6 +246,7 @@ export default class AbstractResource
             // request)
             if (request.url === '/oauth/token')
             {
+                request.set('Accept', 'application/json');
                 resolve({request});
                 return;
             }
