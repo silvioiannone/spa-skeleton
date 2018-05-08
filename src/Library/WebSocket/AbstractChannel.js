@@ -32,8 +32,20 @@ export default class AbstractChannel
      * Get the channel name.
      *
      * @abstract
+     * @return {String}
      */
     name() {
         return '';
+    }
+
+    /**
+     * Whether it's possible for the user to enter the channel.
+     *
+     * @abstract
+     * @return {Boolean}
+     */
+    canEnter()
+    {
+        return true;
     }
 }
