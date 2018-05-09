@@ -41,11 +41,7 @@
                 return new Promise((resolve, reject) =>
                 {
                     this.$api.users.login(this.model)
-                        .then(response =>
-                        {
-                            this.$router.push('/home');
-                            resolve(response);
-                        })
+                        .then(response => resolve(response))
                         .catch(response => reject(response));
                 });
             }
