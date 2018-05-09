@@ -188,7 +188,6 @@ export default class Guard
         let matched = this.router.matcher.match(this.routes, to).matched;
         let guards = [];
         let guardPromises = [];
-        let availableGuards = {};
 
         matched.forEach(match =>
         {
@@ -197,10 +196,13 @@ export default class Guard
             }
         });
 
-        Object.assign(availableGuards, SkeletonGuards, Guards);
+        let availableGuards = Object.assign({}, SkeletonGuards, Guards);
 
         guards.forEach(guard =>
         {
+            if (! availableGuards[guard]) {
+                throw 'The guard ' + guard + ' doesn\'t exist.';
+            }
             let guardPromise = new availableGuards[guard](this.store).execute();
 
             guardPromise.catch(error =>
