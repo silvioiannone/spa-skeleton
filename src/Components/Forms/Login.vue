@@ -49,12 +49,6 @@
                         .catch(response => reject(response));
                 });
             }
-        },
-
-        mounted()
-        {
-            this.$set(this.model, 'username', 'user@boptimera.se');
-            this.$set(this.model, 'password', 'password');
         }
     }
 
