@@ -26,11 +26,11 @@
                     return this.value;
                 },
                 set(value) {
-                    this.$emit('input', value);
-
                     if (! value) {
                         this.$emit('hidden');
                     }
+
+                    this.$emit('input', value);
                 }
             }
         },

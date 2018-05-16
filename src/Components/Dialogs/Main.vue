@@ -23,16 +23,18 @@
             }
         },
 
-        /**
-         * Determines the dialog's visibility.
-         */
         computed: {
 
+            /**
+             * Determines the dialog's visibility.
+             */
             model: {
                 get() {
                     return this.value;
                 },
                 set(value) {
+                    // Force the `v-dialog` to be active.
+                    this.$children[0].isActive = true;
                     this.$emit('input', value);
                 }
             }
