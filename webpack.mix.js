@@ -4,6 +4,11 @@ const merge = require('webpack-merge');
 module.exports = {
 
     /**
+     * Vendor modules that will be extracted.
+     */
+    additionalModulesToExtract: [],
+
+    /**
      * User defined Webpack config.
      */
     userWebpackConfig: {},
@@ -15,9 +20,6 @@ module.exports = {
      */
     build: function (mix)
     {
-        // Load the Configuration from SPA-Skeleton
-        mix.webpackConfig(merge(config, this.userWebpackConfig));
-
         let modulesToExtract = [
             'vue',
             'vue-router',
@@ -30,6 +32,9 @@ module.exports = {
             'raven-js',
             'vue-markdown'
         ].concat(this.additionalModulesToExtract);
+
+        // Load the Configuration from SPA-Skeleton
+        mix.webpackConfig(merge(config, this.userWebpackConfig));
 
         mix.js('resources/assets/js/App.js', './public/js/app.js')
             .extract(modulesToExtract, './public/js/vendor.js');

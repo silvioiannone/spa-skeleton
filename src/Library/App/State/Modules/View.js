@@ -1,5 +1,5 @@
 import AbstractModule from '../../../State/AbstractModule';
-import Config from 'spa-skeleton/src/Config'
+import Config from 'spa-skeleton/src/Config';
 
 /**
  * State machine view module.
@@ -17,6 +17,26 @@ export default class View extends AbstractModule
     {
         let self = this;
         let actions = {};
+
+        // / route.
+        actions['view/ROOT'] = (store, payload) =>
+        {
+            return new Promise((resolve, reject) =>
+            {
+                if (store.getters.app.settings) {
+                    resolve();
+                    return;
+                }
+
+                self.api.app.getSettings()
+                    .then(response =>
+                    {
+                        store.commit('app/SET_SETTINGS', response.body.data);
+                        resolve();
+                    })
+                    .catch(error => reject(error));
+            })
+        };
 
         /**
          * /home route

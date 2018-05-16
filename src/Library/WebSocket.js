@@ -92,6 +92,7 @@ export default class WebSocket
         {
             if (this.activeSubscriptions.indexOf(subscription) >= 0) return;
 
+            // TODO: add the subscription to the list of the active subscriptions only if the joining was successful (use a promise).
             subscription.channels.forEach(channel => this.join(channel, subscription.event));
 
             // Add the subscription to the active subscriptions.
@@ -111,11 +112,11 @@ export default class WebSocket
             let index = this.activeSubscriptions.indexOf(subscription);
             this.activeSubscriptions.splice(index, 1);
 
-            let channels = subscription.channels.map(channel => {
+            subscription.channels.forEach(channel =>
+            {
                 let channelName = (new channel(this.vue.$store)).name();
 
-                Log.info('No longer listening to ' + subscription.event + ' in ' + channelName
-                    + ' room.');
+                Log.info('No longer listening to ' + subscription.event + ' in ' + channelName);
 
                 this.leaveChannelIfUnused(channel);
             });
@@ -162,10 +163,13 @@ export default class WebSocket
     {
         let self = this;
         let channelInstance = new channel(this.vue.$store);
+        let echo = this.echo;
+
+        if (! channelInstance.canEnter()) {
+            return;
+        }
 
         Log.info('Listening to ' + event + ' in the ' + channelInstance.name() + ' room.');
-
-        let echo = this.echo;
 
         if (channelInstance.isPrivate()) {
             echo = echo.private(channelInstance.name());
