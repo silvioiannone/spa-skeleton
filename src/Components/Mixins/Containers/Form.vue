@@ -79,14 +79,14 @@
 
                 // Assign the errors to the validator.
                 for (let index in response.body.errors) {
-
                     // If the error's index is a number then it is a server error not linked to a
                     // form input.
                     let parsedIndex = parseInt(index);
-                    if (parsedIndex !== NaN && typeof parsedIndex === 'number') {
+                    if (! Number.isNaN(parsedIndex) && typeof parsedIndex === 'number') {
                         this.$validator.errors.add({
                             field: '_server',
-                            msg: response.body.errors[index]['details'],
+                            msg: response.body.errors[index]['details'] ||
+                                response.body.errors[index]['title'],
                             scope: '_server'
                         });
                     } else {
@@ -171,7 +171,6 @@
                 {
                     let field = event.target.getAttribute('data-vv-name');
                     this.$validator.errors.remove(field, 'server');
-                    this.$validator.errors.clear('_server');
                 });
             });
         }

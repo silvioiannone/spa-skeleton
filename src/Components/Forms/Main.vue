@@ -75,7 +75,11 @@
 
             hasErrors()
             {
-                return this.$parent.errors.any(null);
+                // Don't consider the server errors not tied to a specific field.
+                let serverErrorsCount = this.$parent.errors.all('_server').length;
+                let totalCount = this.$parent.errors.all().length;
+
+                return totalCount !== serverErrorsCount;
             },
 
             canSubmit()
