@@ -48,3 +48,11 @@ change.
 It's possible to merge spa-skeleton's WebPack configuration with a custom configuration.
 
     SPASkeletonMix.mergeWebpack({...customConfiguration})
+    
+## Compile SASS
+
+Additional SASS files can be compiled.
+
+    SPASkeletonMix.sass('path/to/file.scss');
+    
+The file will be compiled and included in the `all.css` outputted in the `public/css` folder.
