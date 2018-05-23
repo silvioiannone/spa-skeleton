@@ -97,6 +97,12 @@ export default class Guard
                         return;
                     }
 
+                    if(error.statusCode === 503) {
+                        this.store.commit('app/SET_STATUS', 'serviceUnavailable');
+                        next();
+                        return;
+                    }
+
                     Log.error('View ' + to.path + ' failed to load.');
                     Log.error(error);
 

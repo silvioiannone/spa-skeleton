@@ -12,6 +12,8 @@
             </error-unauthorized>
             <error-server-error v-if="status === 'error'"></error-server-error>
             <error-not-found v-if="status === 'notFound'"></error-not-found>
+            <error-service-unavailable v-if="status === 'serviceUnavailable'">
+            </error-service-unavailable>
         </v-content>
         <snackbar-global></snackbar-global>
     </v-app>
@@ -19,9 +21,10 @@
 
 <script>
 
-    import SnackbarGlobal from "../Snackbars/Global.vue";
+    import SnackbarGlobal from '../Snackbars/Global.vue';
     import ErrorNotFound from '../Views/Errors/NotFound.vue';
     import ErrorServerError from '../Views/Errors/ServerError.vue';
+    import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
     import ErrorUnauthorized from '../Views/Errors/Unauthorized.vue';
 
     export default
@@ -31,6 +34,7 @@
         components: {
             ErrorNotFound,
             ErrorServerError,
+            ErrorServiceUnavailable,
             ErrorUnauthorized,
             SnackbarGlobal
         },
