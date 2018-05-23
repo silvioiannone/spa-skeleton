@@ -33,8 +33,6 @@
                     return this.value;
                 },
                 set(value) {
-                    // Force the `v-dialog` to be active.
-                    this.$children[0].isActive = true;
                     this.$emit('input', value);
                 }
             }
