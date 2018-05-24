@@ -67,6 +67,28 @@
             },
 
             /**
+             * Field step size.
+             */
+            step: {
+                type: String,
+                default: '1'
+            },
+
+            /**
+             * Maximum value.
+             */
+            max: {
+                type: String
+            },
+
+            /**
+             * Minimum value.
+             */
+            min: {
+                type: String
+            },
+
+            /**
              * Model value.
              */
             value: {}
@@ -121,7 +143,10 @@
             return createElement('v-text-field', {
                 attrs: {
                     'data-vv-name': this.dataVvName,
-                    'type': this.type
+                    'type': this.type,
+                    'step': this.step,
+                    'min': this.min,
+                    'max': this.max
                 },
                 directives: [
                     {
