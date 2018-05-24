@@ -94,13 +94,6 @@
             value: {}
         },
 
-        data()
-        {
-            return {
-                _value: this.value
-            }
-        },
-
         computed: {
 
             errorMessages()
@@ -126,7 +119,7 @@
 
         watch: {
 
-            value()
+            value(newValue, oldValue)
             {
                 this.$nextTick(() => this.$validator.validateAll());
             }
@@ -143,10 +136,10 @@
             return createElement('v-text-field', {
                 attrs: {
                     'data-vv-name': this.dataVvName,
-                    'type': this.type,
-                    'step': this.step,
-                    'min': this.min,
-                    'max': this.max
+                    type: this.type,
+                    step: this.step,
+                    min: this.min,
+                    max: this.max
                 },
                 directives: [
                     {
