@@ -89,20 +89,67 @@
             },
 
             /**
+             * Input mask.
+             */
+            mask: {
+                type: String,
+                default: ''
+            },
+
+            /**
+             * Input field prefix.
+             */
+            prefix: {
+                type: String,
+                default: ''
+            },
+
+            /**
              * Model value.
              */
             value: {}
         },
 
+        data()
+        {
+            return {
+                isFocused: false
+            }
+        },
+
         computed: {
+
+            /**
+             * This can be overridden in order to modify the value passed to the `v-text-field`.
+             */
+            _value()
+            {
+                return this.value;
+            },
 
             errorMessages()
             {
+                // First we display the server errors if any...
+                let parentErrors = this.parentForm().errors.collect(this.dataVvName);
+
+                if (parentErrors.length) {
+                    return parentErrors;
+                }
+
+                // ...and then the validation errors.
                 return this.errors.collect(this.dataVvName);
             }
         },
 
         methods: {
+
+            /**
+             * Access the form containing the text field.
+             */
+            parentForm()
+            {
+                return this.$parent.$parent.$parent;
+            },
 
             /**
              * Bubble the input event.
@@ -117,11 +164,30 @@
             }
         },
 
+        mounted()
+        {
+            // This is a work-around needed in order to prevent Vuetify text-input mask to trigger
+            // the validation too soon.
+            let phoneInput = this.$el.querySelector('input');
+            phoneInput.addEventListener('focus', () =>
+            {
+                this.isFocused = true;
+            });
+            phoneInput.addEventListener('blur', () =>
+            {
+                this.isFocused = false;
+            });
+        },
+
         watch: {
 
-            value(newValue, oldValue)
+            value()
             {
-                this.$nextTick(() => this.$validator.validateAll());
+                this.$nextTick(() => {
+                    if (this.fields[this.dataVvName].dirty) {
+                        this.$validator.validateAll();
+                    }
+                });
             }
         },
 
@@ -130,7 +196,10 @@
             let self = this;
 
             let props = Object.assign({}, this.$props, {
-                errorMessages: this.errorMessages
+                errorMessages: this.errorMessages,
+                prefix: this.isFocused || (this.value && this.value.length) ? this.prefix : '',
+                mask: this.isFocused || (this.value && this.value.length) ? this.mask : '',
+                value: this._value
             });
 
             return createElement('v-text-field', {
@@ -153,17 +222,12 @@
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),
                     'update:error': value => {
-                        let formContainer = this.$parent.$parent.$parent;
-                        formContainer.$validator.errors.remove(this.dataVvName);
+                        this.parentForm().$validator.errors.remove(this.dataVvName);
 
                         if (value) {
-                            // Take the error and assign it to the parent validator.
-                            // The first parent is VForm.
-                            // The second parent is FormMain.
-                            // The third parent is the actual form container component.
                             this.$validator.errors.items.forEach(error =>
                             {
-                                formContainer.$validator.errors.add(error);
+                                this.parentForm().$validator.errors.add(error);
                             });
                         }
                         self.$emit('update:error')
