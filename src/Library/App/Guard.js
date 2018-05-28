@@ -63,7 +63,7 @@ export default class Guard
             this.store.commit('app/SET_STATUS', 'loading');
 
             // Fetch all the needed data for the current view
-            this.runRouteActions(to)
+            this.runRouteActions(to, from)
                 .then(() =>
                 {
                     // Once all the data has been loaded run the guards
@@ -144,16 +144,21 @@ export default class Guard
      * machine.
      *
      * @param {Object} to
+     * @param {Object} from
      * @return {Promise}
      * @protected
      */
-    runRouteActions(to)
+    runRouteActions(to, from)
     {
         return new Promise((resolve, reject) =>
         {
             let matched = this.router.matcher.match(this.routes, to).matched;
+            let fromMatched = this.router.matcher.match(this.routes, from).matched;
             let actions = [];
             let actionPromises = [];
+            let fromActions = [];
+
+            fromMatched.forEach(match => fromActions = fromActions.concat(match.meta.actions));
 
             matched.forEach(match =>
             {
@@ -161,6 +166,11 @@ export default class Guard
                     actions = actions.concat(match.meta.actions);
                 }
             });
+
+            // We need to take only the actions that are not already defined by the previous route.
+            actions = actions.filter(action =>
+                fromActions.indexOf(action) < 0 || action === 'view/ROOT');
+
 
             Log.debug('Executing actions: ' + actions.join(', ') + '.');
 
