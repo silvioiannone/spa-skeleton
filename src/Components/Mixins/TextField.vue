@@ -107,7 +107,9 @@
             /**
              * Model value.
              */
-            value: {}
+            value: {
+                default: ''
+            }
         },
 
         data()
@@ -129,11 +131,11 @@
 
             errorMessages()
             {
-                // First we display the server errors if any...
-                let parentErrors = this.parentForm().errors.collect(this.dataVvName);
+                let parentFormErrors = this.parentForm().errors.collect(this.dataVvName, 'server');
 
-                if (parentErrors.length) {
-                    return parentErrors;
+                // First we display the server errors if any...
+                if (parentFormErrors.length) {
+                    return parentFormErrors;
                 }
 
                 // ...and then the validation errors.
@@ -183,11 +185,7 @@
 
             value()
             {
-                this.$nextTick(() => {
-                    if (this.fields[this.dataVvName].dirty) {
-                        this.$validator.validateAll();
-                    }
-                });
+                this.$nextTick(() => this.$validator.validateAll());
             }
         },
 
@@ -197,8 +195,8 @@
 
             let props = Object.assign({}, this.$props, {
                 errorMessages: this.errorMessages,
-                prefix: this.isFocused || (this.value && this.value.length) ? this.prefix : '',
-                mask: this.isFocused || (this.value && this.value.length) ? this.mask : '',
+                prefix: this.isFocused || (this._value && this._value.length) ? this.prefix : '',
+                mask: this.isFocused || (this._value && this._value.length) ? this.mask : '',
                 value: this._value
             });
 
@@ -218,7 +216,15 @@
                 ],
                 props,
                 on: {
-                    input: value => self.fireInputEvent(value),
+                    input: value => {
+                        self.fireInputEvent(value);
+
+                        // If the validation is successful remove the errors from the parent form.
+                        this.$nextTick(() =>
+                        {
+                            this.parentForm().$validator.errors.remove(this.dataVvName);
+                        });
+                    },
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),
                     'update:error': value => {
@@ -230,7 +236,7 @@
                                 this.parentForm().$validator.errors.add(error);
                             });
                         }
-                        self.$emit('update:error')
+                        self.$emit('update:error', value)
                     }
                 }
             });
