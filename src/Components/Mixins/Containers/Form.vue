@@ -42,7 +42,9 @@
 
         data() {
             return {
-                model: {}
+                model: {},
+
+                _resetOnMount: true
             }
         },
 
@@ -156,7 +158,9 @@
                 self.onError(response);
             });
 
-            this.resetForm();
+            if (this.$data._resetOnMount) {
+                this.resetForm();
+            }
 
             if (this.focus) {
                 let firstInput = this.$el.querySelector('input');
