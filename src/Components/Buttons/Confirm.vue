@@ -1,11 +1,13 @@
 <template>
     <div class="button--submit">
-        <v-btn v-if="confirmed" error @click="abort" color="error">Abort ({{ countdown }})</v-btn>
-        <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color"
+        <v-btn v-if="confirmed" error @click="abort" color="error" :flat="flat">
+            Abort ({{ countdown }})
+        </v-btn>
+        <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color" :flat="flat"
                @click.stop="handleConfirmation">
             <slot></slot>
         </v-btn>
-        <button-submit v-if="showConfirmation && !confirmed" :on-click="handleClick"
+        <button-submit v-if="showConfirmation && !confirmed" :on-click="handleClick" :flat="flat"
                        color="warning">
             {{ verificationText }}
         </button-submit>
@@ -43,6 +45,14 @@
             },
 
             /**
+             * Whether the button should be flat.
+             */
+            flat: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
              * What to do once the action is confirmed. It should be a function returning a Promise.
              */
             afterConfirmation: {
@@ -55,6 +65,14 @@
             verificationText: {
                 type: String,
                 default: 'Are you sure?'
+            },
+
+            /**
+             * Abort button timeout.
+             */
+            timeout: {
+                type: Number,
+                default: 10
             }
         },
 
@@ -62,7 +80,7 @@
         {
             return {
                 confirmed: false,
-                countdown: 10,
+                countdown: this.timeout,
                 showConfirmation: false
             }
         },
@@ -76,7 +94,7 @@
             {
                 this.confirmed = false;
                 this.showConfirmation = false;
-                this.countdown = 10;
+                this.countdown = this.timeout;
 
                 clearInterval(abortCountdown);
             },
@@ -92,27 +110,31 @@
                 let self = this;
                 this.confirmed = true;
 
-                abortCountdown = setInterval(() =>
+                return new Promise((resolve, reject) =>
                 {
-                    self.countdown--;
-
-                    if(self.countdown === 0)
+                    abortCountdown = setInterval(() =>
                     {
-                        clearInterval(abortCountdown);
+                        self.countdown--;
 
-                        this.afterConfirmation()
-                            .then(() => {
-                                this.confirmed = false;
-                                this.showConfirmation = false;
-                                resolve();
-                            })
-                            .catch(() => {
-                                this.confirmed = false;
-                                this.showConfirmation = false;
-                                reject();
-                            });
-                    }
-                }, 1000);
+                        if(self.countdown === 0)
+                        {
+                            clearInterval(abortCountdown);
+
+                            this.afterConfirmation()
+                                .then(() => {
+                                    this.confirmed = false;
+                                    this.showConfirmation = false;
+                                    resolve();
+                                })
+                                .catch(() => {
+                                    this.confirmed = false;
+                                    this.showConfirmation = false;
+                                    reject();
+                                });
+                        }
+                    }, 1000);
+                })
+
             },
 
             /**
