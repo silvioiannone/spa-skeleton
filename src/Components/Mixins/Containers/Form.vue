@@ -71,7 +71,7 @@
             /**
              * Fire the error event.
              */
-            onError(response, validator)
+            onError(response)
             {
                 this.$emit('error', response);
 

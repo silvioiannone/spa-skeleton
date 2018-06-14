@@ -10,7 +10,7 @@
                     </v-alert>
                 </v-flex>
                 <slot></slot>
-                <v-flex xs12 :class="{'text-xs-center': centerActions}">
+                <v-flex xs12 :class="{'text-xs-center': centerActions}" v-if="submit">
                     <button-submit :on-click="handleSubmit" color="primary"
                                    :disabled="hasErrors || !canSubmit">
                         {{ submitText }}
@@ -53,8 +53,9 @@
              * It needs to be a function returning a promise.
              */
             submit: {
-                type: Function,
-                required: true
+                type: [Function, Boolean],
+                required: false,
+                default: false
             },
 
             /**
