@@ -1,4 +1,5 @@
 import Log    from 'loglevel';
+import _      from 'lodash';
 import Guards from 'assets/js/App/Guards';
 
 // Skeleton guards
@@ -167,10 +168,17 @@ export default class Guard
                 }
             });
 
-            // We need to take only the actions that are not already defined by the previous route.
-            actions = actions.filter(action =>
-                fromActions.indexOf(action) < 0 || action === 'view/ROOT');
-
+            // We need to take only the actions that are not already defined by the previous routes.
+            actions = actions.filter(action => {
+                // Take the action if it's not in the previous route...
+                return fromActions.indexOf(action) < 0 ||
+                    // ...or if it's the root action...
+                    action === 'view/ROOT' ||
+                    // ...or if it's the last action that was executed in the previous route but now
+                    // we're executing it with different parameters.
+                    (fromActions.indexOf(action) === actions.length - 1 &&
+                        ! _.isEqual(to.query, from.query))
+            });
 
             Log.debug('Executing actions: ' + actions.join(', ') + '.');
 
