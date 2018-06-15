@@ -1,7 +1,8 @@
 <template>
-    <v-toolbar :fixed="this.fixed" class="elevation-0" app clipped-left color="blue darken-3" dark
+    <v-toolbar :fixed="this.fixed" app clipped-left :color="color"
                clipped-right :tabs="tabs" :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
-        <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up" v-if="navigationDrawer">
+        <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
+                             v-if="navigationDrawer">
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
@@ -39,6 +40,14 @@
         },
 
         props: {
+
+            /**
+             * Toolbar's color.
+             */
+            color: {
+                type: String,
+                default: ''
+            },
 
             /**
              * Whether the toolbar should be fixed.

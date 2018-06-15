@@ -1,5 +1,5 @@
 <template>
-    <toolbar-main fixed :sidebar="false" :title="title">
+    <toolbar-main fixed :sidebar="false" :title="title" :color="color">
         <div slot="toolbar-text" class="toolbar__text">
             <slot name="toolbar-text"></slot>
         </div>
@@ -20,6 +20,14 @@
         name : 'ToolbarIndex',
 
         props: {
+
+            /**
+             * Toolbar's color.
+             */
+            color: {
+                type: String,
+                default: ''
+            },
 
             /**
              * Toolbar's title.
