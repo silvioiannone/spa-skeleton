@@ -42,8 +42,8 @@ const defaultConfig = {
     /**
      * API settings.
      */
-    api:
-    {
+    api: {
+
         /**
          * Base URL that will be used when sending API requests.
          */
@@ -53,8 +53,8 @@ const defaultConfig = {
     /**
      * Web client settings.
      */
-    client:
-    {
+    client: {
+
         /**
          * OAuth 2 web client ID.
          */
@@ -69,8 +69,8 @@ const defaultConfig = {
     /**
      * Maps settings.
      */
-    maps:
-    {
+    maps: {
+
         /**
          * Google Maps API key.
          */
@@ -82,8 +82,8 @@ const defaultConfig = {
      *
      * These settings change the way the router (in this case vue-router) behaves.
      */
-    router:
-    {
+    router: {
+
         /**
          * This option allows you to set the router mode.
          */
@@ -99,8 +99,8 @@ const defaultConfig = {
     /**
      * WebSocket settings.
      */
-    webSocket:
-    {
+    webSocket: {
+
         /**
          * Host where the WebSocket server is hosted.
          */
@@ -125,12 +125,31 @@ const defaultConfig = {
     /**
      * Sentry error reporting tool.
      */
-    sentry:
-    {
+    sentry: {
+
         /**
          * Sentry DSN.
          */
         dsn: SENTRY_DSN_JS
+    },
+
+    /**
+     * UI settings.
+     */
+    ui: {
+
+        /**
+         * UI colors.
+         */
+        colors: {
+            primary: '#1976D2',
+            secondary: '#424242',
+            accent: '#82B1FF',
+            error: '#FF5252',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FFC107'
+        }
     }
 }
 

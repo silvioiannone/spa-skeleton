@@ -1,5 +1,6 @@
 import Log from 'loglevel';
 import PluginsList from 'assets/js/App/Plugins'
+import Config from '../../Config';
 
 // Skeleton plugins
 import API from './Plugins/API';
@@ -40,7 +41,17 @@ export default class Plugins
         let availablePlugins = Object.assign(SkeletonPlugins, PluginsList);
 
         for (let key in availablePlugins) {
-            this.vue.use(availablePlugins[key]);
+
+            let settings = {};
+
+            if (key === 'Vuetify') {
+                settings = {
+                    theme: Config.ui.colors
+                };
+                console.log(settings);
+            }
+
+            this.vue.use(availablePlugins[key], settings);
 
             Log.debug('Plugin "' + key + '" registered.')
         }
