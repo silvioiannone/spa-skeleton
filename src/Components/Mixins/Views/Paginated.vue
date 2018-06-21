@@ -69,6 +69,7 @@
                 }
 
                 let query = {
+                    ...this.$route.query,
                     page: this.pagination.page
                 };
 
