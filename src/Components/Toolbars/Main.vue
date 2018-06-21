@@ -5,7 +5,10 @@
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
-            <router-link :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
+            <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
+                <slot name="title"></slot>
+            </router-link>
+            <router-link :to="toolbarTitleRedirectUrl" v-else="title">{{ title }}</router-link>
         </v-toolbar-title>
         <slot name="toolbar-text" v-show="showingTitle"></slot>
         <v-spacer v-if="showingTitle"></v-spacer>

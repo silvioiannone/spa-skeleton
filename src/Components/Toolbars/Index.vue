@@ -1,5 +1,8 @@
 <template>
     <toolbar-main fixed :sidebar="false" :title="title" :color="color">
+        <div slot="title">
+            <slot name="title"></slot>
+        </div>
         <div slot="toolbar-text" class="toolbar__text">
             <slot name="toolbar-text"></slot>
         </div>
