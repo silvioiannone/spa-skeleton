@@ -109,6 +109,10 @@
              */
             value: {
                 default: ''
+            },
+
+            suffix: {
+                default: false
             }
         },
 
