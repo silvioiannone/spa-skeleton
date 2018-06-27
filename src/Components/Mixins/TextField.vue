@@ -218,12 +218,6 @@
                 on: {
                     input: value => {
                         self.fireInputEvent(value);
-
-                        // If the validation is successful remove the errors from the parent form.
-                        this.$nextTick(() =>
-                        {
-                            this.parentForm().$validator.errors.remove(this.dataVvName);
-                        });
                     },
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),

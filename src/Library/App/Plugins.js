@@ -48,7 +48,6 @@ export default class Plugins
                 settings = {
                     theme: Config.ui.colors
                 };
-                console.log(settings);
             }
 
             this.vue.use(availablePlugins[key], settings);
