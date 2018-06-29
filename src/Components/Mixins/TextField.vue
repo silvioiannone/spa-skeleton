@@ -116,6 +116,13 @@
              */
             suffix: {
                 default: ''
+            },
+
+            /**
+             * Whether the text field should be disabled.
+             */
+            disabled: {
+                default: false
             }
         },
 
