@@ -173,7 +173,7 @@
             this.$el.querySelectorAll('input').forEach(element => {
                 element.addEventListener('focusin', event =>
                 {
-                    let field = event.target.getAttribute('data-vv-name');
+                    let field = event.target.getAttribute('name');
                     this.$validator.errors.remove(field, 'server');
                 });
             });

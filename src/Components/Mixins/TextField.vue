@@ -43,9 +43,9 @@
             },
 
             /**
-             * Value of the data-vv-name attribute.
+             * Value of the name attribute.
              */
-            dataVvName: {
+            name: {
                 type: String,
                 default: ''
             },
@@ -111,8 +111,11 @@
                 default: ''
             },
 
+            /**
+             * Suffix.
+             */
             suffix: {
-                default: false
+                default: ''
             }
         },
 
@@ -135,7 +138,7 @@
 
             errorMessages()
             {
-                let parentFormErrors = this.parentForm().errors.collect(this.dataVvName, 'server');
+                let parentFormErrors = this.parentForm().errors.collect(this.name, 'server');
 
                 // First we display the server errors if any...
                 if (parentFormErrors.length) {
@@ -143,7 +146,7 @@
                 }
 
                 // ...and then the validation errors.
-                return this.errors.collect(this.dataVvName);
+                return this.errors.collect(this.name);
             }
         },
 
@@ -206,7 +209,7 @@
 
             return createElement('v-text-field', {
                 attrs: {
-                    'data-vv-name': this.dataVvName,
+                    name: this.name,
                     type: this.type,
                     step: this.step,
                     min: this.min,
@@ -226,7 +229,7 @@
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),
                     'update:error': value => {
-                        this.parentForm().$validator.errors.remove(this.dataVvName);
+                        this.parentForm().$validator.errors.remove(this.name);
 
                         if (value) {
                             this.$validator.errors.items.forEach(error =>

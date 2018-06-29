@@ -35,6 +35,7 @@ module.exports = {
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),
             APP_NAME: JSON.stringify(process.env.APP_NAME),
             APP_DOMAIN: JSON.stringify(process.env.APP_DOMAIN),
+            APP_MAIL_SUPPORT_ADDRESS: JSON.stringify(process.env.MAIL_SUPPORT_ADDRESS),
             APP_URL: JSON.stringify(process.env.APP_URL),
             PAGINATION_DEFAULT_SIZE: JSON.stringify(process.env.PAGINATION_DEFAULT_SIZE),
             GOOGLE_API_KEY: JSON.stringify(process.env.GOOGLE_API_KEY),
