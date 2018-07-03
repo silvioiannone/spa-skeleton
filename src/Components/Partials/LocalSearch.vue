@@ -1,6 +1,6 @@
 <template>
-    <v-text-field dark prepend-icon="search" label="Search..." class="toolbar__search" hide-details
-                  single-line name="items" v-model="searchString">
+    <v-text-field dark prepend-icon="search" label="Search..." hide-details single-line name="items"
+                  v-model="searchString">
     </v-text-field>
 </template>
 

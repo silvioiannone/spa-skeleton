@@ -1,6 +1,6 @@
 <template>
     <v-btn @click.stop="_onClick" absolute fab top right color="primary" small dark
-           class="btn--card-check elevation-2" :error="localSelected">
+           class="v-btn--card-check elevation-2" :error="localSelected">
         <v-icon v-if="!localSelected">add</v-icon>
         <v-icon v-if="localSelected">remove</v-icon>
     </v-btn>
@@ -8,7 +8,7 @@
 
 <style>
 
-    .btn--card-check.btn--top.btn--absolute.btn--small {
+    .v-btn--card-check.v-btn--top.v-btn--absolute.v-btn--small {
         top: 16px;
         right: 16px;
     }

@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="visible" class="scroll-y navigation-drawer--notifications" right app fixed width="450"
+    <v-navigation-drawer v-model="visible" class="scroll-y" right app fixed width="450"
                          temporary>
         <v-toolbar class="elevation-0">
             <v-toolbar-title>Notifications</v-toolbar-title>

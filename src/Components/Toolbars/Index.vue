@@ -3,10 +3,10 @@
         <div slot="title">
             <slot name="title"></slot>
         </div>
-        <div slot="toolbar-text" class="toolbar__text">
+        <div slot="toolbar-text" class="v-toolbar__text">
             <slot name="toolbar-text"></slot>
         </div>
-        <div slot="toolbar-text-right" class="toolbar__text">
+        <div slot="toolbar-text-right" class="v-toolbar__text">
             <slot name="toolbar-text-right"></slot>
         </div>
         <template slot="toolbar-items">

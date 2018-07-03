@@ -136,6 +136,15 @@
         computed: {
 
             /**
+             * Override this in order to specify a class that should be applied to the input
+             * element.
+             */
+            _class()
+            {
+                return '';
+            },
+
+            /**
              * This can be overridden in order to modify the value passed to the `v-text-field`.
              */
             _value()
@@ -220,7 +229,8 @@
                     type: this.type,
                     step: this.step,
                     min: this.min,
-                    max: this.max
+                    max: this.max,
+                    class: this._class
                 },
                 directives: [
                     {
