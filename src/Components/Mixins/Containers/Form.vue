@@ -170,11 +170,14 @@
             }
 
             // Whenever an input is focused we need to remove the server errors associated with it.
-            this.$el.querySelectorAll('input').forEach(element => {
-                element.addEventListener('focusin', event =>
-                {
-                    let field = event.target.getAttribute('name');
-                    this.$validator.errors.remove(field, 'server');
+            this.$nextTick(() =>
+            {
+                this.$el.querySelectorAll('input').forEach(element => {
+                    element.addEventListener('focusin', event =>
+                    {
+                        let field = event.target.getAttribute('name');
+                        this.$validator.errors.remove(field, 'server');
+                    });
                 });
             });
         }
