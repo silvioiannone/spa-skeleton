@@ -44,8 +44,7 @@
             {
                 this.$nextTick(() =>
                 {
-                    let firstFormInput = document
-                        .querySelector('.dialog__content__active form input:first-child');
+                    let firstFormInput = document.querySelector('.v-dialog--active form input');
 
                     if (firstFormInput) {
                         firstFormInput.focus();

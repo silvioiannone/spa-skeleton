@@ -24,7 +24,8 @@
         computed: {
 
             /**
-             * This function needs to be overridden by the component using this mixin and it should return the.
+             * This function needs to be overridden by the component using this mixin and it should
+             * return the.
              */
             meta() {}
         },
