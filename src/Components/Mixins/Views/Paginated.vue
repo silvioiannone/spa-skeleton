@@ -62,10 +62,7 @@
             pagination(newPagination, oldPagination)
             {
                 // Do not redirect the user if the pagination parameters are the same.
-                if (newPagination.page === oldPagination.page &&
-                    newPagination.rowsPerPage === oldPagination.rowsPerPage &&
-                    newPagination.sortBy === oldPagination.sortBy &&
-                    newPagination.descending === oldPagination.descending) {
+                if (JSON.stringify(newPagination) === JSON.stringify(oldPagination)) {
                     return;
                 }
 
@@ -80,6 +77,8 @@
 
                 if (this.pagination.descending !== null) {
                     query['sort'] = this.pagination.descending ? '-' + this.pagination.sortBy : this.pagination.sortBy;
+                } else {
+                    delete query['sort'];
                 }
 
                 this.$router.push({ path: this.$route.path, query });
