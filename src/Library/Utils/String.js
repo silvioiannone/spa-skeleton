@@ -46,7 +46,7 @@ export default
      * Return the parent path of the given path.
      *
      * @param {String} path
-     * @param {Number} levels Defaults to 1.
+     * @param {Number} [levels] Defaults to 1.
      * @return {String}
      */
     parentPath(path, levels)
