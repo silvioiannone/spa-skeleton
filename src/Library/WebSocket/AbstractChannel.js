@@ -41,7 +41,6 @@ export default class AbstractChannel
     /**
      * Whether it's possible for the user to enter the channel.
      *
-     * @abstract
      * @return {Boolean}
      */
     canEnter()
