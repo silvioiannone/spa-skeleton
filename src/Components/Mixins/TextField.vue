@@ -123,6 +123,46 @@
              */
             disabled: {
                 default: false
+            },
+
+            /**
+             * Placeholder.
+             */
+            placeholder: {
+                type: String,
+                default: ''
+            },
+
+            /**
+             * Display the text field with a "solo" style.
+             */
+            solo: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
+             * Prepend an icon to the text field.
+             */
+            prependIcon: {
+                type: String,
+                default: ''
+            },
+
+            /**
+             * Prepend an icon to the text field.
+             */
+            appendIcon: {
+                type: String,
+                default: ''
+            },
+
+            /**
+             * Make the text field clearable.
+             */
+            clearable: {
+                type: Boolean,
+                default: false
             }
         },
 
@@ -240,9 +280,7 @@
                 ],
                 props,
                 on: {
-                    input: value => {
-                        self.fireInputEvent(value);
-                    },
+                    input: value => self.fireInputEvent(value),
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),
                     'update:error': value => {
@@ -255,7 +293,8 @@
                             });
                         }
                         self.$emit('update:error', value)
-                    }
+                    },
+                    'click:clear': () => self.$emit('click:clear')
                 }
             });
         }

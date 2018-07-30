@@ -20,7 +20,7 @@
         data()
         {
             return {
-                searchSubject: [],
+                subject: [],
                 subjectName: ''
             }
         },

@@ -13,11 +13,9 @@
         <slot name="toolbar-text" v-show="showingTitle"></slot>
         <v-spacer v-if="showingTitle"></v-spacer>
         <slot name="toolbar-text-right" v-show="showingTitle"></slot>
-        <partial-local-search :subject="searchSubject" v-if="showingSearch">
-        </partial-local-search>
-        <v-btn icon @click="hideSearch" v-show="showingSearch">
-            <v-icon>close</v-icon>
-        </v-btn>
+        <text-field-search v-model="subject" v-show="showingSearch" @click:clear="hideSearch"
+                           @blur="hideSearchIfEmpty">
+        </text-field-search>
         <v-btn icon @click="showSearch" v-if="search" v-show="!showingSearch">
             <v-icon>search</v-icon>
         </v-btn>
@@ -31,15 +29,15 @@
 
 <script>
 
-    import Config             from '../../Config';
-    import PartialLocalSearch from '../Partials/LocalSearch.vue';
+    import Config          from '../../Config';
+    import TextFieldSearch from 'spa-skeleton/src/Components/TextFields/Search'
 
     export default {
 
         name: 'ToolbarMain',
 
         components: {
-            PartialLocalSearch
+            TextFieldSearch
         },
 
         props: {
@@ -66,14 +64,6 @@
             search: {
                 type: Boolean,
                 default: false
-            },
-
-            /**
-             * The subject of the search.
-             */
-            searchSubject: {
-                type: Array,
-                default: () => []
             },
 
             /**
@@ -114,7 +104,7 @@
         {
             return {
                 showingSearch: false,
-                _searchSubject: [],
+                subject: '',
                 mounted: false,
             }
         },
@@ -162,6 +152,17 @@
             hideSearch()
             {
                 this.showingSearch = false;
+                this.subject = '';
+            },
+
+            /**
+             * Hide the search box if it's empty.
+             */
+            hideSearchIfEmpty()
+            {
+                if (!this.subject || this.subject.length === 0) {
+                    this.hideSearch();
+                }
             },
 
             /**
@@ -171,10 +172,15 @@
             {
                 this.showingSearch = true;
 
-                setTimeout(() =>
-                {
-                    this.$el.querySelector('input').focus();
-                })
+                setTimeout(() => this.$el.querySelector('input').focus());
+            }
+        },
+
+        watch: {
+
+            subject()
+            {
+                this.$emit('search:update', this.subject);
             }
         }
     }

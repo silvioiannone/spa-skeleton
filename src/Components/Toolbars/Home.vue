@@ -31,7 +31,7 @@
              * For info about these parameters look at the ToolbarMain component.
              */
             search: {},
-            searchSubject: {},
+            subject: {},
             title: {},
 
             /**

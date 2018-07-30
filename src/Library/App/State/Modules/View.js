@@ -112,10 +112,21 @@ export default class View extends AbstractModule
     {
         defaultParameters = defaultParameters || {};
 
-        return {
+        let parameters = {
             'page[number]': payload.route.query.page || 1,
             'page[size]': payload.route.query.size || Config.app.paginationSize,
-            'sort': payload.route.query.sort || defaultParameters.sort || ''
-        };
+        }
+
+        let sortParameter = payload.route.query.sort || defaultParameters.sort || null;
+        if (sortParameter) {
+            parameters['sort'] = sortParameter;
+        }
+
+        let searchParameter = payload.route.query.search || null;
+        if (searchParameter) {
+            parameters['search'] = searchParameter;
+        }
+
+        return parameters;
     }
 }

@@ -1,16 +1,19 @@
 <template>
-    <v-text-field dark prepend-icon="search" label="Search..." hide-details single-line name="items"
-                  v-model="searchString">
-    </v-text-field>
+    <text-field-search></text-field-search>
 </template>
 
 <script>
 
     import Objects from '../../Library/Utils/Objects';
+    import TextFieldSearch from 'spa-skeleton/src/Components/TextFields/Search';
 
     export default {
 
         name: 'PartialLocalSearch',
+
+        components: {
+            TextFieldSearch
+        },
 
         props: {
 
