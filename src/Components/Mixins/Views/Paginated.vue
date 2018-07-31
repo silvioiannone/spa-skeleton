@@ -30,31 +30,46 @@
             meta() {}
         },
 
-        created()
-        {
-            // Initialize the pagination
-            this.pagination.page = parseInt(this.$route.query.page) || 1;
-            this.pagination.rowsPerPage = parseInt(this.$route.query.size) || Config.app.paginationSize;
-            this.pagination.totalItems = this.meta.total;
-            this.pagination.totalPages = this.meta.last_page;
+        methods: {
 
-            let sortQueryParam = this.$route.query.sort;
+            /**
+             * Initialize the pagination.
+             */
+            initPagination()
+            {
+                this.pagination.page = parseInt(this.$route.query.page) || 1;
+                this.pagination.rowsPerPage = parseInt(this.$route.query.size) || Config.app.paginationSize;
+                this.pagination.totalItems = this.meta.total;
+                this.pagination.totalPages = this.meta.last_page;
 
-            if (sortQueryParam) {
-                if (sortQueryParam[0] === '-') {
-                    this.pagination.sortBy = sortQueryParam.slice(1, sortQueryParam.length);
-                    this.pagination.descending = true;
+                let sortQueryParam = this.$route.query.sort;
+
+                if (sortQueryParam) {
+                    if (sortQueryParam[0] === '-') {
+                        this.pagination.sortBy = sortQueryParam.slice(1, sortQueryParam.length);
+                        this.pagination.descending = true;
+                    } else {
+                        this.pagination.sortBy = sortQueryParam;
+                        this.pagination.descending = false;
+                    }
                 } else {
-                    this.pagination.sortBy = sortQueryParam;
-                    this.pagination.descending = false;
+                    this.pagination.sortBy = '';
+                    this.pagination.descending = null;
                 }
-            } else {
-                this.pagination.sortBy = '';
-                this.pagination.descending = null;
             }
         },
 
+        created()
+        {
+            this.initPagination();
+        },
+
         watch: {
+
+            meta()
+            {
+                this.initPagination();
+            },
 
             /**
              * Whenever the pagination changes we need to redirect the router to the right view.
