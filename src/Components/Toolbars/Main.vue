@@ -13,7 +13,7 @@
         <slot name="toolbar-text" v-show="showingTitle"></slot>
         <v-spacer v-if="showingTitle"></v-spacer>
         <slot name="toolbar-text-right" v-show="showingTitle"></slot>
-        <text-field-search v-model="subject" v-show="showingSearch" @click:clear="hideSearch"
+        <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
                            @blur="hideSearchIfEmpty">
         </text-field-search>
         <v-btn icon @click="showSearch" v-if="search" v-show="!showingSearch">
@@ -104,7 +104,7 @@
         {
             return {
                 showingSearch: false,
-                subject: '',
+                searchQuery: '',
                 mounted: false,
             }
         },
@@ -152,7 +152,7 @@
             hideSearch()
             {
                 this.showingSearch = false;
-                this.subject = '';
+                this.searchQuery = '';
             },
 
             /**
@@ -160,7 +160,7 @@
              */
             hideSearchIfEmpty()
             {
-                if (!this.subject || this.subject.length === 0) {
+                if (!this.searchQuery || this.searchQuery.length === 0) {
                     this.hideSearch();
                 }
             },
@@ -176,11 +176,21 @@
             }
         },
 
+        mounted()
+        {
+            let searchQuery = this.$route.query.search;
+
+            if (this.search && searchQuery) {
+                this.searchQuery = searchQuery;
+                this.showSearch();
+            }
+        },
+
         watch: {
 
-            subject()
+            searchQuery()
             {
-                this.$emit('search:update', this.subject);
+                this.$emit('search:update', this.searchQuery);
             }
         }
     }
