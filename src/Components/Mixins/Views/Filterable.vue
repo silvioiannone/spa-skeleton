@@ -20,9 +20,25 @@
 
         methods: {
 
+            /**
+             * Whether filters are applied.
+             *
+             * @returns {boolean}
+             */
             hasFilters()
             {
                 return JSON.stringify(this.filters) !== this.initialFilters;
+            },
+
+            /**
+             * Whether the value is an empty array.
+             *
+             * @param value
+             * @returns {boolean}
+             */
+            isEmptyArray(value)
+            {
+                return Array.isArray(value) && value.length === 0;
             }
         },
 
@@ -37,7 +53,10 @@
             for (let key in this.$route.query)
             {
                 if (this.filters.hasOwnProperty(key)) {
-                    this.filters[key] = this.$route.query[key];
+                    let filterValue = this.$route.query[key].split(',');
+                    
+                    this.filters[key] = Array.isArray(this.filters[key]) ?
+                        filterValue : filterValue[0];
                 }
             }
         },
@@ -49,17 +68,18 @@
                 {
                     let query = {...this.$route.query};
 
-                    // If filters are set...
-                    if (this.hasFilters()) {
-                        // ...update the route query...
-                        for (let key in this.filters) {
-                            query[key] = this.filters[key];
-                        }
-                    } else {
-                        // ...otherwise remove the query parameters related to the filters.
-                        for (let key in this.filters) {
+                    for (let key in this.filters) {
+                        let filterValue = this.filters[key];
+                        let queryValue = query[key];
+                        // If a filter is in the query but not in the filters then we remove it.
+                        if ((! filterValue || this.isEmptyArray(filterValue)) && queryValue) {
                             delete query[key];
+                            continue;
                         }
+
+                        // If the filter is an array then we need to append it.
+                        query[key] = queryValue && Array.isArray(filterValue) ?
+                            filterValue.join(',') : filterValue;
                     }
 
                     this.$router.push({ path: this.$route.path, query });
