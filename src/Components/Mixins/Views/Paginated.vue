@@ -37,8 +37,8 @@
              */
             initPagination()
             {
-                this.pagination.page = parseInt(this.$route.query.page) || 1;
-                this.pagination.rowsPerPage = parseInt(this.$route.query.size) || Config.app.paginationSize;
+                this.pagination.page = this.meta.current_page || parseInt(this.$route.query.page) || 1;
+                this.pagination.rowsPerPage = this.meta.per_page || parseInt(this.$route.query.size) || Config.app.paginationSize;
                 this.pagination.totalItems = this.meta.total;
                 this.pagination.totalPages = this.meta.last_page;
 

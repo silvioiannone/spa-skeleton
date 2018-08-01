@@ -112,9 +112,17 @@ export default class View extends AbstractModule
     {
         defaultParameters = defaultParameters || {};
 
+        let pageSizeParameter = Config.app.paginationSize;
+        if (defaultParameters['page[size]']) {
+            pageSizeParameter = defaultParameters['page[size]'];
+        }
+        if (payload.route.query.size) {
+            pageSizeParameter = payload.route.query.size;
+        }
+
         let parameters = {
             'page[number]': payload.route.query.page || 1,
-            'page[size]': payload.route.query.size || Config.app.paginationSize,
+            'page[size]': pageSizeParameter
         }
 
         let sortParameter = payload.route.query.sort || defaultParameters.sort || null;
