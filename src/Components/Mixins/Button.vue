@@ -8,6 +8,14 @@
         props: {
 
             /**
+             * Applies specified color to the control.
+             */
+            color: {
+                type: String,
+                default: ''
+            },
+
+            /**
              * Designates the button as icon - round and flat.
              */
             icon: {
