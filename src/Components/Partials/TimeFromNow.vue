@@ -1,5 +1,9 @@
 <template>
-    <span>{{ $data._time }}</span>
+    <v-tooltip v-if="tooltip" top>
+        <span slot="activator">{{ $data._time }}</span>
+        <span>{{ time }}</span>
+    </v-tooltip>
+    <span v-else>{{ $data._time }}</span>
 </template>
 
 <script>
@@ -20,6 +24,14 @@
             time: {
                 type: String,
                 required: true
+            },
+
+            /**
+             * Display a tooltip that will show the exact time.
+             */
+            tooltip: {
+                type: Boolean,
+                required: false
             }
         },
 
