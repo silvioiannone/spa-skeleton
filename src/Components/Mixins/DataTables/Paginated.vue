@@ -25,7 +25,7 @@
             }
         },
 
-        mounted()
+        created()
         {
             this.$data._pagination = {...this.pagination};
 
