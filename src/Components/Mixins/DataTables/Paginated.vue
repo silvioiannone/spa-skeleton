@@ -5,7 +5,6 @@
      *
      * It should be used by all tables that display paginated data.
      */
-
     export default {
 
         props: {
@@ -28,9 +27,12 @@
 
         mounted()
         {
-            this.$data._pagination = this.pagination;
+            this.$data._pagination = {...this.pagination};
 
-            this.$watch(() => this.$data._pagination, value => this.$emit('update:pagination', value));
+            this.$watch(
+                () => this.$data._pagination,
+                value => this.$emit('update:pagination', value)
+            );
         }
     }
 

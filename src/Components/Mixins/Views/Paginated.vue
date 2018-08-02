@@ -66,11 +66,6 @@
 
         watch: {
 
-            meta()
-            {
-                this.initPagination();
-            },
-
             /**
              * Whenever the pagination changes we need to redirect the router to the right view.
              */
