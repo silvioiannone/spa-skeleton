@@ -81,9 +81,9 @@
                     page: this.pagination.page
                 };
 
-                query['size'] = this.pagination.page * this.pagination.rowsPerPage < this.pagination.totalItems ?
-                    this.pagination.rowsPerPage :
-                    this.pagination.totalItems - this.pagination.rowsPerPage * (this.pagination.page - 1)
+                if (this.pagination.rowsPerPage !== Config.app.paginationSize) {
+                    query['size'] = this.pagination.rowsPerPage;
+                }
 
                 if (this.pagination.descending !== null) {
                     query['sort'] = this.pagination.descending ? '-' + this.pagination.sortBy : this.pagination.sortBy;
