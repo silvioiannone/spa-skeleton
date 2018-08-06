@@ -67,6 +67,10 @@ export default class WebSocket
     {
         this.vue = vue;
 
+        if(! Config.webSocket.enabled) {
+            return;
+        }
+
         this.connect();
 
         let subscriptions = this.skeletonSubscriptions
