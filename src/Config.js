@@ -102,6 +102,11 @@ const defaultConfig = {
     webSocket: {
 
         /**
+         * Whether to connect to the WS server.
+         */
+        enabled: true,
+
+        /**
          * Host where the WebSocket server is hosted.
          */
         host: WEBSOCKET_SERVER_HOST,
