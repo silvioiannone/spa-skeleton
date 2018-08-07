@@ -131,7 +131,7 @@ export default class CollectionModule extends AbstractModule
      */
     deleteMutation(state, item)
     {
-        let index = state.data.findIndex(item => item.id === item.id);
+        let index = state.data.findIndex(_item => _item.id === item.id);
 
         if (index === -1) return;
 
