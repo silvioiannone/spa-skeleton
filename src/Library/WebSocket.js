@@ -120,7 +120,8 @@ export default class WebSocket
             {
                 let channelName = (new channel(this.vue.$store)).name();
 
-                Log.info('No longer listening to ' + subscription.event + ' in ' + channelName);
+                Log.info('No longer listening to ' + subscription.event + ' in the ' + channelName
+                    + ' room.');
 
                 this.leaveChannelIfUnused(channel);
             });
