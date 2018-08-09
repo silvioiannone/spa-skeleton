@@ -26,6 +26,9 @@ export default class Navigator
     {
         levels = levels || 1;
 
-        this.router.push(String.parentPath(this.route.path, levels));
+        this.router.push({
+            path: String.parentPath(this.route.path, levels),
+            query: this.route.query
+        });
     }
 }
