@@ -5,6 +5,7 @@ import Config from '../../Config';
 // Skeleton plugins
 import API from './Plugins/API';
 import EventHub from './Plugins/EventHub';
+import Navigator from './Plugins/Navigator';
 import Vuetify from 'vuetify';
 import VueI18N from 'vue-i18n';
 import Vue2Filters from 'vue2-filters';
@@ -12,12 +13,13 @@ import VueRouter from 'vue-router';
 import WebSocket from './Plugins/WebSocket';
 
 const SkeletonPlugins = {
-    API,
-    EventHub,
     Vuetify,
     VueI18N,
     VueRouter,
     Vue2Filters,
+    API,
+    Navigator,
+    EventHub,
     WebSocket
 };
 
