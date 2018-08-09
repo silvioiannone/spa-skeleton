@@ -28,10 +28,10 @@ Import the plugin:
 
 `spa-skeleton` ships the following plugins:
 
-- [API](plugins/API.md): Makes the API client easily accessible from any Vue component.
-- [EventHub](plugins/EventHub.md): A global event hub.
-- [Navigator](plugins/Navigator.md): A navigation helper.
-- [WebSocket](plugins/WebSocket.md): Allows to interact with the WS client from any Vue component.
+- [API](Plugins/API.md): Makes the API client easily accessible from any Vue component.
+- [EventHub](Plugins/EventHub.md): A global event hub.
+- [Navigator](Plugins/Navigator.md): A navigation helper.
+- [WebSocket](Plugins/WebSocket.md): Allows to interact with the WS client from any Vue component.
 
 ---
 [More about Vue plugins](https://vuejs.org/v2/guide/plugins.html).
