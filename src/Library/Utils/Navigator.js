@@ -18,6 +18,31 @@ export default class Navigator
     }
 
     /**
+     * Set the route.
+     *
+     * @param route
+     */
+    setRoute(route)
+    {
+        this.route = route;
+    }
+
+    /**
+     * Go to route.
+     *
+     * It behaves in the same way as $router.push but keeps the query parameters.
+     *
+     * @param path
+     */
+    toAndKeepQuery(path)
+    {
+        this.router.push({
+            path,
+            query: this.route.query
+        });
+    }
+
+    /**
      * Go to the parent route.
      *
      * @param [levels] {Number}
