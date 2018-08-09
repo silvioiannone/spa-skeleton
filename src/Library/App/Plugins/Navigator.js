@@ -9,10 +9,17 @@ export default
     {
         let navigator = new Navigator();
 
-        // Set the vue instance inside the navigator.
+        // Make sure that the navigator always have an updated router and route by using vue-router
+        // hooks.
         Vue.mixin({
-            created: function () {
-                navigator.setInstance(this);
+            beforeRouteUpdate: (to, from, next) => {
+                navigator.setRoute(to);
+                next();
+            },
+            beforeRouteEnter: (to, from, next) => {
+                next(vm => {
+                    navigator.setInstance(vm);
+                });
             }
         })
 
