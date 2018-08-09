@@ -1,6 +1,6 @@
 # API plugin
 
-The API plugins allows to easily access the API client from any component.
+The API plugin allows to easily access the API client from any component.
 
 ## Usage
 
