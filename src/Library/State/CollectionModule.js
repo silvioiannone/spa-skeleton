@@ -78,7 +78,10 @@ export default class CollectionModule extends AbstractModule
      */
     storeMutation(state, body)
     {
-        state.data = Array.isArray(body.data) ? body.data : [body.data];
+        // Do not add data to the state if the body's data evaluates to false.
+        if (body.data && (body.data || body.data.length)) {
+            state.data = Array.isArray(body.data) ? body.data : [body.data];
+        }
         state.meta = body.meta || {};
     }
 
@@ -96,8 +99,8 @@ export default class CollectionModule extends AbstractModule
         items = Array.isArray(items) ? items : [items];
 
         // This collection buffer will be used in order to improve performances.
-        // The changes to the state will be applied (triggering Vue to re-render) only when all the elements have been
-        // added to the state.
+        // The changes to the state will be applied (triggering Vue to re-render) only when all the
+        // elements have been added to the state.
         let buffer = state.data.slice(0);
 
         items.forEach(currentItem =>
