@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import Log from 'loglevel';
-import Modules from 'assets/js/App/State'
+import Modules from 'js/App/State'
 
 // Skeleton modules
 import App from './State/Modules/App';

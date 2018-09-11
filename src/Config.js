@@ -2,7 +2,7 @@
  * Central client configuration
  */
 
-import AppConfig from 'assets/js/Config.js';
+import AppConfig from 'js/Config.js';
 
 const defaultConfig = {
 

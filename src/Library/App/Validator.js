@@ -1,6 +1,6 @@
 import Log                 from 'loglevel';
 import VeeValidate         from 'vee-validate';
-import ValidatorDictionary from 'assets/js/App/Validator/Dictionary';
+import ValidatorDictionary from 'js/App/Validator/Dictionary';
 
 /**
  * The validator register the needed validators for the vue-validator plugin.

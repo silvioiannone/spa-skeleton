@@ -1,5 +1,5 @@
 import Log from 'loglevel';
-import AppFilters from 'assets/js/App/Filters';
+import AppFilters from 'js/App/Filters';
 
 // Skeleton filters
 import OrganizationNumber from './Filters/OrganizationNumber';

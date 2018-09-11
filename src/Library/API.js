@@ -1,4 +1,4 @@
-import AppAPIResources from 'assets/js/App/API';
+import AppAPIResources from 'js/App/API';
 
 // Skeleton API resources
 import App from './API/App';

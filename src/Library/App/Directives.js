@@ -1,5 +1,5 @@
 import Log            from 'loglevel';
-import DirectivesList from 'assets/js/App/Directives';
+import DirectivesList from 'js/App/Directives';
 
 // Skeleton directives
 

@@ -2,7 +2,7 @@ import Echo from 'laravel-echo';
 import IO  from 'socket.io-client';
 import Log from 'loglevel';
 import Config from '../Config';
-import Subscriptions from 'assets/js/App/Subscriptions';
+import Subscriptions from 'js/App/Subscriptions';
 import AdminChannel from './WebSocket/Channels/Admin';
 import AppChannel from './WebSocket/Channels/App';
 import UserChannel from './WebSocket/Channels/User';

@@ -1,5 +1,5 @@
 import Log from 'loglevel';
-import PluginsList from 'assets/js/App/Plugins';
+import PluginsList from 'js/App/Plugins';
 import Config from '../../Config';
 
 // Skeleton plugins

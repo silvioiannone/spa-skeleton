@@ -1,5 +1,5 @@
 import Log            from 'loglevel';
-import ComponentsList from 'assets/js/App/Components';
+import ComponentsList from 'js/App/Components';
 
 // Skeleton components
 import AnimatedRouterView   from '../../Components/Misc/AnimatedRouterView.vue';

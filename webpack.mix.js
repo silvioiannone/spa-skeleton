@@ -83,7 +83,7 @@ module.exports = {
             'vue-markdown'
         ].concat(this.additionalModulesToExtract);
 
-        this.mix.js('resources/assets/js/App.js', './public/js/app.js')
+        this.mix.js('resources/js/App.js', './public/js/app.js')
             .extract(modulesToExtract, './public/js/vendor.js');
     },
 
@@ -102,7 +102,7 @@ module.exports = {
             'public/css/app.css'
         ];
 
-        this.mix.stylus('resources/assets/stylus/app.styl', 'public/css');
+        this.mix.stylus('resources/stylus/app.styl', 'public/css');
 
         if (this.additionalSass.length) {
             this.additionalSass.forEach(function (sassSource)

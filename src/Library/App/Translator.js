@@ -17,7 +17,7 @@ export default class Translator
         Log.debug('Loading language...');
 
         let locale = Config.locale;
-        let defaultLocale = require('assets/locales/' + locale + '.json');
+        let defaultLocale = require('locales/' + locale + '.json');
         let messages = {};
 
         messages[locale] = defaultLocale;

@@ -4,7 +4,7 @@ import Config    from '../../Config';
 import Guard     from './Guard';
 import MixinRoot from '../../Components/Mixins/Root';
 import RootViewComponent from '../../Components/Views/Root';
-import Routes    from 'assets/js/App/Routes';
+import Routes    from 'js/App/Routes';
 import VueRouter from 'vue-router';
 import { sync }  from 'vuex-router-sync';
 

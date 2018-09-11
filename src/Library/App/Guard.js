@@ -1,6 +1,6 @@
 import Log    from 'loglevel';
 import _      from 'lodash';
-import Guards from 'assets/js/App/Guards';
+import Guards from 'js/App/Guards';
 
 // Skeleton guards
 import Auth from './Guards/Auth';
