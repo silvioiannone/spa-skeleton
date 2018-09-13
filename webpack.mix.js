@@ -12,7 +12,12 @@ module.exports = {
     /**
      * Additional Sass files that will be compiled.
      */
-    additionalSass: [],
+    additionalSass: [
+        {
+            path: 'node_modules/spa-skeleton/src/Assets/Sass/Skeleton.scss',
+            file: 'Skeleton.css'
+        }
+    ],
 
     /**
      * Laravel mix.
@@ -45,6 +50,7 @@ module.exports = {
 
         mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
         mix.copy('node_modules/mdi/fonts', 'public/fonts');
+        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
 
         if (process.env.APP_ENV !== 'production') {
             mix.sourceMaps();
@@ -95,6 +101,7 @@ module.exports = {
     buildStyles()
     {
         let self = this;
+
         let sources = [
             'node_modules/material-design-icons/iconfont/material-icons.css',
             'node_modules/mdi/css/materialdesignicons.css',

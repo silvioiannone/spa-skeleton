@@ -132,8 +132,7 @@
             },
 
             model: {
-                handler: () => {
-                },
+                handler: () => {},
                 deep: true
             }
         },

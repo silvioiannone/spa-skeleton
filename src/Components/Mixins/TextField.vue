@@ -1,5 +1,7 @@
 <script>
 
+    import MixinInput from './Input';
+
     /**
      * This mixin can be used in order to create text fields.
      *
@@ -8,38 +10,18 @@
      */
     export default {
 
+        mixins: [
+            MixinInput
+        ],
+
         props: {
-
-            /**
-             * Label.
-             */
-            label: {
-                type: String,
-                default: ''
-            },
-
-            /**
-             * A hint displayed under the text field.
-             */
-            hint: {
-                type: String,
-                default: ''
-            },
-
-            /**
-             * Make the hint always visible.
-             */
-            persistentHint: {
-                type: Boolean,
-                default: false
-            },
 
             /**
              * Make the phone input required.
              */
             required: {
                 type: Boolean,
-                default: true
+                default: false
             },
 
             /**
@@ -105,24 +87,10 @@
             },
 
             /**
-             * Model value.
-             */
-            value: {
-                default: ''
-            },
-
-            /**
              * Suffix.
              */
             suffix: {
                 default: ''
-            },
-
-            /**
-             * Whether the text field should be disabled.
-             */
-            disabled: {
-                default: false
             },
 
             /**
@@ -190,31 +158,10 @@
             _value()
             {
                 return this.value;
-            },
-
-            errorMessages()
-            {
-                let parentFormErrors = this.parentForm().errors.collect(this.name, 'server');
-
-                // First we display the server errors if any...
-                if (parentFormErrors.length) {
-                    return parentFormErrors;
-                }
-
-                // ...and then the validation errors.
-                return this.errors.collect(this.name);
             }
         },
 
         methods: {
-
-            /**
-             * Access the form containing the text field.
-             */
-            parentForm()
-            {
-                return this.$parent.$parent.$parent;
-            },
 
             /**
              * Bubble the input event.
