@@ -54,7 +54,7 @@
 
         created()
         {
-            this.visible = this.$vuetify.breakpoint.lgAndDown ? false : true;
+            this.visible = !this.$vuetify.breakpoint.lgAndDown;
         }
     }
 
