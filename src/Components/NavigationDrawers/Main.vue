@@ -50,6 +50,11 @@
             {
                 return this.$store.getters.app.user;
             }
+        },
+
+        created()
+        {
+            this.visible = this.$vuetify.breakpoint.lgAndDown ? false : true;
         }
     }
 
