@@ -11,6 +11,7 @@ import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
 import PartialTimeFromNow   from '../../Components/Partials/TimeFromNow';
 import PartialFooter        from '../../Components/Partials/Footer.vue';
 import PartialMarkdown      from '../../Components/Partials/Markdown.vue';
+import ResponsiveContainer  from '../../Components/Misc/Grid/ResponsiveContainer';
 import ToolbarMain          from '../../Components/Toolbars/Main.vue';
 import ToolbarHome          from '../../Components/Toolbars/Home.vue';
 
@@ -22,6 +23,7 @@ const SkeletonComponents = {
     'navigation-drawer-main': NavigationDrawerMain,
     'partial-footer': PartialFooter,
     'partial-markdown': PartialMarkdown,
+    'responsive-container': ResponsiveContainer,
     'toolbar-main': ToolbarMain,
     'toolbar-home': ToolbarHome,
     'time-from-now': PartialTimeFromNow
