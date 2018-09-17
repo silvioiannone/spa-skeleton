@@ -1,0 +1,34 @@
+@import '../theme.styl'
+
+//
+// Toolbar
+//
+
+// Theme
+v-toolbar($theme)
+  color: $theme.toolbar.text.primary
+
+theme(v-toolbar, "v-toolbar")
+
+.v-toolbar
+
+  elevation(1)
+
+  &__title > a
+    color: $themeColors.primary
+    text-decoration none
+
+    img
+      margin-top 10px
+      height 37px
+
+  &__text
+    display flex
+    align-items center
+
+  // Do not wrap the breadcrumb text
+  .v-breadcrumbs
+    justify-content flex-start
+    text-overflow ellipsis
+    overflow hidden
+    white-space nowrap

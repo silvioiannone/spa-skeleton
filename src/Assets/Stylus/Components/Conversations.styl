@@ -1,0 +1,55 @@
+/*
+ * Conversation module.
+ */
+
+.conversation
+  display flex
+  flex-direction column
+
+/*
+ * Conversation message.
+ */
+.conversation__message
+  align-items center
+  display flex
+  justify-content flex-start
+
+.conversation__message--mine
+  justify-content flex-end
+
+  .conversation__message-container
+    justify-content flex-end
+    martgin-left 0
+
+  .conversation__message-content
+
+    &.alert
+      background-color: $themeColors.primary
+      color white
+      margin-left 0
+
+  .conversation__message-details
+    text-align right
+
+/*
+ * Conversation message container
+ */
+.conversation__message-container
+  display flex
+  flex-direction column
+  margin-left 8px
+
+/*
+ * Conversation message content
+ */
+.conversation__message-content
+  display inline-block
+  @extends .elevation-1
+
+  &.alert
+    border-radius: 3px;
+    background-color: $grey.lighten-2
+    color: $grey.darken-3
+    margin-left 0
+    margin-right 0
+    padding 10px
