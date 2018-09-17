@@ -49,7 +49,7 @@ module.exports = {
         }
 
         mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
-        mix.copy('node_modules/mdi/fonts', 'public/fonts');
+        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
         mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
 
         if (process.env.APP_ENV !== 'production') {
@@ -104,7 +104,7 @@ module.exports = {
 
         let sources = [
             'node_modules/material-design-icons/iconfont/material-icons.css',
-            'node_modules/mdi/css/materialdesignicons.css',
+            'node_modules/@mdi/font/css/materialdesignicons.css',
             'node_modules/github-markdown-css/github-markdown.css',
             'public/css/app.css'
         ];
