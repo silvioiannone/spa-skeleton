@@ -4,6 +4,7 @@
         <slot slot="title" name="title"></slot>
         <slot slot="toolbar-text" name="toolbar-text"></slot>
         <slot slot="toolbar-text-right" name="toolbar-text-right"></slot>
+        <slot slot="toolbar-items" name="toolbar-items"></slot>
         <template slot="toolbar-items">
             <v-btn icon @click="toggleNotificationsDrawer">
                 <v-badge color="red">
@@ -14,7 +15,6 @@
                 </v-badge>
             </v-btn>
         </template>
-        <slot slot="toolbar-items" name="toolbar-items"></slot>
         <slot slot="tabs" name="tabs"></slot>
     </toolbar-main>
 </template>
