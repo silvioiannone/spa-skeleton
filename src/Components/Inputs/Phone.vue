@@ -51,8 +51,7 @@
             return {
                 countryPhonePrefixes: CountryPhonePrefixes,
                 phoneNumber: '',
-                countryPrefix: '',
-                isInitialized: false
+                countryPrefix: ''
             }
         },
 
@@ -123,11 +122,6 @@
                 if (! this.value) {
                     this.phoneNumber = '';
                     this.countryPrefix = '';
-                    this.isInitialized = false;
-                    return;
-                }
-
-                if (this.isInitialized) {
                     return;
                 }
 
@@ -141,7 +135,6 @@
                     .find(item => item.prefix === parsedNumber.countryCallingCode.toString())
                     .prefix;
                 this.phoneNumber = parsedNumber.phone;
-                this.isInitialized = true;
             },
 
             /**
