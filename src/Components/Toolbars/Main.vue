@@ -4,14 +4,16 @@
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
-        <v-toolbar-title v-if="showingTitle && title.length" class="mr-3">
+        <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
                 <slot name="title"></slot>
             </router-link>
-            <router-link :to="toolbarTitleRedirectUrl" v-else="title">{{ title }}</router-link>
+            <router-link :to="toolbarTitleRedirectUrl" v-if="title && title.length">
+                {{ title }}
+            </router-link>
         </v-toolbar-title>
         <slot name="toolbar-text" v-show="showingTitle"></slot>
-        <v-spacer v-if="showingTitle"></v-spacer>
+        <v-spacer></v-spacer>
         <slot name="toolbar-text-right" v-show="showingTitle"></slot>
         <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
                            @blur="hideSearchIfEmpty">
@@ -122,7 +124,15 @@
 
             showingTitle()
             {
-                return !(this.showingSearch && window.innerWidth <= 576);
+                if (this.$vuetify.breakpoint.xs) {
+                    return false;
+                }
+
+                if (this.$vuetify.breakpoint.mdAndUp) {
+                    return !!(!!this.$slots.title || (this.title && this.title.length))
+                } else {
+                    return !(this.showingSearch && window.innerWidth <= 576);
+                }
             },
 
             ui()
