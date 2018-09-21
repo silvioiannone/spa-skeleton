@@ -1,7 +1,7 @@
 <template>
     <v-navigation-drawer v-model="visible" class="scroll-y" :right="right" app clipped fixed
                          :disable-resize-watcher="right">
-        <v-toolbar class="elevation-0" dense v-if="title || $slots.toolbar">
+        <v-toolbar class="elevation-0" v-if="title || $slots.toolbar">
             <v-toolbar-title>{{ title }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <slot name="toolbar"></slot>
