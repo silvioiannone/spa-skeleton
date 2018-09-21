@@ -10,6 +10,12 @@
                 </v-btn>
                 <span>Mark all as read</span>
             </v-tooltip>
+            <v-tooltip bottom>
+                <v-btn icon slot="activator" @click="visible = false">
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <span>Close</span>
+            </v-tooltip>
         </v-toolbar>
         <v-list two-line v-if="unreadNotifications.length">
             <slot :unread-notifications="unreadNotifications"></slot>

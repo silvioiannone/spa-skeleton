@@ -1,14 +1,25 @@
 <template>
-    <v-navigation-drawer v-model="visible" class="scroll-y" persistent :right="right" app clipped
-                         fixed :enable-resize-watcher="!right">
+    <v-navigation-drawer v-model="visible" class="scroll-y" :right="right" app clipped fixed
+                         :enable-resize-watcher="!right" ref="vuetifyNavigationDrawer">
+        <v-toolbar class="elevation-0" dense v-if="title || $slots.toolbar">
+            <v-toolbar-title>{{ title }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <slot name="toolbar"></slot>
+            <v-tooltip bottom>
+                <v-btn icon slot="activator" @click="visible = false">
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <span>Close</span>
+            </v-tooltip>
+        </v-toolbar>
         <slot></slot>
     </v-navigation-drawer>
 </template>
 
 <script>
 
-    export default
-    {
+    export default {
+
         name: 'NavigationDrawerMain',
 
         props: {
@@ -19,6 +30,14 @@
             right: {
                 type: Boolean,
                 default: false
+            },
+
+            /**
+             * Navigation drawer's title.
+             */
+            title: {
+                type: String,
+                default: ''
             }
         },
 
