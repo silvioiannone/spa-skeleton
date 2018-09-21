@@ -1,7 +1,7 @@
 @import "~vuetify/src/stylus/theme.styl"
 @import "Variables.styl"
 
-$skeleton-light = {
+$theme-light := {
   app-bar: white,
   toolbar: {
     text: {
@@ -10,7 +10,7 @@ $skeleton-light = {
   }
 }
 
-$skeleton-dark = {
+$theme-dark := {
   toolbar: {
     text: {
       primary: $themeColors.primary
@@ -18,5 +18,5 @@ $skeleton-dark = {
   }
 }
 
-$material-light = merge($material-light, $skeleton-light);
-$material-dark = merge($material-dark, $skeleton-dark);
+$material-light = merge($material-light, $theme-light);
+$material-dark = merge($material-dark, $theme-dark);
