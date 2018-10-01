@@ -103,6 +103,7 @@ module.exports = {
         let self = this;
 
         let sources = [
+            'node_modules/vue2-dropzone/dist/vue2Dropzone.css',
             'node_modules/material-design-icons/iconfont/material-icons.css',
             'node_modules/@mdi/font/css/materialdesignicons.css',
             'node_modules/github-markdown-css/github-markdown.css',

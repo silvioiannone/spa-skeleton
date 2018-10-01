@@ -2,10 +2,12 @@ import Log from 'loglevel';
 import AppFilters from 'js/App/Filters';
 
 // Skeleton filters
+import FileSize from './Filters/FileSize';
 import OrganizationNumber from './Filters/OrganizationNumber';
 import Phone from './Filters/Phone';
 
 const SkeletonFilters = {
+    fileSize: FileSize,
     organizationNumber: OrganizationNumber,
     phone: Phone
 };

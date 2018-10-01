@@ -103,6 +103,29 @@ export default class AbstractResource
     }
 
     /**
+     * Send a GET HTTP download request to the API.
+     *
+     * @param {string} action
+     * @return {Promise}
+     * @protected
+     */
+    _download(action)
+    {
+        let actionUri = this.getAction(action);
+
+        if(Object.keys(this.parameters).length !== 0)
+        {
+            actionURI += '?' + this.getURIEncodedParameters();
+        }
+
+        let request = this.httpClient
+            .get(actionUri)
+            .responseType('blob');
+
+        return this.dispatchRequest(request);
+    }
+
+    /**
      * Send a DELETE HTTP request to the API.
      *
      * @param {string} action The action that should be added at the end of the path.
