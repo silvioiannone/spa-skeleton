@@ -155,7 +155,7 @@
             handleSuccess(file, response)
             {
                 this.$store.commit('files/ADD', response);
-                this.$emit('uploaded');
+                this.$emit('uploaded', response);
             },
 
             /**
