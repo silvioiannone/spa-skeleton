@@ -3,8 +3,7 @@
         <vue-dropzone v-if="previewTemplate" ref="dropzone" id="dropzone" :options="dropzoneOptions"
                       :useCustomSlot=true class="dropzone" :include-styling="false"
                       v-on:vdropzone-thumbnail="generateThumbnail"
-                      v-on:vdropzone-error="handleError"
-                      v-on:vdropzone-success="handleSuccess">
+                      v-on:vdropzone-error="handleError" v-on:vdropzone-success="handleSuccess">
             <div>
                 <h3>Drag and drop to upload a file!</h3>
                 <p>...or click/tap to select one.</p>
@@ -68,6 +67,17 @@
             VueDropzone
         },
 
+        props: {
+
+            /**
+             * Dropzone options object that will be merged with the default one.
+             */
+            options: {
+                type: Object,
+                default: () => { return {} }
+            }
+        },
+
         data()
         {
             return {
@@ -93,7 +103,8 @@
                     previewTemplate: this.previewTemplate,
                     thumbnailHeight: null,
                     thumbnailWidth: 640,
-                    url: '/api/v1/files'
+                    url: '/api/v1/files',
+                    ...this.options,
                 }
             }
         },
