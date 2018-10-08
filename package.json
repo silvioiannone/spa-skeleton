@@ -59,6 +59,8 @@
     "raven-js": "^3.24.2",
     "socket.io": "^2.1.0",
     "superagent": "^3.8.2",
+    "tiptap": "^0.16.0",
+    "tiptap-extensions": "^0.18.0",
     "url-pattern": "^1.0.3",
     "urijs": "^1.19.1",
     "vee-validate": "^2.0.6",

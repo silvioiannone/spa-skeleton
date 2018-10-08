@@ -1,0 +1,23 @@
+//
+// Editors.
+//
+
+@import "../Variables.styl"
+
+.editor
+
+  /*
+   * Editor content.
+   */
+  &__content
+
+    div[contenteditable="true"]
+      font-family: $body-font-family
+      min-height 200px
+      &:focus
+        outline 0px solid transparent
+
+      ul, ol
+        li
+          p
+            display inline

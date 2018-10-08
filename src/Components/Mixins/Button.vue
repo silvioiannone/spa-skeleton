@@ -36,16 +36,6 @@
             }
         },
 
-        data()
-        {
-            return {
-                // Use this in order to override the value of a prop.
-                props: {
-
-                }
-            }
-        },
-
         methods: {
 
         },
