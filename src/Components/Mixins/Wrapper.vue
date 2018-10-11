@@ -46,8 +46,13 @@
             {
                 let props = {};
 
-                for(let propKey in this.$attrs) {
-                    this.$set(props, propKey, this.$attrs[propKey]);
+                let propsToMerge = {
+                    ...this.$props,
+                    ...this.$attrs
+                }
+
+                for(let propKey in propsToMerge) {
+                    this.$set(props, propKey, propsToMerge[propKey]);
                 }
 
                 // If the component has a model we also need to include the value prop.
@@ -84,7 +89,42 @@
             getSlots()
             {
                 return this.$slots.default;
+            },
+
+            /**
+             * Override the wrapped's `$emit` function.
+             */
+            overrideWrapped$emit()
+            {
+                if (!this.$children.length) {
+                    throw "The wrapper has no children.";
+                    return;
+                }
+
+                // We need to override the $emit function so that we will be able to catch and fire
+                // all the events fired by the wrapped component.
+                let wrapped = this.$children[0];
+                let childEmit = wrapped.$emit;
+
+                wrapped.$emit = (payload) =>
+                {
+                    childEmit.apply(wrapped, [payload]);
+                    this.$emit(payload);
+                }
             }
+        },
+
+        created()
+        {
+            if (! this.$data.__component) {
+                throw 'Wrapped component not set. Please set it using the `__component` data ' +
+                      'property.';
+            }
+        },
+
+        mounted()
+        {
+            this.overrideWrapped$emit();
         },
 
         render(createElement)
