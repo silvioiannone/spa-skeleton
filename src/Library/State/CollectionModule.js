@@ -6,12 +6,105 @@ import AbstractModule from './AbstractModule';
  */
 export default class CollectionModule extends AbstractModule
 {
+    constructor()
+    {
+        super();
+
+        /*
+         * Related resources.
+         */
+        this.related = [];
+    }
+
     /**
      * Collection actions.
      */
     actions()
     {
-        return {};
+        let actions = {};
+
+        let deleteActionName = this.getModuleName() + '/DELETE';
+
+        actions[deleteActionName] = this.deleteAction();
+
+        return actions;
+    }
+
+    /**
+     * Delete action.
+     *
+     * @protected
+     */
+    deleteAction()
+    {
+        return (store, resource) => new Promise((resolve, reject) =>
+        {
+            return this.api[this.getModuleName()]
+                .delete(resource)
+                .then(response =>
+                {
+                    this.deleteTwinsInRelatedResources(store, resource);
+                    resolve(response);
+                })
+                .catch(response => reject(response));
+        })
+    }
+
+    /**
+     * Delete the twins of a resource in related resources.
+     *
+     * @protected
+     */
+    deleteTwinsInRelatedResources(store, resource)
+    {
+        let relatedResources = this.getRelatedResources(store, resource);
+
+        for (let related in relatedResources) {
+
+            // We now need to remove the item (resource) from the related resource.
+            relatedResources[related].forEach(relatedResource =>
+            {
+                this.deleteItem(relatedResource[this.getModuleName()], resource);
+            });
+        }
+
+        store.commit(this.getDeleteMutationName(), resource);
+    }
+
+    /**
+     * Retrieve the related resources.
+     *
+     * @protected
+     * @param store
+     * @param item
+     * @return Object
+     */
+    getRelatedResources(store, item)
+    {
+        // We need to loop through all the related resources and find the ones that have a relation
+        // to the item.
+
+        let resources = {};
+
+        this.related.forEach(related =>
+        {
+            resources[related] = [];
+
+            store.getters[related].forEach(relatedResource =>
+            {
+                let twins = relatedResource[this.getModuleName()];
+
+                if (! twins.length) {
+                    return;
+                }
+
+                if (twins.find(twin => twin.id === item.id)) {
+                    resources[related].push(relatedResource);
+                }
+            });
+        });
+
+        return resources;
     }
 
     /**
@@ -39,18 +132,14 @@ export default class CollectionModule extends AbstractModule
     {
         let mutations = {};
 
-        let storeMutationName  = this.getModuleName() + '/STORE',
-            addMutationName    = this.getModuleName() + '/ADD',
-            deleteMutationName = this.getModuleName() + '/DELETE';
-
         // <module>/STORE mutation
-        mutations[storeMutationName] = this.storeMutation;
+        mutations[this.getStoreMutationName()] = this.storeMutation;
 
         // <module>/ADD mutation definition
-        mutations[addMutationName] = this.addMutation;
+        mutations[this.getAddMutationName()] = this.addMutation;
 
         // <module>/DELETE mutation definition
-        mutations[deleteMutationName] = this.deleteMutation;
+        mutations[this.getDeleteMutationName()] = this.deleteMutation();
 
         return mutations;
     }
@@ -130,15 +219,30 @@ export default class CollectionModule extends AbstractModule
      *
      * @protected
      * @param state
+     * @param body
+     */
+    deleteMutation()
+    {
+        return (state, body) =>
+        {
+            this.deleteItem(state.data, body);
+        }
+    }
+
+    /**
+     * Delete the item with the matching id.
+     *
+     * @protected
+     * @param items
      * @param item
      */
-    deleteMutation(state, item)
+    deleteItem(items, item)
     {
-        let index = state.data.findIndex(_item => _item.id === item.id);
+        let index = items.findIndex(_item => _item.id === item.id);
 
         if (index === -1) return;
 
-        state.data.splice(index, 1);
+        items.splice(index, 1);
     }
 
     /**
@@ -149,5 +253,38 @@ export default class CollectionModule extends AbstractModule
     getModuleName()
     {
         return this.moduleName;
+    }
+
+    /**
+     * Get the delete mutation name.
+     *
+     * @protected
+     * @return String
+     */
+    getDeleteMutationName()
+    {
+        return this.getModuleName() + '/DELETE';
+    }
+
+    /**
+     * Get the add mutation name.
+     *
+     * @protected
+     * @return String
+     */
+    getAddMutationName()
+    {
+        return this.getModuleName() + '/ADD';
+    }
+
+    /**
+     * Get the store mutation name.
+     *
+     * @protected
+     * @return String
+     */
+    getStoreMutationName()
+    {
+        return this.getModuleName() + '/STORE';
     }
 }
