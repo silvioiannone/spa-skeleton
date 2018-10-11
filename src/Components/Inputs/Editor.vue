@@ -1,6 +1,6 @@
 <template>
     <editor class="editor" @keydown.enter="stopEnterPropagation" :extensions="extensions"
-            ref="editor" @update="bubbleUpdateEvent">
+            ref="editor" @update="updateModel">
         <v-toolbar dense class="menubar" slot="menubar" slot-scope="{nodes, marks, focus}"
                    v-if="nodes && marks">
             <editor-buttons-formats :nodes="nodes" :marks="marks" :focus="focus">
@@ -16,7 +16,7 @@
             </editor-button-link>
         </v-toolbar>
         <div slot="content" slot-scope="props" class="mt-3 editor__content">
-            <slot name="content"></slot>
+            <div v-html="value"></div>
         </div>
     </editor>
 </template>
@@ -54,11 +54,21 @@
         name: 'InputEditor',
 
         components: {
-            EditorButtonLink,
             Editor,
+            EditorButtonLink,
             EditorButtonsFormats,
             EditorButtonsHeadings,
             EditorButtonsLists
+        },
+
+        props: {
+
+            /**
+             * Model.
+             */
+            value: {
+                default: ''
+            }
         },
 
         data()
@@ -88,24 +98,24 @@
         methods: {
 
             /**
-             * Stop the propagation of the enter keypress event.
-             *
-             * This is needed in order to avoid accidentally submitting the form containing this
-             * input element.
-             *
-             * @param event
-             */
+              * Stop the propagation of the enter keypress event.
+              *
+              * This is needed in order to avoid accidentally submitting the form containing this
+              * input element.
+              *
+              * @param event
+              */
             stopEnterPropagation(event)
             {
                 event.preventDefault();
             },
 
             /**
-             * Emit the update event.
-             */
-            bubbleUpdateEvent(content)
+              * Emit the update event.
+              */
+            updateModel(content)
             {
-                this.$emit('update', content.getHTML());
+                this.$emit('input', content.getHTML());
             }
         }
     }
