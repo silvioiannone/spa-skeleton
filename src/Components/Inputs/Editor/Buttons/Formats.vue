@@ -1,15 +1,19 @@
 <template>
-    <v-btn-toggle v-model="formats" multiple>
-        <v-btn flat :active="marks.bold.active()" @click="marks.bold.command">
+    <v-btn-toggle>
+        <v-btn flat :value="0" @click="marks.bold.command"
+               :class="{ 'v-btn--active': marks.bold.active() }">
             <v-icon>format_bold</v-icon>
         </v-btn>
-        <v-btn flat :active="marks.italic.active()" @click="marks.italic.command">
+        <v-btn flat :value="1" @click="marks.italic.command"
+               :class="{ 'v-btn--active': marks.italic.active() }">
             <v-icon>format_italic</v-icon>
         </v-btn>
-        <v-btn flat :active="marks.strike.active()" @click="marks.strike.command">
+        <v-btn flat :value="2" @click="marks.strike.command"
+               :class="{ 'v-btn--active': marks.strike.active() }">
             <v-icon>format_strikethrough</v-icon>
         </v-btn>
-        <v-btn flat :active="marks.underline.active()" @click="marks.underline.command">
+        <v-btn flat :value="3" @click="marks.underline.command"
+               :class="{ 'v-btn--active': marks.underline.active() }">
             <v-icon>format_underline</v-icon>
         </v-btn>
     </v-btn-toggle>
@@ -25,14 +29,7 @@
 
         mixins: [
             MixinEditorCommand
-        ],
-
-        data()
-        {
-            return {
-                formats: []
-            }
-        }
+        ]
     }
 
 </script>
