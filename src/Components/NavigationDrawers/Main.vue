@@ -73,7 +73,7 @@
 
         created()
         {
-            this.visible = !this.$vuetify.breakpoint.lgAndDown && !this.right;
+            this.visible = this.$vuetify.breakpoint.lgAndUp && !this.right;
         }
     }
 
