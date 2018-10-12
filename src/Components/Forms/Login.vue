@@ -1,5 +1,5 @@
 <template>
-    <form-main :submit="login" submit-text="login">
+    <form-main v-bind="getProps()" v-on="getOn()" :submit="login" submit-text="login">
         <v-flex xs12>
             <v-text-field label="E-mail" v-model="model.username"></v-text-field>
         </v-flex>
@@ -11,19 +11,21 @@
 
 <script>
 
-    import MixinContainerForm from 'spa-skeleton/src/Components/Mixins/Containers/Form';
+    import FormMain from "spa-skeleton/src/Components/Forms/Main";
+    import Wrapper  from 'spa-skeleton/src/Components/Mixins/Wrapper';
 
     export default {
 
         name: 'FormLogin',
 
         mixins: [
-            MixinContainerForm
+            Wrapper
         ],
 
         data()
         {
             return {
+                __component: FormMain,
                 model: {
                     username: '',
                     password: ''

@@ -1,5 +1,5 @@
 <template>
-    <form-main :submit="reset" submit-text="Reset">
+    <form-main v-bind="getProps()" v-on="getOn()" :submit="reset" submit-text="Reset">
         <v-flex xs12>
             <p>
                 Please enter the email address that was used to create your account. We'll send an
@@ -12,14 +12,15 @@
 
 <script>
 
-    import MixinContainerForm from '../Mixins/Containers/Form';
+    import FormMain from "spa-skeleton/src/Components/Forms/Main";
+    import Wrapper  from 'spa-skeleton/src/Components/Mixins/Wrapper';
 
     export default {
 
         name: 'FormPasswordAskReset',
 
         mixins: [
-            MixinContainerForm
+            Wrapper
         ],
 
         props: {
@@ -36,6 +37,7 @@
         data()
         {
             return {
+                __component: FormMain,
                 model: {
                     email: ''
                 },

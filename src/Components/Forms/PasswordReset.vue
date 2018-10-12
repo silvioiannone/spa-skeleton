@@ -1,5 +1,5 @@
 <template>
-    <form-main :submit="change" submit-text="Change">
+    <form-main v-bind="getProps()" v-on="getOn()" :submit="change" submit-text="Change">
         <v-flex xs12>
             <v-text-field label="New password" type="password" v-model="model.password">
             </v-text-field>
@@ -14,14 +14,15 @@
 
 <script>
 
-    import MixinContainerForm from '../Mixins/Containers/Form';
+    import FormMain from "spa-skeleton/src/Components/Forms/Main";
+    import Wrapper from 'spa-skeleton/src/Components/Mixins/Wrapper';
 
     export default {
 
         name: 'FormPasswordReset',
 
         mixins: [
-            MixinContainerForm
+            Wrapper
         ],
 
         props: {
@@ -46,6 +47,7 @@
         data()
         {
             return {
+                __component: FormMain,
                 model: {
                     password: '',
                     passwordConfirmation: ''
