@@ -43,26 +43,23 @@
             }
         },
 
-        computed: {
+        data()
+        {
+            return {
+                _resetOnMount: true
+            }
+        },
 
-            _cancellable()
-            {
-                return this.$parent.cancellable || this.cancellable;
-            },
+        computed: {
 
             hasErrors()
             {
                 // Don't consider the server errors not tied to a specific field.
-                let serverErrorsCount = this.$parent.errors.all('_server').length;
-                let totalCount = this.$parent.errors.all().length;
+                let serverErrorsCount = this.errors.all('_server').length;
+                let totalCount = this.$parent.errors.all().length +
+                    (this.errors.all().length - serverErrorsCount);
 
-                return totalCount !== serverErrorsCount;
-            },
-
-            canSubmit()
-            {
-                return (typeof this.$parent.canSubmit !== 'undefined') ?
-                    this.$parent.canSubmit : true;
+                return totalCount > serverErrorsCount;
             }
         },
 
@@ -73,8 +70,7 @@
              */
             cancel()
             {
-                this.$parent.$validator.reset();
-                this.$emit('cancel')
+                this.$emit('cancel');
             },
 
             /**
@@ -88,7 +84,7 @@
                 return new Promise((resolve, reject) =>
                 {
                     // Before submitting make sure that the form is valid.
-                    this.$parent.$validator
+                    this.$validator
                         .validateAll()
                         .then(result =>
                         {
@@ -100,18 +96,108 @@
                             this.submit()
                                 .then(response =>
                                 {
-                                    //this.$parent.$validator.pause();
+                                    this.resetForm();
                                     this.$emit('submitted', response);
                                     resolve(response);
                                 })
-                                .catch(error =>
+                                .catch(response =>
                                 {
-                                    this.$emit('error', error);
-                                    reject(error);
-                                    throw error;
+                                    this.$emit('error', response);
+                                    this.handleErrors(response);
+                                    reject(response);
+                                    throw response;
                                 });
                         });
                 });
+            },
+
+            /**
+             * Handle errors.
+             *
+             * @param response
+             */
+            handleErrors(response)
+            {
+                if (! response.body.errors) {
+                    return;
+                }
+
+                // Assign the errors to the validator.
+                for (let index in response.body.errors) {
+                    // If the error's index is a number then it is a server error not linked to a
+                    // form input.
+                    let parsedIndex = parseInt(index);
+                    if (!Number.isNaN(parsedIndex) && typeof parsedIndex === 'number') {
+                        this.$validator.errors.add({
+                            field: '_server',
+                            msg: response.body.errors[index]['details'] ||
+                                response.body.errors[index]['title'],
+                            scope: '_server'
+                        });
+                    } else {
+                        this.$validator.errors.add({
+                            field: index,
+                            msg: response.body.errors[index][0],
+                            scope: 'server'
+                        });
+                        this.$validator.errors.add({
+                            field: '_server',
+                            msg: response.body.message,
+                            scope: '_server'
+                        });
+                    }
+                }
+            },
+
+            /**
+             * Reset the form to its original state.
+             */
+            resetForm()
+            {
+                this.$validator.errors.clear();
+                this.$validator.errors.clear('_server');
+
+                if (this.$parent) {
+                    this.$parent.$validator.errors.clear();
+                    this.$parent.model = {...this.$parent.model, ...this.$parent.value};
+                }
+            }
+        },
+
+        created()
+        {
+            this.resetForm();
+        },
+
+        mounted()
+        {
+            if (this.focus) {
+                let firstInput = this.$el.querySelector('input');
+                if (firstInput) {
+                    firstInput.focus();
+                }
+            }
+
+            // Whenever an input is focused we need to remove the server errors associated with it.
+            this.$nextTick(() =>
+            {
+                this.$el.querySelectorAll('input').forEach(element => {
+                    element.addEventListener('focusin', event =>
+                    {
+                        let field = event.target.getAttribute('name');
+                        this.$validator.errors.remove(field, 'server');
+                    });
+                });
+            });
+        },
+
+        watch: {
+
+            focus()
+            {
+                if (this.focus) {
+                    this.$el.querySelector('input').focus();
+                }
             }
         }
     }
