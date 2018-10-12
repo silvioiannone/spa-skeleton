@@ -1,11 +1,18 @@
 <script>
 
+    import Vue from 'vue';
+
     /**
      * Use this mixin when you need to create a component wrapping another component.
      *
-     * The props passed to the parent component will be passed to its child component if those can
-     * be applied. Any event fired by the wrapped component will be propagated by the wrapping
+     * The point of this mixin is to act as a proxy between the wrapped component and the wrapping
+     * component so that every prop that is passed to the wrapping componet is passed down to the
+     * wrapped component and any event fired by the wrapped component is fired also by the wrapping
      * component.
+     *
+     * I created this mixin because in this way I can easily proxy all the props made available by
+     * the wrapped component without having to re-declare them in the wrapping component. The same
+     * logic is behind the events.
      *
      * Just set the `__component` $data property.
      */
@@ -13,12 +20,16 @@
 
         props: {
 
+            /*
+             * v-model.
+             */
             value: {}
         },
 
         data()
         {
             return {
+
                 // The component being wrapped.
                 __component: '',
             }
@@ -70,9 +81,6 @@
             {
                 let on = {};
 
-                // The only thing that we need to do is to bubble up all the events coming from the
-                // wrapped component.
-
                 // Model input event
                 if (this._hasModel) {
                     on['input'] = value => { this.$emit('input', value) }
@@ -111,6 +119,18 @@
                     childEmit.apply(wrapped, [payload]);
                     this.$emit(payload);
                 }
+            },
+
+            /**
+             * TODO: probably this is not needed.
+             */
+            mergeData()
+            {
+                let wrappedInstance = new (Vue.extend(this.$data.__component));
+
+                for (let key in wrappedInstance.$data) {
+                    this.$data[key] = wrappedInstance.$data[key];
+                }
             }
         },
 
@@ -125,6 +145,11 @@
         mounted()
         {
             this.overrideWrapped$emit();
+        },
+
+        created()
+        {
+            this.mergeData();
         },
 
         render(createElement)
