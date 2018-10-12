@@ -1,6 +1,6 @@
 <template>
-    <editor class="editor" @keydown.enter="stopEnterPropagation" :extensions="extensions"
-            ref="editor" @update="updateModel">
+    <editor @keydown.enter="stopEnterPropagation" :extensions="extensions" ref="editor"
+            @update="updateModel">
         <v-toolbar dense class="menubar" slot="menubar" slot-scope="{nodes, marks, focus}"
                    v-if="nodes && marks">
             <editor-buttons-formats :nodes="nodes" :marks="marks" :focus="focus">
@@ -74,10 +74,6 @@
         data()
         {
             return {
-                buttonGroups: {
-                    headings: [],
-                    lists: []
-                },
                 extensions: [
                     new BulletListNode(),
                     new HeadingNode({ maxLevel: 3 }),
