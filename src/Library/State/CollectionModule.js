@@ -94,7 +94,7 @@ export default class CollectionModule extends AbstractModule
             {
                 let twins = relatedResource[this.getModuleName()];
 
-                if (! twins.length) {
+                if (!twins || !twins.length) {
                     return;
                 }
 

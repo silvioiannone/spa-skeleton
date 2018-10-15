@@ -102,10 +102,10 @@
                                 })
                                 .catch(response =>
                                 {
+                                    throw response;
                                     this.$emit('error', response);
                                     this.handleErrors(response);
                                     reject(response);
-                                    throw response;
                                 });
                         });
                 });
