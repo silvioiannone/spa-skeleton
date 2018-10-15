@@ -23,6 +23,7 @@
             class()
             {
                 let classes = {
+                    'container': true,
                     'responsive-container': true
                 };
 
