@@ -17,12 +17,7 @@ export default
         let meta = response.body.meta;
         let uri = URIjs(response.req.url);
 
-        let pagination = {
-            page: meta.current_page,
-            rowsPerPage: meta.per_page,
-            totalItems: meta.total,
-            totalPages: meta.last_page
-        };
+        let pagination = this.makeFromMetaObject(meta);
 
         let sortValue = uri.search(true).sort;
         if (sortValue) {
@@ -39,6 +34,22 @@ export default
         }
 
         return pagination;
+    },
+
+    /**
+     * Create a pagination object from a meta object.
+     *
+     * @param meta
+     * @returns Object
+     */
+    makeFromMetaObject(meta)
+    {
+        return {
+            page: meta.current_page,
+            rowsPerPage: meta.per_page,
+            totalItems: meta.total,
+            totalPages: meta.last_page
+        }
     },
 
     /**
@@ -61,7 +72,3 @@ export default
         return parameters;
     }
 }
-
-
-// WEBPACK FOOTER //
-// ./node_modules/spa-skeleton/src/Library/Utils/Pagination.js
