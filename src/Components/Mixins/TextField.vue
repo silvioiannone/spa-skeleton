@@ -131,6 +131,13 @@
             clearable: {
                 type: Boolean,
                 default: false
+            },
+
+            /**
+             * Set the validation alias.
+             */
+            dataVvAs: {
+                type: String
             }
         },
 
@@ -217,7 +224,8 @@
                     step: this.step,
                     min: this.min,
                     max: this.max,
-                    class: this._class
+                    class: this._class,
+                    dataVvAs: this.dataVvAs
                 },
                 directives: [
                     {
