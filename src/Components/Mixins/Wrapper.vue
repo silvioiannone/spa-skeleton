@@ -39,7 +39,16 @@
 
             _hasModel()
             {
-                return typeof this._component.mixins[0].props.value !== 'undefined';
+                if (this._component.mixins) {
+                    if (typeof this._component.mixins[0].props.value !== 'undefined')
+                    return true;
+                }
+
+                if (this._component.props) {
+                    return this._component.props.value;
+                }
+
+                return false;
             },
 
             _component()
