@@ -225,7 +225,7 @@
                     min: this.min,
                     max: this.max,
                     class: this._class,
-                    dataVvAs: this.dataVvAs
+                    'data-vv-as': this.dataVvAs
                 },
                 directives: [
                     {
