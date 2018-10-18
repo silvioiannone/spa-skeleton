@@ -69,7 +69,7 @@
                 let propsToMerge = {
                     ...this.$props,
                     ...this.$attrs
-                }
+                };
 
                 for(let propKey in propsToMerge) {
                     this.$set(props, propKey, propsToMerge[propKey]);
@@ -123,22 +123,10 @@
                 let wrapped = this.$children[0];
                 let childEmit = wrapped.$emit;
 
-                wrapped.$emit = (payload) =>
+                wrapped.$emit = (event, payload) =>
                 {
-                    childEmit.apply(wrapped, [payload]);
-                    this.$emit(payload);
-                }
-            },
-
-            /**
-             * TODO: probably this is not needed.
-             */
-            mergeData()
-            {
-                let wrappedInstance = new (Vue.extend(this.$data.__component));
-
-                for (let key in wrappedInstance.$data) {
-                    this.$data[key] = wrappedInstance.$data[key];
+                    childEmit.apply(wrapped, [event, payload]);
+                    this.$emit(event, payload);
                 }
             }
         },
@@ -154,11 +142,6 @@
         mounted()
         {
             this.overrideWrapped$emit();
-        },
-
-        created()
-        {
-            this.mergeData();
         },
 
         render(createElement)
