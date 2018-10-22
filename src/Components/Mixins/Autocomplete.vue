@@ -2,8 +2,6 @@
 
     import TextField from 'spa-skeleton/src/Components/Mixins/TextField';
 
-    let timeout = null;
-
     /**
      * This mixin can be used to build autocomplete inputs.
      *
@@ -93,7 +91,8 @@
                 _selected: [],
                 _items: [],
                 _loading: false,
-                searchQuery: ''
+                searchQuery: '',
+                timeout: null
             }
         },
 
@@ -113,11 +112,11 @@
             {
                 this.$data._loading = true;
 
-                if (timeout) {
-                    clearTimeout(timeout);
+                if (this.timeout) {
+                    clearTimeout(this.timeout);
                 }
 
-                timeout = setTimeout(() =>
+                this.timeout = setTimeout(() =>
                 {
                     this._search();
                 }, 250);
