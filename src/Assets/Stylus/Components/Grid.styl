@@ -4,7 +4,6 @@
 
 .responsive-container
 
-  display flex
   height 100%
 
   // The responsive container has a fab button so we add a bit of bottom padding so other elements
@@ -12,7 +11,7 @@
   &.fab
     padding-bottom: $button-floating-large-width + $grid-gutters.lg
 
-  @media $display-breakpoints.xs-only
+@media $display-breakpoints.xs-only
 
     .v-card
       elevation(0)
