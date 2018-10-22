@@ -15,9 +15,9 @@
                     :search-input.sync="searchQuery"
                     :filter="filter"
                     :multiple="multiple"
-                    :data-vv-as="vvAs">
+                    :data-vv-as="vvAs"
                     @keydown.enter="stopEnterPropagation"
-                    @input="emitInput"
+                    @input="emitInput">
         <template slot="item" slot-scope="{ item, tile }">
             <slot name="item" :item="item" :tile="tile"></slot>
         </template>
