@@ -82,6 +82,22 @@
             returnObject: {
                 type: Boolean,
                 default: false
+            },
+
+            /**
+             * Changes display of selections to chips
+             */
+            chips: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
+             * Keeps a local unique copy of all items that have been passed through the items prop.
+             */
+            cacheItems: {
+                type: Boolean,
+                default: false
             }
         },
 
@@ -110,6 +126,11 @@
              */
             handleSearch()
             {
+                // Don't perform the search if we already retrieved the items from the server.
+                if (this.local && this.$data._items.length) {
+                    return;
+                }
+
                 this.$data._loading = true;
 
                 if (this.timeout) {
