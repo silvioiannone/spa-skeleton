@@ -15,7 +15,7 @@ export default class Roles extends AbstractResource
     /**
      * Get the roles.
      */
-    all()
+    get()
     {
         return this._get('');
     }
