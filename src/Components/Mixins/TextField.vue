@@ -136,7 +136,7 @@
             /**
              * Set the validation alias.
              */
-            dataVvAs: {
+            vvAs: {
                 type: String
             }
         },
@@ -187,12 +187,12 @@
         {
             // This is a work-around needed in order to prevent Vuetify text-input mask to trigger
             // the validation too soon.
-            let phoneInput = this.$el.querySelector('input');
-            phoneInput.addEventListener('focus', () =>
+            let input = this.$el.querySelector('input');
+            input.addEventListener('focus', () =>
             {
                 this.isFocused = true;
             });
-            phoneInput.addEventListener('blur', () =>
+            input.addEventListener('blur', () =>
             {
                 this.isFocused = false;
             });
@@ -202,7 +202,10 @@
 
             value()
             {
-                this.$nextTick(() => this.$validator.validateAll());
+                // Trigger the validation on the next tick but only if the input is dirty
+                if (this.$children[0].isDirty) {
+                    this.$nextTick(() => this.$validator.validateAll());
+                }
             }
         },
 
@@ -225,7 +228,7 @@
                     min: this.min,
                     max: this.max,
                     class: this._class,
-                    'data-vv-as': this.dataVvAs
+                    'data-vv-as': this.vvAs
                 },
                 directives: [
                     {
@@ -238,8 +241,11 @@
                     input: value => self.fireInputEvent(value),
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),
-                    'update:error': value => {
-                        this.parentForm().$validator.errors.remove(this.name);
+                    'update:error': value =>
+                    {
+                        let errorIndex = this.vvAs ? this.vvAs : this.name;
+
+                        this.parentForm().$validator.errors.remove(errorIndex);
 
                         if (value) {
                             this.$validator.errors.items.forEach(error =>
