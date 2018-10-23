@@ -104,7 +104,7 @@
         data()
         {
             return {
-                _selected: [],
+                _selected: null,
                 _items: [],
                 _loading: false,
                 searchQuery: '',
@@ -184,17 +184,20 @@
             }
         },
 
-        mounted()
-        {
-            this.$data._items = this.value;
-        },
-
         watch: {
 
             searchQuery: {
                 handler: function()
                 {
                     this.handleSearch();
+                },
+                immediate: true
+            },
+
+            value: {
+                handler: function()
+                {
+                    this.$data._selected = this.value;
                 },
                 immediate: true
             }
