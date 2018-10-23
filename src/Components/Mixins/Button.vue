@@ -31,13 +31,21 @@
                 default: false
             },
 
+            /**
+             * Display the button in a loading state.
+             */
             loading: {
+                type: Boolean,
+                default: false
+            },
 
+            /**
+             * Display a flat button.
+             */
+            flat: {
+                type: Boolean,
+                default: false
             }
-        },
-
-        methods: {
-
         },
 
         render(createElement)
@@ -50,7 +58,6 @@
                 on: {
                     click: event => {
                         self.$emit('click', event);
-                        self.onClick(event);
                     }
                 }
             }, this.$slots.default);
