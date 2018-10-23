@@ -113,7 +113,7 @@
              */
             overrideWrapped$emit()
             {
-                if (!this.$children.length) {
+                if (! this.$children.length) {
                     throw "The wrapper has no children.";
                     return;
                 }
@@ -146,7 +146,9 @@
 
         render(createElement)
         {
-            return createElement(this.$data.__component.name, {
+            return createElement(
+                this.$data.__component.name,
+                {
                     props: this.getProps(),
                     domProps: {
                         value: this.value

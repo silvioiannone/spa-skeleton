@@ -16,7 +16,7 @@
         computed: {
 
             /**
-             * Use this prop in order to set props reactive default values.
+             * Use this computed prop in order to set props reactive default values.
              */
             computedProps()
             {
