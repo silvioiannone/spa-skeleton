@@ -102,10 +102,10 @@
                                 })
                                 .catch(response =>
                                 {
-                                    throw response;
                                     this.$emit('error', response);
                                     this.handleErrors(response);
                                     reject(response);
+                                    throw response;
                                 });
                         });
                 });
@@ -118,6 +118,7 @@
              */
             handleErrors(response)
             {
+                debugger;
                 if (! response.body.errors) {
                     return;
                 }
@@ -128,19 +129,19 @@
                     // form input.
                     let parsedIndex = parseInt(index);
                     if (!Number.isNaN(parsedIndex) && typeof parsedIndex === 'number') {
-                        this.$validator.errors.add({
+                        this.errors.add({
                             field: '_server',
                             msg: response.body.errors[index]['details'] ||
                                 response.body.errors[index]['title'],
                             scope: '_server'
                         });
                     } else {
-                        this.$validator.errors.add({
+                        this.$parent.errors.add({
                             field: index,
                             msg: response.body.errors[index][0],
                             scope: 'server'
                         });
-                        this.$validator.errors.add({
+                        this.errors.add({
                             field: '_server',
                             msg: response.body.message,
                             scope: '_server'
