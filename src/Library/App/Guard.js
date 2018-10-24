@@ -159,7 +159,11 @@ export default class Guard
             let actionPromises = [];
             let fromActions = [];
 
-            fromMatched.forEach(match => fromActions = fromActions.concat(match.meta.actions));
+            fromMatched.forEach(match => {
+                if (match.meta.actions) {
+                    fromActions = fromActions.concat(match.meta.actions)
+                }
+            });
 
             matched.forEach(match =>
             {
@@ -169,7 +173,8 @@ export default class Guard
             });
 
             // We need to take only the actions that are not already defined by the previous routes.
-            actions = actions.filter(action => {
+            actions = actions.filter(action =>
+            {
                 // Take the action if it's not in the previous route...
                 return fromActions.indexOf(action) < 0 ||
                     // ...or if it's the root action...
