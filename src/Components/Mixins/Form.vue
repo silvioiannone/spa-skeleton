@@ -118,7 +118,6 @@
              */
             handleErrors(response)
             {
-                debugger;
                 if (! response.body.errors) {
                     return;
                 }
