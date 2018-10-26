@@ -186,6 +186,7 @@
                     {
                         let field = event.target.getAttribute('name');
                         this.$validator.errors.remove(field, 'server');
+                        this.$parent.$validator.errors.remove(field, 'server');
                     });
                 });
             });
