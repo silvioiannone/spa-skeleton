@@ -88,6 +88,11 @@
             handleUpdateSearchInput(value)
             {
                 this.searchQuery = value;
+
+                // If the value is empty we need to remove the selected value.
+                if (this.searchQuery === '')  {
+                    this.$data._selected = null;
+                }
             }
         },
 
@@ -146,8 +151,10 @@
                     ],
                     on: {
                         input: value => this.emitInput(value),
-                        'keydown.enter': this.stopEnterPropagation,
                         'update:searchInput': this.handleUpdateSearchInput
+                    },
+                    nativeOn: {
+                        keydown: this.stopEnterPropagation
                     },
                     scopedSlots
                 }

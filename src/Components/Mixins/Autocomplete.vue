@@ -121,8 +121,6 @@
 
             /**
              * Handle the search.
-             *
-             * @param search
              */
             handleSearch()
             {
@@ -153,7 +151,9 @@
              */
             stopEnterPropagation(event)
             {
-                event.preventDefault();
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                }
             },
 
             /**
