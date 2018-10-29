@@ -115,9 +115,11 @@
                 scopedSlots.item = this.$vnode.data.scopedSlots.item;
             }
 
+            let selected = this.multiple ? this.$data._selected : [this.$data._selected];
+
             let props = {
                 value: this.$data._selected,
-                items: this.$data._items,
+                items: [...selected, ...this.$data._items],
                 itemValue: this.itemValue,
                 itemText: this.itemText,
                 loading: this.$data._loading,
