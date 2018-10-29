@@ -171,13 +171,6 @@
 
         mounted()
         {
-            if (this.focus) {
-                let firstInput = this.$el.querySelector('input');
-                if (firstInput) {
-                    firstInput.focus();
-                }
-            }
-
             // Whenever an input is focused we need to remove the server errors associated with it.
             this.$nextTick(() =>
             {
@@ -194,11 +187,23 @@
 
         watch: {
 
-            focus()
-            {
-                if (this.focus) {
-                    this.$el.querySelector('input').focus();
-                }
+            focus: {
+                handler()
+                {
+                    if (! this.$el) {
+                        return;
+                    }
+
+                    let firstInput = this.$el.querySelector('input');
+
+                    if (firstInput) {
+                        this.$nextTick(() =>
+                        {
+                            firstInput.focus();
+                        });
+                    }
+                },
+                immediate: true
             }
         }
     }
