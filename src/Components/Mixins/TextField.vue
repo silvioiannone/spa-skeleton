@@ -222,12 +222,11 @@
         {
             let self = this;
 
-            let props = Object.assign({}, this.$props, {
-                errorMessages: this.errorMessages,
-                prefix: this.isFocused || (this._value && this._value.length) ? this.prefix : '',
-                mask: this.isFocused || (this._value && this._value.length) ? this.mask : '',
+            let props = {
+                ...this.$props,
+                errorMessages: this._errorMessages,
                 value: this._value
-            });
+            };
 
             return createElement('v-text-field', {
                 attrs: {
@@ -250,20 +249,7 @@
                     input: value => self.fireInputEvent(value),
                     blur: () => self.$emit('blur'),
                     focus: () => self.$emit('focus'),
-                    'update:error': value =>
-                    {
-                        let errorIndex = this.vvAs ? this.vvAs : this.name;
-
-                        this.parentForm().$validator.errors.remove(errorIndex);
-
-                        if (value) {
-                            this.$validator.errors.items.forEach(error =>
-                            {
-                                this.parentForm().$validator.errors.add(error);
-                            });
-                        }
-                        self.$emit('update:error', value)
-                    },
+                    'update:error': value => self.$emit('update:error', value),
                     'click:clear': () => self.$emit('click:clear')
                 }
             });
