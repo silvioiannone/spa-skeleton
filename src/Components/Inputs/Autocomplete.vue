@@ -115,11 +115,11 @@
                 scopedSlots.item = this.$vnode.data.scopedSlots.item;
             }
 
-            let selected = this.multiple ? this.$data._selected : [this.$data._selected];
+            let selected = this.multiple ? (this.$data._selected || []) : [this.$data._selected];
 
             let props = {
                 value: this.$data._selected,
-                items: [...selected, ...this.$data._items],
+                items: [...this.items, ...selected, ...this.$data._items],
                 itemValue: this.itemValue,
                 itemText: this.itemText,
                 loading: this.$data._loading,
@@ -133,8 +133,12 @@
             };
 
             // Override the filter functionality only if we want to perform a server search.
-            if (! this.local) {
-                props.filter = this._filter
+            if (this.local) {
+                if (this.filter) {
+                    props.filter = this.filter;
+                }
+            } else {
+                props.filter = this._filter;
             }
 
             return createElement(

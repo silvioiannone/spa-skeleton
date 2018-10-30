@@ -98,6 +98,13 @@
             cacheItems: {
                 type: Boolean,
                 default: false
+            },
+
+            /**
+             * Custom filter function.
+             */
+            filter: {
+                default: null
             }
         },
 
