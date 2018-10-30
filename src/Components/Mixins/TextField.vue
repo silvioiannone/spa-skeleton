@@ -138,6 +138,15 @@
              */
             vvAs: {
                 type: String
+            },
+
+            /**
+             * Creates counter for input length; if no number is specified, it defaults to 25. Does
+             * not apply any validation.
+             */
+            counter: {
+                type: Number,
+                default: undefined
             }
         },
 

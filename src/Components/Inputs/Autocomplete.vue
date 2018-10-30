@@ -129,6 +129,7 @@
                 label: this.label,
                 multiple: this.multiple,
                 chips: this.chips,
+                counter: this.counter,
                 errorMessages: this.errors.collect(this.vvAs || this.name)
             };
 
