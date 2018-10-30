@@ -39,9 +39,6 @@ export default class Main
         // Init the state machine
         let state = (new StateMachine(this.vue)).boot();
 
-        // Init the validator
-        (new Validator(this.vue)).boot();
-
         // Init the filters
         (new Filters(this.vue)).boot();
 
@@ -53,6 +50,9 @@ export default class Main
 
         // Init the translator
         let translator = (new Translator).boot();
+
+        // Init the validator
+        (new Validator(this.vue, translator)).boot();
 
         // Init the router
         (new Router(this.vue))
