@@ -93,6 +93,15 @@
                 if (this.searchQuery === '')  {
                     this.$data._selected = null;
                 }
+            },
+
+            /**
+             * Handle the `update:error` event.
+             * @param value
+             */
+            handleUpdateError(value)
+            {
+                this.$emit('update:error', value);
             }
         },
 
@@ -118,19 +127,12 @@
             let selected = this.multiple ? (this.$data._selected || []) : [this.$data._selected];
 
             let props = {
+                ...this.$props,
                 value: this.$data._selected,
                 items: [...this.items, ...selected, ...this.$data._items],
-                itemValue: this.itemValue,
-                itemText: this.itemText,
                 loading: this.$data._loading,
-                hideNoData: this.hideNoData,
                 returnObject: true,
-                searchInput: this.searchInput,
-                label: this.label,
-                multiple: this.multiple,
-                chips: this.chips,
-                counter: this.counter,
-                errorMessages: this.errors.collect(this.vvAs || this.name)
+                errorMessages: this._errorMessages
             };
 
             // Override the filter functionality only if we want to perform a server search.
@@ -158,7 +160,8 @@
                     ],
                     on: {
                         input: value => this.emitInput(value),
-                        'update:searchInput': this.handleUpdateSearchInput
+                        'update:searchInput': this.handleUpdateSearchInput,
+                        'update:error': this.handleUpdateError
                     },
                     nativeOn: {
                         keydown: this.stopEnterPropagation
