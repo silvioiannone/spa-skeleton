@@ -6,5 +6,15 @@
 clickable()
   cursor pointer
 
+grabbable()
+  cursor move /* fallback if grab cursor is unsupported */
+  cursor grab
+
 .clickable
   clickable()
+
+.handle
+  grabbable()
+
+  &.active
+    cursor grabbing
