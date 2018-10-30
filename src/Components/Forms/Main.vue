@@ -1,5 +1,5 @@
 <template>
-    <v-form @submit.prevent>
+    <v-form @submit.prevent v-model="$data._vFormValid">
         <v-container fluid grid-list-lg class="pa-0">
             <v-layout row wrap>
                 <v-flex xs12>

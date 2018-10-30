@@ -46,6 +46,7 @@
         data()
         {
             return {
+                _vFormValid: true,
                 _resetOnMount: true
             }
         },
@@ -54,12 +55,7 @@
 
             hasErrors()
             {
-                // Don't consider the server errors not tied to a specific field.
-                let serverErrorsCount = this.errors.all('_server').length;
-                let totalCount = this.$parent.errors.all().length +
-                    (this.errors.all().length - serverErrorsCount);
-
-                return totalCount > serverErrorsCount;
+                ! this.$data._vFormValid;
             }
         },
 
@@ -135,6 +131,8 @@
                             scope: '_server'
                         });
                     } else {
+                        // These errors need to be set on the parent form because that's where the
+                        // other components are located.
                         this.$parent.errors.add({
                             field: index,
                             msg: response.body.errors[index][0],
