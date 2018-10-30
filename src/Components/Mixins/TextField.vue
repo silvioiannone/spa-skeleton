@@ -189,6 +189,14 @@
              */
             fireInputEvent(value) {
                 this.$emit('input', value);
+            },
+
+            /**
+             * Access the form containing the text field.
+             */
+            parentForm()
+            {
+                return this.$parent.$parent.$parent;
             }
         },
 

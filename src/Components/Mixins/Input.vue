@@ -1,5 +1,7 @@
 <script>
 
+    import Component from './Component';
+
     /**
      * This mixin can be used in order to create inputs.
      *
@@ -44,33 +46,24 @@
             label: {
                 type: String,
                 default: ''
+            },
+
+            /**
+             * Puts the input in an error state and passes through custom error messsages. Will be
+             * combined with any validations that occur from the rules prop. This field will not
+             * trigger validation.
+             */
+            errorMessages: {
+                type: Array,
+                default: () => []
             }
         },
 
         computed: {
 
-            errorMessages()
+            _errorMessages()
             {
-                let parentFormErrors = this.parentForm().errors.collect(this.name, 'server');
-
-                // First we display the server errors if any...
-                if (parentFormErrors.length) {
-                    return parentFormErrors;
-                }
-
-                // ...and then the validation errors.
-                return this.errors.collect(this.name);
-            }
-        },
-
-        methods: {
-
-            /**
-             * Access the form containing the text field.
-             */
-            parentForm()
-            {
-                return this.$parent.$parent.$parent;
+                return [...this.errorMessages, ...this.errors.collect(this.name)];
             }
         }
     }
