@@ -12,7 +12,7 @@
              *
              * @param event
              */
-            bubbleCancelledEvent(event)
+            bubbleCancelEvent(event)
             {
                 this.$emit('cancel', event);
             },
