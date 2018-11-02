@@ -18,13 +18,13 @@
             },
 
             /**
-             * Propagates the submitted form event to the parent.
+             * Propagates the submit form event to the parent.
              *
              * @param event
              */
-            bubbleSubmittedEvent(event)
+            bubbleSubmitEvent(event)
             {
-                this.$emit('submitted', event)
+                this.$emit('submit', event)
             }
         }
     }
