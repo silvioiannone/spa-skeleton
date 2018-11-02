@@ -172,7 +172,8 @@
             // Whenever an input is focused we need to remove the server errors associated with it.
             this.$nextTick(() =>
             {
-                this.$el.querySelectorAll('input').forEach(element => {
+                this.$el.querySelectorAll('input, textarea')
+                    .forEach(element => {
                     element.addEventListener('focusin', event =>
                     {
                         let field = event.target.getAttribute('name');
