@@ -66,9 +66,7 @@
 
                 // Get the position of the nearest item. The nearest item is the previous item if
                 // moving the items down or the next item if moving them down.
-                let nearestItem = movement.newIndex > movement.oldIndex ?
-                    this.model[movement.newIndex - 1] :
-                    this.model[movement.newIndex + 1];
+                let nearestItem = this.model[movement.newIndex];
 
                 // Give the current item the same position as the reference item (the backend will
                 // take care of updating the other item's position to the correct value).
