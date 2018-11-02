@@ -55,7 +55,7 @@
 
             hasErrors()
             {
-                ! this.$data._vFormValid;
+                return ! this.$data._vFormValid;
             }
         },
 
@@ -93,15 +93,15 @@
                                 .then(response =>
                                 {
                                     this.resetForm();
-                                    this.$emit('submitted', response);
+                                    this.$emit('submit', response);
                                     resolve(response);
                                 })
                                 .catch(response =>
                                 {
                                     this.$emit('error', response);
+                                    console.error(response);
                                     this.handleErrors(response);
                                     reject(response);
-                                    throw response;
                                 });
                         });
                 });
