@@ -124,12 +124,19 @@
                 scopedSlots.item = this.$vnode.data.scopedSlots.item;
             }
 
-            let selected = this.multiple ? (this.$data._selected || []) : [this.$data._selected];
+            let selected = this.multiple ?
+                (this.$data._selected || []) : this.$data._selected;
+            let items = [...this.items, ...this.$data._items];
+
+            if (selected && this.multiple) {
+                // Check if selected is array
+                items = items.concat(selected);
+            }
 
             let props = {
                 ...this.$props,
-                value: this.$data._selected,
-                items: [...this.items, ...selected, ...this.$data._items],
+                value: selected,
+                items: items,
                 loading: this.$data._loading,
                 returnObject: true,
                 errorMessages: this._errorMessages
