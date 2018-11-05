@@ -96,7 +96,8 @@ export default class WebSocket
         {
             if (this.activeSubscriptions.indexOf(subscription) >= 0) return;
 
-            // TODO: add the subscription to the list of the active subscriptions only if the joining was successful (use a promise).
+            // TODO: add the subscription to the list of the active subscriptions only if the
+            // joining was successful (use a promise).
             subscription.channels.forEach(channel => this.join(channel, subscription.event));
 
             // Add the subscription to the active subscriptions.
@@ -118,7 +119,7 @@ export default class WebSocket
 
             subscription.channels.forEach(channel =>
             {
-                let channelName = (new channel(this.vue.$store)).name();
+                let channelName = this.makeChannel(channel).name();
 
                 Log.info('No longer listening to ' + subscription.event + ' in the ' + channelName
                     + ' room.');
@@ -135,7 +136,7 @@ export default class WebSocket
      */
     leaveChannelIfUnused(channel)
     {
-        let channelName = (new channel(this.vue.$store)).name();
+        let channelName = this.makeChannel(channel).name();
         let channelInUse = false;
         this.activeSubscriptions.forEach(subscription =>
         {
@@ -144,7 +145,7 @@ export default class WebSocket
             }
 
             let found = subscription.channels
-                .find(channel => (new channel(this.vue.$store)).name() === channelName);
+                .find(channel => this.makeChannel(channel).name() === channelName);
 
             if (found) {
                 channelInUse = true;
@@ -167,7 +168,7 @@ export default class WebSocket
     join(channel, event)
     {
         let self = this;
-        let channelInstance = new channel(this.vue.$store);
+        let channelInstance = this.makeChannel(channel);
         let echo = this.echo;
 
         if (! channelInstance.canEnter()) {
@@ -190,6 +191,17 @@ export default class WebSocket
                 self.broadcast(event, payload);
             }
         });
+    }
+
+    /**
+     * Make a channel instance.
+     *
+     * @param channel
+     * @returns {Object}
+     */
+    makeChannel(channel)
+    {
+        return typeof channel === 'object' ? channel : new channel(this.vue.$store)
     }
 
     /**
@@ -245,7 +257,8 @@ export default class WebSocket
             handlers.push(new subscription.handlers[handler](this.vue));
         }
 
-        handlers.forEach(handler => {
+        handlers.forEach(handler =>
+        {
             handler.handle(event, message);
         });
     }

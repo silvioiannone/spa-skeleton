@@ -2,8 +2,7 @@ import AbstractHandler from './AbstractHandler';
 import Pluralize       from 'pluralize';
 
 /**
- * This handler performs basic tasks such as firing mutations for the right
- * state machine module.
+ * This handler performs basic tasks such as firing mutations for the right state machine module.
  */
 export default class ModelHandler extends AbstractHandler
 {
@@ -17,9 +16,11 @@ export default class ModelHandler extends AbstractHandler
         /**
          * A list of events that should be handled.
          *
+         * The order of the events is important!
+         *
          * @type {string[]}
          */
-        this.knownEvents = ['Created', 'Updated', 'Deleted', 'Attached'];
+        this.knownEvents = ['Attached', 'Created', 'PivotUpdated', 'Updated', 'Deleted',];
 
         /**
          * Maps each model event to a function that will process it.
@@ -27,6 +28,7 @@ export default class ModelHandler extends AbstractHandler
         this.eventProcessors = {
             'Attached': this.attachedProcessor,
             'Created': this.createdProcessor,
+            'PivotUpdated': this.pivotUpdatedProcessor,
             'Updated': this.udpatedProcessor,
             'Deleted': this.deletedProcessor
         }
@@ -46,8 +48,8 @@ export default class ModelHandler extends AbstractHandler
      */
     handle(event, message)
     {
-        // Split the event name in <stateModule><eventName>, for example a UserCreated will set model = 'user' and
-        // event = 'created'.
+        // Split the event name in <stateModule><eventName>, for example a UserCreated will set
+        // model = 'user' and event = 'created'.
         this.knownEvents.find(modelEvent =>
         {
             if(!event.endsWith(modelEvent)) {
@@ -121,6 +123,23 @@ export default class ModelHandler extends AbstractHandler
         if (model) {
             model[message.key].push(message.related);
         }
+    }
+
+    /**
+     * Process a 'pivotUpdated' model event.
+     *
+     * @param event
+     * @param message
+     */
+    pivotUpdatedProcessor(event, message)
+    {
+        let stateModuleName = this.getStateModuleName(event, 'PivotUpdated');
+        let module = this.vue.$store.getters[stateModuleName];
+        let model = module.find(current => current.id === message.model.id);
+        let relatedModel = model[message.relation]
+            .find(current => current.id === message.related.id);
+
+        relatedModel.pivot = message.pivot;
     }
 
     /**
