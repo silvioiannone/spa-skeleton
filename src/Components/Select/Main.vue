@@ -15,17 +15,7 @@
             return createElement(
                 'v-select',
                 {
-                    props: {
-                        autocomplete: true,
-                        chips: this.chips,
-                        clearable: this.clearable,
-                        items: this.$data._models,
-                        label: this.label,
-                        tags: this.tags,
-                        multiple: this.multiple,
-                        returnObject: true,
-                        value: this.$data._selected
-                    },
+                    props: this.$props,
                     on: {
                         input: value => this.fire(value)
                     },
