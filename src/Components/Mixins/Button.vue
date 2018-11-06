@@ -32,6 +32,14 @@
             },
 
             /**
+             * Display a large button.
+             */
+            large: {
+                type: Boolean,
+                default: false
+            },
+
+            /**
              * Display the button in a loading state.
              */
             loading: {
