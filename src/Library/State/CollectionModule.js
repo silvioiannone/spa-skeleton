@@ -1,8 +1,8 @@
 import AbstractModule from './AbstractModule';
+import _ from 'lodash';
 
 /**
- * This class handles collection modules, such as Agents, Websites, Campaigns
- * etc...
+ * This class handles collection modules, such as Agents, Websites, Campaigns etc...
  */
 export default class CollectionModule extends AbstractModule
 {
@@ -11,9 +11,11 @@ export default class CollectionModule extends AbstractModule
         super();
 
         /*
-         * Related resources.
+         * Module relations.
+         * 
+         * E.g.: 'agendas.point', 'meetings.agenda.point'...
          */
-        this.related = [];
+        this.relations = [];
     }
 
     /**
@@ -24,14 +26,18 @@ export default class CollectionModule extends AbstractModule
         let actions = {};
 
         let deleteActionName = this.getModuleName() + '/DELETE';
+        let deleteActionLocalName = this.getModuleName() + '/DELETE-LOCAL';
 
         actions[deleteActionName] = this.deleteAction();
+        actions[deleteActionLocalName] = this.deleteLocalAction();
 
         return actions;
     }
 
     /**
      * Delete action.
+     *
+     * This action deletes the given resource from the server an locally.
      *
      * @protected
      */
@@ -51,6 +57,22 @@ export default class CollectionModule extends AbstractModule
     }
 
     /**
+     * Delete local action.
+     *
+     * This action deletes the given resource locally. The server resource will not be touched.
+     *
+     * @protected
+     */
+    deleteLocalAction()
+    {
+        return (store, resource) => new Promise((resolve, reject) =>
+        {
+            this.deleteTwinsInRelatedResources(store, resource);
+            resolve(resource);
+        });
+    }
+
+    /**
      * Delete the twins of a resource in related resources.
      *
      * @protected
@@ -59,14 +81,15 @@ export default class CollectionModule extends AbstractModule
     {
         let relatedResources = this.getRelatedResources(store, resource);
 
-        for (let related in relatedResources) {
+        this.relations.forEach(relation =>
+        {
+            let [module, path] = this.parseRelation(relation);
 
-            // We now need to remove the item (resource) from the related resource.
-            relatedResources[related].forEach(relatedResource =>
+            relatedResources[module].forEach(relatedResource =>
             {
-                this.deleteItem(relatedResource[this.getModuleName()], resource);
+                this.deleteItem(_.get(relatedResource, path), resource);
             });
-        }
+        })
 
         store.commit(this.getDeleteMutationName(), resource);
     }
@@ -83,28 +106,48 @@ export default class CollectionModule extends AbstractModule
     {
         // We need to loop through all the related resources and find the ones that have a relation
         // to the item.
-
         let resources = {};
 
-        this.related.forEach(related =>
+        this.relations.forEach(relation =>
         {
-            resources[related] = [];
+            // Take the related and split it into its parts: 'meetings.agenda.points' will become
+            // ['meetings', 'agenda.points'].
+            let [module, path] = this.parseRelation(relation);
 
-            store.getters[related].forEach(relatedResource =>
+            resources[module] = [];
+
+            store.getters[module].forEach(relatedResource =>
             {
-                let twins = relatedResource[this.getModuleName()];
+                let twins = _.get(relatedResource, path, false);
 
-                if (!twins || !twins.length) {
+                if (! twins || ! twins.length) {
                     return;
                 }
 
                 if (twins.find(twin => twin.id === item.id)) {
-                    resources[related].push(relatedResource);
+                    resources[module].push(relatedResource);
                 }
             });
         });
 
         return resources;
+    }
+
+    /**
+     * Parse the related resource string.
+     *
+     * E.g.: 'meeting', 'agenda.points' etc...
+     *
+     * @param relation
+     * @returns {{groups: {}}|RegExpExecArray}
+     */
+    parseRelation(relation)
+    {
+        let [, module, path] = /([\w]+)\.?(.+)?/.exec(relation);
+
+        path = path || this.getModuleName();
+
+        return [module, path]
     }
 
     /**

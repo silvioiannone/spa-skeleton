@@ -104,9 +104,10 @@ export default class ModelHandler extends AbstractHandler
      */
     deletedProcessor(event, message)
     {
-        let mutation = this.getStateModuleName(event, 'Deleted') + '/DELETE';
+        // Use the <moduleName>/DELETE-LOCAL action to completely remove the resource locally.
+        let action = this.getStateModuleName(event, 'Deleted') + '/DELETE-LOCAL';
 
-        this.vue.$store.commit(mutation, message);
+        this.vue.$store.dispatch(action, message.data);
     }
 
     /**
