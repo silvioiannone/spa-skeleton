@@ -2,7 +2,8 @@ import AbstractHandler from './AbstractHandler';
 import Pluralize       from 'pluralize';
 
 /**
- * This handler performs basic tasks such as firing mutations for the right state machine module.
+ * This handler performs basic tasks such as committing mutations and dispatching for the right
+ * state machine module.
  */
 export default class ModelHandler extends AbstractHandler
 {
@@ -91,9 +92,9 @@ export default class ModelHandler extends AbstractHandler
      */
     udpatedProcessor(event, message)
     {
-        let mutation = this.getStateModuleName(event, 'Updated') + '/ADD';
+        let action = this.getStateModuleName(event, 'Updated') + '/UPDATE-LOCAL';
 
-        this.vue.$store.commit(mutation, message);
+        this.vue.$store.dispatch(action, message.data);
     }
 
     /**

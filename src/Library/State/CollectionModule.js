@@ -10,12 +10,19 @@ export default class CollectionModule extends AbstractModule
     {
         super();
 
-        /*
+        /**
          * Module relations.
          * 
          * E.g.: 'agendas.point', 'meetings.agenda.point'...
          */
         this.relations = [];
+
+        /**
+         * Key that indicates the field that stores an item's position.
+         *
+         * @type {string}
+         */
+        this.positionKey = 'position';
     }
 
     /**
@@ -27,9 +34,11 @@ export default class CollectionModule extends AbstractModule
 
         let deleteActionName = this.getModuleName() + '/DELETE';
         let deleteActionLocalName = this.getModuleName() + '/DELETE-LOCAL';
+        let updateActionLocalName = this.getModuleName() + '/UPDATE-LOCAL';
 
         actions[deleteActionName] = this.deleteAction();
         actions[deleteActionLocalName] = this.deleteLocalAction();
+        actions[updateActionLocalName] = this.updateLocalAction();
 
         return actions;
     }
@@ -68,16 +77,83 @@ export default class CollectionModule extends AbstractModule
         return (store, resource) => new Promise((resolve, reject) =>
         {
             this.deleteTwinsInRelatedResources(store, resource);
+            store.commit(this.getDeleteMutationName(), resource);
             resolve(resource);
         });
     }
 
     /**
-     * Delete the twins of a resource in related resources.
+     * Update local action.
      *
      * @protected
      */
+    updateLocalAction()
+    {
+        return (store, resource) => new Promise((resolve, reject) =>
+        {
+            this.updatePositions(store, resource);
+            store.commit(this.getAddMutationName(), {data: resource});
+            resolve(resource);
+        });
+    }
+
+    /**
+     * Update the position of the resources if the current resource has been moved.
+     */
+    updatePositions(store, resource)
+    {
+        let resources = [
+            ...store.getters[this.getModuleName()],
+            ...this.getRelatedResources(store, resource)
+        ];
+        let oldResource = resources.find(currentResource => currentResource.id === resource.id);
+
+        if (! oldResource || oldResource[this.positionKey] === resource[this.positionKey]) {
+            return;
+        }
+
+        // If the resource was moved down...
+        if (resource[this.positionKey] >= oldResource[this.positionKey]) {
+            // ...move up all the resources between the new and old resource position.
+            resources.filter(currentResource =>
+            {
+                return currentResource[this.positionKey] > oldResource[this.positionKey] &&
+                    currentResource[this.positionKey] <= resource[this.positionKey]
+            })
+                .forEach(currentResource => currentResource[this.positionKey]--);
+        } else {
+            resources.filter(currentResource =>
+            {
+                return currentResource[this.positionKey] >= resource[this.positionKey] &&
+                    currentResource[this.positionKey] < oldResource[this.positionKey]
+            })
+                .forEach(currentResource => currentResource[this.positionKey]++);
+        }
+    }
+
+    /**
+     * Delete the twins of a resource in related modules.
+     *
+     * @param store
+     * @param resource
+     * @protected
+     */
     deleteTwinsInRelatedResources(store, resource)
+    {
+        this.forEachRelatedResource(store, resource, (relatedResource, path) =>
+        {
+            this.deleteItem(_.get(relatedResource, path), resource);
+        });
+    }
+
+    /**
+     * Perform an action on each related resource.
+     *
+     * @param store
+     * @param resource
+     * @param callback
+     */
+    forEachRelatedResource(store, resource, callback)
     {
         let relatedResources = this.getRelatedResources(store, resource);
 
@@ -87,11 +163,9 @@ export default class CollectionModule extends AbstractModule
 
             relatedResources[module].forEach(relatedResource =>
             {
-                this.deleteItem(_.get(relatedResource, path), resource);
+                callback(relatedResource, path);
             });
         })
-
-        store.commit(this.getDeleteMutationName(), resource);
     }
 
     /**
