@@ -1,6 +1,6 @@
 <template>
     <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject"
-                  :tabs="tabs" :title-to="titleTo">
+                  :tabs="tabs" :title-to="titleTo" @searh:update="bubbleSearchUpdateEvent">
         <slot slot="title" name="title"></slot>
         <slot slot="toolbar-text" name="toolbar-text"></slot>
         <slot slot="toolbar-text-right" name="toolbar-text-right"></slot>
@@ -84,6 +84,16 @@
                 let visibility = this.$store.getters.ui.notificationsDrawerVisible;
 
                 this.$store.commit('ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY', !visibility);
+            },
+
+            /**
+             * Bubble the `search:update` event.
+             *
+             * @param payload
+             */
+            bubbleSearchUpdateEvent(payload)
+            {
+                this.$emit('search:update', payload)
             }
         }
     }
