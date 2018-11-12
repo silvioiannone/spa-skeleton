@@ -1,6 +1,6 @@
 <template>
     <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject"
-                  :tabs="tabs" :title-to="titleTo" @searh:update="bubbleSearchUpdateEvent">
+                  :tabs="tabs" :title-to="titleTo" @search:update="bubbleSearchUpdateEvent">
         <slot slot="title" name="title"></slot>
         <slot slot="toolbar-text" name="toolbar-text"></slot>
         <slot slot="toolbar-text-right" name="toolbar-text-right"></slot>
