@@ -67,8 +67,6 @@
         beforeRouteUpdate(to, from, next)
         {
             this.pagination.page = parseInt(to.query.page) || 1;
-            console.log(to);
-            console.log(this.pagination.page);
 
             next();
         },
