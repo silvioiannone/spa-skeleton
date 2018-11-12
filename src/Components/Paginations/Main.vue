@@ -27,17 +27,24 @@
             }
         },
 
-        mounted()
-        {
-            this.page = this.pagination.page;
+        watch: {
 
-            this.$watch('page', () =>
+            pagination: {
+                handler()
+                {
+                    this.page = this.pagination.page;
+                },
+                immediate: true,
+                deep: true
+            },
+
+            page()
             {
                 this.$emit('update:pagination', {
                     ...this.pagination,
                     page: this.page
                 });
-            })
+            }
         }
     }
 
