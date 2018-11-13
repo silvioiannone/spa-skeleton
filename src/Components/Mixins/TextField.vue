@@ -147,6 +147,14 @@
             counter: {
                 type: Number,
                 default: undefined
+            },
+
+            /**
+             * Returns the unmodified masked string.
+             */
+            returnMaskedValue: {
+                type: Boolean,
+                default: false
             }
         },
 
