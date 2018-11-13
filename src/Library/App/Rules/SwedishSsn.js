@@ -27,12 +27,15 @@ export default class SwedishSsn extends AbstractRule
     /**
      * Validate.
      *
-     * @param value
+     * @param {String} value
      * @param params
      * @returns {boolean}
      */
     validate(value, params)
     {
+        // Remove the dash.
+        value = value.replace('-', '');
+
         if (value.length !== 10) {
             return false;
         }

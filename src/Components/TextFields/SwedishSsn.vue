@@ -34,6 +34,14 @@
             mask: {
                 type: String,
                 default: '######-####'
+            },
+
+            /**
+             * Returns the unmodified masked string.
+             */
+            returnMaskedValue: {
+                type: Boolean,
+                default: true
             }
         },
 
