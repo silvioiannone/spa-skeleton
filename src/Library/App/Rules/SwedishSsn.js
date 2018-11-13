@@ -49,12 +49,7 @@ export default class SwedishSsn extends AbstractRule
         // Can't use reduce since the first time the validation is run it will only contain one
         // value and reduce will return it immediately causing the sum to not be processed.
         let total = sums
-            .map(number =>
-            {
-                let partial = number > 10 ? (number % 10) + Math.trunc(number / 10) : number;
-
-                return partial;
-            })
+            .map(number => number > 10 ? (number % 10) + Math.trunc(number / 10) : number)
             .reduce((total, current) => total + current);
 
         let totalLastDigit = total % 10;
