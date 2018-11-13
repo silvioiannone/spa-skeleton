@@ -3,10 +3,12 @@ import VeeValidate         from 'vee-validate';
 import ValidatorDictionary from 'js/App/Validator/Dictionary';
 
 // Skeleton rules.
-import Count from './Rules/Count';
+import Count      from './Rules/Count';
+import SwedishSsn from './Rules/SwedishSsn';
 
 const skeletonRules = {
-    Count
+    Count,
+    SwedishSsn
 }
 
 /**

@@ -1,0 +1,49 @@
+<script>
+
+    import TextField from '../Mixins/TextField';
+
+    export default {
+
+        name: 'TextFieldSwedishSsn',
+
+        mixins: [
+            TextField
+        ],
+
+        props: {
+
+            /**
+             * Social security number.
+             */
+            label: {
+                type: String,
+                default: 'Social security number'
+            },
+
+            /**
+             * Input field name.
+             */
+            name: {
+                type: String,
+                default: 'ssn'
+            },
+
+            /**
+             * Mask.
+             */
+            mask: {
+                type: String,
+                default: '######-####'
+            }
+        },
+
+        computed: {
+
+            _validation()
+            {
+                return this.validation.concat('|', 'swedishSsn');
+            }
+        }
+    }
+
+</script>

@@ -92,6 +92,7 @@
                 // If the value is empty we need to remove the selected value.
                 if (this.searchQuery === '')  {
                     this.$data._selected = null;
+                    this.emitInput(null);
                 }
             },
 

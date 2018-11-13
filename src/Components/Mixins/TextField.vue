@@ -174,6 +174,14 @@
             _value()
             {
                 return this.value;
+            },
+
+            /**
+             * Override this in order to define the validation rules.
+             */
+            _validation()
+            {
+                return this.validation;
             }
         },
 
@@ -249,7 +257,7 @@
                 directives: [
                     {
                         name: 'validate',
-                        value: this.validation
+                        value: this._validation
                     }
                 ],
                 props,
