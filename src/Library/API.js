@@ -1,10 +1,10 @@
 import AppAPIResources from 'js/App/API';
 
 // Skeleton API resources
-import App from './API/App';
-import Notifications from './API/Notifications';
-import Roles from './API/Roles';
-import Users from './API/Users';
+import App from './API/Resources/App';
+import Notifications from './API/Resources/Notifications';
+import Roles from './API/Resources/Roles';
+import Users from './API/Resources/Users';
 
 const APIResources = {
     App,
