@@ -1,33 +1,33 @@
 {
   "_args": [
     [
-      "spa-skeleton@0.0.106",
-      "/Users/silvioiannone/Programming/Projects/Boptimera"
+      "spa-skeleton@0.0.128",
+      "/Users/silvioiannone/Programming/Projects/BloomEstateNew"
     ]
   ],
-  "_from": "spa-skeleton@0.0.106",
-  "_id": "spa-skeleton@0.0.106",
+  "_from": "spa-skeleton@0.0.128",
+  "_id": "spa-skeleton@0.0.128",
   "_inBundle": false,
-  "_integrity": "sha512-qBRzG7qH6yPUqWc+kJ36UVHl6xfq4W7vcMwiTe86GvWIYn+vFycyS7/erUAmEAMKQ6QaQk56I6P2qWCJpD6Gng==",
+  "_integrity": "sha512-6LSEk9q4rCGkv+YLKk9mk/rG/f6HpxyIE44wBXPlwJbgeGLF+SBYSJyw36GROR+XbMR8wRz7Koogse1aA/bBmw==",
   "_location": "/spa-skeleton",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "spa-skeleton@0.0.106",
+    "raw": "spa-skeleton@0.0.128",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "0.0.106",
+    "rawSpec": "0.0.128",
     "saveSpec": null,
-    "fetchSpec": "0.0.106"
+    "fetchSpec": "0.0.128"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.106.tgz",
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.128.tgz",
   "_shasum": "6f168f180711d86dc5744a8bb20a2c1ab6ee9d10",
-  "_spec": "0.0.106",
-  "_where": "/Users/silvioiannone/Programming/Projects/Boptimera",
+  "_spec": "0.0.128",
+  "_where": "/Users/silvioiannone/Programming/Projects/BloomEstateNew",
   "author": {
     "name": "Silvio Iannone"
   },
@@ -38,15 +38,9 @@
   "dependencies": {
     "@mdi/font": "^2.7.94",
     "axios": "^0.18.0",
-    "babel-helper-vue-jsx-merge-props": "^2.0.3",
-    "babel-plugin-syntax-jsx": "^6.18.0",
-    "babel-plugin-transform-vue-jsx": "^3.7.0",
-    "babel-preset-env": "^1.7.0",
     "country-json": "^1.0.7",
-    "debug": "^3.1.0",
     "flag-icon-css": "^3.0.0",
     "github-markdown-css": "^2.10.0",
-    "imports-loader": "^0.8.0",
     "jwt-decode": "^2.2.0",
     "laravel-echo": "^1.3.5",
     "libphonenumber-js": "^1.4.6",
@@ -62,8 +56,6 @@
     "superagent": "^3.8.2",
     "tiptap": "^0.16.0",
     "tiptap-extensions": "^0.18.0",
-    "url-pattern": "^1.0.3",
-    "urijs": "^1.19.1",
     "vee-validate": "^2.0.6",
     "vue": "^2.5.17",
     "vue-avatar": "^2.1.3",
@@ -75,17 +67,24 @@
     "vuedraggable": "^2.16.0",
     "vuetify": "^1.2.5",
     "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0",
-    "webpack-merge": "^4.1.2"
+    "vuex-router-sync": "^5.0.0"
   },
   "deprecated": false,
   "description": "A VueJS based SPA skeleton",
   "devDependencies": {
+    "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
+    "babel-preset-env": "^1.7.0",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
+    "imports-loader": "^0.8.0",
     "laravel-mix": "^2.1.11",
+    "ts-loader": "^5.3.0",
+    "typescript": "^3.1.6",
     "vue-loader": "^14.2.2",
-    "webpack": "^4.6.0"
+    "webpack": "^4.6.0",
+    "webpack-merge": "^4.1.2"
   },
   "homepage": "https://github.com/silvioiannone/spa-skeleton#readme",
   "license": "ISC",
