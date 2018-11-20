@@ -3,6 +3,7 @@
  */
 
 import AppConfig from 'js/Config.js';
+import _         from 'lodash';
 
 // API drivers.
 import SuperAgentApiDriver from './Library/API/Drivers/SuperAgentDriver';
@@ -56,7 +57,7 @@ const defaultConfig = {
          *
          * Must match one of the keys in `api.drivers`.
          */
-        driver: 'axios',
+        driver: 'superAgent',
 
         /**
          * Available API drivers.
@@ -180,7 +181,6 @@ const defaultConfig = {
     }
 }
 
-let config = {}
-config = Object.assign(config, defaultConfig, AppConfig);
+let config = _.merge(defaultConfig, AppConfig);
 
 export default config;
