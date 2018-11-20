@@ -70,11 +70,19 @@
         props: {
 
             /**
+             * Additional data to send to the server.
+             */
+            data: {
+                type: Object,
+                default: () => ({})
+            },
+
+            /**
              * Dropzone options object that will be merged with the default one.
              */
             options: {
                 type: Object,
-                default: () => { return {} }
+                default: () => ({})
             }
         },
 
@@ -82,7 +90,6 @@
         {
             return {
                 errorMessage: '',
-                test: '',
                 previewTemplate: null,
                 uploading: false
             }
@@ -104,6 +111,7 @@
                     thumbnailHeight: null,
                     thumbnailWidth: 640,
                     url: '/api/v1/files',
+                    params: this.data,
                     ...this.options,
                 }
             }
