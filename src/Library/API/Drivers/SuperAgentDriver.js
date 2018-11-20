@@ -1,8 +1,7 @@
-import Config     from '../../Config';
-import httpClient from 'superagent';
-import Token      from './Token';
-import URLPattern from 'url-pattern';
-import Echo from 'laravel-echo';
+import AbstractApiDriver from './AbstractApiDriver';
+import Config            from '../../../Config';
+import SuperAgent        from 'superagent';
+import URLPattern        from 'url-pattern';
 
 /**
  * Paths that should be ignored.
@@ -42,43 +41,17 @@ let ignoredPaths = [
 ];
 
 /**
- * Represents an abstract API resouce.
+ * API driver that makes use of SuperAgent.
  *
  * @abstract
  */
-export default class AbstractResource
+export default class SuperAgentDriver extends AbstractApiDriver
 {
     constructor()
     {
-        this.attachments = [];
-        this.token = new Token;
-        this.httpClient = httpClient;
-        this.parameters = {};
-        this.resourceName = '';
-        this.socketId = '';
-    }
+        super();
 
-    /**
-     * Set the socket ID that will be send with the headers.
-     *
-     * @param socketId
-     */
-    setSocketId(socketId)
-    {
-        this.socketId = socketId;
-    }
-
-    /**
-     * Set the parameters to be sent with the request.
-     *
-     * @param parameters
-     * @return {AbstractResource}
-     */
-    setParameters(parameters)
-    {
-        this.parameters = parameters;
-
-        return this;
+        this.httpClient = SuperAgent;
     }
 
     /**
@@ -88,7 +61,7 @@ export default class AbstractResource
      * @return {Promise}
      * @protected
      */
-    _get(action)
+    sendGet(action)
     {
         let actionURI = this.getAction(action);
 
@@ -97,7 +70,7 @@ export default class AbstractResource
             actionURI += '?' + this.getURIEncodedParameters();
         }
 
-        let request = httpClient.get(actionURI);
+        let request = this.httpClient.get(actionURI);
 
         return this.dispatchRequest(request);
     }
@@ -134,9 +107,9 @@ export default class AbstractResource
      * @return {Promise}
      * @protected
      */
-    _delete(action, data)
+    sendDelete(action, data)
     {
-        let request = httpClient
+        let request = this.httpClient
             .delete(this.getAction(action))
             .send(data);
 
@@ -152,9 +125,9 @@ export default class AbstractResource
      * @return {Promise}
      * @protected
      */
-    _patch(action, data)
+    sendPatch(action, data)
     {
-        let request = httpClient
+        let request = this.httpClient
             .patch(this.getAction(action))
             .send(data);
 
@@ -170,9 +143,9 @@ export default class AbstractResource
      * @return Promise
      * @protected
      */
-    _post(action, data)
+    sendPost(action, data)
     {
-        let request = httpClient
+        let request = this.httpClient
             .post(this.getAction(action));
 
         this.attachments.forEach(attachment =>
@@ -194,21 +167,6 @@ export default class AbstractResource
         request.send(data);
 
         return this.dispatchRequest(request);
-    }
-
-    /**
-     * Attach a file to the request. This will only work with a POST request.
-     *
-     * @param {string} name
-     * @param {File} file
-     */
-    attach(name, file)
-    {
-        this.attachments.push({
-            name, file
-        });
-
-        return this;
     }
 
     /**
@@ -308,7 +266,7 @@ export default class AbstractResource
 
         return new Promise((resolve, reject) =>
         {
-            httpClient
+            self.httpClient
                 .post(Config.api.basePath + 'oauth/token')
                 .send({
                     grant_type: 'refresh_token',
@@ -326,7 +284,7 @@ export default class AbstractResource
                         return;
                     }
 
-                    this.token.save(response);
+                    this.token.save(response.body.access_token, response.body.refresh_tokeh);
                 });
         });
 
@@ -373,55 +331,11 @@ export default class AbstractResource
             if(response.body && response.body.access_token)
             {
                 // ...save it.
-                self.token.save(response);
+                self.token.save(response.body.access_token, response.body.refresh_token);
             }
 
             resolve(response);
         })
-    }
-
-    /**
-     * Get the action URI.
-     *
-     * @param action
-     * @returns {string}
-     * @protected
-     */
-    getAction(action)
-    {
-        let actionURI = Config.api.basePath + this.getResourceName();
-
-        if(action)
-        {
-            actionURI += '/' + action;
-        }
-
-        return actionURI;
-    }
-
-    /**
-     * @return {string}
-     * @protected
-     */
-    getResourceName()
-    {
-        return this.resourceName;
-    }
-
-    /**
-     * Return a string of URL parameter from an object.
-     *
-     * @return {string}
-     * @protected
-     */
-    getURIEncodedParameters()
-    {
-        let self = this;
-
-        return Object.keys(self.parameters).map(k =>
-        {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(self.parameters[k])
-        }).join('&');
     }
 
     /**
@@ -442,5 +356,15 @@ export default class AbstractResource
         }
 
         return false;
+    }
+
+    /**
+     * Override this function in order to parse and normalize the response.
+     *
+     * @return Object
+     * @protected
+     */
+    parseResponse(response) {
+        return response;
     }
 }

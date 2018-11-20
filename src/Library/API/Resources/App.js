@@ -23,16 +23,18 @@ export default class App extends AbstractResource
     {
         return new Promise((resolve, reject) =>
         {
-            this.httpClient.get('/locales/' + locale + '.json').end(function (error, response)
-            {
-                if (error)
+            this.httpClient
+                .get('/locales/' + locale + '.json')
+                .end(function (error, response)
                 {
-                    reject(response);
-                    return;
-                }
+                    if (error)
+                    {
+                        reject(response);
+                        return;
+                    }
 
-                resolve(response);
-            });
+                    resolve(response);
+                });
         });
     }
 

@@ -65,12 +65,13 @@ export default class Token
     /**
      * Save the JSON web token.
      *
-     * @param response
+     * @param accessToken {String}
+     * @param refreshToken {String}
      */
-    save(response)
+    save(accessToken, refreshToken)
     {
-        let accessTokenCookie = this.accessTokenName + "=" + response.body.access_token + "; path=/;";
-        let refreshTokenCookie = this.refreshTokenName + "=" + response.body.refresh_token + "; path=/;";
+        let accessTokenCookie = this.accessTokenName + "=" + accessToken + "; path=/;";
+        let refreshTokenCookie = this.refreshTokenName + "=" + refreshToken + "; path=/;";
 
         // If production send only over HTTPS
         if(Config.env !== 'local')

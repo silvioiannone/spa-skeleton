@@ -1,5 +1,5 @@
 import AbstractResource from './AbstractResource';
-import Config           from '../../Config';
+import Config           from '../../../Config';
 
 /**
  * Users resource.
@@ -96,20 +96,15 @@ export default class Users extends AbstractResource
      * @param {Object} userCredentials
      * @return {Promise}
      */
-    login(userCredentials)
+    async login(userCredentials)
     {
-        let parameters = userCredentials;
-
-        parameters.grant_type = 'password';
-        parameters.client_id = Config.client.id;
-        parameters.client_secret = Config.client.secret;
-        parameters.scope = '*';
-
-        let request = this.httpClient
-            .post('/oauth/token')
-            .send(parameters);
-
-        return this.dispatchRequest(request);
+        return this._post('./api/v1/oauth/token', {
+            ...userCredentials,
+            grant_type: 'password',
+            client_id: Config.client.id,
+            client_secret: Config.client.secret,
+            scope: '*'
+        });
     }
 
     /**

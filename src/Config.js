@@ -4,6 +4,10 @@
 
 import AppConfig from 'js/Config.js';
 
+// API drivers.
+import SuperAgentApiDriver from './Library/API/Drivers/SuperAgentDriver';
+import AxiosApiDriver      from './Library/API/Drivers/AxiosDriver';
+
 const defaultConfig = {
 
     /**
@@ -31,6 +35,9 @@ const defaultConfig = {
      */
     locale: 'en',
 
+    /**
+     * App specific settings.
+     */
     app: {
 
         /**
@@ -43,6 +50,21 @@ const defaultConfig = {
      * API settings.
      */
     api: {
+
+        /**
+         * Default API driver.
+         *
+         * Must match one of the keys in `api.drivers`.
+         */
+        driver: 'axios',
+
+        /**
+         * Available API drivers.
+         */
+        drivers: {
+            axios:      AxiosApiDriver,
+            superAgent: SuperAgentApiDriver
+        },
 
         /**
          * Base URL that will be used when sending API requests.

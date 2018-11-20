@@ -42,7 +42,8 @@
             {
                 return new Promise((resolve, reject) =>
                 {
-                    this.$api.users.login(this.model)
+                    this.$api.users
+                        .login(this.model)
                         .then(response => resolve(response))
                         .catch(response => reject(response));
                 });
