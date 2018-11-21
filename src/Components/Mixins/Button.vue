@@ -56,6 +56,23 @@
             }
         },
 
+        methods: {
+
+            /**
+             * Override this function in order to define what to do when `click` event is emitted.
+             */
+            onClick() {},
+
+            /**
+             * Handle `click` event.
+             */
+            handleClick(event)
+            {
+                this.$emit('click', event);
+                this.onClick();
+            }
+        },
+
         render(createElement)
         {
             let self = this;
@@ -64,9 +81,7 @@
             return createElement('v-btn', {
                 props,
                 on: {
-                    click: event => {
-                        self.$emit('click', event);
-                    }
+                    click: event => self.handleClick(event)
                 }
             }, this.$slots.default);
         }
