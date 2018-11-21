@@ -71,9 +71,12 @@
                     for (let key in this.filters) {
                         let filterValue = this.filters[key];
                         let queryValue = query[key];
+                        
                         // If a filter is in the query but not in the filters then we remove it.
-                        if ((! filterValue || this.isEmptyArray(filterValue)) && queryValue) {
-                            delete query[key];
+                        if ((! filterValue || this.isEmptyArray(filterValue))) {
+                            if (queryValue) {
+                                delete query[key];
+                            }
                             continue;
                         }
 
