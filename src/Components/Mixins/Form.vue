@@ -80,8 +80,7 @@
                 return new Promise((resolve, reject) =>
                 {
                     // Before submitting make sure that the form is valid.
-                    this.$validator
-                        .validateAll()
+                    this.$validator.validateAll()
                         .then(result =>
                         {
                             if (!result) {
@@ -135,8 +134,7 @@
                         // other components are located.
                         this.$parent.errors.add({
                             field: index,
-                            msg: response.body.errors[index][0],
-                            scope: 'server'
+                            msg: response.body.errors[index][0]
                         });
                         this.errors.add({
                             field: '_server',
@@ -152,11 +150,11 @@
              */
             resetForm()
             {
-                this.$validator.errors.clear();
-                this.$validator.errors.clear('_server');
+                this.errors.clear();
+                this.errors.clear('_server');
 
                 if (this.$parent) {
-                    this.$parent.$validator.errors.clear();
+                    this.$parent.errors.clear();
                     this.$parent.model = {...this.$parent.model, ...this.$parent.value};
                 }
             }
@@ -177,8 +175,8 @@
                     element.addEventListener('focusin', event =>
                     {
                         let field = event.target.getAttribute('name');
-                        this.$validator.errors.remove(field, 'server');
-                        this.$parent.$validator.errors.remove(field, 'server');
+                        this.errors.remove(field, 'server');
+                        this.$parent.errors.remove(field);
                     });
                 });
             });
