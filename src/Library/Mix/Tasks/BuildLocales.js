@@ -83,6 +83,10 @@ class BuildLocalesTask extends Task
             appLocale = _.merge(skeletonLocale, appLocale);
         }
 
+        if (! FS.existsSync('public/locales')) {
+            FS.mkdirSync('public/locales');
+        }
+
         FS.writeFileSync('public/locales/' + file, JSON.stringify(appLocale, null, 4));
     }
 }
