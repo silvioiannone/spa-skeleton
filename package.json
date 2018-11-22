@@ -96,5 +96,5 @@
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress"
   },
-  "version": "0.0.144"
+  "version": "0.0.145"
 }
