@@ -6,5 +6,11 @@
   "menu": {
     "settings": "Settings",
     "quit": "Quit"
+  },
+  "navigationDrawer": {
+    "close": "Close",
+    "markAllAsRead": "Mark all as read",
+    "noNewNotificaitons": "No new notifications at this time.",
+    "notifications": "Notifications"
   }
 }

@@ -6,5 +6,11 @@
   "menu": {
     "settings": "Inställningar",
     "quit": "Logga ut"
+  },
+  "navigationDrawer": {
+    "close": "Stäng",
+    "markAllAsRead": "Markera alla som lästa",
+    "noNewNotifications": "Inga nya notifiering.",
+    "notifications": "Notifiering"
   }
 }
