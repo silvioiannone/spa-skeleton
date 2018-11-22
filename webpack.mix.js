@@ -1,6 +1,7 @@
-const config = require('spa-skeleton/webpack.config');
-const merge = require('webpack-merge');
-const path = require('path');
+const config = require('spa-skeleton/webpack.config'),
+      merge = require('webpack-merge'),
+      path = require('path'),
+      BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
 
 module.exports = {
 
@@ -40,7 +41,9 @@ module.exports = {
 
         // Load the Configuration from SPA-Skeleton
         mix.webpackConfig(merge(config, this.userWebpackConfig));
+        mix.extend('buildLocales', new BuildLocales);
 
+        mix.buildLocales();
         this.buildJS();
         this.buildStyles();
 

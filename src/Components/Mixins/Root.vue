@@ -5,7 +5,6 @@
      */
 
     import Config  from '../../Config';
-    import VueI18N from 'vue-i18n';
 
     export default
     {

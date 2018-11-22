@@ -38,8 +38,7 @@
              * Text for the submit button.
              */
             submitText: {
-                type: String,
-                default: 'Submit'
+                type: String
             }
         },
 

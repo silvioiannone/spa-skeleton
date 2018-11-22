@@ -1,0 +1,10 @@
+{
+  "form": {
+    "submit": "Skicka",
+    "cancel": "Avbryt"
+  },
+  "menu": {
+    "settings": "Inställningar",
+    "quit": "Logga ut"
+  }
+}

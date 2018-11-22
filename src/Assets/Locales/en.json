@@ -1,0 +1,10 @@
+{
+  "form": {
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "menu": {
+    "settings": "Settings",
+    "quit": "Quit"
+  }
+}
