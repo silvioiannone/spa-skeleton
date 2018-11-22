@@ -1,6 +1,7 @@
-import Log from 'loglevel';
+import _           from 'lodash';
+import Log         from 'loglevel';
 import PluginsList from 'js/App/Plugins';
-import Config from '../../Config';
+import Config      from '../../Config';
 
 // Skeleton plugins
 import API from './Plugins/API';
@@ -12,9 +13,12 @@ import Vue2Filters from 'vue2-filters';
 import VueRouter from 'vue-router';
 import WebSocket from './Plugins/WebSocket';
 
+/**
+ * SPA-Skeleton plugins. The order is important.
+ */
 const SkeletonPlugins = {
-    Vuetify,
     VueI18N,
+    Vuetify,
     VueRouter,
     Vue2Filters,
     API,
@@ -28,9 +32,11 @@ const SkeletonPlugins = {
  */
 export default class Plugins
 {
-    constructor(vue)
+    constructor(vue, translator)
     {
+        this.translator = vue;
         this.vue = vue;
+        this.beforeActions = {};
     }
 
     /**
@@ -48,15 +54,40 @@ export default class Plugins
 
             if (key === 'Vuetify') {
                 settings = {
-                    theme: Config.ui.colors
+                    theme: Config.ui.colors,
                 };
+            }
+
+            if (this.beforeActions[key]) {
+                this.beforeActions[key].forEach(action => {
+                    let actionSettings = action();
+                    settings = _.merge(settings, actionSettings)
+                });
             }
 
             this.vue.use(availablePlugins[key], settings);
 
-            Log.debug('Plugin "' + key + '" registered.')
+            Log.debug('Plugin "' + key + '" registered.');
         }
 
         Log.debug('Plugins loaded.');
+    }
+
+    /**
+     * Register a callback that should be executed before a plugin is registered.
+     *
+     * @param plugin
+     * @param callback Can an object containing the settings that should be passed to the plugin.
+     * @return Plugins
+     */
+    before(plugin, callback)
+    {
+        if (! this.beforeActions[plugin]) {
+            this.beforeActions[plugin] = [];
+        }
+
+        this.beforeActions[plugin].push(callback);
+
+        return this;
     }
 }
