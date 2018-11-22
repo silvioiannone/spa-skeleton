@@ -30,22 +30,26 @@ class BuildLocalesTask extends Task
             });
 
         FS.readdirSync(this.skeletonLocalesPath)
+            // We can filter out all the locales that are not present in the app.
+            .filter(file => appLocales.indexOf(file) >= 0)
             .forEach(file =>
             {
                 this.skeletonLocales.push(file);
-                files.push(new File(this.skeletonLocalesPath + '/' + file));
             });
+
+        this.assets = files;
 
         // The parent class uses the `files` property in order to set the files that should be
         // watched but it's expecting a `FilesCollection`. In this case we can't use the
         // `FilesCollection` because we need to look at the files from two different sources.
         // Instead we create a files that behaves in a a compatible way.
+        //
+        // Files contains all the files that shoulbe watched for changes.
         this.files = {
             get() {
                 return files.map(file => file.relativePath());
             }
         };
-        this.assets = files;
 
         appLocales.forEach(file => this.mergeLocales(file));
     }
