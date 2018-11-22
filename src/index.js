@@ -45,11 +45,23 @@ export default class Main
         // Init the global components
         (new Components(this.vue)).boot();
 
-        // Init the plugins
-        (new Plugins(this.vue)).boot();
+        let translator = null;
 
-        // Init the translator
-        let translator = (new Translator).boot();
+        // Init the plugins
+        (new Plugins(this.vue))
+            .before('Vuetify', () =>
+            {
+                // Init the translator
+                translator = (new Translator).boot();
+
+                return {
+                    lang: {
+                        t: (key, ...params) => translator.t(key, params)
+                    }
+                }
+            })
+            .boot();
+
 
         // Init the validator
         (new Validator(this.vue, translator)).boot();
