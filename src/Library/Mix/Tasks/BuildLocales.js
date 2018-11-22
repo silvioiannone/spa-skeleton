@@ -51,7 +51,7 @@ class BuildLocalesTask extends Task
 
         appLocales.forEach(file => {
             this.mergeLocales(file);
-            this.assets.push('locales/' + file);
+            this.assets.push(new File('public/locales/' + file));
         });
     }
 
