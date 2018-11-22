@@ -5,7 +5,7 @@
         <slot slot="toolbar-text-right" class="v-toolbar__text" name="toolbar-text-right"></slot>
         <template slot="toolbar-items">
             <slot></slot>
-            <v-btn flat to="/login">Log in</v-btn>
+            <v-btn flat to="/login">{{ $t('toolbar.logIn') }}</v-btn>
         </template>
     </toolbar-main>
 </template>

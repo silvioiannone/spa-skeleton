@@ -1,16 +1,32 @@
 {
+  "common": {
+    "cancel": "Cancel",
+    "logIn": "Log in",
+    "search": "Search",
+    "upload": "Upload"
+  },
   "form": {
-    "submit": "Submit",
-    "cancel": "Cancel"
+    "cancel": "@:common.cancel",
+    "logIn": "@:common.logIn",
+    "submit": "Submit"
   },
   "menu": {
     "settings": "Settings",
     "quit": "Quit"
+  },
+  "misc": {
+    "fileUpload": {
+      "dragAndDropToUploadAFile": "Drag and drop to upload a file!",
+      "orClickTapToSelectOne": "...or click/tap to select one."
+    }
   },
   "navigationDrawer": {
     "close": "Close",
     "markAllAsRead": "Mark all as read",
     "noNewNotificaitons": "No new notifications at this time.",
     "notifications": "Notifications"
+  },
+  "toolbar": {
+    "logIn": "@:common.logIn"
   }
 }

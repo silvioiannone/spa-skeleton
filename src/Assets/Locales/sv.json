@@ -1,16 +1,32 @@
 {
+  "common": {
+    "cancel": "Avbryt",
+    "logIn": "Logga in",
+    "search": "Sök",
+    "upload": "Ladda up"
+  },
   "form": {
-    "submit": "Skicka",
-    "cancel": "Avbryt"
+    "cancel": "@:common.canel",
+    "logIn": "@:common.logIn",
+    "submit": "Skicka"
   },
   "menu": {
     "settings": "Inställningar",
     "quit": "Logga ut"
+  },
+  "misc": {
+    "fileUpload": {
+      "dragAndDropToUploadAFile": "Dra och släpp för att ladda upp en fil!",
+      "orClickTapToSelectOne": "...eller klicka/peka för att välja en."
+    }
   },
   "navigationDrawer": {
     "close": "Stäng",
     "markAllAsRead": "Markera alla som lästa",
     "noNewNotifications": "Inga nya notifiering.",
     "notifications": "Notifiering"
+  },
+  "toolbar": {
+    "logIn": "@:common.logIn"
   }
 }

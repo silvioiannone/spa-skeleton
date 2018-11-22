@@ -2,7 +2,8 @@
     <v-layout wrap>
         <v-flex sm12 md6 v-if="$vuetify.breakpoint.mdAndUp"></v-flex>
         <v-flex sm12 md6>
-            <v-text-field solo placeholder="Search..." prepend-icon="search" v-model="searchText">
+            <v-text-field solo :placeholder="$t('common.search') + '...'" prepend-icon="search"
+                          v-model="searchText">
             </v-text-field>
         </v-flex>
         <v-flex xs12>

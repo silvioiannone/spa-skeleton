@@ -5,14 +5,14 @@
                       v-on:vdropzone-thumbnail="generateThumbnail"
                       v-on:vdropzone-error="handleError" v-on:vdropzone-success="handleSuccess">
             <div>
-                <h3>Drag and drop to upload a file!</h3>
-                <p>...or click/tap to select one.</p>
+                <h3>{{ $t('misc.fileUpload.dragAndDropToUploadAFile') }}</h3>
+                <p>{{ $t('misc.fileUpload.orClickTapToSelectOne') }}</p>
             </div>
         </vue-dropzone>
         <v-alert type="error" :value="errorMessage.length" class="mt-3">{{ errorMessage }}</v-alert>
         <div class="mt-3">
-            <v-btn color="primary" @click="upload" :loadinig="uploading">Upload</v-btn>
-            <v-btn flat @click="cancel">Cancel</v-btn>
+            <v-btn color="primary" @click="upload" :loadinig="uploading">{{ $t('common.upload') }}</v-btn>
+            <v-btn flat @click="cancel">{{ $t('common.cancel') }}</v-btn>
         </div>
 
         <!-- Template preview -->
