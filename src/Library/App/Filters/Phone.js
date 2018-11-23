@@ -1,9 +1,21 @@
+import AbstractFilter from './AbstractFilter';
+
 /**
  * This filter formats a phone number.
  */
-export default function (value)
+export default class Phone extends AbstractFilter
 {
-    if (! value) return '';
+    /**
+     * Run the filter.
+     *
+     * @param value
+     * @returns {string}
+     */
+    run(value)
+    {
+        if (! value) return '';
 
-    return value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5, 8) +  ' ' + value.slice(8, value.length);
+        return value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5, 8) +  ' '
+            + value.slice(8, value.length);
+    }
 }

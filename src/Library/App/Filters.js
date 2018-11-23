@@ -1,12 +1,20 @@
-import Log from 'loglevel';
+import Log        from 'loglevel';
 import AppFilters from 'js/App/Filters';
 
 // Skeleton filters
-import FileSize from './Filters/FileSize';
+import Capitalize         from './Filters/Capitalize';
+import Currency           from './Filters/Currency';
+import Date               from './Filters/Date';
+import FileSize           from './Filters/FileSize';
 import OrganizationNumber from './Filters/OrganizationNumber';
-import Phone from './Filters/Phone';
+import Phone              from './Filters/Phone';
+import ReadableDate       from './Filters/ReadableDate';
 
 const SkeletonFilters = {
+    capitalize: Capitalize,
+    currency: Currency,
+    date: Date,
+    readableDate: ReadableDate,
     fileSize: FileSize,
     organizationNumber: OrganizationNumber,
     phone: Phone
@@ -17,9 +25,16 @@ const SkeletonFilters = {
  */
 export default class Filters
 {
-    constructor(vue)
+    /**
+     * Constructor.
+     *
+     * @param vue
+     * @param store
+     */
+    constructor(vue, store)
     {
         this.vue = vue;
+        this.store = store;
     }
 
     /**
@@ -29,12 +44,12 @@ export default class Filters
     {
         Log.debug('Loading filters...');
 
-        let availableFilters = {};
-        Object.assign(availableFilters, SkeletonFilters, AppFilters);
+        let availableFilters = {... SkeletonFilters, ...AppFilters};
 
         for (let key in availableFilters) {
+            let filter = (new availableFilters[key](this.store)).run.bind(this);
+            this.vue.filter(key, filter);
             Log.debug('Filter "' + key + '" registered.');
-            this.vue.filter(key, availableFilters[key]);
         }
 
         Log.debug('Filters loaded.');

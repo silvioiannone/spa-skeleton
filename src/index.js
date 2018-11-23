@@ -36,14 +36,12 @@ export default class Main
         // Register the custom directives
         (new Directives(this.vue)).boot();
 
-        // Init the state machine
-        let state = (new StateMachine(this.vue)).boot();
-
-        // Init the filters
-        (new Filters(this.vue)).boot();
-
         // Init the global components
         (new Components(this.vue)).boot();
+
+        // Init the state machine
+        let store = (new StateMachine(this.vue)).boot()
+            .getStore();
 
         let translator = null;
 
@@ -62,6 +60,8 @@ export default class Main
             })
             .boot();
 
+        // Init the filters
+        (new Filters(this.vue, store)).boot();
 
         // Init the validator
         (new Validator(this.vue, translator)).boot();
@@ -69,7 +69,7 @@ export default class Main
         // Init the router
         (new Router(this.vue))
             .translator(translator)
-            .boot(state.getStore());
+            .boot(store);
 
         let t1 = performance.now();
         Log.info('App started and running.');
