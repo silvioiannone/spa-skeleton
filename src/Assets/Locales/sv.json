@@ -7,7 +7,9 @@
   },
   "form": {
     "cancel": "@:common.canel",
+    "email": "E-post",
     "logIn": "@:common.logIn",
+    "password": "Lösenord",
     "submit": "Skicka"
   },
   "menu": {

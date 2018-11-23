@@ -1,10 +1,11 @@
 <template>
     <form-main v-bind="getProps()" v-on="getOn()" :submit="login" :submit-text="$t('form.logIn')">
         <v-flex xs12>
-            <v-text-field label="E-mail" v-model="model.username"></v-text-field>
+            <v-text-field :label="$t('form.email')" v-model="model.username"></v-text-field>
         </v-flex>
         <v-flex xs12>
-            <v-text-field label="Password" type="password" v-model="model.password"></v-text-field>
+            <v-text-field :label="$t('form.password')" type="password" v-model="model.password">
+            </v-text-field>
         </v-flex>
     </form-main>
 </template>
