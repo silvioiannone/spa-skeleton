@@ -6,7 +6,7 @@
     "upload": "Ladda up"
   },
   "form": {
-    "cancel": "@:common.canel",
+    "cancel": "@:common.cancel",
     "email": "E-post",
     "logIn": "@:common.logIn",
     "password": "Lösenord",
