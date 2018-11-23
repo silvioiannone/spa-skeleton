@@ -30,5 +30,19 @@
   },
   "toolbar": {
     "logIn": "@:common.logIn"
+  },
+  "$vuetify": {
+    "dataIterator": {
+      "nextPage": "Nästa sida",
+      "noResultsText": "Inga matchande poster hittades",
+      "pageText": "{0}-{1} av {2}",
+      "prevPage": "Föregående sida",
+      "rowsPerPageAll": "Alla",
+      "rowsPerPageText": "Element per sida:"
+    },
+    "dataTable": {
+      "rowsPerPageText": "Rader per sida:"
+    },
+    "noDataText": "Ingen tillgänglig data"
   }
 }

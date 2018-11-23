@@ -30,5 +30,19 @@
   },
   "toolbar": {
     "logIn": "@:common.logIn"
+  },
+  "$vuetify": {
+    "dataIterator": {
+      "nextPage": "Next page",
+      "noResultsText": "@:common.no matching records found",
+      "pageText": "{0}-{1} of {2}",
+      "prevPage": "Previous page",
+      "rowsPerPageAll": "All",
+      "rowsPerPageText": "Items per page:"
+    },
+    "dataTable": {
+      "rowsPerPageText": "Rows per page:"
+    },
+    "noDataText": "@:common.no data available"
   }
 }
