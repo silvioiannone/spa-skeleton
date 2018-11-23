@@ -29,6 +29,7 @@ export default class Translator
 
         return new VueI18N({
             locale,
+            fallbackLocale: 'en',
             messages
         });
     }
