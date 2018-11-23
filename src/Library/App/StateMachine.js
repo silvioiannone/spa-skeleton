@@ -30,6 +30,7 @@ export default class State
     constructor(Vue)
     {
         this.vue = Vue;
+        this.store = null;
     }
 
     /**
@@ -53,6 +54,11 @@ export default class State
      */
     getStore()
     {
+        // Make sure only once store instance is created.
+        if (this.store) {
+            return this.store;
+        }
+
         // Register all the modules with the state machine
         let availableModules = {};
         let vuexModules = {};
@@ -65,6 +71,8 @@ export default class State
             vuexModules[key] = module;
         }
 
-        return new Vuex.Store({ modules: vuexModules });
+        this.store = new Vuex.Store({ modules: vuexModules });
+
+        return this.store;
     }
 }
