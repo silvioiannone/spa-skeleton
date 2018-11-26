@@ -1,7 +1,9 @@
 {
   "common": {
     "cancel": "Cancel",
+    "delete": "Delete",
     "logIn": "Log in",
+    "no": "No",
     "search": "Search",
     "upload": "Upload"
   },
@@ -25,7 +27,7 @@
   "navigationDrawer": {
     "close": "Close",
     "markAllAsRead": "Mark all as read",
-    "noNewNotificaitons": "No new notifications at this time.",
+    "noNewNotifications": "No new notifications at this time.",
     "notifications": "Notifications"
   },
   "toolbar": {
