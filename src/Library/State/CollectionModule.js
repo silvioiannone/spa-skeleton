@@ -59,6 +59,7 @@ export default class CollectionModule extends AbstractModule
                 .then(response =>
                 {
                     this.deleteTwinsInRelatedResources(store, resource);
+                    store.commit(this.getDeleteMutationName(), resource);
                     resolve(response);
                 })
                 .catch(response => reject(response));
