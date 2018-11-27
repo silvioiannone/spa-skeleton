@@ -129,6 +129,8 @@
                 (this.$data._selected || []) : this.$data._selected;
             let items = [...this.items, ...this.$data._items];
 
+            items.push(selected);
+
             if (selected && this.multiple) {
                 // Check if selected is array
                 items = items.concat(selected);

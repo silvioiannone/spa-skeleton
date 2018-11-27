@@ -1,7 +1,5 @@
 <script>
 
-    import Component from './Component';
-
     /**
      * This mixin can be used in order to create inputs.
      *
