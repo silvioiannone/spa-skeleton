@@ -22,9 +22,9 @@
             </v-flex>
             <v-flex xs9>
                 <v-text-field label="Phone" v-model="phoneNumber" :disabled="! countryPrefix || disabled"
-                              name="phone" :error-messages="errorMessages" :required="required"
+                              name="phone" :error-messages="_errorMessages" :required="required"
                               :hint="hint" :persistent-hint="persistentHint"
-                              :label="label"
+                              :label="label" v-validate="validation" :data-vv-as="vvAs"
                               :mask="selectedCountryPhonePrefix && selectedCountryPhonePrefix.mask || ''">
                 </v-text-field>
             </v-flex>
@@ -79,6 +79,21 @@
             required: {
                 type: Boolean,
                 default: false
+            },
+
+            /**
+             * Validation rules.
+             */
+            validation: {
+                type: [String, Object],
+                default: ''
+            },
+
+            /**
+             * Set the validation alias.
+             */
+            vvAs: {
+                type: String
             }
         },
 
@@ -158,15 +173,12 @@
                 this.$emit('input', this.e164FormattedNumber);
             },
 
-            value()
-            {
-                this.init();
+            value: {
+                handler() {
+                    this.init();
+                },
+                immediate: true
             }
-        },
-
-        created()
-        {
-            this.init();
         }
     }
 
