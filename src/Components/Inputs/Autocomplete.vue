@@ -1,6 +1,7 @@
 <script>
 
     import Autocomplete from '../Mixins/Autocomplete';
+    import _            from 'lodash';
 
     export default {
 
@@ -128,10 +129,14 @@
             let selected = this.multiple ? (this.value || []) : this.value;
             let items = [...this.items, ...this.$data._items];
 
-            if (selected && this.multiple) {
-                items = items.concat(selected);
-            } else {
-                items.push(selected);
+            // `selected` is probably going to be an `Observer` so we transform it into a normal
+            // object.
+            if (! _.isEmpty({...selected})) {
+                if (this.multiple) {
+                    items = items.concat(selected);
+                } else {
+                    items.push(selected);
+                }
             }
 
             let props = {
