@@ -1,7 +1,5 @@
 <script>
 
-    import Vue from 'vue';
-
     /**
      * Use this mixin when you need to create a component wrapping another component.
      *
@@ -54,6 +52,14 @@
             _component()
             {
                 return this.$data.__component;
+            },
+
+            /**
+             * Override this computed prop in order to transform the value in case of need.
+             */
+            _value()
+            {
+                return this.value;
             }
         },
 
@@ -77,7 +83,7 @@
 
                 // If the component has a model we also need to include the value prop.
                 if (this._hasModel) {
-                    this.$set(props, 'value', this.value);
+                    this.$set(props, 'value', this._value);
                 }
 
                 return props;
@@ -151,7 +157,7 @@
                 {
                     props: this.getProps(),
                     domProps: {
-                        value: this.value
+                        value: this._value
                     },
                     on: this.getOn()
                 },
