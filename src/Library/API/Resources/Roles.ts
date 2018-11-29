@@ -1,4 +1,5 @@
-import AbstractResource from './AbstractResource';
+import AbstractResource  from './AbstractResource';
+import ResponseInterface from '../ResponseInterface';
 
 /**
  * Roles resource.
@@ -15,7 +16,7 @@ export default class Roles extends AbstractResource
     /**
      * Get the roles.
      */
-    get()
+    get(): Promise<ResponseInterface>
     {
         return this._get('');
     }

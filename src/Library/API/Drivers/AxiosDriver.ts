@@ -1,12 +1,22 @@
-import Axios             from 'axios';
-import Config            from '../../../Config';
+import Axios, {
+    AxiosInstance,
+    AxiosResponse,
+    AxiosRequestConfig
+} from 'axios';
 import AbstractApiDriver from './AbstractApiDriver';
+import Config            from '../../../Config';
+import ResponseInterface from '../ResponseInterface';
 
 /**
  * API driver that makes use of Axios.
  */
 export default class AxiosDriver extends AbstractApiDriver
 {
+    /**
+     * Axios HTTP client.
+     */
+    protected http: AxiosInstance;
+
     /**
      * Constructor.
      */
@@ -27,7 +37,7 @@ export default class AxiosDriver extends AbstractApiDriver
      *
      * @param response
      */
-    interceptResponse(response)
+    interceptResponse(response: AxiosResponse)
     {
         if (response.data.access_token) {
             this.token.save(response.data.access_token, response.data.refresh_token);
@@ -41,7 +51,7 @@ export default class AxiosDriver extends AbstractApiDriver
      *
      * @param config
      */
-    async interceptRequest(config)
+    async interceptRequest(config: AxiosRequestConfig): Promise<AxiosRequestConfig>
     {
         return new Promise(async (resolve, reject) =>
         {
@@ -70,17 +80,15 @@ export default class AxiosDriver extends AbstractApiDriver
 
     /**
      * Refresh the current API token.
-     *
-     * @return {Promise}
      */
-    async refreshToken()
+    async refreshToken(): Promise<any>
     {
         let response;
 
         try {
             response = await this.http.post('/oauth/token', {
                 grant_type: 'refresh_token',
-                refresh_token: self.token.getRefreshToken(),
+                refresh_token: this.token.getRefreshToken(),
                 client_id: Config.client.id,
                 client_secret: Config.client.secret,
                 scope: ''
@@ -91,7 +99,6 @@ export default class AxiosDriver extends AbstractApiDriver
         }
 
         this.token.save(response.data.access_token, response.data.refresh_token);
-        resolve(response);
     }
 
     /**
@@ -100,7 +107,7 @@ export default class AxiosDriver extends AbstractApiDriver
      * @param config
      * @returns {*}
      */
-    setHeaders(config)
+    setHeaders(config: AxiosRequestConfig): AxiosRequestConfig
     {
         config.headers.Accept = 'application/json';
 
@@ -115,31 +122,23 @@ export default class AxiosDriver extends AbstractApiDriver
         return config;
     }
 
-    _download(action)
+    protected async _download(action: string): Promise<any>
     {
         return undefined;
     }
 
     /**
      * Send a DELETE HTTP request to the API.
-     *
-     * @param action
-     * @param data
-     * @returns {Promise}
      */
-    async sendDelete(action, data)
+    protected async sendDelete(action: string, data: any): Promise<any>
     {
         return this.http.delete(this.getAction(action), data);
     }
 
     /**
      * Send a GET HTTP request to the API.
-     *
-     * @param action
-     * @returns {Promise}
-     * @protected
      */
-    async sendGet(action)
+    protected async sendGet(action: string): Promise<any>
     {
         return this.http.get(
             this.getAction(action),
@@ -151,25 +150,16 @@ export default class AxiosDriver extends AbstractApiDriver
 
     /**
      * Sebd a PATCH HTTP request to the API.
-     *
-     * @param action
-     * @param data
-     * @returns {Promise}
      */
-    async sendPatch(action, data)
+    protected async sendPatch(action: string, data: any): Promise<any>
     {
         return this.http.patch(this.getAction(action), data);
     }
 
     /**
      * Send a POST HTTP request to the API.
-     *
-     * @param action
-     * @param data
-     * @returns {Promise}
-     * @protected
      */
-    async sendPost(action, data)
+    async sendPost(action: string, data: any): Promise<any>
     {
         return this.http.post(this.getAction(action), data);
     }
@@ -179,7 +169,7 @@ export default class AxiosDriver extends AbstractApiDriver
      *
      * @param response
      */
-    parseResponse(response)
+    parseResponse(response: AxiosResponse): ResponseInterface
     {
         return {
             body: response.data

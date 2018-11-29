@@ -1,4 +1,5 @@
-import AbstractResource from './AbstractResource';
+import AbstractResource  from './AbstractResource';
+import ResponseInterface from '../ResponseInterface';
 
 /**
  * Notifications resource.
@@ -18,7 +19,7 @@ export default class Notifications extends AbstractResource
      * @param notification
      * @returns {Promise}
      */
-    markAsRead(notification)
+    markAsRead(notification: any): Promise<ResponseInterface>
     {
         return this._patch('markAsRead', notification);
     }
@@ -28,7 +29,7 @@ export default class Notifications extends AbstractResource
      *
      * @returns {Promise}
      */
-    markAllAsRead()
+    markAllAsRead(): Promise<ResponseInterface>
     {
         return this._post('markAsRead/all');
     }

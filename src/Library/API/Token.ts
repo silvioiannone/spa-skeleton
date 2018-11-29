@@ -1,46 +1,45 @@
-import Config from '../../Config';
+/// <reference path="../../../../@types/jwt-decode/index.d.ts"/>
 
-let jwtDecode = require('jwt-decode');
+import Config    from '../../Config';
+import JwtDecode from 'jwt-decode';
 
 /**
  * This class handles the OAUTH 2 token received from the API.
  */
 export default class Token
 {
-    constructor()
-    {
-        this.accessTokenName = 'access_token';
-        this.refreshTokenName = 'refresh_token';
-    }
+    /**
+     * Access token name.
+     */
+    protected accessTokenName: string = 'access_token';
+
+    /**
+     * Refresh token name.
+     */
+    protected refreshTokenName: string = 'refresh_token';
 
     /**
      * Get the access token.
-     *
-     * @returns {string}
      */
-    getAccessToken()
+    getAccessToken(): string
     {
         return document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 
     /**
      * Get the refresh token.
-     *
-     * @returns {string}
      */
-    getRefreshToken()
+    getRefreshToken(): string
     {
         return document.cookie.replace(/(?:(?:^|.*;\s*)refresh_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 
     /**
      * Decode the token.
-     *
-     * @return {Object}
      */
-    decode()
+    decode(): any
     {
-        return jwtDecode(this.getAccessToken());
+        return JwtDecode(this.getAccessToken());
     }
 
     /**
@@ -48,7 +47,7 @@ export default class Token
      *
      * @returns {boolean}
      */
-    isExpired()
+    isExpired(): boolean
     {
         return this.decode().exp < Math.ceil(new Date().getTime() / 1000);
     }
@@ -56,7 +55,7 @@ export default class Token
     /**
      * Remove the cookie.
      */
-    remove()
+    remove(): void
     {
         document.cookie = this.accessTokenName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         document.cookie = this.refreshTokenName +'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -65,10 +64,10 @@ export default class Token
     /**
      * Save the JSON web token.
      *
-     * @param accessToken {String}
-     * @param refreshToken {String}
+     * @param accessToken
+     * @param refreshToken
      */
-    save(accessToken, refreshToken)
+    save(accessToken: string, refreshToken: string): void
     {
         let accessTokenCookie = this.accessTokenName + "=" + accessToken + "; path=/;";
         let refreshTokenCookie = this.refreshTokenName + "=" + refreshToken + "; path=/;";

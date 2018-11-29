@@ -1,5 +1,6 @@
 import AbstractApiDriver from './AbstractApiDriver';
 import Config            from '../../../Config';
+import ResponseInterface from '../ResponseInterface';
 import SuperAgent        from 'superagent';
 import URLPattern        from 'url-pattern';
 
@@ -42,11 +43,17 @@ let ignoredPaths = [
 
 /**
  * API driver that makes use of SuperAgent.
- *
- * @abstract
  */
 export default class SuperAgentDriver extends AbstractApiDriver
 {
+    /**
+     * SuperAgent HTTP client.
+     */
+    protected httpClient: SuperAgent.SuperAgentStatic;
+
+    /**
+     * Constructor.
+     */
     constructor()
     {
         super();
@@ -56,12 +63,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Send a GET HTTP request to the API.
-     *
-     * @param {string} action
-     * @return {Promise}
-     * @protected
      */
-    sendGet(action)
+    protected sendGet(action: string): Promise<any>
     {
         let actionURI = this.getAction(action);
 
@@ -82,13 +85,13 @@ export default class SuperAgentDriver extends AbstractApiDriver
      * @return {Promise}
      * @protected
      */
-    _download(action)
+    protected _download(action: string): Promise<any>
     {
         let actionUri = this.getAction(action);
 
         if(Object.keys(this.parameters).length !== 0)
         {
-            actionURI += '?' + this.getURIEncodedParameters();
+            actionUri += '?' + this.getURIEncodedParameters();
         }
 
         let request = this.httpClient
@@ -100,14 +103,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Send a DELETE HTTP request to the API.
-     *
-     * @param {string} action The action that should be added at the end of the path.
-     *        E.g.: 'signup' method => 'https://example.com/user/signup'.
-     * @param {Object} data POST data.
-     * @return {Promise}
-     * @protected
      */
-    sendDelete(action, data)
+    protected sendDelete(action: string, data: any): Promise<any>
     {
         let request = this.httpClient
             .delete(this.getAction(action))
@@ -118,14 +115,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Send a PATCH HTTP request to the API.
-     *
-     * @param {string} action The action that should be added at the end of the
-     *        path. E.g.: 'signup' method => 'https://example.com/user/signup'.
-     * @param {Object} data POST data.
-     * @return {Promise}
-     * @protected
      */
-    sendPatch(action, data)
+    protected sendPatch(action: string, data: any): Promise<any>
     {
         let request = this.httpClient
             .patch(this.getAction(action))
@@ -136,17 +127,10 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Send a POST HTTP request to the API.
-     *
-     * @param {string} action The action that should be added at the end of the path.
-     *        E.g.: 'signup' method => 'https://example.com/user/signup'.
-     * @param {Object} [data] POST data.
-     * @return Promise
-     * @protected
      */
-    sendPost(action, data)
+    protected sendPost(action: string, data: any): Promise<any>
     {
-        let request = this.httpClient
-            .post(this.getAction(action));
+        let request = this.httpClient.post(this.getAction(action));
 
         this.attachments.forEach(attachment =>
         {
@@ -171,11 +155,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Dispatch the request to the server.
-     *
-     * @param {Request} request
-     * @return {Promise}
      */
-    dispatchRequest(request)
+    protected dispatchRequest(request: SuperAgent.SuperAgentRequest): Promise<SuperAgent.Response>
     {
         let self = this;
 
@@ -217,7 +198,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
      * @param {Object} request
      * @returns {Promise}
      */
-    interceptRequest(request)
+    interceptRequest(request: SuperAgent.SuperAgentRequest)
+        : Promise<{request: SuperAgent.SuperAgentRequest}>
     {
         let self = this;
 
@@ -260,7 +242,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Refresh the current API token.
      */
-    refreshToken()
+    refreshToken(): Promise<any>
     {
         let self = this;
 
@@ -284,19 +266,15 @@ export default class SuperAgentDriver extends AbstractApiDriver
                         return;
                     }
 
-                    this.token.save(response.body.access_token, response.body.refresh_tokeh);
+                    self.token.save(response.body.access_token, response.body.refresh_tokeh);
                 });
         });
-
     }
 
     /**
      * Set the correct headers on the request.
-     *
-     * @param request
-     * @returns {*}
      */
-    setHeaders(request)
+    setHeaders(request: SuperAgent.SuperAgentRequest): SuperAgent.SuperAgentRequest
     {
         // Set the API header on every request
         request.set('Accept', 'application/json');
@@ -317,11 +295,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Intercept the response.
-     *
-     * @param response
-     * @returns {Promise}
      */
-    interceptResponse(response)
+    interceptResponse(response: SuperAgent.Response): Promise<SuperAgent.Response>
     {
         let self = this;
 
@@ -340,12 +315,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Skip the ignored requests.
-     *
-     * @param request
-     * @return {Boolean} Return true if the request was skipped.
-     * @private
      */
-    skipIgnoredRequests(request)
+    protected skipIgnoredRequests(request: any)
     {
         for(let i = 0; i < ignoredPaths.length; i++)
         {
@@ -360,11 +331,9 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Override this function in order to parse and normalize the response.
-     *
-     * @return Object
-     * @protected
      */
-    parseResponse(response) {
+    protected parseResponse(response: SuperAgent.Response): ResponseInterface
+    {
         return response;
     }
 }

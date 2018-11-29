@@ -1,9 +1,7 @@
 /**
  * Central client configuration
  */
-
-import AppConfig from 'js/Config.js';
-import _         from 'lodash';
+import AppConfig from '../../../resources/ts/Config';
 
 // API drivers.
 import SuperAgentApiDriver from './Library/API/Drivers/SuperAgentDriver';
@@ -57,7 +55,7 @@ const defaultConfig = {
          *
          * Must match one of the keys in `api.drivers`.
          */
-        driver: 'superAgent',
+        driver: 'axios',
 
         /**
          * Available API drivers.
@@ -181,6 +179,6 @@ const defaultConfig = {
     }
 }
 
-let config = _.merge(defaultConfig, AppConfig);
+let config: any = {...defaultConfig, ...AppConfig};
 
 export default config;

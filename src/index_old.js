@@ -1,6 +1,4 @@
 import Log from 'loglevel';
-import Raven from 'raven-js';
-import RavenVue from 'raven-js/plugins/vue';
 import Vue from 'vue';
 import Config from './Config';
 import Components from './Library/App/Components';

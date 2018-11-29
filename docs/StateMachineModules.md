@@ -94,7 +94,7 @@ Here is an example:
     // resources/assets/js/App/State/Modules/App.js
 
 Once you have defined your state machine module you can import it in 
-*resources/assets/js/App/State.js*
+*resources/assets/js/App/State.ts*
 
     import App from './State/Modules/App'
 
@@ -102,10 +102,10 @@ Once you have defined your state machine module you can import it in
         App
     }
 
-    // resources/assets/js/App/State.js
+    // resources/assets/js/App/State.ts
 
 New state machine modules can be defined in *resources/assets/js/App/State/Modules* and imported in
-*resources/assets/js/App/State.js*.
+*resources/assets/js/App/State.ts*.
 
 ## The Collection module
 

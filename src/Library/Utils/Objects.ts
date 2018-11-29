@@ -9,11 +9,8 @@ export default {
      * Pluck a list of unique items from a collection.
      *
      * This only works for collection of items returned by the API.
-     *
-     * @param {array} subject
-     * @param {String} key
      */
-    pluckUnique(subject, key)
+    pluckUnique(subject: Array<any>, key: string): any
     {
         let uniques = _(_.map(subject, key)).compact();
 
@@ -32,11 +29,8 @@ export default {
 
     /**
      * Search the subject in an array of objects.
-     *
-     * @param {String} subject
-     * @param {[]} objects
      */
-    search(subject, objects)
+    search(subject: string, objects: Array<any>): Array<any>
     {
         return objects.filter((currentObject) =>
         {

@@ -88,11 +88,10 @@ module.exports = {
             'loglevel',
             'moment',
             'lodash',
-            'raven-js',
             'vue-markdown'
         ].concat(this.additionalModulesToExtract);
 
-        this.mix.js('resources/js/App.js', './public/js/app.js')
+        this.mix.js('resources/ts/App.ts', './public/js/app.js')
             .extract(modulesToExtract, './public/js/vendor.js');
     },
 

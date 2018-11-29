@@ -1,9 +1,7 @@
 {
   "common": {
     "cancel": "Avbryt",
-    "delete": "Radera",
     "logIn": "Logga in",
-    "no": "Nej",
     "search": "Sök",
     "upload": "Ladda up"
   },

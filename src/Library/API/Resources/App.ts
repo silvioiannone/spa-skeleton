@@ -1,4 +1,5 @@
-import AbstractResource from './AbstractResource';
+import AbstractResource  from './AbstractResource';
+import ResponseInterface from '../ResponseInterface';
 
 /**
  * App resource.
@@ -19,13 +20,14 @@ export default class App extends AbstractResource
      * @param successCallback
      * @param errorCallback
      */
-    getLocale(locale, successCallback, errorCallback)
+    getLocale(locale: string, successCallback: Function, errorCallback: Function)
+        : Promise<ResponseInterface>
     {
         return new Promise((resolve, reject) =>
         {
             this.httpClient
                 .get('/locales/' + locale + '.json')
-                .end(function (error, response)
+                .end(function (error: any, response: any)
                 {
                     if (error)
                     {
@@ -40,21 +42,16 @@ export default class App extends AbstractResource
 
     /**
      * Get the application settings.
-     *
-     * @returns {Promise}
      */
-    getSettings()
+    getSettings(): Promise<ResponseInterface>
     {
         return this._get('settings');
     }
 
     /**
      * Save the application settings.
-     *
-     * @param settings
-     * @returns {Promise}
      */
-    saveSettings(settings)
+    saveSettings(settings: any): Promise<ResponseInterface>
     {
         return this._patch('settings', settings);
     }

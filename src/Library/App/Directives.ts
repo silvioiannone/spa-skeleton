@@ -1,8 +1,8 @@
 import Log            from 'loglevel';
-import DirectivesList from 'js/App/Directives';
+import Vue            from 'vue';
+import DirectivesList from '../../../../../resources/ts/App/Directives';
 
 // Skeleton directives
-
 const SkeletonDirectives = {
 }
 
@@ -12,25 +12,17 @@ const SkeletonDirectives = {
 export default class Directives
 {
     /**
-     * @param Vue Vue instance.
-     */
-    constructor(Vue)
-    {
-        this.vue = Vue;
-    }
-
-    /**
      * Register the custom directives.
      */
     boot()
     {
         Log.debug('Booting directives...');
 
-        let availableDirectives = Object.assign(SkeletonDirectives, DirectivesList);
+        let availableDirectives = {...SkeletonDirectives, ...DirectivesList};
 
         for(let key in availableDirectives)
         {
-            this.vue.directive(key, availableDirectives[key]);
+            Vue.directive(key, availableDirectives[key]);
 
             Log.debug('Directive "' + key + '" registered.');
         }

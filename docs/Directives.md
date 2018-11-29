@@ -1,7 +1,7 @@
 # Directives
 
 New directives can be defined in the *resources/assets/js/App/Directives* directory and imported in
-*resources/assets/js/App/Directives.js*.
+*resources/assets/js/App/Directives.ts*.
 
 Directive example:
 
@@ -23,7 +23,7 @@ Import the directive:
         'on-click': OnClick
     }
 
-    // resources/assets/js/App/Directives.js
+    // resources/assets/js/App/Directives.ts
 
 ---
 [More about directives](https://vuejs.org/v2/guide/custom-directive.html).

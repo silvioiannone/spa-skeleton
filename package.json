@@ -38,6 +38,9 @@
   "bundleDependencies": false,
   "dependencies": {
     "@mdi/font": "^2.7.94",
+    "@types/jwt-decode": "^2.2.1",
+    "@types/lodash": "^4.14.118",
+    "@types/superagent": "^3.8.4",
     "axios": "^0.18.0",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-plugin-syntax-jsx": "^6.18.0",
@@ -60,7 +63,6 @@
     "node-env-file": "^0.1.8",
     "npm": "^5.8.0",
     "pluralize": "^7.0.0",
-    "raven-js": "^3.24.2",
     "socket.io": "^2.1.0",
     "superagent": "^3.8.2",
     "tiptap": "^0.16.0",
@@ -96,5 +98,5 @@
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress"
   },
-  "version": "0.0.154"
+  "version": "0.0.148"
 }

@@ -1,7 +1,6 @@
 <script>
 
     import Autocomplete from '../Mixins/Autocomplete';
-    import _            from 'lodash';
 
     export default {
 
@@ -126,22 +125,18 @@
                 scopedSlots.item = this.$vnode.data.scopedSlots.item;
             }
 
-            let selected = this.multiple ? (this.value || []) : this.value;
+            let selected = this.multiple ?
+                (this.$data._selected || []) : this.$data._selected;
             let items = [...this.items, ...this.$data._items];
 
-            // `selected` is probably going to be an `Observer` so we transform it into a normal
-            // object.
-            if (! _.isEmpty({...selected})) {
-                if (this.multiple) {
-                    items = items.concat(selected);
-                } else {
-                    items.push(selected);
-                }
+            if (selected && this.multiple) {
+                // Check if selected is array
+                items = items.concat(selected);
             }
 
             let props = {
                 ...this.$props,
-                value: this.value,
+                value: selected,
                 items: items,
                 loading: this.$data._loading,
                 returnObject: true,

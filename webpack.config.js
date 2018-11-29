@@ -9,6 +9,7 @@ let chunkFilename = (process.env.APP_ENV === 'local') ? 'js/[name].js' : 'js/[na
 
 module.exports = {
     resolve: {
+        extensions: ['.ts'],
         modules: [
             path.resolve('./resources'),
             path.resolve('./node_modules')
@@ -26,6 +27,13 @@ module.exports = {
                     loader: 'babel-loader',
                     options: mix.config.babel()
                 }]
+            },
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                options: {
+                    configFile: path.resolve(__dirname, "tsconfig.json")
+                }
             }
         ]
     },
