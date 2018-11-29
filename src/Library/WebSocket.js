@@ -92,6 +92,8 @@ export default class WebSocket
             return;
         }
 
+        this.updateEchoHeaders();
+
         subscriptions.forEach(subscription =>
         {
             if (this.activeSubscriptions.indexOf(subscription) >= 0) return;
@@ -270,13 +272,15 @@ export default class WebSocket
      */
     connect()
     {
-        if (this.echo) return;
+        if (this.echo) {
+            return;
+        }
 
         this.echo = new Echo({
             broadcaster: 'socket.io',
             host: Config.webSocket.host + ':' + Config.webSocket.port
         });
-        this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` + (new Token).getAccessToken();
+        this.updateEchoHeaders();
         this.echo.connector.socket._callbacks.$connect.push(() =>
         {
             // Set the socket ID in the API
@@ -285,6 +289,15 @@ export default class WebSocket
         });
 
         return this;
+    }
+
+    /**
+     * Update Laravel echo headers.
+     */
+    updateEchoHeaders()
+    {
+        this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` +
+            (new Token).getAccessToken();
     }
 
     /**
