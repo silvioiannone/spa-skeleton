@@ -2,9 +2,12 @@
   "common": {
     "cancel": "Cancel",
     "delete": "Delete",
+    "done": "Done",
     "logIn": "Log in",
     "no": "No",
     "search": "Search",
+    "showAll": "Show all",
+    "showMore": "Show more",
     "upload": "Upload"
   },
   "form": {

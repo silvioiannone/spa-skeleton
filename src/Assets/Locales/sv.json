@@ -2,9 +2,12 @@
   "common": {
     "cancel": "Avbryt",
     "delete": "Radera",
+    "done": "Klar",
     "logIn": "Logga in",
     "no": "Nej",
     "search": "Sök",
+    "showAll": "Visa alla",
+    "showMore": "Visa fler",
     "upload": "Ladda up"
   },
   "form": {
