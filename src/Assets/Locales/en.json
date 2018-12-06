@@ -3,8 +3,10 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "done": "Done",
+    "email": "E-mail",
     "logIn": "Log in",
     "no": "No",
+    "reset": "Reset",
     "search": "Search",
     "showAll": "Show all",
     "showMore": "Show more",
@@ -12,10 +14,16 @@
   },
   "form": {
     "cancel": "@:common.cancel",
-    "email": "E-mail",
+    "changePassword": "Change password",
+    "email": "@:common.email",
     "logIn": "@:common.logIn",
-    "password": "Password",
-    "submit": "Submit"
+    "newPassword": "New password",
+    "password": "Lösenord",
+    "repeatPassword": "Repeat password",
+    "submit": "Submit",
+    "passwordAskReset": {
+      "message": "Please enter the email address that was used to create your account. We'll send an email with a reset link where you can set a new password."
+    }
   },
   "menu": {
     "settings": "Settings",

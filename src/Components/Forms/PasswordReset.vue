@@ -1,11 +1,12 @@
 <template>
-    <form-main v-bind="getProps()" v-on="getOn()" :submit="change" submit-text="Change">
+    <form-main v-bind="getProps()" v-on="getOn()" :submit="change"
+               :submit-text="$t('form.changePassword')">
         <v-flex xs12>
-            <v-text-field label="New password" type="password" v-model="model.password">
+            <v-text-field :label="$t('form.newPassword')" type="password" v-model="model.password">
             </v-text-field>
         </v-flex>
         <v-flex xs12>
-            <v-text-field label="Repeat password" type="password"
+            <v-text-field :label="$t('form.repeatPassword')" type="password"
                           v-model="model.password_confirmation">
             </v-text-field>
         </v-flex>

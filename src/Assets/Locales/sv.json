@@ -3,8 +3,10 @@
     "cancel": "Avbryt",
     "delete": "Radera",
     "done": "Klar",
+    "email": "E-post",
     "logIn": "Logga in",
     "no": "Nej",
+    "reset": "Återställa",
     "search": "Sök",
     "showAll": "Visa alla",
     "showMore": "Visa fler",
@@ -12,10 +14,16 @@
   },
   "form": {
     "cancel": "@:common.cancel",
-    "email": "E-post",
+    "changePassword": "Byt lösenord",
+    "email": "@:common.email",
     "logIn": "@:common.logIn",
+    "newPassword": "Nytt lösenord",
     "password": "Lösenord",
-    "submit": "Skicka"
+    "repeatPassword": "Repetera lösenord",
+    "submit": "Skicka",
+    "passwordAskReset": {
+      "message": "Ange den e-postadress som användes för att skapa ditt konto. Vi skickar ett mail med en återställd länk där du kan ange ett nytt lösenord."
+    }
   },
   "menu": {
     "settings": "Inställningar",

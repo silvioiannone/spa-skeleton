@@ -1,11 +1,9 @@
 <template>
-    <form-main v-bind="getProps()" v-on="getOn()" :submit="reset" submit-text="Reset">
+    <form-main v-bind="getProps()" v-on="getOn()" :submit="reset" :submit-text="$t('common.reset')">
         <v-flex xs12>
-            <p>
-                Please enter the email address that was used to create your account. We'll send an
-                email with a reset link where you can set a new password.
-            </p>
-            <v-text-field label="E-mail" v-model="model.email"></v-text-field>
+            <p>{{ $t('form.passwordAskReset.message') }}</p>
+            <v-text-field :label="$t('form.email')" v-model="model.email" name="email">
+            </v-text-field>
         </v-flex>
     </form-main>
 </template>
@@ -58,12 +56,12 @@
                 return new Promise((resolve, reject) =>
                 {
                     this.$api.users.sendPasswordResetEmail(this.model.email)
-                        .then(() =>
+                        .then(response =>
                         {
                             this.success = true;
-                            resolve();
+                            resolve(response);
                         })
-                        .catch(() => reject());
+                        .catch(response => reject(response));
                 })
             }
         }
