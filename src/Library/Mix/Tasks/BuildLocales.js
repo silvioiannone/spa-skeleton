@@ -72,9 +72,16 @@ class BuildLocalesTask extends Task
      */
     mergeLocales(file)
     {
-        let appLocale = JSON.parse(
-            FS.readFileSync(this.appLocalesPath + '/' + file)
-        );
+        let appLocale = {};
+
+        try {
+            appLocale = JSON.parse(
+                FS.readFileSync(this.appLocalesPath + '/' + file)
+            );
+        } catch (error) {
+            console.log('Failed decoding locale\'s JSON: ' + error);
+            return;
+        }
 
         let skeletonLocale = null;
 
