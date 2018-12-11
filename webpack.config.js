@@ -32,6 +32,7 @@ module.exports = {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
                 options: {
+                    appendTsSuffixTo: [/\.vue$/],
                     configFile: path.resolve(__dirname, "tsconfig.json")
                 }
             }

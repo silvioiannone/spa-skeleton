@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue from 'vue';
+
+    export default Vue.extend({
 
         name: 'ResponsiveContainer',
 
@@ -49,6 +51,6 @@
                 attrs: this.attrs
             }, this.$slots.default);
         }
-    }
+    });
 
 </script>

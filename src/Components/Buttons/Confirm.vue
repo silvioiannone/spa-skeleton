@@ -22,14 +22,13 @@
 
 </style>
 
-<script>
+<script lang="ts">
 
+    import Vue          from 'vue';
     import ButtonSubmit from './Submit.vue';
 
-    let abortCountdown;
+    export default Vue.extend({
 
-    export default
-    {
         mixins: [
             ButtonSubmit
         ],
@@ -81,7 +80,8 @@
             return {
                 confirmed: false,
                 countdown: this.timeout,
-                showConfirmation: false
+                showConfirmation: false,
+                abortCountdown: null
             }
         },
 
@@ -96,7 +96,7 @@
                 this.showConfirmation = false;
                 this.countdown = this.timeout;
 
-                clearInterval(abortCountdown);
+                clearInterval(<any>this.abortCountdown);
             },
 
             /**
@@ -105,20 +105,20 @@
              * @param resolve
              * @param reject
              */
-            handleClick(resolve, reject)
+            handleClick(resolve: Function, reject: Function)
             {
                 let self = this;
                 this.confirmed = true;
 
                 return new Promise((resolve, reject) =>
                 {
-                    abortCountdown = setInterval(() =>
+                    self.abortCountdown = <any>setInterval(() =>
                     {
                         self.countdown--;
 
                         if(self.countdown === 0)
                         {
-                            clearInterval(abortCountdown);
+                            clearInterval(<any>self.abortCountdown);
 
                             this.afterConfirmation()
                                 .then(() => {
@@ -152,5 +152,6 @@
                 }, 3000);
             }
         }
-    }
+    });
+
 </script>

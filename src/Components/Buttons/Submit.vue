@@ -5,11 +5,13 @@
     </v-btn>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default
-    {
-        selector: 'button-submit',
+    import Vue from 'vue';
+
+    export default Vue.extend({
+
+        name: 'button-submit',
 
         props: {
 
@@ -71,6 +73,6 @@
                     });
             }
         }
-    }
+    });
 
 </script>

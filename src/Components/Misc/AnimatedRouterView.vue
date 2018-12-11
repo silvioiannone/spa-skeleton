@@ -7,9 +7,11 @@
     </v-fade-transition>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue from 'vue';
+
+    export default Vue.extend({
 
         name: 'AnimatedRouterView',
 
@@ -36,6 +38,6 @@
                 default: 'slide-x'
             }
         }
-    }
+    });
 
 </script>

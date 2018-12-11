@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
 
-    import MixinInput from './Input';
+    import Vue, { VNode } from 'vue';
+    import MixinInput     from './Input.vue';
 
     /**
      * This mixin can be used in order to create text fields.
@@ -8,7 +9,7 @@
      * It is possible to override any of the value of the props by defining a computed value with
      * the same name.
      */
-    export default {
+    export default Vue.extend({
 
         mixins: [
             MixinInput
@@ -171,7 +172,7 @@
              * Override this in order to specify a class that should be applied to the input
              * element.
              */
-            _class()
+            _class(): string
             {
                 return '';
             },
@@ -179,7 +180,7 @@
             /**
              * This can be overridden in order to modify the value passed to the `v-text-field`.
              */
-            _value()
+            _value(): any
             {
                 return this.value;
             },
@@ -187,7 +188,7 @@
             /**
              * Override this in order to define the validation rules.
              */
-            _validation()
+            _validation(): any
             {
                 return this.validation;
             }
@@ -203,20 +204,21 @@
              *
              * @param value
              */
-            fireInputEvent(value) {
+            fireInputEvent(value): void
+            {
                 this.$emit('input', value);
             },
 
             /**
              * Access the form containing the text field.
              */
-            parentForm()
+            parentForm(): any
             {
                 return this.$parent.$parent.$parent;
             }
         },
 
-        mounted()
+        mounted(): void
         {
             // This is a work-around needed in order to prevent Vuetify text-input mask to trigger
             // the validation too soon.
@@ -233,7 +235,7 @@
 
         watch: {
 
-            value()
+            value(): void
             {
                 // Trigger the validation on the next tick but only if the input is dirty
                 if (this.$children[0].isDirty) {
@@ -242,7 +244,7 @@
             }
         },
 
-        render(createElement)
+        render(createElement): VNode
         {
             let self = this;
 
@@ -278,6 +280,6 @@
                 }
             });
         }
-    }
+    });
 
 </script>

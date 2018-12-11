@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 
-    import MixinTextField from '../Mixins/TextField';
+    import Vue            from 'vue';
+    import MixinTextField from '../Mixins/TextField.vue';
 
-    export default {
+    export default Vue.extend({
 
         name: 'TextFieldSearch',
 
@@ -52,6 +53,6 @@
         mixins: [
             MixinTextField
         ]
-    }
+    });
 
 </script>

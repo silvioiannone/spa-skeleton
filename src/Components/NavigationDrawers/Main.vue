@@ -16,9 +16,11 @@
     </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue from 'vue';
+
+    export default Vue.extend({
 
         name: 'NavigationDrawerMain',
 
@@ -44,7 +46,7 @@
         computed: {
 
             visible: {
-                get()
+                get(): boolean
                 {
                     if (this.right)
                     {
@@ -53,7 +55,7 @@
 
                     return this.$store.getters.ui.navigationDrawerVisible;
                 },
-                set(value)
+                set(value): void
                 {
                     if (this.right)
                     {
@@ -65,16 +67,16 @@
                 }
             },
 
-            user()
+            user(): any
             {
                 return this.$store.getters.app.user;
             }
         },
 
-        created()
+        created(): void
         {
             this.visible = this.$vuetify.breakpoint.lgAndUp && !this.right;
         }
-    }
+    })
 
 </script>

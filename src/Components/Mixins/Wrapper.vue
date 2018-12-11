@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 
     import Vue from 'vue';
 
@@ -16,7 +16,7 @@
      *
      * Just set the `__component` $data property.
      */
-    export default {
+    export default Vue.extend({
 
         props: {
 
@@ -37,7 +37,7 @@
 
         computed: {
 
-            _hasModel()
+            _hasModel(): boolean
             {
                 if (this._component.mixins) {
                     if (typeof this._component.mixins[0].props.value !== 'undefined')
@@ -51,7 +51,7 @@
                 return false;
             },
 
-            _component()
+            _component(): any
             {
                 return this.$data.__component;
             }
@@ -62,7 +62,7 @@
             /**
              * Get the props.
              */
-            getProps()
+            getProps(): any
             {
                 let props = {};
 
@@ -86,7 +86,7 @@
             /**
              * Get the on event listeners.
              */
-            getOn()
+            getOn(): any
             {
                 let on = {};
 
@@ -103,7 +103,7 @@
              *
              * @returns {*}
              */
-            getSlots()
+            getSlots(): any
             {
                 return this.$slots.default;
             },
@@ -111,11 +111,10 @@
             /**
              * Override the wrapped's `$emit` function.
              */
-            overrideWrapped$emit()
+            overrideWrapped$emit(): void
             {
                 if (! this.$children.length) {
                     throw "The wrapper has no children.";
-                    return;
                 }
 
                 // We need to override the $emit function so that we will be able to catch and fire
@@ -123,7 +122,7 @@
                 let wrapped = this.$children[0];
                 let childEmit = wrapped.$emit;
 
-                wrapped.$emit = (event, payload) =>
+                wrapped.$emit = (event: any, payload: any) =>
                 {
                     childEmit.apply(wrapped, [event, payload]);
                     this.$emit(event, payload);
@@ -144,7 +143,7 @@
             this.overrideWrapped$emit();
         },
 
-        render(createElement)
+        render(createElement): VNode
         {
             return createElement(
                 this.$data.__component.name,
@@ -158,6 +157,6 @@
                 this.getSlots()
             );
         }
-    }
+    });
 
 </script>

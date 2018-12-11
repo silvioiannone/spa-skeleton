@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
+
+    import Vue               from 'vue';
+    import ResponseInterface from '../../Library/API/ResponseInterface';
 
     /*
      * This mixin can be used in order to create new forms.
      */
-    export default {
+    export default Vue.extend({
 
         props: {
 
@@ -29,7 +32,7 @@
              * It needs to be a function returning a promise.
              */
             submit: {
-                type: [Function, Boolean],
+                type: Function,
                 required: false,
                 default: false
             },
@@ -52,7 +55,7 @@
 
         computed: {
 
-            hasErrors()
+            hasErrors(): boolean
             {
                 return ! this.$data._vFormValid;
             }
@@ -63,20 +66,17 @@
             /**
              * Cancel the form.
              */
-            cancel()
+            cancel(): void
             {
                 this.$emit('cancel');
             },
 
             /**
              * Handle the form submission.
-             *
-             * @param resolve
-             * @param reject
              */
-            handleSubmit()
+            handleSubmit(): Promise<ResponseInterface>
             {
-                return new Promise((resolve, reject) =>
+                return new Promise((resolve: Function, reject: Function) =>
                 {
                     // Before submitting make sure that the form is valid.
                     this.$validator.validateAll()
@@ -88,13 +88,13 @@
                             }
 
                             this.submit()
-                                .then(response =>
+                                .then((response: ResponseInterface) =>
                                 {
                                     this.resetForm();
                                     this.$emit('submit', response);
                                     resolve(response);
                                 })
-                                .catch(response =>
+                                .catch((response: ResponseInterface) =>
                                 {
                                     this.$emit('error', response);
                                     console.error(response);
@@ -107,10 +107,8 @@
 
             /**
              * Handle errors.
-             *
-             * @param response
              */
-            handleErrors(response)
+            handleErrors(response: ResponseInterface): void
             {
                 if (! response.body.errors) {
                     return;
@@ -147,7 +145,7 @@
             /**
              * Reset the form to its original state.
              */
-            resetForm()
+            resetForm(): void
             {
                 this.errors.clear();
                 this.errors.clear('_server');
@@ -159,19 +157,19 @@
             }
         },
 
-        created()
+        created(): void
         {
             this.resetForm();
         },
 
-        mounted()
+        mounted(): void
         {
             // Whenever an input is focused we need to remove the server errors associated with it.
-            this.$nextTick(() =>
+            this.$nextTick(function()
             {
                 this.$el.querySelectorAll('input, textarea')
                     .forEach(element => {
-                    element.addEventListener('focusin', event =>
+                    element.addEventListener('focusin', (event: any) =>
                     {
                         let field = event.target.getAttribute('name');
                         this.errors.remove(field, 'server');
@@ -184,7 +182,7 @@
         watch: {
 
             focus: {
-                handler()
+                handler: function(): void
                 {
                     if (! this.$el) {
                         return;
@@ -195,13 +193,13 @@
                     if (firstInput) {
                         this.$nextTick(() =>
                         {
-                            firstInput.focus();
+                            firstInput && firstInput.focus();
                         });
                     }
                 },
                 immediate: true
             }
         }
-    }
+    });
 
 </script>

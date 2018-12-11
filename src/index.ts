@@ -4,8 +4,21 @@
 
 import Log          from 'loglevel';
 import Config       from './Config';
+import Components   from './Library/App/Components';
 import Directives   from './Library/App/Directives';
 import StateMachine from './Library/App/StateMachine';
+
+import Vue from 'vue';
+
+declare module 'vue/types/vue' {
+
+    interface Vue {
+        $route: any,
+        $vuetify: any,
+        $validator: any,
+        errors: any
+    }
+}
 
 /**
  * SPA Skeleton entry point.
@@ -25,9 +38,9 @@ export default class Main
 
         (new Directives).boot();
 
+        (new Components).boot();
+
         let state = (new StateMachine).boot();
-
-
     }
 
     /**

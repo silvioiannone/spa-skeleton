@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
 
-    import Button from '../Mixins/Button';
-    import Component from '../Mixins/Component';
+    import Button       from '../Mixins/Button';
+    import Component    from '../Mixins/Component';
+    import Vue, {VNode} from 'vue';
 
-    export default {
+    export default Vue.extend({
 
         name: 'ButtonMain',
 
@@ -72,7 +73,7 @@
             }
         },
 
-        render(createElement)
+        render(createElement): VNode
         {
             return createElement(
                 'v-btn',
@@ -85,6 +86,6 @@
                 this.$slots.default
             );
         }
-    }
+    });
 
 </script>

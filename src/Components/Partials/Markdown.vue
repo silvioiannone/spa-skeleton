@@ -2,11 +2,12 @@
     <vue-markdown class="markdown-body" :source="source"></vue-markdown>
 </template>
 
-<script>
+<script lang="ts">
 
+    import Vue         from 'vue';
     import VueMarkdown from 'vue-markdown';
 
-    export default {
+    export default Vue.extend({
 
         name: 'Markdown',
 
@@ -24,6 +25,6 @@
                 default: ''
             }
         }
-    }
+    });
 
 </script>

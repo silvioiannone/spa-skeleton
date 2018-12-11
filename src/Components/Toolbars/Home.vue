@@ -19,9 +19,11 @@
     </toolbar-main>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue from 'vue';
+
+    export default Vue.extend({
 
         name : 'ToolbarHome',
 
@@ -61,15 +63,15 @@
 
         computed: {
 
-            user()
+            user(): number
             {
                 return this.$store.getters.app.user;
             },
 
-            unreadNotificationsCount()
+            unreadNotificationsCount(): number
             {
                 return this.$store.getters.notifications
-                    .filter(notification => notification.read_at === null)
+                    .filter((notification: any) => notification.read_at === null)
                     .length;
             }
         },
@@ -79,7 +81,7 @@
             /**
              * Toggle the notifications drawer.
              */
-            toggleNotificationsDrawer()
+            toggleNotificationsDrawer(): void
             {
                 let visibility = this.$store.getters.ui.notificationsDrawerVisible;
 
@@ -88,14 +90,12 @@
 
             /**
              * Bubble the `search:update` event.
-             *
-             * @param payload
              */
-            bubbleSearchUpdateEvent(payload)
+            bubbleSearchUpdateEvent(payload: any): void
             {
                 this.$emit('search:update', payload)
             }
         }
-    }
+    });
 
 </script>

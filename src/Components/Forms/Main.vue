@@ -23,17 +23,18 @@
     </v-form>
 </template>
 
-<script>
+<script lang="ts">
 
-    import MixinForm from '../Mixins/Form';
+    import Vue       from 'vue';
+    import MixinForm from '../Mixins/Form.vue';
 
-    export default {
+    export default Vue.extend({
 
         name: 'FormMain',
 
         mixins: [
             MixinForm
         ]
-    }
+    });
 
 </script>

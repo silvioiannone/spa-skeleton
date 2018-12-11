@@ -1,5 +1,6 @@
 import Log            from 'loglevel';
-import ComponentsList from 'js/App/Components';
+import Vue            from 'vue';
+import ComponentsList from '../../../../../resources/ts/App/Components';
 
 // Skeleton components
 import AnimatedRouterView   from '../../Components/Misc/AnimatedRouterView.vue';
@@ -7,12 +8,11 @@ import ButtonConfirm        from '../../Components/Buttons/Confirm.vue';
 import ButtonMain           from '../../Components/Buttons/Main.vue';
 import ButtonSubmit         from '../../Components/Buttons/Submit.vue';
 import FormMain             from '../../Components/Forms/Main.vue';
-import LayoutRoot           from '../../Components/Mixins/Root.vue';
 import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
-import PartialTimeFromNow   from '../../Components/Partials/TimeFromNow';
+import PartialTimeFromNow   from '../../Components/Partials/TimeFromNow.vue';
 import PartialFooter        from '../../Components/Partials/Footer.vue';
 import PartialMarkdown      from '../../Components/Partials/Markdown.vue';
-import ResponsiveContainer  from '../../Components/Misc/Grid/ResponsiveContainer';
+import ResponsiveContainer  from '../../Components/Misc/Grid/ResponsiveContainer.vue';
 import ToolbarMain          from '../../Components/Toolbars/Main.vue';
 import ToolbarHome          from '../../Components/Toolbars/Home.vue';
 
@@ -40,14 +40,6 @@ const SkeletonComponents = {
 export default class Components
 {
     /**
-     * @param vue Vue main instance.
-     */
-    constructor(vue)
-    {
-        this.vue = vue;
-    }
-
-    /**
      * Register the components.
      */
     boot()
@@ -55,11 +47,11 @@ export default class Components
         Log.debug('Registering global components...');
 
         // Register the skeleton components
-        let availableComponents = Object.assign(SkeletonComponents, ComponentsList);
+        let availableComponents = {...SkeletonComponents, ...ComponentsList};
 
         for(let key in availableComponents)
         {
-            this.vue.component(key, availableComponents[key]);
+            Vue.component(key, availableComponents[key]);
 
             Log.debug('Component "' + key + '" registered.');
         }

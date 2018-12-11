@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
+
+    import Vue, {VNode} from 'vue';
 
     /**
      * This mixin can be used in order to create buttons.
      */
-    export default {
+    export default Vue.extend({
 
         props: {
 
@@ -61,19 +63,19 @@
             /**
              * Override this function in order to define what to do when `click` event is emitted.
              */
-            onClick() {},
+            onClick(): void {},
 
             /**
              * Handle `click` event.
              */
-            handleClick(event)
+            handleClick(event: any): void
             {
                 this.$emit('click', event);
                 this.onClick();
             }
         },
 
-        render(createElement)
+        render(createElement): VNode
         {
             let self = this;
             let props = {...this.$props, ...this.props};
@@ -85,6 +87,6 @@
                 }
             }, this.$slots.default);
         }
-    }
+    });
 
 </script>

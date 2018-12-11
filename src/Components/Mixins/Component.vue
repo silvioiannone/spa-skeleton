@@ -1,9 +1,11 @@
-<script>
+<script lang="ts">
+
+    import Vue from 'vue';
 
     /**
      * This mixin can be used to create base components.
      */
-    export default {
+    export default Vue.extend({
 
         data()
         {
@@ -18,7 +20,7 @@
             /**
              * Use this computed prop in order to set props reactive default values.
              */
-            computedProps()
+            computedProps(): any
             {
                 return {};
             }
@@ -31,7 +33,7 @@
              *
              * @returns {{}}
              */
-            getProps()
+            getProps(): any
             {
                 // The merge priority is the following:
                 // 1. Component props
@@ -48,15 +50,12 @@
 
             /**
              * Get the selected slot.
-             *
-             * @param slot {String}
-             * @return array|null
              */
-            getSlot(slot)
+            getSlot(slot: string): Array<any> | null
             {
                 return this.$slots[slot] ? this.$slots[slot] : null
             }
         }
-    }
+    });
 
 </script>

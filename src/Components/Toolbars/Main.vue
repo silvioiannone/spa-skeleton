@@ -29,12 +29,13 @@
     </v-toolbar>
 </template>
 
-<script>
+<script lang="ts">
 
+    import Vue             from 'vue';
     import Config          from '../../Config';
-    import TextFieldSearch from 'spa-skeleton/src/Components/TextFields/Search'
+    import TextFieldSearch from '../TextFields/Search.vue'
 
-    export default {
+    export default Vue.extend({
 
         name: 'ToolbarMain',
 
@@ -113,7 +114,7 @@
 
         computed: {
 
-            toolbarTitleRedirectUrl()
+            toolbarTitleRedirectUrl(): string
             {
                 if (this.titleTo.length) {
                     return this.titleTo;
@@ -122,7 +123,7 @@
                 return (this.user.id) ? '/home' : '/';
             },
 
-            showingTitle()
+            showingTitle(): boolean
             {
                 if (this.$vuetify.breakpoint.xs) {
                     return false;
@@ -135,12 +136,12 @@
                 }
             },
 
-            ui()
+            ui(): any
             {
                 return this.$store.getters.ui;
             },
 
-            user()
+            user(): any
             {
                 return this.$store.getters.app.user;
             }
@@ -151,15 +152,18 @@
             /**
              * Expand the navigationDrawer.
              */
-            toggleNavigationDrawer()
+            toggleNavigationDrawer(): void
             {
-                this.$store.commit('ui/SET_NAVIGATION_DRAWER_VISIBILITY', !this.ui.navigationDrawerVisible);
+                this.$store.commit(
+                    'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
+                    !this.ui.navigationDrawerVisible
+                );
             },
 
             /**
              * Hide the search box.
              */
-            hideSearch()
+            hideSearch(): void
             {
                 this.showingSearch = false;
                 this.searchQuery = '';
@@ -168,7 +172,7 @@
             /**
              * Hide the search box if it's empty.
              */
-            hideSearchIfEmpty()
+            hideSearchIfEmpty(): void
             {
                 if (!this.searchQuery || this.searchQuery.length === 0) {
                     this.hideSearch();
@@ -178,11 +182,16 @@
             /**
              * Show the search box.
              */
-            showSearch()
+            showSearch(): void
             {
                 this.showingSearch = true;
 
-                setTimeout(() => this.$el.querySelector('input').focus());
+                setTimeout(() => {
+                    let input = this.$el.querySelector('input');
+                    if (input) {
+                        input.focus();
+                    }
+                });
             }
         },
 
@@ -203,6 +212,6 @@
                 this.$emit('search:update', this.searchQuery);
             }
         }
-    }
+    });
 
 </script>

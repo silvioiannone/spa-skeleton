@@ -6,13 +6,14 @@
     <span v-else>{{ $data._time }}</span>
 </template>
 
-<script>
+<script lang="ts">
 
+    import Vue    from 'vue';
     import Moment from 'moment';
 
-    let interval = null;
+    let interval: any = null;
 
-    export default {
+    export default Vue.extend({
 
         name: 'TimeFromNow',
 
@@ -68,6 +69,6 @@
         {
             clearInterval(interval);
         }
-    }
+    });
 
 </script>
