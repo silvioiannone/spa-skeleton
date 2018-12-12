@@ -1,18 +1,18 @@
 <template>
     <editor @keydown.enter="stopEnterPropagation" :extensions="extensions" ref="editor"
             @update="updateModel">
-        <v-toolbar dense class="menubar" slot="menubar" slot-scope="{nodes, marks, focus}"
+        <v-toolbar dense class="menubar" slot="menubar" slot-scope="{commands, isActive}"
                    v-if="nodes && marks">
-            <editor-buttons-formats :nodes="nodes" :marks="marks" :focus="focus">
+            <editor-buttons-formats :commands="commands"  :isActive="isActive">
             </editor-buttons-formats>
             <v-divider class="mr-2" vertical></v-divider>
-            <editor-buttons-headings :nodes="nodes" :marks="marks" :focus="focus">
+            <editor-buttons-headings :commands="commands"  :isActive="isActive">
             </editor-buttons-headings>
             <v-divider class="mr-2" vertical></v-divider>
-            <editor-buttons-lists :nodes="nodes" :marks="marks" :focus="focus">
+            <editor-buttons-lists :commands="commands"  :isActive="isActive">
             </editor-buttons-lists>
             <v-spacer></v-spacer>
-            <editor-button-link :nodes="nodes" :marks="marks" :focus="focus" :editor="$refs.editor">
+            <editor-button-link :commands="commands"  :isActive="isActive" :editor="$refs.editor">
             </editor-button-link>
         </v-toolbar>
         <div slot="content" slot-scope="props" class="mt-3 editor__content">

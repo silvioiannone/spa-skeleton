@@ -10,24 +10,17 @@
         props: {
 
             /**
-             * TipTap marks.
+             * TipTap editor commands prop.
              */
-            marks: {
+            commands: {
                 required: true
             },
 
             /**
-             * TipTap nodes.
+             * TipTap editor isActive prop.
              */
-            nodes: {
+            isActive: {
                 requred: true
-            },
-
-            /**
-             * TipTap focus.
-             */
-            focus: {
-                required: true
             }
         }
     }

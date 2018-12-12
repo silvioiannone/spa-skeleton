@@ -69,7 +69,7 @@
              */
             setLinkUrl(url)
             {
-                this.marks.link.command({href: url});
+                this.commands.link({href: url});
                 this.focus();
             }
         },

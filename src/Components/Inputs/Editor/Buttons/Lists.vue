@@ -1,11 +1,11 @@
 <template>
     <v-btn-toggle>
-        <v-btn flat @click="nodes.bullet_list.command"
-               :class="{ 'v-btn--active' : nodes.bullet_list.active() }">
+        <v-btn flat @click="commands.bullet_list"
+               :class="{ 'v-btn--active' : isActive.bullet_list() }">
             <v-icon>format_list_bulleted</v-icon>
         </v-btn>
-        <v-btn flat @click="nodes.ordered_list.command"
-               :class="{ 'v-btn--active' : nodes.ordered_list.active() }">
+        <v-btn flat @click="commands.ordered_list"
+               :class="{ 'v-btn--active' : isActive.ordered_list() }">
             <v-icon>format_list_numbered</v-icon>
         </v-btn>
     </v-btn-toggle>
