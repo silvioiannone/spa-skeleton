@@ -25,23 +25,18 @@
 
     import { Editor } from 'tiptap';
     import {
-        // Nodes
-        BulletListNode,
-        HeadingNode,
-        ListItemNode,
-        OrderedListNode,
-
-        // Marks
-        BoldMark,
-        CodeMark,
-        ItalicMark,
-        LinkMark,
-        StrikeMark,
-        UnderlineMark,
-
-        // General Extensions
-        HistoryExtension,
-        PlaceholderExtension,
+        BulletList,
+        Heading,
+        ListItem,
+        OrderedList,
+        Bold,
+        Code,
+        Italic,
+        Link,
+        Strike,
+        Underline,
+        History,
+        Placeholder,
     } from 'tiptap-extensions';
 
     import EditorButtonsFormats from './Editor/Buttons/Formats';
@@ -75,18 +70,18 @@
         {
             return {
                 extensions: [
-                    new BulletListNode(),
-                    new HeadingNode({ maxLevel: 3 }),
-                    new ListItemNode(),
-                    new OrderedListNode(),
-                    new BoldMark(),
-                    new CodeMark(),
-                    new ItalicMark(),
-                    new LinkMark(),
-                    new StrikeMark(),
-                    new UnderlineMark(),
-                    new HistoryExtension(),
-                    new PlaceholderExtension(),
+                    new BulletList(),
+                    new Heading({ maxLevel: 3 }),
+                    new ListItem(),
+                    new OrderedList(),
+                    new Bold(),
+                    new Code(),
+                    new Italic(),
+                    new Link(),
+                    new Strike(),
+                    new Underline(),
+                    new History(),
+                    new Placeholder(),
                 ],
             }
         },
