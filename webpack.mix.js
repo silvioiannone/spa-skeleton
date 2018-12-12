@@ -1,5 +1,6 @@
 const config = require('spa-skeleton/webpack.config'),
       merge = require('webpack-merge'),
+      mix = require('laravel-mix');
       path = require('path'),
       BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
 
@@ -32,15 +33,14 @@ module.exports = {
 
     /**
      * Build.
-     *
-     * @param mix
      */
-    build: function (mix)
+    build: function ()
     {
         this.mix = mix;
 
         // Load the Configuration from SPA-Skeleton
         mix.webpackConfig(merge(config, this.userWebpackConfig));
+
         mix.extend('buildLocales', new BuildLocales);
 
         mix.buildLocales();
