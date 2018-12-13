@@ -92,8 +92,8 @@ module.exports = {
             'vue-markdown'
         ].concat(this.additionalModulesToExtract);
 
-        this.mix.js('resources/js/App.js', 'app.js')
-            .extract(modulesToExtract, 'vendor.js');
+        this.mix.js('resources/js/App.js', 'js/app.js')
+            .extract(modulesToExtract, 'js/vendor.js');
     },
 
     /**
