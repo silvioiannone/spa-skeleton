@@ -5,28 +5,28 @@
       "/Users/silvioiannone/Programming/Projects/BloomEstateNew"
     ]
   ],
-  "_from": "spa-skeleton@0.0.160",
-  "_id": "spa-skeleton@0.0.160",
+  "_from": "spa-skeleton@0.0.161",
+  "_id": "spa-skeleton@0.0.161",
   "_inBundle": false,
-  "_integrity": "sha512-3OGZqlK1C3jfYugd8w2Ov7oNWbRx2fojrVhTT+zFCz2cUuiW6Nhchip2J542mhlwDMPkK3/z/1wB4kzYfzD8fQ==",
+  "_integrity": "sha512-B+QuXNB4dthHJ7yikVWJo9LCzBJIESOMr3NGAMfdkYxyzHD/olPsCyzFlFmI/bi2lbe5LhXuHAArs124ssfR1g==",
   "_location": "/spa-skeleton",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "spa-skeleton@0.0.160",
+    "raw": "spa-skeleton@0.0.161",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "0.0.160",
+    "rawSpec": "0.0.161",
     "saveSpec": null,
-    "fetchSpec": "0.0.160"
+    "fetchSpec": "0.0.161"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.160.tgz",
-  "_shasum": "ec524f029cc75128cc7d7445f8ec81bfc6ee6956",
-  "_spec": "spa-skeleton@0.0.160",
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.161.tgz",
+  "_shasum": "436cdfaa40e845526a3b0608bba3da1caed66978",
+  "_spec": "spa-skeleton@0.0.161",
   "_where": "/Users/silvioiannone/Programming/Projects/Boptimera",
   "author": {
     "name": "Silvio Iannone"
