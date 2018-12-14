@@ -9,6 +9,7 @@
 <script>
 
     import Moment from 'moment';
+    import Config from 'spa-skeleton/src/Config';
 
     let interval = null;
 
@@ -46,7 +47,10 @@
 
             update()
             {
-                this.$data._time = Moment.utc(this.time).local().fromNow();
+                this.$data._time = Moment.utc(this.time)
+                    .local()
+                    .locale(Config.locale)
+                    .fromNow();
             }
         },
 
