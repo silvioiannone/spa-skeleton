@@ -1,29 +1,29 @@
 <template>
-    <editor @keydown.enter="stopEnterPropagation" :extensions="extensions" ref="editor"
-            @update="updateModel">
-        <v-toolbar dense class="menubar" slot="menubar" slot-scope="{commands, isActive}"
-                   v-if="nodes && marks">
-            <editor-buttons-formats :commands="commands"  :isActive="isActive">
-            </editor-buttons-formats>
-            <v-divider class="mr-2" vertical></v-divider>
-            <editor-buttons-headings :commands="commands"  :isActive="isActive">
-            </editor-buttons-headings>
-            <v-divider class="mr-2" vertical></v-divider>
-            <editor-buttons-lists :commands="commands"  :isActive="isActive">
-            </editor-buttons-lists>
-            <v-spacer></v-spacer>
-            <editor-button-link :commands="commands"  :isActive="isActive" :editor="$refs.editor">
-            </editor-button-link>
-        </v-toolbar>
-        <div slot="content" slot-scope="props" class="mt-3 editor__content">
-            <div v-html="value"></div>
-        </div>
-    </editor>
+    <div>
+        <editor-menu-bar :editor="editor">
+            <v-toolbar dense class="menubar" slot-scope="{commands, isActive}">
+                <editor-buttons-formats :commands="commands" :isActive="isActive">
+                </editor-buttons-formats>
+                <v-divider class="mr-2" vertical></v-divider>
+                <editor-buttons-headings :commands="commands" :isActive="isActive">
+                </editor-buttons-headings>
+                <v-divider class="mr-2" vertical></v-divider>
+                <editor-buttons-lists :commands="commands" :isActive="isActive">
+                </editor-buttons-lists>
+                <v-spacer></v-spacer>
+                <editor-button-link :commands="commands" :isActive="isActive" :editor="editor">
+                </editor-button-link>
+            </v-toolbar>
+        </editor-menu-bar>
+        <editor-content class="mt-3 editor__content" :editor="editor" @update="updateModel"
+                        @keydown.enter="stopEnterPropagation">
+        </editor-content>
+    </div>
 </template>
 
 <script>
 
-    import { Editor } from 'tiptap';
+    import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
     import {
         BulletList,
         Heading,
@@ -49,7 +49,8 @@
         name: 'InputEditor',
 
         components: {
-            Editor,
+            EditorContent,
+            EditorMenuBar,
             EditorButtonLink,
             EditorButtonsFormats,
             EditorButtonsHeadings,
@@ -69,20 +70,24 @@
         data()
         {
             return {
-                extensions: [
-                    new BulletList(),
-                    new Heading({ maxLevel: 3 }),
-                    new ListItem(),
-                    new OrderedList(),
-                    new Bold(),
-                    new Code(),
-                    new Italic(),
-                    new Link(),
-                    new Strike(),
-                    new Underline(),
-                    new History(),
-                    new Placeholder(),
-                ],
+                editor: new Editor({
+                    extensions: [
+                        new BulletList(),
+                        new Heading({ maxLevel: 3 }),
+                        new ListItem(),
+                        new OrderedList(),
+                        new Bold(),
+                        new Code(),
+                        new Italic(),
+                        new Link(),
+                        new Strike(),
+                        new Underline(),
+                        new History(),
+                        new Placeholder(),
+                    ],
+                    onUpdate: this.updateModel,
+                    content: this.value
+                })
             }
         },
 
@@ -108,7 +113,12 @@
             {
                 this.$emit('input', content.getHTML());
             }
-        }
+        },
+
+        beforeDestroy()
+        {
+            this.editor.destroy()
+        },
     }
 
 </script>
