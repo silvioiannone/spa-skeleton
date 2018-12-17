@@ -7,7 +7,7 @@
             <v-flex xs12>
                 <div class="text-xs-center">
                     <v-btn color="primary" large @click="goBack()" v-if="backButton">
-                        <v-icon left>arrow_back</v-icon>Go back
+                        <v-icon left>arrow_back</v-icon>{{ $t('misc.goBack') }}
                     </v-btn>
                 </div>
             </v-flex>

@@ -33,7 +33,9 @@
     "fileUpload": {
       "dragAndDropToUploadAFile": "Dra och släpp för att ladda upp en fil!",
       "orClickTapToSelectOne": "...eller klicka/peka för att välja en."
-    }
+    },
+    "goBack": "Tillbaka",
+    "pageNotFound": "Sidan hittades inte."
   },
   "navigationDrawer": {
     "close": "Stäng",
