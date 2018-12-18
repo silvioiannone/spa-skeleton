@@ -6,19 +6,14 @@ import AbstractChannel from '../AbstractChannel';
 export default class App extends AbstractChannel
 {
     /**
-     * @param store
+     * Whether the channel is private or not.
      */
-    constructor(store)
-    {
-        super(store);
-
-        this.private = false;
-    }
+    protected private: boolean = false;
 
     /**
      * Get the channel name.
      */
-    name()
+    name(): string
     {
         return 'App';
     }

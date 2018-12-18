@@ -1,34 +1,51 @@
 {
   "_args": [
     [
-      "spa-skeleton@0.0.128",
+      "github:silvioiannone/spa-skeleton#next",
       "/Users/silvioiannone/Programming/Projects/BloomEstateNew"
     ]
   ],
-  "_from": "spa-skeleton@0.0.138",
-  "_id": "spa-skeleton@0.0.138",
+  "_from": "github:silvioiannone/spa-skeleton#next",
+  "_id": "spa-skeleton@github:silvioiannone/spa-skeleton#f3bf4029ba7cdc040cc84124f4b2a6834ef2a18e",
   "_inBundle": false,
-  "_integrity": "sha512-wm1yMP97qrGmlMS/3CMTSF0bOLcdgJItfS/eQOV/QnyLgMViQI6SGfS2QlYrk7MEM63X4A3Lk3Vwof9C/DvlvA==",
+  "_integrity": "",
   "_location": "/spa-skeleton",
-  "_phantomChildren": {},
+  "_phantomChildren": {
+    "consolidate": "0.14.5",
+    "hash-sum": "1.0.2",
+    "is-directory": "0.3.1",
+    "js-yaml": "3.7.0",
+    "loader-utils": "1.1.0",
+    "lru-cache": "4.1.5",
+    "minimist": "1.2.0",
+    "object-assign": "4.1.1",
+    "os-homedir": "1.0.2",
+    "parse-json": "2.2.0",
+    "postcss": "6.0.23",
+    "postcss-load-options": "1.2.0",
+    "postcss-load-plugins": "2.3.0",
+    "postcss-selector-parser": "2.2.3",
+    "prettier": "1.15.3",
+    "resolve": "1.9.0",
+    "source-map": "0.6.1",
+    "vue-hot-reload-api": "2.3.1",
+    "vue-template-es2015-compiler": "1.6.0"
+  },
   "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "spa-skeleton@0.0.138",
-    "name": "spa-skeleton",
-    "escapedName": "spa-skeleton",
-    "rawSpec": "0.0.138",
-    "saveSpec": null,
-    "fetchSpec": "0.0.138"
+    "type": "git",
+    "raw": "github:silvioiannone/spa-skeleton#next",
+    "rawSpec": "github:silvioiannone/spa-skeleton#next",
+    "saveSpec": "github:silvioiannone/spa-skeleton#next",
+    "fetchSpec": null,
+    "gitCommittish": "next"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.0.138.tgz",
+  "_resolved": "github:silvioiannone/spa-skeleton#f3bf4029ba7cdc040cc84124f4b2a6834ef2a18e",
   "_shasum": "c8c72a6e9b5a2333831a3ee9fdddc04a70755b26",
-  "_spec": "spa-skeleton@0.0.138",
-  "_where": "/Users/silvioiannone/Programming/Projects/Boptimera",
+  "_spec": "github:silvioiannone/spa-skeleton#next",
+  "_where": "/Users/silvioiannone/Programming/Projects/BloomEstateNew",
   "author": {
     "name": "Silvio Iannone"
   },

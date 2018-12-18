@@ -1,27 +1,26 @@
+import Vue from 'vue';
+
 /**
  * Handles the events that will alter the state.
  */
 export default class AbstractHandler
 {
+    protected vue: Vue;
+
     /**
      * Constructor.
      *
      * @param vue
      */
-    constructor(vue)
+    constructor(vue: Vue)
     {
         this.vue = vue;
-
-        return this;
     }
 
     /**
      * Handle the event.
-     *
-     * @param {String} event
-     * @param {Object} message
      */
-    handle(event, message)
+    handle(event: string, message: any)
     {
         if(!this[event])
         {

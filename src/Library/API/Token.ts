@@ -1,5 +1,3 @@
-/// <reference path="../../../../@types/jwt-decode/index.d.ts"/>
-
 import Config    from '../../Config';
 import JwtDecode from 'jwt-decode';
 
@@ -23,7 +21,8 @@ export default class Token
      */
     getAccessToken(): string
     {
-        return document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        return document.cookie
+            .replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 
     /**
@@ -31,7 +30,8 @@ export default class Token
      */
     getRefreshToken(): string
     {
-        return document.cookie.replace(/(?:(?:^|.*;\s*)refresh_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        return document.cookie
+            .replace(/(?:(?:^|.*;\s*)refresh_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     }
 
     /**

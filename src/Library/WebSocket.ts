@@ -1,14 +1,15 @@
-import Echo from 'laravel-echo';
-import IO  from 'socket.io-client';
-import Log from 'loglevel';
-import Config from '../Config';
-import Subscriptions from 'js/App/Subscriptions';
-import AdminChannel from './WebSocket/Channels/Admin';
-import AppChannel from './WebSocket/Channels/App';
-import UserChannel from './WebSocket/Channels/User';
-import AppHandler from './Events/AppHandler';
-import ModelHandler from './Events/ModelHandler';
-import Token from './API/Token';
+import Echo            from 'laravel-echo';
+import IO              from 'socket.io-client';
+import Log             from 'loglevel';
+import Vue             from 'vue';
+import Config          from '../Config';
+import Subscriptions   from '../../../../resources/ts/App/Subscriptions';
+import AdminChannel    from './WebSocket/Channels/Admin';
+import AppChannel      from './WebSocket/Channels/App';
+import UserChannel     from './WebSocket/Channels/User';
+import AbstractChannel from './WebSocket/AbstractChannel';
+import AppHandler      from './Events/AppHandler';
+import Token           from './API/Token';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -40,20 +41,30 @@ export default class WebSocket
      */
     protected echo: Echo;
 
+    /**
+     * Pending subscriptions.
+     */
+    protected pendingSubscriptions: Array<any> = [];
+
+    /**
+     * List of active subscriptions.
+     */
+    protected activeSubscriptions: Array<any> = [];
+
+    /**
+     * Vue.
+     */
+    protected vue: Vue;
+
+    /**
+     * Whether the connection with the WS server is established.
+     */
+    protected isConnected: boolean = false;
+
     constructor()
     {
-        /**
-         * Pending subscriptions.
-         */
-        this.pendingSubscriptions = [];
-
-        /**
-         * List of active subscriptions.
-         */
-        this.activeSubscriptions = [];
-
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
-        window.io = IO;
+        (<any>window).io = IO;
     }
 
     /**
@@ -61,7 +72,7 @@ export default class WebSocket
      *
      * @param vue Needed in order to access the root component and use it to fire events.
      */
-    subscribe(vue)
+    subscribe(vue: Vue): void
     {
         this.vue = vue;
 
@@ -80,10 +91,8 @@ export default class WebSocket
 
     /**
      * Subscribe to a channel and listen to an event.
-     *
-     * @param {Array} subscriptions
      */
-    listen(subscriptions)
+    listen(subscriptions: Array<any>): void
     {
         if (! this.echo) {
             this.pendingSubscriptions = this.pendingSubscriptions.concat(subscriptions);
@@ -96,7 +105,7 @@ export default class WebSocket
 
             // TODO: add the subscription to the list of the active subscriptions only if the
             // joining was successful (use a promise).
-            subscription.channels.forEach(channel => this.join(channel, subscription.event));
+            subscription.channels.forEach((channel: any) => this.join(channel, subscription.event));
 
             // Add the subscription to the active subscriptions.
             this.activeSubscriptions = this.activeSubscriptions.concat(subscription);
@@ -105,17 +114,15 @@ export default class WebSocket
 
     /**
      * Remove the subscriptions.
-     *
-     * @param subscriptions
      */
-    silence(subscriptions)
+    silence(subscriptions: Array<any>): void
     {
         subscriptions.forEach(subscription =>
         {
             let index = this.activeSubscriptions.indexOf(subscription);
             this.activeSubscriptions.splice(index, 1);
 
-            subscription.channels.forEach(channel =>
+            subscription.channels.forEach((channel: any) =>
             {
                 let channelName = this.makeChannel(channel).name();
 
@@ -129,10 +136,8 @@ export default class WebSocket
 
     /**
      * Leave a channel if it's not used by any event.
-     *
-     * @param {String} channel
      */
-    leaveChannelIfUnused(channel)
+    leaveChannelIfUnused(channel: any): void
     {
         let channelName = this.makeChannel(channel).name();
         let channelInUse = false;
@@ -143,7 +148,7 @@ export default class WebSocket
             }
 
             let found = subscription.channels
-                .find(channel => this.makeChannel(channel).name() === channelName);
+                .find((channel: any) => this.makeChannel(channel).name() === channelName);
 
             if (found) {
                 channelInUse = true;
@@ -158,16 +163,11 @@ export default class WebSocket
 
     /**
      * Listen for an event on a channel.
-     *
-     * @param {} channel
-     * @param {} event
-     * @protected
      */
-    join(channel, event)
+    protected join(channel: any, event: any): void
     {
         let self = this;
         let channelInstance = this.makeChannel(channel);
-        let echo = this.echo;
 
         if (! channelInstance.canEnter()) {
             return;
@@ -175,13 +175,11 @@ export default class WebSocket
 
         Log.info('Listening to ' + event + ' in the ' + channelInstance.name() + ' room.');
 
-        if (channelInstance.isPrivate()) {
-            echo = echo.private(channelInstance.name());
-        } else {
-            echo = echo.channel(channelInstance.name());
-        }
+        let _channel = channelInstance.isPrivate() ?
+            this.echo.private(channelInstance.name()) :
+            this.echo.channel(channelInstance.name());
 
-        echo.listen(event, payload =>
+        _channel.listen(event, (payload: any) =>
         {
             if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
                 self.handleNotification(payload.response);
@@ -193,22 +191,16 @@ export default class WebSocket
 
     /**
      * Make a channel instance.
-     *
-     * @param channel
-     * @returns {Object}
      */
-    makeChannel(channel)
+    makeChannel(channel: any): AbstractChannel
     {
         return typeof channel === 'object' ? channel : new channel(this.vue.$store)
     }
 
     /**
      * Broadcast an event to all vue components and execute the state mutations needed.
-     *
-     * @param event
-     * @param message
      */
-    broadcast(event, message)
+    broadcast(event: string, message: any): void
     {
         // Fire the event globally using the EventHub
         this.vue.$eh.$emit(event, message);
@@ -220,10 +212,8 @@ export default class WebSocket
 
     /**
      * Handle a notification.
-     *
-     * @param notification
      */
-    handleNotification(notification)
+    handleNotification(notification: any): void
     {
         this.vue.$store.commit('notifications/ADD', {data: notification});
 
@@ -232,13 +222,11 @@ export default class WebSocket
 
     /**
      * Handle an event received from the WebSocket server.
-     *
-     * @param event
-     * @param message
      */
-    handleEvent(event, message)
+    handleEvent(event: string, message: any): void
     {
-        let subscription = this.activeSubscriptions.find(subscription => subscription.event === event);
+        let subscription = this.activeSubscriptions
+            .find(subscription => subscription.event === event);
         let handlers = [];
 
         if (!subscription) {
@@ -248,7 +236,7 @@ export default class WebSocket
         // If it's a model related event...
         if (event.startsWith('Models.') || event.indexOf('App\\Events\\Models') >= 0) {
             // ...let it be handled by the model handler.
-            handlers.push(new ModelHandler(this.vue));
+            // handlers.push(new ModelHandler(this.vue));
         }
 
         for (let handler in subscription.handlers) {
@@ -263,12 +251,12 @@ export default class WebSocket
 
     /**
      * Connect to the WebSocket server.
-     *
-     * @return {WebSocket}
      */
-    connect()
+    connect(): WebSocket
     {
-        if (this.echo) return;
+        if (this.isConnected) {
+            return this;
+        }
 
         this.echo = new Echo({
             broadcaster: 'socket.io',
@@ -279,6 +267,7 @@ export default class WebSocket
         {
             // Set the socket ID in the API
             this.vue.$api.setSocketId(this.echo.socketId());
+            this.isConnected = true;
             Log.debug('Connected to the WebSocket server (ID: ' + this.echo.socketId() + ')');
         });
 
@@ -292,7 +281,7 @@ export default class WebSocket
     {
         if (this.echo) {
             this.echo.disconnect();
-            this.echo = null;
+            this.isConnected = false;
         }
     }
 }

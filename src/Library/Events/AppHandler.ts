@@ -5,7 +5,7 @@ import AbstractHandler from './AbstractHandler';
  */
 export default class AppHandler extends AbstractHandler
 {
-    'Models.UserUpdated'(event)
+    'Models.UserUpdated'(event: any): void
     {
         let authenticatedUser = this.vue.$store.getters.app.user;
 
@@ -14,7 +14,7 @@ export default class AppHandler extends AbstractHandler
         }
     }
 
-    '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated'(event)
+    '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated'(event: any): void
     {
         this.vue.$store.commit('app/SET_SETTINGS', event.data);
     }

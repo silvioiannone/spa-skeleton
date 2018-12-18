@@ -7,21 +7,16 @@ export default class Admin extends AbstractChannel
 {
     /**
      * Get the channel name.
-     *
-     * @return {String}
      */
-    name()
+    name(): string
     {
         return 'Admin';
     }
 
     /**
      * Whether it's possible for the user to enter the channel.
-     *
-     * @abstract
-     * @return {Boolean}
      */
-    canEnter()
+    canEnter(): boolean
     {
         let user = this.store.getters.app.user;
 
