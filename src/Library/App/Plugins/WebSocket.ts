@@ -1,3 +1,4 @@
+import Vue       from 'vue';
 import WebSocket from '../../WebSocket';
 
 /**
@@ -6,7 +7,7 @@ import WebSocket from '../../WebSocket';
  * It's possible to access the WebSocket client by simply referring to "this.$ws" from inside any
  * component.
  */
-export default
+export default function WebSocket()
 {
     install(Vue, options)
     {

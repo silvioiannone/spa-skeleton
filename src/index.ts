@@ -1,6 +1,9 @@
-/// <reference path="./Types/Environment.d.ts"/>
+/// <reference path="./Definitions/Environment.d.ts"/>
+/// <reference path="./Definitions/laravel-echo/echo.d.ts"/>
 /// <reference path="../../vue/types/index.d.ts"/>
+/// <reference path="../../vue-router/types/index.d.ts"/>
 /// <reference path="../../@types/loglevel/index.d.ts"/>
+/// <reference path="../../@types/vue-markdown/index.d.ts"/>
 
 import Log          from 'loglevel';
 import Config       from './Config';
@@ -8,12 +11,16 @@ import Components   from './Library/App/Components';
 import Directives   from './Library/App/Directives';
 import StateMachine from './Library/App/StateMachine';
 
+// TODO: move this somewhere else
 import Vue from 'vue';
+import Router, { Route } from 'vue-router';
 
-declare module 'vue/types/vue' {
-
-    interface Vue {
-        $route: any,
+declare module 'vue/types/vue'
+{
+    interface Vue
+    {
+        $route: Route,
+        $router: Router
         $vuetify: any,
         $validator: any,
         errors: any
@@ -40,7 +47,12 @@ export default class Main
 
         (new Components).boot();
 
-        let state = (new StateMachine).boot();
+        let store = (new StateMachine).boot()
+            .getStore();
+
+        let translator = null;
+
+
     }
 
     /**

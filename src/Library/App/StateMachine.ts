@@ -1,7 +1,7 @@
-import Vue     from 'vue';
-import Vuex    from 'vuex';
-import Log     from 'loglevel';
-import Modules from '../../../../../resources/ts/App/State';
+import Log             from 'loglevel';
+import Vue             from 'vue';
+import Vuex, { Store } from 'vuex';
+import Modules         from '../../../../../resources/ts/App/State';
 
 // Skeleton modules
 import App           from './State/Modules/App';
@@ -25,10 +25,17 @@ const SkeletonModules = {
  */
 export default class State
 {
+    protected store: Store<any> | null;
+
+    constructor()
+    {
+        this.store = null;
+    }
+
     /**
      * Boot the state machine.
      */
-    boot()
+    boot(): State
     {
         Log.debug('Booting state machine...');
 
@@ -41,11 +48,14 @@ export default class State
 
     /**
      * Get the store.
-     *
-     * @returns {*}
      */
-    getStore()
+    getStore(): Store<any>
     {
+        // Make sure only once store instance is created.
+        if (this.store) {
+            return this.store;
+        }
+
         // Register all the modules with the state machine
         let vuexModules = {};
         let availableModules = {...SkeletonModules, ...Modules};
@@ -57,6 +67,8 @@ export default class State
             vuexModules[key] = module;
         }
 
-        return new Vuex.Store({ modules: vuexModules });
+        this.store = new Vuex.Store({ modules: vuexModules });
+
+        return this.store;
     }
 }

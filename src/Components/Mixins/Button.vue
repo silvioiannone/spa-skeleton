@@ -75,15 +75,14 @@
             }
         },
 
-        render(createElement): VNode
+        render(createElement: Function): VNode
         {
             let self = this;
-            let props = {...this.$props, ...this.props};
 
             return createElement('v-btn', {
-                props,
+                props: this.$props,
                 on: {
-                    click: event => self.handleClick(event)
+                    click: (event: any) => self.handleClick(event)
                 }
             }, this.$slots.default);
         }

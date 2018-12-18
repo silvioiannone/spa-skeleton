@@ -83,7 +83,7 @@
              */
             title: {
                 type: String,
-                default: () => Config.name
+                default: (): string => Config.name
             },
 
             /**
@@ -195,7 +195,7 @@
             }
         },
 
-        mounted()
+        mounted(): void
         {
             let searchQuery = this.$route.query.search;
 
@@ -207,7 +207,7 @@
 
         watch: {
 
-            searchQuery()
+            searchQuery(): void
             {
                 this.$emit('search:update', this.searchQuery);
             }

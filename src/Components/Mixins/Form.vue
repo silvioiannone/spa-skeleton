@@ -3,6 +3,14 @@
     import Vue               from 'vue';
     import ResponseInterface from '../../Library/API/ResponseInterface';
 
+    declare module 'vue/types/vue' {
+
+        interface Vue {
+            model: any,
+            value: any
+        }
+    }
+
     /*
      * This mixin can be used in order to create new forms.
      */
@@ -45,7 +53,7 @@
             }
         },
 
-        data()
+        data(): any
         {
             return {
                 _vFormValid: true,
@@ -68,7 +76,7 @@
              */
             cancel(): void
             {
-                this.$emit('cancel');
+                this.$emit('cancel', null);
             },
 
             /**
@@ -80,7 +88,7 @@
                 {
                     // Before submitting make sure that the form is valid.
                     this.$validator.validateAll()
-                        .then(result =>
+                        .then((result: any) =>
                         {
                             if (!result) {
                                 reject();
@@ -165,17 +173,18 @@
         mounted(): void
         {
             // Whenever an input is focused we need to remove the server errors associated with it.
-            this.$nextTick(function()
+            this.$nextTick(function(this: any): void
             {
                 this.$el.querySelectorAll('input, textarea')
-                    .forEach(element => {
-                    element.addEventListener('focusin', (event: any) =>
+                    .forEach((element: any): void =>
                     {
-                        let field = event.target.getAttribute('name');
-                        this.errors.remove(field, 'server');
-                        this.$parent.errors.remove(field);
+                        element.addEventListener('focusin', (event: any) =>
+                        {
+                            let field = event.target.getAttribute('name');
+                            this.errors.remove(field, 'server');
+                            this.$parent.errors.remove(field);
+                        });
                     });
-                });
             });
         },
 

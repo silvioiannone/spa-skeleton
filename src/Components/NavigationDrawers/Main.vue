@@ -55,7 +55,7 @@
 
                     return this.$store.getters.ui.navigationDrawerVisible;
                 },
-                set(value): void
+                set(value: boolean): void
                 {
                     if (this.right)
                     {

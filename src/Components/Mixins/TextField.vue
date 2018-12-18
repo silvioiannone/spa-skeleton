@@ -3,6 +3,13 @@
     import Vue, { VNode } from 'vue';
     import MixinInput     from './Input.vue';
 
+    declare module 'vue/types/vue' {
+
+        interface Vue {
+            isDirty: any
+        }
+    }
+
     /**
      * This mixin can be used in order to create text fields.
      *
@@ -182,7 +189,7 @@
              */
             _value(): any
             {
-                return this.value;
+                return this.$props.value;
             },
 
             /**
@@ -204,7 +211,7 @@
              *
              * @param value
              */
-            fireInputEvent(value): void
+            fireInputEvent(value: any): void
             {
                 this.$emit('input', value);
             },
@@ -223,11 +230,16 @@
             // This is a work-around needed in order to prevent Vuetify text-input mask to trigger
             // the validation too soon.
             let input = this.$el.querySelector('input');
-            input.addEventListener('focus', () =>
+
+            if (! input) {
+                return;
+            }
+
+            input.addEventListener('focus', (): void =>
             {
                 this.isFocused = true;
             });
-            input.addEventListener('blur', () =>
+            input.addEventListener('blur', (): void =>
             {
                 this.isFocused = false;
             });
@@ -239,44 +251,44 @@
             {
                 // Trigger the validation on the next tick but only if the input is dirty
                 if (this.$children[0].isDirty) {
-                    this.$nextTick(() => this.$validator.validateAll());
+                    this.$nextTick((): void => this.$validator.validateAll());
                 }
             }
         },
 
-        render(createElement): VNode
+        render(createElement: Function): VNode
         {
             let self = this;
 
             let props = {
-                ...this.$props,
-                errorMessages: this._errorMessages,
-                value: this._value
+                ...self.$props,
+                errorMessages: self._errorMessages,
+                value: self._value
             };
 
             return createElement('v-text-field', {
                 attrs: {
-                    name: this.name,
-                    type: this.type,
-                    step: this.step,
-                    min: this.min,
-                    max: this.max,
-                    class: this._class,
-                    'data-vv-as': this.vvAs
+                    name: self.name,
+                    type: self.type,
+                    step: self.step,
+                    min: self.min,
+                    max: self.max,
+                    class: self._class,
+                    'data-vv-as': self.vvAs
                 },
                 directives: [
                     {
                         name: 'validate',
-                        value: this._validation
+                        value: self._validation
                     }
                 ],
                 props,
                 on: {
-                    input: value => self.fireInputEvent(value),
-                    blur: () => self.$emit('blur'),
-                    focus: () => self.$emit('focus'),
-                    'update:error': value => self.$emit('update:error', value),
-                    'click:clear': () => self.$emit('click:clear')
+                    input: (value: any): void => self.fireInputEvent(value),
+                    blur: () => self.$emit('blur', null),
+                    focus: () => self.$emit('focus', null),
+                    'update:error': (value: any): void => self.$emit('update:error', value),
+                    'click:clear': (): void => self.$emit('click:clear', null)
                 }
             });
         }

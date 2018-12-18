@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import Vue from 'vue';
+    import Vue, { VNode } from 'vue';
 
     /**
      * Use this mixin when you need to create a component wrapping another component.
@@ -122,7 +122,7 @@
                 let wrapped = this.$children[0];
                 let childEmit = wrapped.$emit;
 
-                wrapped.$emit = (event: any, payload: any) =>
+                wrapped.$emit = (event: any, payload: any): void =>
                 {
                     childEmit.apply(wrapped, [event, payload]);
                     this.$emit(event, payload);
@@ -130,7 +130,7 @@
             }
         },
 
-        created()
+        created(): void
         {
             if (! this.$data.__component) {
                 throw 'Wrapped component not set. Please set it using the `__component` data ' +
@@ -138,12 +138,12 @@
             }
         },
 
-        mounted()
+        mounted(): void
         {
             this.overrideWrapped$emit();
         },
 
-        render(createElement): VNode
+        render(createElement: Function): VNode
         {
             return createElement(
                 this.$data.__component.name,

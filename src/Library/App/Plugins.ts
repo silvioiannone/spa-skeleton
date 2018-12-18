@@ -1,17 +1,17 @@
 import _           from 'lodash';
 import Log         from 'loglevel';
-import PluginsList from 'js/App/Plugins';
+import Vue         from 'vue';
+import PluginsList from '../../../../../resources/js/App/Plugins';
 import Config      from '../../Config';
 
 // Skeleton plugins
-import API from './Plugins/API';
-import EventHub from './Plugins/EventHub';
-import Navigator from './Plugins/Navigator';
-import Vuetify from 'vuetify';
-import VueI18N from 'vue-i18n';
-import Vue2Filters from 'vue2-filters';
-import VueRouter from 'vue-router';
-import WebSocket from './Plugins/WebSocket';
+import Vuetify     from 'vuetify';
+import VueI18N     from 'vue-i18n';
+import VueRouter   from 'vue-router';
+import Api         from './Plugins/Api';
+import EventHub    from './Plugins/EventHub';
+import Navigator   from './Plugins/Navigator';
+import WebSocket   from './Plugins/WebSocket';
 
 /**
  * SPA-Skeleton plugins. The order is important.
@@ -20,8 +20,7 @@ const SkeletonPlugins = {
     VueI18N,
     Vuetify,
     VueRouter,
-    Vue2Filters,
-    API,
+    Api,
     Navigator,
     EventHub,
     WebSocket
@@ -32,10 +31,16 @@ const SkeletonPlugins = {
  */
 export default class Plugins
 {
-    constructor(vue, translator)
+    /**
+     * Actions to perform before registering a plug-in.
+     */
+    protected beforeActions: any;
+
+    /**
+     * Constructor.
+     */
+    constructor()
     {
-        this.translator = vue;
-        this.vue = vue;
         this.beforeActions = {};
     }
 
@@ -46,7 +51,7 @@ export default class Plugins
     {
         Log.debug('Loading plugins...');
 
-        let availablePlugins = Object.assign(SkeletonPlugins, PluginsList);
+        let availablePlugins = {...SkeletonPlugins, ...PluginsList};
 
         for (let key in availablePlugins) {
 
@@ -59,13 +64,14 @@ export default class Plugins
             }
 
             if (this.beforeActions[key]) {
-                this.beforeActions[key].forEach(action => {
+                this.beforeActions[key].forEach((action: Function) =>
+                {
                     let actionSettings = action();
                     settings = _.merge(settings, actionSettings)
                 });
             }
 
-            this.vue.use(availablePlugins[key], settings);
+            Vue.use(availablePlugins[key], settings);
 
             Log.debug('Plugin "' + key + '" registered.');
         }
@@ -75,12 +81,8 @@ export default class Plugins
 
     /**
      * Register a callback that should be executed before a plugin is registered.
-     *
-     * @param plugin
-     * @param callback Can an object containing the settings that should be passed to the plugin.
-     * @return Plugins
      */
-    before(plugin, callback)
+    before(plugin: any, callback: Function)
     {
         if (! this.beforeActions[plugin]) {
             this.beforeActions[plugin] = [];

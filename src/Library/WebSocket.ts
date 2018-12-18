@@ -15,35 +15,33 @@ import Token from './API/Token';
  */
 export default class WebSocket
 {
+    /**
+     * The Skeleton's subscriptions.
+     */
+    protected skeletonSubscriptions: Array<any> = [
+        {
+            event: 'Models.UserUpdated',
+            channels: [AdminChannel, UserChannel],
+            handlers: {AppHandler}
+        },
+        {
+            event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
+            channels: [UserChannel],
+        },
+        {
+            event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated',
+            channels: [AppChannel],
+            handlers: {AppHandler}
+        }
+    ];
+
+    /**
+     * The Laravel echo server.
+     */
+    protected echo: Echo;
+
     constructor()
     {
-        /**
-         * The Skeleton's subscriptions.
-         *
-         * @type {[]}
-         */
-        this.skeletonSubscriptions = [
-            {
-                event: 'Models.UserUpdated',
-                channels: [AdminChannel, UserChannel],
-                handlers: {AppHandler}
-            },
-            {
-                event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
-                channels: [UserChannel],
-            },
-            {
-                event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated',
-                channels: [AppChannel],
-                handlers: {AppHandler}
-            }
-        ];
-
-        /**
-         * The Laravel echo server.
-         */
-        this.echo = null;
-
         /**
          * Pending subscriptions.
          */

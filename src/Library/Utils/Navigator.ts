@@ -1,4 +1,6 @@
-import String from './String';
+import Vue               from 'vue';
+import Router, { Route } from 'vue-router'
+import String            from './String';
 
 /**
  * Providers navigations and routing utilities.
@@ -6,11 +8,26 @@ import String from './String';
 export default class Navigator
 {
     /**
+     * Vue instance.
+     */
+    protected vue: Vue;
+
+    /**
+     * Vue router.
+     */
+    protected router: Router;
+
+    /**
+     * Vue router's route.
+     */
+    protected route: Route;
+
+    /**
      * Set the vue instance.
      *
      * @param vue
      */
-    setInstance(vue)
+    setInstance(vue: Vue)
     {
         this.vue = vue;
         this.router = this.vue.$router;
@@ -19,10 +36,8 @@ export default class Navigator
 
     /**
      * Set the route.
-     *
-     * @param route
      */
-    setRoute(route)
+    setRoute(route: Route): void
     {
         this.route = route;
     }
@@ -31,10 +46,8 @@ export default class Navigator
      * Go to route.
      *
      * It behaves in the same way as $router.push but keeps the query parameters.
-     *
-     * @param path
      */
-    toAndKeepQuery(path)
+    toAndKeepQuery(path: string): void
     {
         this.router.push({
             path,
@@ -44,13 +57,9 @@ export default class Navigator
 
     /**
      * Go to the parent route.
-     *
-     * @param [levels] {Number}
      */
-    toParent(levels)
+    toParent(levels = 1)
     {
-        levels = levels || 1;
-
         this.router.push({
             path: String.parentPath(this.route.path, levels),
             query: this.route.query

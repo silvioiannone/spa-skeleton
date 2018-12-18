@@ -7,12 +7,8 @@ export default
 {
     /**
      * Limit a string to the specified number of words.
-     *
-     * @param {String} string
-     * @param {Number} [wordsCount]
-     * @return {*}
      */
-    limit(string, wordsCount)
+    limit(string: string, wordsCount: number): string
     {
         wordsCount = wordsCount || 25;
 
@@ -30,12 +26,8 @@ export default
 
     /**
      * Transforms the time string into a human readable format.
-     *
-     * @param {String} string
-     * @param {String} format http://momentjs.com/docs/#/displaying/format/
-     * @return {*}
      */
-    time(string, format)
+    time(string: string, format: string): string
     {
         format = format || 'lll';
 
@@ -44,15 +36,9 @@ export default
 
     /**
      * Return the parent path of the given path.
-     *
-     * @param {String} path
-     * @param {Number} [levels] Defaults to 1.
-     * @return {String}
      */
-    parentPath(path, levels)
+    parentPath(path: string, levels = 1): string
     {
-        levels = levels || 1;
-
         let parent = path.split('/');
         return '/' + parent.splice(1, parent.length - levels - 1).join('/');
     }

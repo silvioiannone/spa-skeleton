@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import Vue from 'vue';
+    import Vue, { VNode } from 'vue';
 
     export default Vue.extend({
 
@@ -8,9 +8,9 @@
 
         computed: {
 
-            attrs()
+            attrs(): any
             {
-                return Object.keys(this.$attrs).filter(key =>
+                return Object.keys(this.$attrs).filter((key: string) =>
                 {
                     if (key === 'slot') {
                         return false;
@@ -22,7 +22,7 @@
                 });
             },
 
-            class()
+            class(): any
             {
                 let classes = {
                     'container': true,
@@ -33,7 +33,7 @@
                     classes['pa-0'] = true;
                 }
 
-                this.attrs.forEach(attribute =>
+                this.attrs.forEach((attribute: string) =>
                 {
                     classes[attribute] = true;
                 });
@@ -42,10 +42,8 @@
             }
         },
 
-        render(createElement)
+        render(createElement: Function): VNode
         {
-            let self = this;
-
             return createElement('v-container', {
                 class: this.class,
                 attrs: this.attrs

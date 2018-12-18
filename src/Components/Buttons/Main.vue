@@ -1,7 +1,7 @@
 <script lang="ts">
 
-    import Button       from '../Mixins/Button';
-    import Component    from '../Mixins/Component';
+    import Button       from '../Mixins/Button.vue';
+    import Component    from '../Mixins/Component.vue';
     import Vue, {VNode} from 'vue';
 
     export default Vue.extend({
@@ -19,7 +19,7 @@
              * An action that will be performed when clicking on the button.
              */
             action: {
-                validator: (value) =>
+                validator: (value: any): boolean =>
                 {
                     return typeof value === 'function';
                 }
@@ -35,12 +35,12 @@
 
         computed: {
 
-            propLoading()
+            propLoading(): boolean
             {
                 return this.$data._loading;
             },
 
-            computedProps()
+            computedProps(): any
             {
                 return {
                     loading: this.propLoading
@@ -53,7 +53,7 @@
             /**
              * React to `click` event.
              */
-            onClick()
+            onClick(): void
             {
                 if (this.action) {
                     this.$data._loading = true;
@@ -73,17 +73,18 @@
             }
         },
 
-        render(createElement): VNode
+        render(createElement: Function): VNode
         {
+            let self = this;
             return createElement(
                 'v-btn',
                 {
-                    props: this.getProps(),
+                    props: self.getProps(),
                     on: {
-                        click: this.onClick
+                        click: self.onClick
                     }
                 },
-                this.$slots.default
+                self.$slots.default
             );
         }
     });
