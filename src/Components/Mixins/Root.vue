@@ -1,8 +1,7 @@
 <script lang="ts">
 
-    import Vue       from 'vue';
-    import Component from 'vue-class-component';
-    import Config from '../../Config';
+    import { Vue, Component, Prop } from 'vue-property-decorator'
+    import Config    from '../../Config';
 
     /**
      * This mixin adds multilanguage support to every component.

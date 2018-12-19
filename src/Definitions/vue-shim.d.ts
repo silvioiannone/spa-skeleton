@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router, { Route } from 'vue-router';
+import { VuetifyObject } from 'vuetify';
+import { ErrorBag, Validator }     from 'vee-validate';
 import Api from '../Library/Api';
 
 declare module 'vue/types/vue'
@@ -10,9 +12,9 @@ declare module 'vue/types/vue'
         $eh: Vue,
         $route: Route,
         $router: Router
-        $vuetify: any,
-        $validator: any,
-        errors: any
+        $vuetify: VuetifyObject,
+        $validator: Validator,
+        errors: ErrorBag
     }
 }
 
