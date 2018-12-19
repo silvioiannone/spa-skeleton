@@ -16,7 +16,6 @@ import Router       from './Library/App/Router';
 import StateMachine from './Library/App/StateMachine';
 import Translator   from './Library/App/Translator';
 import Validator    from './Library/App/Validator';
-import VueI18N      from 'vue-i18n';
 
 /**
  * SPA Skeleton entry point.

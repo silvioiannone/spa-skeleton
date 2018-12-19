@@ -2,16 +2,12 @@
     <router-view></router-view>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue       from 'vue';
+    import Component from 'vue-class-component';
 
-        name: 'RootRouterView',
-
-        mounted()
-        {
-            this.$ws.subscribe(this);
-        }
-    }
+    @Component
+    export default class Root extends Vue {}
 
 </script>

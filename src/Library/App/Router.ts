@@ -2,14 +2,13 @@ import Log                  from 'loglevel';
 import Vue                  from 'vue';
 import { Store }            from 'vuex';
 import VueRouter, { Route } from 'vue-router';
-import VueI18N              from 'vue-i18n';
 import { sync }             from 'vuex-router-sync';
 import Api                  from '../Api';
 import Config               from '../../Config';
 import Guard                from './Guard';
 import Translator           from './Translator';
-//import MixinRoot          from '../../Components/Mixins/Root';
-//import RootViewComponent  from '../../Components/Views/Root';
+import MixinRoot            from '../../Components/Mixins/Root';
+import RootViewComponent    from '../../Components/Views/Root.vue';
 import Routes               from '../../../../../resources/ts/App/Routes';
 
 /**
@@ -76,7 +75,7 @@ export default class Router
                     meta: {
                         actions: ['view/ROOT']
                     },
-                    //component: RootViewComponent,
+                    component: RootViewComponent,
                     children: Routes
                 }
             ],
@@ -116,7 +115,7 @@ export default class Router
             // Bind the store so that it's available to all children components
             store,
 
-            //mixins: [MixinRoot],
+            mixins: [MixinRoot],
 
             i18n: this.translator.get(),
 
