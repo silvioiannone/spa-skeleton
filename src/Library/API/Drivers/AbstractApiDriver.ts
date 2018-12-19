@@ -35,6 +35,14 @@ export default abstract class AbstractApiDriver
     parameters: any;
 
     /**
+     * Constructor.
+     */
+    protected constructor()
+    {
+        this.token = new Token;
+    }
+
+    /**
      * Set the socket ID that will be send with the headers.
      */
     setSocketId(socketId: string): void

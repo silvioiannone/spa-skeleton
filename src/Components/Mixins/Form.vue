@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import Vue               from 'vue';
-    import ResponseInterface from '../../Library/API/ResponseInterface';
+    import ResponseInterface from '../../Library/Api/ResponseInterface';
 
     declare module 'vue/types/vue' {
 
