@@ -9,7 +9,7 @@ import AppChannel      from './WebSocket/Channels/App';
 import UserChannel     from './WebSocket/Channels/User';
 import AbstractChannel from './WebSocket/AbstractChannel';
 import AppHandler      from './Events/AppHandler';
-import Token           from './API/Token';
+import Token           from './Api/Token';
 
 /**
  * This class enables real time communication between the SPA and the server.

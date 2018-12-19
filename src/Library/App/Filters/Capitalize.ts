@@ -13,12 +13,12 @@ export default class Capitalize extends AbstractFilter
      * @param value
      * @returns {string}
      */
-    run(value)
+    run(value: string): string
     {
         if (!value) {
             return '';
         }
 
-        return value.charAt(0).toUpperCase() + value.slice(1)
+        return value.charAt(0).toUpperCase() + value.slice(1);
     }
 }

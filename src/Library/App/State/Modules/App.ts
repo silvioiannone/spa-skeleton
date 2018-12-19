@@ -1,7 +1,7 @@
 import AbstractModule    from '../../../State/AbstractModule';
 import Config            from '../../../../Config';
 import ResponseInterface from '../../../Api/ResponseInterface';
-import Token             from '../../../API/Token';
+import Token             from '../../../Api/Token';
 import { Store }         from 'vuex';
 
 /**

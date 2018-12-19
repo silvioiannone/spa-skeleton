@@ -2,10 +2,10 @@ import AbstractResource from './Api/Resources/AbstractResource';
 import AppApi           from '../../../../resources/ts/App/Api';
 
 // Skeleton API resources
-import App           from './API/Resources/App';
-import Notifications from './API/Resources/Notifications';
-import Roles         from './API/Resources/Roles';
-import Users         from './API/Resources/Users';
+import App           from './Api/Resources/App';
+import Notifications from './Api/Resources/Notifications';
+import Roles         from './Api/Resources/Roles';
+import Users         from './Api/Resources/Users';
 
 const ApiResources = {
     App,

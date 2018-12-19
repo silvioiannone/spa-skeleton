@@ -1,5 +1,7 @@
 import Log        from 'loglevel';
-import AppFilters from 'js/App/Filters';
+import Vue        from 'vue';
+import { Store }  from 'vuex';
+import AppFilters from '../../../../../resources/ts/App/Filters';
 
 // Skeleton filters
 import Capitalize         from './Filters/Capitalize';
@@ -26,14 +28,17 @@ const SkeletonFilters = {
 export default class Filters
 {
     /**
+     * State machine store.
+     */
+    protected store: Store<any>;
+
+    /**
      * Constructor.
      *
-     * @param vue
      * @param store
      */
-    constructor(vue, store)
+    constructor(store: Store<any>)
     {
-        this.vue = vue;
         this.store = store;
     }
 
@@ -48,7 +53,7 @@ export default class Filters
 
         for (let key in availableFilters) {
             let filter = (new availableFilters[key](this.store)).run.bind(this);
-            this.vue.filter(key, filter);
+            Vue.filter(key, filter);
             Log.debug('Filter "' + key + '" registered.');
         }
 

@@ -1,9 +1,18 @@
-import Log    from 'loglevel';
-import _      from 'lodash';
-import Guards from 'js/App/Guards';
+import _             from 'lodash';
+import Log           from 'loglevel';
+import Vue           from 'vue';
+import Router, {
+    RouteConfig,
+    Route,
+    RouteRecord,
+    RawLocation }    from 'vue-router';
+import { Store }     from 'vuex';
+import AbstractGuard from '../Guards/AbstractGuard';
+import Guards        from '../../../../../resources/ts/App/Guards';
+import Routes        from '../../../../../resources/ts/App/Routes';
 
 // Skeleton guards
-import Auth from './Guards/Auth';
+import Auth        from './Guards/Auth';
 import UserIsAdmin from './Guards/UserIsAdmin';
 
 const SkeletonGuards = {
@@ -19,20 +28,25 @@ const SkeletonGuards = {
  */
 export default class Guard
 {
-    constructor()
-    {
-        // The router
-        this.router = null;
+    /**
+     * Router.
+     */
+    protected router: Router;
 
-        // The routes containing also the guard definitions
-        this.routes = null;
+    /**
+     * Router routes.
+     */
+    protected routes: Array<RouteConfig>;
 
-        // The state machine store
-        this.store = null;
+    /**
+     * State machine store.
+     */
+    protected store: Store<any>;
 
-        // Completed hooks
-        this.completedHooks = [];
-    }
+    /**
+     * Completed hooks.
+     */
+    protected completedHooks: Array<any> = [];
 
     /**
      * Initializes the guard.
@@ -40,10 +54,10 @@ export default class Guard
      * @param router A vue router instance.
      * @param store Store instance.
      */
-    init(router, store)
+    init(router: Router, store: Store<any>): Guard
     {
         this.router = router;
-        this.routes = router.options.routes;
+        this.routes = Routes;
         this.store = store;
 
         return this;
@@ -52,11 +66,14 @@ export default class Guard
     /**
      * Apply the middleware to the router.
      */
-    run()
+    run(): void
     {
         let ready = true;
 
-        this.router.beforeEach((to, from, next) =>
+        this.router.beforeEach((
+            to: Route,
+            from: Route,
+            next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) =>
         {
             ready = true;
             Log.debug('Loading ' + to.path + '...');
@@ -80,7 +97,7 @@ export default class Guard
                             next();
                         });
                 })
-                .catch(error =>
+                .catch((error: any) =>
                 {
                     ready = false;
 
@@ -112,7 +129,7 @@ export default class Guard
                 });
         });
 
-        this.router.afterEach((to, from) =>
+        this.router.afterEach((to: Route, from: Route) =>
         {
             if (ready) {
                 this.store.commit('app/SET_STATUS', 'ready');
@@ -130,10 +147,8 @@ export default class Guard
 
     /**
      * Register a completed hook.
-     *
-     * @param callback
      */
-    onComplete(callback)
+    onComplete(callback: Function): void
     {
         this.completedHooks.push(callback);
     }
@@ -144,28 +159,24 @@ export default class Guard
      * The actions are defined in the views module (library/state/modules/view.js) of the state
      * machine.
      *
-     * @param {Object} to
-     * @param {Object} from
-     * @return {Promise}
      * @protected
      */
-    runRouteActions(to, from)
+    protected runRouteActions(to: Route, from: Route): Promise<any>
     {
         return new Promise((resolve, reject) =>
         {
-            let matched = this.router.matcher.match(this.routes, to).matched;
-            let fromMatched = this.router.matcher.match(this.routes, from).matched;
-            let actions = [];
-            let actionPromises = [];
-            let fromActions = [];
+            let actions: Array<String> = [];
+            let actionPromises: Array<any> = [];
+            let fromActions: Array<any> = [];
 
-            fromMatched.forEach(match => {
+            from.matched.forEach((match: RouteRecord) =>
+            {
                 if (match.meta.actions) {
                     fromActions = fromActions.concat(match.meta.actions)
                 }
             });
 
-            matched.forEach(match =>
+            to.matched.forEach((match: RouteRecord) =>
             {
                 if (typeof match.meta.actions !== 'undefined') {
                     actions = actions.concat(match.meta.actions);
@@ -173,7 +184,7 @@ export default class Guard
             });
 
             // We need to take only the actions that are not already defined by the previous routes.
-            actions = actions.filter(action =>
+            actions = actions.filter((action: string) =>
             {
                 // Take the action if it's not in the previous route...
                 return fromActions.indexOf(action) < 0 ||
@@ -187,7 +198,7 @@ export default class Guard
 
             Log.debug('Executing actions: ' + actions.join(', ') + '.');
 
-            actions.forEach(action =>
+            actions.forEach((action: string) =>
             {
                 actionPromises.push(this.store.dispatch(action, {
                     vue: this.store,
@@ -196,36 +207,31 @@ export default class Guard
             });
 
             Promise.all(actionPromises)
-                .then(() => {
+                .then(() =>
+                {
                     resolve();
                     Log.debug('Actions executed.');
                 })
-                .catch(error => reject(error))
+                .catch((error: any) => reject(error))
         });
     }
 
     /**
      * Executes the guards for the specified route.
-     *
-     * @param {Object} to
-     * @param {Object} from
-     * @return {Promise}
-     * @protected
      */
-    runRouteGuards(to, from)
+    protected runRouteGuards(to: Route, from: Route): Promise<any>
     {
-        let matched = this.router.matcher.match(this.routes, to).matched;
-        let guards = [];
-        let guardPromises = [];
+        let guards: Array<string> = [];
+        let guardPromises: Array<Promise<any>> = [];
 
-        matched.forEach(match =>
+        to.matched.forEach(match =>
         {
             if (typeof match.meta.guards !== 'undefined') {
                 guards = guards.concat(match.meta.guards);
             }
         });
 
-        let availableGuards = Object.assign({}, SkeletonGuards, Guards);
+        let availableGuards = {...SkeletonGuards, ...Guards};
 
         guards.forEach(guard =>
         {
@@ -234,7 +240,7 @@ export default class Guard
             }
             let guardPromise = new availableGuards[guard](this.store).execute();
 
-            guardPromise.catch(error =>
+            guardPromise.catch((error: any) =>
             {
                 Log.error('The guard ' + guard + ' blocked the loading of the view.');
                 console.error(error);
@@ -247,7 +253,7 @@ export default class Guard
         {
             Promise.all(guardPromises)
                 .then(() => resolve())
-                .catch(error => reject(error));
+                .catch((error: any) => reject(error));
         });
     }
 }

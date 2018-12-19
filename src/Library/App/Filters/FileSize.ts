@@ -7,22 +7,20 @@ export default class FileSize extends AbstractFilter
 {
     /**
      * Run the filter.
-     *
-     * @param value
-     * @returns {string}
      */
-    run(value)
+    run(value: string): string
     {
+        let valueNumber = parseInt(value);
         const units = ['B', 'KB', 'MB', 'GB', 'TB'];
         const unitsCount = 1024;
 
         let step = 0;
 
-        while (value >= unitsCount) {
-            value /= unitsCount;
+        while (valueNumber >= unitsCount) {
+            valueNumber /= unitsCount;
             step++;
         }
 
-        return value.toFixed(1) + ' ' + units[step];
+        return valueNumber + ' ' + units[step];
     }
 }

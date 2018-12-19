@@ -9,11 +9,22 @@ import Config  from '../../Config';
 export default class Translator
 {
     /**
-     * Boot the translator.
-     *
-     * @returns {Translator}
+     * Translator instance.
      */
-    boot()
+    protected static instance: VueI18N;
+
+    /**
+     * Get the translator instance.
+     */
+    get(): VueI18N
+    {
+        return Translator.instance;
+    }
+
+    /**
+     * Boot the translator.
+     */
+    boot(): Translator
     {
         Log.debug('Loading language...');
 
@@ -27,10 +38,12 @@ export default class Translator
 
         Log.debug('Language loaded.');
 
-        return new VueI18N({
+        Translator.instance = new VueI18N({
             locale,
             fallbackLocale: 'en',
             messages
         });
+
+        return this;
     }
 }

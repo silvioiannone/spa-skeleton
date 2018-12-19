@@ -67,7 +67,7 @@ export default class Token
      * @param accessToken
      * @param refreshToken
      */
-    save(accessToken: string, refreshToken: string): void
+    save(accessToken: string, refreshToken: string = ''): void
     {
         let accessTokenCookie = this.accessTokenName + "=" + accessToken + "; path=/;";
         let refreshTokenCookie = this.refreshTokenName + "=" + refreshToken + "; path=/;";

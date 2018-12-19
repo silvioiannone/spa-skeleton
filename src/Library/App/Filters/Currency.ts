@@ -9,10 +9,8 @@ export default class Currency extends AbstractFilter
 {
     /**
      * Run the filter.
-     *
-     * @param value
      */
-    run(value)
+    run(value: string): string
     {
         let settings = this.store.getters.app.user.settings;
 

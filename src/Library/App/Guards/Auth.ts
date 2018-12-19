@@ -1,6 +1,6 @@
 import AbstractGuard from '../../Guards/AbstractGuard';
-import API           from '../../API';
-import Token         from '../../API/Token';
+import API           from '../../Api';
+import Token         from '../../Api/Token';
 
 /**
  * Auth guard.
@@ -10,24 +10,20 @@ import Token         from '../../API/Token';
  */
 export default class Auth extends AbstractGuard
 {
-    constructor()
-    {
-        super();
-
-        this.guardName = 'Auth';
-    }
+    /**
+     * Guard name.
+     */
+    protected name: string = 'Auth';
 
     /**
      * Run the guard.
-     *
-     * @return {Promise}
      */
-    handle()
+    handle(): Promise<any>
     {
         let token = new Token();
         let api = new API();
 
-        return new Promise((resolve, reject) =>
+        return new Promise((resolve: Function, reject: Function) =>
         {
             // Avoid requesting a token if there's already a request pending
             if(sessionStorage.getItem('fetchingToken'))
@@ -41,7 +37,7 @@ export default class Auth extends AbstractGuard
                 api.users.refreshToken()
                     .then(response =>
                     {
-                        token.save(response);
+                        token.save(response.body.access_token);
                         sessionStorage.removeItem('fetchingToken');
                         resolve();
                     })

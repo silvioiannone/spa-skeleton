@@ -13,25 +13,16 @@ export default class SwedishSsn extends AbstractRule
 {
     /**
      * Get the validation message.
-     *
-     * @param field
-     * @param params
-     * @param data
-     * @returns {string}
      */
-    getMessage(field, params, data)
+    getMessage(field: string, params: Array<any>, data: any): string
     {
         return `Invalid SSN.`;
     }
 
     /**
      * Validate.
-     *
-     * @param {String} value
-     * @param params
-     * @returns {boolean}
      */
-    validate(value, params)
+    validate(value: string, params: Array<any>): boolean
     {
         // Remove the dash.
         value = value.replace('-', '');
@@ -40,7 +31,7 @@ export default class SwedishSsn extends AbstractRule
             return false;
         }
 
-        let sums = [...value]
+        let sums = [...Array.from(value)]
             .slice(0, 9)
             .map((char, index) =>
             {

@@ -1,6 +1,6 @@
 import AbstractModule    from '../../../State/AbstractModule';
 import Config            from 'spa-skeleton/src/Config';
-import ResponseInterface from '../../../API/ResponseInterface';
+import ResponseInterface from '../../../Api/ResponseInterface';
 import { Store }         from 'vuex';
 
 /**

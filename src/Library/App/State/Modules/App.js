@@ -1,6 +1,6 @@
 import AbstractModule from '../../../State/AbstractModule';
 import Config         from '../../../../Config';
-import Token          from '../../../API/Token';
+import Token          from '../../../Api/Token';
 
 /**
  * State machine App module.

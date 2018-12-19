@@ -7,11 +7,8 @@ export default class OrganizationNumber extends AbstractFilter
 {
     /**
      * Run the filter.
-     *
-     * @param value
-     * @returns {string}
      */
-    run(value)
+    run(value: string): string
     {
         if (!value) return '';
 

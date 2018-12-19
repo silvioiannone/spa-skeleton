@@ -1,6 +1,7 @@
-import Log                 from 'loglevel';
-import VeeValidate         from 'vee-validate';
-import ValidatorDictionary from 'js/App/Validator/Dictionary';
+import Log         from 'loglevel';
+import VeeValidate from 'vee-validate';
+import Vue         from 'vue';
+import Translator  from './Translator';
 
 // Skeleton rules.
 import Count      from './Rules/Count';
@@ -17,11 +18,15 @@ const skeletonRules = {
 export default class Validator
 {
     /**
-     * @param Vue Vue instance.
+     * Translator.
      */
-    constructor(Vue, translator)
+    protected translator: Translator;
+
+    /**
+     * Constructor.
+     */
+    constructor(translator: Translator)
     {
-        this.vue = Vue;
         this.translator = translator;
     }
 
@@ -32,11 +37,10 @@ export default class Validator
     {
         Log.debug('Booting validator...');
 
-        VeeValidate.Validator.localize(ValidatorDictionary);
-        this.vue.use(VeeValidate);
+        Vue.use(VeeValidate);
 
         for (let key in skeletonRules) {
-            let rule = new (skeletonRules[key])(this.translator);
+            let rule = new (skeletonRules[key])(this.translator.get());
             let ruleName = key.charAt(0).toLowerCase() + key.slice(1);
 
             Log.debug(`Registered rule '${ruleName}'.`);

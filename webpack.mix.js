@@ -51,13 +51,13 @@ module.exports = {
             mix.version();
         }
 
-        mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
-        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
-        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
-
         if (process.env.APP_ENV !== 'production') {
             mix.sourceMaps();
         }
+
+        mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
+        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
+        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
     },
 
     /**

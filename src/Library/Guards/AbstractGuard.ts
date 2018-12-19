@@ -1,18 +1,28 @@
-import Log from 'loglevel';
+import Log       from 'loglevel';
+import { Store } from 'vuex';
 
 /**
  * This class should be extended by all guards.
  *
  * @abstract
  */
-export default class AbstractGuard
+export default abstract class AbstractGuard
 {
     /**
-     * @param {Store} store
+     * Guard name.
      */
-    constructor(store)
+    protected name: string = '';
+
+    /**
+     * State machine store.
+     */
+    protected store: Store<any>;
+
+    /**
+     * Constructor.
+     */
+    protected constructor(store: Store<any>)
     {
-        this.guardName = '';
         this.store = store;
     }
 
@@ -21,9 +31,9 @@ export default class AbstractGuard
      *
      * @return {Promise}
      */
-    execute()
+    execute(): Promise<any>
     {
-        Log.debug('Executing guard ' + this.guardName + '.');
+        Log.debug('Executing guard ' + this.name + '.');
 
         return this.handle();
     }
@@ -32,10 +42,6 @@ export default class AbstractGuard
      * Use this function to define what the guard should do. Each guard should return a function
      * returning a promise (this is needed in order to avoid that the promise is executed
      * immediately).
-     *
-     * @abstract
-     * @protected
-     * @return {Promise}
      */
-    handle() {};
+    protected abstract handle(): Promise<any>
 }

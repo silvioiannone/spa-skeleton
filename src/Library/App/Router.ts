@@ -1,12 +1,16 @@
-import Log       from 'loglevel';
-import API       from '../API';
-import Config    from '../../Config';
-import Guard     from './Guard';
-import MixinRoot from '../../Components/Mixins/Root';
-import RootViewComponent from '../../Components/Views/Root';
-import Routes    from 'js/App/Routes';
-import VueRouter from 'vue-router';
-import { sync }  from 'vuex-router-sync';
+import Log                  from 'loglevel';
+import Vue                  from 'vue';
+import { Store }            from 'vuex';
+import VueRouter, { Route } from 'vue-router';
+import VueI18N              from 'vue-i18n';
+import { sync }             from 'vuex-router-sync';
+import Api                  from '../Api';
+import Config               from '../../Config';
+import Guard                from './Guard';
+import Translator           from './Translator';
+//import MixinRoot          from '../../Components/Mixins/Root';
+//import RootViewComponent  from '../../Components/Views/Root';
+import Routes               from '../../../../../resources/ts/App/Routes';
 
 /**
  * Application router.
@@ -14,21 +18,27 @@ import { sync }  from 'vuex-router-sync';
 export default class Router
 {
     /**
-     * @param vue Vue instance.
+     * API client.
      */
-    constructor(vue)
+    protected api: Api;
+
+    /**
+     * Set the translator.
+     */
+    protected translator: Translator;
+
+    /**
+     * Constructor.
+     */
+    constructor()
     {
-        this.vue = vue;
-        this.api = new API;
+        this.api = new Api;
     }
 
     /**
      * Set the translator.
-     *
-     * @param translator
-     * @return {Router}
      */
-    translator(translator)
+    setTranslator(translator: Translator): Router
     {
         this.translator = translator;
 
@@ -38,14 +48,14 @@ export default class Router
     /**
      * Boot the router.
      */
-    boot(store)
+    boot(store: Store<any>)
     {
         Log.debug('Booting router...');
 
         let guard = new Guard();
-        let scrollPromise = new Promise((resolve, reject) =>
+        let scrollPromise = new Promise((resolve: Function, reject: Function) =>
         {
-            guard.onComplete((to, from) =>
+            guard.onComplete((to: Route, from: Route) =>
             {
                 if (to.hash) {
                     resolve({ selector: to.hash });
@@ -66,21 +76,21 @@ export default class Router
                     meta: {
                         actions: ['view/ROOT']
                     },
-                    component: RootViewComponent,
+                    //component: RootViewComponent,
                     children: Routes
                 }
             ],
-            scrollBehavior(to, from, savedPosition)
+            scrollBehavior(to: Route, from: Route, savedPosition: any)
             {
                 return new Promise((resolve, reject) =>
                 {
                     scrollPromise
-                        .then(solution => {
+                        .then((solution: any) => {
                             // The timeout is needed because we need to wait for the view animation
                             // to finish.
                             setTimeout(() => resolve(solution), 500);
                         })
-                        .catch(reason => {
+                        .catch((reason: any) => {
                             if (reason !== {}) {
                                 Log.error('Scroll behaviour failed.');
                                 Log.error(reason);
@@ -98,7 +108,7 @@ export default class Router
         guard.init(router, store).run();
 
         // Router root component
-        let app = new this.vue({
+        let app = new Vue({
 
             // Bind the router to the root component
             router,
@@ -106,12 +116,13 @@ export default class Router
             // Bind the store so that it's available to all children components
             store,
 
-            mixins: [MixinRoot],
+            //mixins: [MixinRoot],
 
-            i18n: this.translator,
+            i18n: this.translator.get(),
 
             // The root `div` is needed in order for the Vue devtools to work properly.
-            template: '<div><animated-router-view></animated-router-view></div>'
+            // template: '<div><animated-router-view></animated-router-view></div>'
+            template: '<div>I\'m alive.</div>'
         });
 
         app.$mount(Config.appSelector);

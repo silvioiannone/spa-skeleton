@@ -1,4 +1,4 @@
-import Moment from 'moment';
+import * as Moment from 'moment';
 import AbstractFilter from './AbstractFilter';
 
 /**
@@ -8,15 +8,12 @@ export default class Date extends AbstractFilter
 {
     /**
      * Run the filter.
-     *
-     * @param value
-     * @returns {string}
      */
-    run(value)
+    run(value: string): string
     {
         let settings = this.store.getters.app.user.settings;
-        let date = new Moment(value);
 
-        return Intl.DateTimeFormat(settings.language).format(date);
+        return Moment(value).locale(settings.language)
+            .format('MMMM Do YYYY');
     }
 }

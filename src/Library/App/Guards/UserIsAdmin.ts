@@ -7,19 +7,15 @@ import AbstractGuard from 'spa-skeleton/src/Library/Guards/AbstractGuard';
  */
 export default class UserIsAdmin extends AbstractGuard
 {
-    constructor(store)
-    {
-        super(store);
-
-        this.guardName = 'UserIsAdmin';
-    }
+    /**
+     * Guard name.
+     */
+    protected name: string = 'UserIsAdmin';
 
     /**
      * Run the guard.
-     *
-     * @return {*}
      */
-    handle()
+    handle(): Promise<any>
     {
         return new Promise((resolve, reject) =>
         {
