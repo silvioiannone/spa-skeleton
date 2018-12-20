@@ -1,7 +1,8 @@
 const path = require('path'),
       nodeEnvFile = require('node-env-file'),
       webpack = require('webpack'),
-      mix = require('laravel-mix');
+      mix = require('laravel-mix'),
+      vueLoaderPlugin = require('vue-loader/lib/plugin');
 
 nodeEnvFile('./.env');
 
@@ -39,6 +40,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new vueLoaderPlugin,
         new webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),
