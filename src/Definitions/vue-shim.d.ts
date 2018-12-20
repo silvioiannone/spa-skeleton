@@ -1,17 +1,21 @@
 import Vue from 'vue';
-import Router, { Route } from 'vue-router';
-import { VuetifyObject } from 'vuetify';
-import { ErrorBag, Validator }     from 'vee-validate';
-import Api from '../Library/Api';
+import Router, { Route }       from 'vue-router';
+import { VuetifyObject }       from 'vuetify';
+import { Store }               from 'vuex';
+import { ErrorBag, Validator } from 'vee-validate';
+import VueI18n, { IVueI18n }   from 'vue-i18n';
+import Api                     from '../Library/Api';
 
 declare module 'vue/types/vue'
 {
     interface Vue
     {
-        $api: Api,
-        $eh: Vue,
+        readonly $api: Api,
+        readonly $i18n: VueI18n & IVueI18n;
+        $eh: Vue
         $route: Route,
-        $router: Router
+        $router: Router,
+        $store: Store<any>,
         $vuetify: VuetifyObject,
         $validator: Validator,
         errors: ErrorBag

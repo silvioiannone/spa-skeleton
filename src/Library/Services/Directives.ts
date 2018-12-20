@@ -1,5 +1,6 @@
-import Log            from 'loglevel';
 import Vue            from 'vue';
+import Service        from './Service';
+import Logger         from './Logger';
 import DirectivesList from '../../../../../resources/ts/App/Directives';
 
 // Skeleton directives
@@ -7,26 +8,27 @@ const SkeletonDirectives = {
 }
 
 /**
- * Initialize and manage the custom directives.
+ * This service registers the Vue directives.
  */
-export default class Directives
+export default class Directives extends Service
 {
     /**
-     * Register the custom directives.
+     * The service's name.
      */
-    boot()
-    {
-        Log.debug('Booting directives...');
+    name: string = 'Directives';
 
+    /**
+     * Boot the service.
+     */
+    boot(): void
+    {
         let availableDirectives = {...SkeletonDirectives, ...DirectivesList};
 
         for(let key in availableDirectives)
         {
             Vue.directive(key, availableDirectives[key]);
 
-            Log.debug('Directive "' + key + '" registered.');
+            Logger.debug('Directive "' + key + '" registered.');
         }
-
-        Log.debug('Directives ready.');
     }
 }

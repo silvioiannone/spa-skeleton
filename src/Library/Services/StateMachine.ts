@@ -1,15 +1,16 @@
 import Log             from 'loglevel';
 import Vue             from 'vue';
 import Vuex, { Store } from 'vuex';
+import Service         from './Service';
 import Modules         from '../../../../../resources/ts/App/State';
 
 // Skeleton modules
-import App           from './State/Modules/App';
-import Notifications from './State/Modules/Notifications';
-import Roles         from './State/Modules/Roles';
-import Users         from './State/Modules/Users';
-import UI            from './State/Modules/UI';
-import View          from './State/Modules/View';
+import App           from '../App/State/Modules/App';
+import Notifications from '../App/State/Modules/Notifications';
+import Roles         from '../App/State/Modules/Roles';
+import Users         from '../App/State/Modules/Users';
+import UI            from '../App/State/Modules/UI';
+import View          from '../App/State/Modules/View';
 
 const SkeletonModules = {
     App,
@@ -21,29 +22,26 @@ const SkeletonModules = {
 };
 
 /**
- * Initialize and manage the state machine.
+ * This service provides the application with a state machine.
  */
-export default class State
+export default class StateMachine extends Service
 {
-    protected store: Store<any> | null;
+    /**
+     * Service name.
+     */
+    name: string = 'State Machine';
 
-    constructor()
-    {
-        this.store = null;
-    }
+    /**
+     * State machine store.
+     */
+    protected store: Store<any> | null;
 
     /**
      * Boot the state machine.
      */
-    boot(): State
+    boot(): void
     {
-        Log.debug('Booting state machine...');
-
         Vue.use(Vuex);
-
-        Log.debug('State machine ready.');
-
-        return this;
     }
 
     /**

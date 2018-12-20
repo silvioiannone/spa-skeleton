@@ -1,20 +1,22 @@
-import Log                  from 'loglevel';
 import Vue                  from 'vue';
-import { Store }            from 'vuex';
 import VueRouter, { Route } from 'vue-router';
 import { sync }             from 'vuex-router-sync';
 import Api                  from '../Api';
 import Config               from '../../Config';
-import Guard                from './Guard';
+import Guard                from '../App/Guard';
+import Logger               from './Logger';
+import Service              from './Service';
 import Translator           from './Translator';
-import MixinRoot            from '../../Components/Mixins/Root';
-import RootViewComponent    from '../../Components/Views/Root.vue';
 import Routes               from '../../../../../resources/ts/App/Routes';
+import StateMachine         from './StateMachine';
+import MixinRoot            from '../../Components/Mixins/Root.vue';
+import RootViewComponent    from '../../Components/Views/Root.vue';
+
 
 /**
- * Application router.
+ * This service provides a navigation router.
  */
-export default class Router
+export default class Router extends Service
 {
     /**
      * API client.
@@ -31,26 +33,18 @@ export default class Router
      */
     constructor()
     {
+        super();
+
         this.api = new Api;
-    }
-
-    /**
-     * Set the translator.
-     */
-    setTranslator(translator: Translator): Router
-    {
-        this.translator = translator;
-
-        return this;
+        this.translator = new Translator;
     }
 
     /**
      * Boot the router.
      */
-    boot(store: Store<any>)
+    boot(): void
     {
-        Log.debug('Booting router...');
-
+        let store = (new StateMachine).getStore();
         let guard = new Guard();
         let scrollPromise = new Promise((resolve: Function, reject: Function) =>
         {
@@ -91,8 +85,8 @@ export default class Router
                         })
                         .catch((reason: any) => {
                             if (reason !== {}) {
-                                Log.error('Scroll behaviour failed.');
-                                Log.error(reason);
+                                Logger.error('Scroll behaviour failed.');
+                                Logger.error(reason);
                                 reject(reason);
                                 return;
                             }
@@ -120,8 +114,7 @@ export default class Router
             i18n: this.translator.get(),
 
             // The root `div` is needed in order for the Vue devtools to work properly.
-            // template: '<div><animated-router-view></animated-router-view></div>'
-            template: '<div>I\'m alive.</div>'
+            template: '<div><animated-router-view></animated-router-view></div>'
         });
 
         app.$mount(Config.appSelector);
@@ -129,7 +122,5 @@ export default class Router
         // Synchronize the router with the store. Allows to save the router state in the state
         // machine store.
         sync(store, router);
-
-        Log.debug('Router ready.');
     }
 }

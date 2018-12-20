@@ -1,9 +1,10 @@
-import Log            from 'loglevel';
-import Vue            from 'vue';
-import ComponentsList from '../../../../../resources/ts/App/Components';
+import Vue           from 'vue';
+import Service       from './Service';
+import Logger        from './Logger';
+import AppComponents from '../../../../../resources/ts/App/Components';
 
 // Skeleton components
-// import AnimatedRouterView   from '../../Components/Misc/AnimatedRouterView.vue';
+import AnimatedRouterView from '../../Components/Misc/AnimatedRouterView.vue';
 // import ButtonConfirm        from '../../Components/Buttons/Confirm.vue';
 // import ButtonMain           from '../../Components/Buttons/Main.vue';
 // import ButtonSubmit         from '../../Components/Buttons/Submit.vue';
@@ -17,7 +18,7 @@ import ComponentsList from '../../../../../resources/ts/App/Components';
 // import ToolbarHome          from '../../Components/Toolbars/Home.vue';
 
 const SkeletonComponents = {
-    //'animated-router-view': AnimatedRouterView,
+    AnimatedRouterView,
     //'button-confirm': ButtonConfirm,
     //'button-main': ButtonMain,
     //'button-submit': ButtonSubmit,
@@ -32,30 +33,31 @@ const SkeletonComponents = {
 };
 
 /**
- * This class is used to register all the Vue components that should be available globally.
+ * This service registers all the Vue components that should be available globally.
  *
  * It can be really useful for components used a lot in order to avoid to import them multiple
  * times.
  */
-export default class Components
+export default class Components extends Service
 {
+    /**
+     * Service name.
+     */
+    name: string = 'Components';
+
     /**
      * Register the components.
      */
-    boot()
+    boot(): void
     {
-        Log.debug('Registering global components...');
-
         // Register the skeleton components
-        let availableComponents = {...SkeletonComponents, ...ComponentsList};
+        let availableComponents = {...SkeletonComponents, ...AppComponents};
 
         for(let key in availableComponents)
         {
             Vue.component(key, availableComponents[key]);
 
-            Log.debug('Component "' + key + '" registered.');
+            Logger.debug('Component "' + key + '" registered.');
         }
-
-        Log.debug('Global components registered.');
     }
 }

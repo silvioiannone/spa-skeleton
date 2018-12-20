@@ -1,13 +1,19 @@
-import _       from 'lodash';
-import Log     from 'loglevel';
+import Log     from "loglevel";
+import _       from "lodash";
 import VueI18N from 'vue-i18n';
-import Config  from '../../Config';
+import Service from './Service';
+import Config from "../../Config";
 
 /**
- * Add multiple language support to the app.
+ * This service provides translations.
  */
-export default class Translator
+export default class Translator extends Service
 {
+    /**
+     * Service name.
+     */
+    name: string = 'Translator';
+
     /**
      * Translator instance.
      */

@@ -1,17 +1,18 @@
 import _           from 'lodash';
 import Log         from 'loglevel';
 import Vue         from 'vue';
-import PluginsList from '../../../../../resources/js/App/Plugins';
+import Service     from './Service';
+import Translator  from './Translator';
 import Config      from '../../Config';
 
 // Skeleton plugins
 import Vuetify     from 'vuetify';
 import VueI18N     from 'vue-i18n';
 import VueRouter   from 'vue-router';
-import Api         from './Plugins/Api';
-import EventHub    from './Plugins/EventHub';
-import Navigator   from './Plugins/Navigator';
-import WebSocket   from './Plugins/WebSocket';
+import Api         from '../App/Plugins/Api';
+import EventHub    from '../App/Plugins/EventHub';
+import Navigator   from '../App/Plugins/Navigator';
+import WebSocket   from '../App/Plugins/WebSocket';
 
 /**
  * SPA-Skeleton plugins. The order is important.
@@ -27,33 +28,47 @@ const SkeletonPlugins = {
 };
 
 /**
- * This class binds all the needed plugins to Vue.
+ * This service registers various Vue plugins.
  */
-export default class Plugins
+export default class Plugins extends Service
 {
+    /**
+     * Service name.
+     */
+    name: string = 'Plugins';
+
     /**
      * Actions to perform before registering a plug-in.
      */
-    protected beforeActions: any;
+    protected beforeActions: any = {};
 
     /**
      * Constructor.
      */
     constructor()
     {
-        this.beforeActions = {};
+        super();
+
+        this.before('Vuetify', () =>
+        {
+            let translatorInstance = (new Translator).get();
+
+            return {
+                lang: {
+                    t: (key: string, ...params: any) => translatorInstance.t(key, params)
+                }
+            }
+        });
     }
 
     /**
      * Bind the plugins.
      */
-    boot()
+    boot(): void
     {
-        Log.debug('Loading plugins...');
+        let availablePlugins = {...SkeletonPlugins};
 
-        let availablePlugins = {...SkeletonPlugins, ...PluginsList};
-
-        for (let key in availablePlugins) {
+        for (let key in SkeletonPlugins) {
 
             let settings = {};
 
@@ -75,8 +90,6 @@ export default class Plugins
 
             Log.debug('Plugin "' + key + '" registered.');
         }
-
-        Log.debug('Plugins loaded.');
     }
 
     /**

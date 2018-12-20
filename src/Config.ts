@@ -1,6 +1,6 @@
-/**
- * Central client configuration
- */
+import _ from 'lodash';
+
+// App configuration.
 import AppConfig from '../../../resources/ts/Config';
 
 // API drivers.
@@ -13,11 +13,6 @@ const defaultConfig = {
      * This is the selector that identifies where the app should be attached to the DOM.
      */
     appSelector: '#app',
-
-    /**
-     * The application name that should be displayed publicly.
-     */
-    name: APP_NAME,
 
     /**
      * This value specifies the environment the application is runnig.
@@ -38,6 +33,11 @@ const defaultConfig = {
      * App specific settings.
      */
     app: {
+
+        /**
+         * The application name that should be displayed publicly.
+         */
+        name: APP_NAME,
 
         /**
          * Pagination size.
@@ -179,6 +179,6 @@ const defaultConfig = {
     }
 }
 
-let config: any = {...defaultConfig, ...AppConfig};
+let config: any = _.merge(defaultConfig, AppConfig);
 
 export default config;
