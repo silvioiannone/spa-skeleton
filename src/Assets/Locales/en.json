@@ -1,16 +1,29 @@
 {
   "common": {
     "cancel": "Cancel",
+    "delete": "Delete",
+    "done": "Done",
+    "email": "E-mail",
     "logIn": "Log in",
+    "no": "No",
+    "reset": "Reset",
     "search": "Search",
+    "showAll": "Show all",
+    "showMore": "Show more",
     "upload": "Upload"
   },
   "form": {
     "cancel": "@:common.cancel",
-    "email": "E-mail",
+    "changePassword": "Change password",
+    "email": "@:common.email",
     "logIn": "@:common.logIn",
-    "password": "Password",
-    "submit": "Submit"
+    "newPassword": "New password",
+    "password": "Lösenord",
+    "repeatPassword": "Repeat password",
+    "submit": "Submit",
+    "passwordAskReset": {
+      "message": "Please enter the email address that was used to create your account. We'll send an email with a reset link where you can set a new password."
+    }
   },
   "menu": {
     "settings": "Settings",
@@ -20,12 +33,14 @@
     "fileUpload": {
       "dragAndDropToUploadAFile": "Drag and drop to upload a file!",
       "orClickTapToSelectOne": "...or click/tap to select one."
-    }
+    },
+    "goBack": "Go back",
+    "pageNotFound": "Page not found."
   },
   "navigationDrawer": {
     "close": "Close",
     "markAllAsRead": "Mark all as read",
-    "noNewNotificaitons": "No new notifications at this time.",
+    "noNewNotifications": "No new notifications at this time.",
     "notifications": "Notifications"
   },
   "toolbar": {
