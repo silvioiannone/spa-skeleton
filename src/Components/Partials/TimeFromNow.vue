@@ -10,6 +10,7 @@
 
     import Vue    from 'vue';
     import Moment from 'moment';
+    import Config from '../../Config';
 
     let interval: any = null;
 
@@ -47,7 +48,10 @@
 
             update()
             {
-                this.$data._time = Moment.utc(this.time).local().fromNow();
+                this.$data._time = Moment.utc(this.time)
+                    .local()
+                    .locale(Config.locale)
+                    .fromNow();
             }
         },
 
