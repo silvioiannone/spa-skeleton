@@ -30,7 +30,10 @@ export default class Validator extends Service
     {
         let translator = (new Translator).get();
 
-        Vue.use(VeeValidate);
+        Vue.use(VeeValidate, {
+            i18nRootKey: 'validations',
+            i18n: translator,
+        });
 
         for (let key in skeletonRules) {
             let rule = new (skeletonRules[key])(translator);
