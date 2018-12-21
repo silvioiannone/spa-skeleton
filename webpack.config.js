@@ -1,23 +1,19 @@
 const path = require('path'),
-      nodeEnvFile = require('node-env-file'),
       webpack = require('webpack'),
       mix = require('laravel-mix'),
       vueLoaderPlugin = require('vue-loader/lib/plugin');
 
-nodeEnvFile('./.env');
-
-let chunkFilename = (process.env.APP_ENV === 'local') ? 'js/[name].js' : 'js/[name].[chunkhash].js';
-
 module.exports = {
+    profile: true,
     resolve: {
-        extensions: ['.ts'],
+        extensions: ['.ts', '.vue'],
+        alias: {
+            'spa-skeleton$': path.resolve(__dirname, 'src/index.ts')
+        },
         modules: [
             path.resolve('./resources'),
             path.resolve('./node_modules')
         ]
-    },
-    output: {
-        chunkFilename
     },
     module: {
         rules: [
@@ -32,6 +28,7 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
+                exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
                 options: {
                     appendTsSuffixTo: [/\.vue$/],
                     configFile: path.resolve(__dirname, "tsconfig.json")

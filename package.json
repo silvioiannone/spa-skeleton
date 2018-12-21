@@ -102,8 +102,7 @@
     "url": "git+https://github.com/silvioiannone/spa-skeleton.git"
   },
   "scripts": {
-    "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress"
+    "build": "tsc"
   },
   "version": "0.0.148"
 }

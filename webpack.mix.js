@@ -122,6 +122,10 @@ module.exports = {
             });
         }
 
+        this.mix.options({
+            processCssUrls: false
+        })
+
         this.mix.styles(sources, 'public/css/all.css');
     },
 
