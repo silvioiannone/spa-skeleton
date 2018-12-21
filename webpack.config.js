@@ -1,7 +1,6 @@
 const path = require('path'),
       webpack = require('webpack'),
-      mix = require('laravel-mix'),
-      vueLoaderPlugin = require('vue-loader/lib/plugin');
+      mix = require('laravel-mix');
 
 module.exports = {
     profile: true,
@@ -37,7 +36,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new vueLoaderPlugin,
         new webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),
