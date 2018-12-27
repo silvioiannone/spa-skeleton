@@ -1,4 +1,26 @@
 {
+  "_from": "github:silvioiannone/spa-skeleton#next",
+  "_id": "spa-skeleton@",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/spa-skeleton",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "spa-skeleton@github:silvioiannone/spa-skeleton#next",
+    "name": "spa-skeleton",
+    "escapedName": "spa-skeleton",
+    "rawSpec": "github:silvioiannone/spa-skeleton#next",
+    "saveSpec": "github:silvioiannone/spa-skeleton#next",
+    "fetchSpec": null,
+    "gitCommittish": "next"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "github:silvioiannone/spa-skeleton#0ffa57c7a98fb3e6c1d1555f0f6a220d1d0411ca",
+  "_spec": "spa-skeleton@github:silvioiannone/spa-skeleton#next",
+  "_where": "/Users/silvioiannone/Programming/Projects/BloomEstateNew",
   "author": {
     "name": "Silvio Iannone"
   },
@@ -79,5 +101,6 @@
   },
   "scripts": {
     "build": "tsc"
-  }
+  },
+  "version": ""
 }
