@@ -1,4 +1,4 @@
-import Log     from "loglevel";
+import Log     from "./Logger";
 import _       from "lodash";
 import VueI18N from 'vue-i18n';
 import Service from './Service';

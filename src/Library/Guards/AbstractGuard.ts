@@ -1,4 +1,4 @@
-import Log       from 'loglevel';
+import Log       from '../Services/Logger';
 import { Store } from 'vuex';
 
 /**

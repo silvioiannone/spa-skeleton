@@ -1,5 +1,4 @@
 import _             from 'lodash';
-import Log           from 'loglevel';
 import Vue           from 'vue';
 import Router, {
     RouteConfig,
@@ -7,6 +6,7 @@ import Router, {
     RouteRecord,
     RawLocation }    from 'vue-router';
 import { Store }     from 'vuex';
+import Log           from '../Services/Logger';
 import AbstractGuard from '../Guards/AbstractGuard';
 import Guards        from '../../../../../resources/ts/App/Guards';
 import Routes        from '../../../../../resources/ts/App/Routes';

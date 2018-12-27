@@ -1,6 +1,6 @@
 import Echo            from 'laravel-echo';
 import IO              from 'socket.io-client';
-import Log             from 'loglevel';
+import Log             from './Services/Logger';
 import Vue             from 'vue';
 import Config          from '../Config';
 import Subscriptions   from '../../../../resources/ts/App/Subscriptions';

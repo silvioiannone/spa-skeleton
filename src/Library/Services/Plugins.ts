@@ -1,18 +1,18 @@
-import _           from 'lodash';
-import Log         from 'loglevel';
-import Vue         from 'vue';
-import Service     from './Service';
-import Translator  from './Translator';
-import Config      from '../../Config';
+import _          from 'lodash';
+import Vue        from 'vue';
+import Service    from './Service';
+import Logger     from './Logger'
+import Translator from './Translator';
+import Config     from '../../Config';
 
 // Skeleton plugins
-import Vuetify     from 'vuetify';
-import VueI18N     from 'vue-i18n';
-import VueRouter   from 'vue-router';
-import Api         from '../App/Plugins/Api';
-import EventHub    from '../App/Plugins/EventHub';
-import Navigator   from '../App/Plugins/Navigator';
-import WebSocket   from '../App/Plugins/WebSocket';
+import Vuetify   from 'vuetify';
+import VueI18N   from 'vue-i18n';
+import VueRouter from 'vue-router';
+import Api       from '../App/Plugins/Api';
+import EventHub  from '../App/Plugins/EventHub';
+import Navigator from '../App/Plugins/Navigator';
+import WebSocket from '../App/Plugins/WebSocket';
 
 /**
  * SPA-Skeleton plugins. The order is important.
@@ -88,7 +88,7 @@ export default class Plugins extends Service
 
             Vue.use(availablePlugins[key], settings);
 
-            Log.debug('Plugin "' + key + '" registered.');
+            Logger.debug('Plugin "' + key + '" registered.');
         }
     }
 

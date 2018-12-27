@@ -1,6 +1,6 @@
-import Log         from 'loglevel';
 import VeeValidate from 'vee-validate';
 import Vue         from 'vue';
+import Log         from './Logger';
 import Service     from './Service';
 import Translator  from './Translator';
 

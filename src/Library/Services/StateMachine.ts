@@ -1,4 +1,4 @@
-import Log             from 'loglevel';
+import Log             from './Logger';
 import Vue             from 'vue';
 import Vuex, { Store } from 'vuex';
 import Service         from './Service';
