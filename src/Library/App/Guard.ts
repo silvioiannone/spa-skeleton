@@ -7,7 +7,6 @@ import Router, {
     RawLocation }    from 'vue-router';
 import { Store }     from 'vuex';
 import Log           from '../Services/Logger';
-import AbstractGuard from '../Guards/AbstractGuard';
 import Guards        from '../../../../../resources/ts/App/Guards';
 import Routes        from '../../../../../resources/ts/App/Routes';
 
@@ -50,9 +49,6 @@ export default class Guard
 
     /**
      * Initializes the guard.
-     *
-     * @param router A vue router instance.
-     * @param store Store instance.
      */
     init(router: Router, store: Store<any>): Guard
     {
@@ -166,7 +162,7 @@ export default class Guard
         return new Promise((resolve, reject) =>
         {
             let actions: Array<String> = [];
-            let actionPromises: Array<any> = [];
+            let actionPromises: Array<Promise<any>> = [];
             let fromActions: Array<any> = [];
 
             from.matched.forEach((match: RouteRecord) =>

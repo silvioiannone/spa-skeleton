@@ -34,10 +34,8 @@ export default class AxiosDriver extends AbstractApiDriver
 
     /**
      * Intercept a response.
-     *
-     * @param response
      */
-    interceptResponse(response: AxiosResponse)
+    interceptResponse(response: AxiosResponse): AxiosResponse
     {
         if (response.data.access_token) {
             this.token.save(response.data.access_token, response.data.refresh_token);
