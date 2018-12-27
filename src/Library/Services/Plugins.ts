@@ -27,6 +27,8 @@ const SkeletonPlugins = {
     WebSocket
 };
 
+export type BeforeActions = { [key: string]: Array<Function> };
+
 /**
  * This service registers various Vue plugins.
  */
@@ -40,7 +42,7 @@ export default class Plugins extends Service
     /**
      * Actions to perform before registering a plug-in.
      */
-    protected beforeActions: { [key: string]: Array<Function> } = {};
+    protected beforeActions: BeforeActions = {};
 
     /**
      * Constructor.
