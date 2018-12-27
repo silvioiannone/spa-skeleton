@@ -1,6 +1,6 @@
 <template>
-    <v-toolbar :fixed="this.fixed" app clipped-left :color="color"
-               clipped-right :tabs="tabs" :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
+    <v-toolbar :fixed="fixed" app clipped-left :color="color" clipped-right :tabs="tabs"
+               :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
                              v-if="navigationDrawer">
         </v-toolbar-side-icon>
@@ -31,169 +31,136 @@
 
 <script lang="ts">
 
-    import Vue             from 'vue';
+    import Vue from 'vue';
+    import {
+        Component,
+        Prop,
+        Watch }            from 'vue-property-decorator';
     import Config          from '../../Config';
     import TextFieldSearch from '../TextFields/Search.vue'
 
-    export default Vue.extend({
-
-        name: 'ToolbarMain',
-
+    @Component({
         components: {
             TextFieldSearch
-        },
+        }
+    })
+    export default class ToolbarMain extends Vue
+    {
+        /**
+         * Toolbar's color.
+         */
+        @Prop({type: String, default: ''}) color: string;
 
-        props: {
+        /**
+         * Whether the toolbar should be fixed.
+         */
+        @Prop({type: Boolean, default: true}) fixed: boolean;
 
-            /**
-             * Toolbar's color.
-             */
-            color: {
-                type: String,
-                default: ''
-            },
+        /**
+         * Whether or not there is a navigationDrawer. If there is no navigationDrawer (false)
+         * the navigationDrawer menu icon is hidden.
+         */
+        @Prop({type: Boolean, default: true}) navigationDrawer: boolean;
 
-            /**
-             * Whether the toolbar should be fixed.
-             */
-            fixed: {
-                type: Boolean,
-                default: true
-            },
+        /**
+         * Whether or not the search button should be displayed.
+         */
+        @Prop({type: Boolean, default: false}) search: boolean;
 
-            /**
-             * Whether or not the search button should be displayed.
-             */
-            search: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Toolbar title link.
+         */
+        @Prop({type: String, default: ''}) titleTo: string;
 
-            /**
-             * Whether or not there is a navigationDrawer. If there is no navigationDrawer (false)
-             * the navigationDrawer menu icon is hidden.
-             */
-            navigationDrawer: {
-                type: Boolean,
-                default: true
-            },
+        /**
+         * Toolbar title.
+         */
+        @Prop({type: String, default: Config.name}) title: string;
 
-            /**
-             * Toolbar title.
-             */
-            title: {
-                type: String,
-                default: (): string => Config.name
-            },
+        /**
+         * Display a toolbar with tabs.
+         */
+        @Prop({type: Boolean, default: false}) tabs: boolean;
 
-            /**
-             * Toolbar title link.
-             */
-            titleTo: {
-                type: String,
-                default: ''
-            },
+        protected showingSearch: boolean = false;
+        protected searchQuery: string | string[] = '';
 
-            /**
-             * Display a toolbar with tabs.
-             */
-            tabs: {
-                type: Boolean,
-                default: false
-            }
-        },
-
-        data()
+        get toolbarTitleRedirectUrl(): string
         {
-            return {
-                showingSearch: false,
-                searchQuery: '',
-                mounted: false,
+            if (this.titleTo.length) {
+                return this.titleTo;
             }
-        },
 
-        computed: {
+            return (this.user.id) ? '/home' : '/';
+        }
 
-            toolbarTitleRedirectUrl(): string
-            {
-                if (this.titleTo.length) {
-                    return this.titleTo;
-                }
-
-                return (this.user.id) ? '/home' : '/';
-            },
-
-            showingTitle(): boolean
-            {
-                if (this.$vuetify.breakpoint.xs) {
-                    return false;
-                }
-
-                if (this.$vuetify.breakpoint.mdAndUp) {
-                    return !!(!!this.$slots.title || (this.title && this.title.length))
-                } else {
-                    return !(this.showingSearch && window.innerWidth <= 576);
-                }
-            },
-
-            ui(): any
-            {
-                return this.$store.getters.ui;
-            },
-
-            user(): any
-            {
-                return this.$store.getters.app.user;
+        get showingTitle(): boolean
+        {
+            if (this.$vuetify.breakpoint.xs) {
+                return false;
             }
-        },
 
-        methods: {
-
-            /**
-             * Expand the navigationDrawer.
-             */
-            toggleNavigationDrawer(): void
-            {
-                this.$store.commit(
-                    'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
-                    !this.ui.navigationDrawerVisible
-                );
-            },
-
-            /**
-             * Hide the search box.
-             */
-            hideSearch(): void
-            {
-                this.showingSearch = false;
-                this.searchQuery = '';
-            },
-
-            /**
-             * Hide the search box if it's empty.
-             */
-            hideSearchIfEmpty(): void
-            {
-                if (!this.searchQuery || this.searchQuery.length === 0) {
-                    this.hideSearch();
-                }
-            },
-
-            /**
-             * Show the search box.
-             */
-            showSearch(): void
-            {
-                this.showingSearch = true;
-
-                setTimeout(() => {
-                    let input = this.$el.querySelector('input');
-                    if (input) {
-                        input.focus();
-                    }
-                });
+            if (this.$vuetify.breakpoint.mdAndUp) {
+                return !!(!!this.$slots.title || (this.title && this.title.length))
+            } else {
+                return !(this.showingSearch && window.innerWidth <= 576);
             }
-        },
+        }
+
+        get ui(): any
+        {
+            return this.$store.getters.ui;
+        }
+
+        get user(): any
+        {
+            return this.$store.getters.app.user;
+        }
+
+        /**
+         * Expand the navigationDrawer.
+         */
+        toggleNavigationDrawer(): void
+        {
+            this.$store.commit(
+                'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
+                !this.ui.navigationDrawerVisible
+            );
+        }
+
+        /**
+         * Hide the search box.
+         */
+        hideSearch(): void
+        {
+            this.showingSearch = false;
+            this.searchQuery = '';
+        }
+
+        /**
+         * Hide the search box if it's empty.
+         */
+        hideSearchIfEmpty(): void
+        {
+            if (!this.searchQuery || this.searchQuery.length === 0) {
+                this.hideSearch();
+            }
+        }
+
+        /**
+         * Show the search box.
+         */
+        showSearch(): void
+        {
+            this.showingSearch = true;
+
+            setTimeout(() => {
+                let input = this.$el.querySelector('input');
+                if (input) {
+                    input.focus();
+                }
+            });
+        }
 
         mounted(): void
         {
@@ -203,15 +170,13 @@
                 this.searchQuery = searchQuery;
                 this.showSearch();
             }
-        },
-
-        watch: {
-
-            searchQuery(): void
-            {
-                this.$emit('search:update', this.searchQuery);
-            }
         }
-    });
+
+        @Watch('searchQuery')
+        onSearchQueryChanged()
+        {
+            this.$emit('search:update', this.searchQuery);
+        }
+    }
 
 </script>

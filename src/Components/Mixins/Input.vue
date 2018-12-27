@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
 
-    import Component from './Component';
+    import { Component, Prop, Mixins } from 'vue-property-decorator';
+    import MixinComponent from './Component';
 
     /**
      * This mixin can be used in order to create inputs.
@@ -8,63 +9,49 @@
      * It is possible to override any of the value of the props by defining a computed value with
      * the same name.
      */
-    export default {
+    @Component
+    export default class Input extends Mixins(MixinComponent)
+    {
+        /**
+         * v-model
+         */
+        @Prop() value: any;
 
-        props: {
+        /**
+         * A hint displayed under the text field.
+         */
+        @Prop({ type: String, default: '' }) hint: string;
 
-            /**
-             * v-model
-             */
-            value: {},
+        /**
+         * Make the hint always visible.
+         */
+        @Prop({ type: Boolean, default: false }) persistentHint: boolean;
 
-            /**
-             * A hint displayed under the text field.
-             */
-            hint: {
-                type: String,
-                default: ''
-            },
+        /**
+         * Whether the input is disabled.
+         */
+        @Prop({ type: Boolean, default: false }) disabled: boolean;
 
-            /**
-             * Make the hint always visible.
-             */
-            persistentHint: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Input label.
+         */
+        @Prop({ type: String, default: '' }) label: string;
 
-            /**
-             * Whether the input is disabled.
-             */
-            disabled: {
-                default: false
-            },
+        /**
+         * Input name attribute.
+         */
+        @Prop({ type: String, default: ''}) name: string;
 
-            /**
-             * Input label.
-             */
-            label: {
-                type: String,
-                default: ''
-            },
+        /**
+         * Puts the input in an error state and passes through custom error messsages. Will be
+         * combined with any validations that occur from the rules prop. This field will not
+         * trigger validation.
+         */
+        @Prop({ type: Array, default: () => []}) errorMessages: Array<any>
 
-            /**
-             * Puts the input in an error state and passes through custom error messsages. Will be
-             * combined with any validations that occur from the rules prop. This field will not
-             * trigger validation.
-             */
-            errorMessages: {
-                type: Array,
-                default: () => []
-            }
-        },
-
-        computed: {
-
-            _errorMessages()
-            {
-                return [...this.errorMessages, ...this.errors.collect(this.name)];
-            }
+        get _errorMessages()
+        {
+            return [...this.errorMessages, ...this.errors.collect(this.name)];
         }
     }
 

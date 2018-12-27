@@ -22,17 +22,19 @@
     </error>
 </template>
 
-<script>
+<script lang="ts">
 
-    import Error from "./Main.vue";
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
+    import Error         from "./Main.vue";
 
-    export default {
-
-        name: 'ErrorUnauthorized',
-
+    @Component({
         components: {
             Error
         }
+    })
+    export default class ErrorUnauthorized extends Vue
+    {
     }
 
 </script>

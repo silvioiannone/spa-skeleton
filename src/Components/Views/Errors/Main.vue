@@ -45,18 +45,16 @@
     </v-container>
 </template>
 
-<script>
+<script lang="ts">
 
-    import LayoutApp from 'spa-skeleton/src/Components/Layouts/App';
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
+    import LayoutApp     from 'spa-skeleton/src/Components/Layouts/App';
 
-    export default
-    {
-        name: 'Error',
-
+    @Component({
         components: {
             LayoutApp
         },
-
         props: {
 
             /**
@@ -66,28 +64,23 @@
                 type: Boolean,
                 default: true
             }
-        },
+        }
+    })
+    export default class ErrorMain extends Vue
+    {
+        get app()
+        {
+            return this.$store.getters.app;
+        }
 
-        computed: {
+        get error()
+        {
+            return this.app.error;
+        }
 
-            app()
-            {
-                return this.$store.getters.app;
-            },
-
-            error()
-            {
-                return this.app.error;
-            }
-
-        },
-
-        methods: {
-
-            goBack()
-            {
-                window.history.back();
-            }
+        goBack()
+        {
+            window.history.back();
         }
     }
 

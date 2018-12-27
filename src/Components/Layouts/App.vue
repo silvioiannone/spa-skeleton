@@ -19,18 +19,18 @@
     </v-app>
 </template>
 
-<script>
+<script lang="ts">
 
-    import SnackbarGlobal from '../Snackbars/Global.vue';
-    import ErrorNotFound from '../Views/Errors/NotFound.vue';
-    import ErrorServerError from '../Views/Errors/ServerError.vue';
+    import SnackbarGlobal          from '../Snackbars/Global.vue';
+    import ErrorNotFound           from '../Views/Errors/NotFound.vue';
+    import ErrorServerError        from '../Views/Errors/ServerError.vue';
     import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
-    import ErrorUnauthorized from '../Views/Errors/Unauthorized.vue';
+    import ErrorUnauthorized       from '../Views/Errors/Unauthorized.vue';
 
-    export default
-    {
-        name: 'LayoutApp',
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
 
+    @Component({
         components: {
             ErrorNotFound,
             ErrorServerError,
@@ -38,27 +38,26 @@
             ErrorUnauthorized,
             SnackbarGlobal
         },
+    })
+    export default class App extends Vue
+    {
+        get status()
+        {
+            return this.$store.getters.app.status;
+        }
 
-        computed: {
-
-            status ()
-            {
-                return this.$store.getters.app.status;
-            },
-
-            user ()
-            {
-                return this.$store.getters.app.user;
-            },
-
-            theme ()
-            {
-                try {
-                    return this.user.settings.ui.theme;
-                } catch (error) {
-                    return 'light';
-                }
+        get theme()
+        {
+            try {
+                return this.user.settings.ui.theme;
+            } catch (error) {
+                return 'light';
             }
+        }
+
+        get user()
+        {
+            return this.$store.getters.app.user;
         }
     }
 

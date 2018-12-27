@@ -12,17 +12,19 @@
     </error>
 </template>
 
-<script>
+<script lang="ts">
+    
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
+    import Error         from './Main';
 
-    import Error from './Main';
-
-    export default {
-
-        name: 'ErrorServiceUnavailable',
-
+    @Component({
         components: {
             Error
         }
+    })
+    export default class ErrorServiceUnavailable extends Vue
+    {
     }
-
+    
 </script>

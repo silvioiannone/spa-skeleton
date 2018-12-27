@@ -1,46 +1,43 @@
 <script lang="ts">
 
     import Vue, { VNode } from 'vue';
+    import { Component }  from 'vue-property-decorator';
 
-    export default Vue.extend({
-
-        name: 'ResponsiveContainer',
-
-        computed: {
-
-            attrs(): any
+    @Component
+    export default class ResponsiveContainer extends Vue
+    {
+        get attrs(): any
+        {
+            return Object.keys(this.$attrs).filter((key: string) =>
             {
-                return Object.keys(this.$attrs).filter((key: string) =>
-                {
-                    if (key === 'slot') {
-                        return false;
-                    }
-
-                    let value = this.$attrs[key];
-
-                    return value || typeof value === 'string';
-                });
-            },
-
-            class(): any
-            {
-                let classes = {
-                    'container': true,
-                    'responsive-container': true
-                };
-
-                if (this.$vuetify.breakpoint.xs) {
-                    classes['pa-0'] = true;
+                if (key === 'slot') {
+                    return false;
                 }
 
-                this.attrs.forEach((attribute: string) =>
-                {
-                    classes[attribute] = true;
-                });
+                let value = this.$attrs[key];
 
-                return classes;
+                return value || typeof value === 'string';
+            });
+        }
+
+        get class(): any
+        {
+            let classes = {
+                'container': true,
+                'responsive-container': true
+            };
+
+            if (this.$vuetify.breakpoint.xs) {
+                classes['pa-0'] = true;
             }
-        },
+
+            this.attrs.forEach((attribute: string) =>
+            {
+                classes[attribute] = true;
+            });
+
+            return classes;
+        }
 
         render(createElement: Function): VNode
         {
@@ -49,6 +46,6 @@
                 attrs: this.attrs
             }, this.$slots.default);
         }
-    });
+    }
 
 </script>

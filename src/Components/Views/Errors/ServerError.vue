@@ -20,24 +20,22 @@
     </error>
 </template>
 
-<script>
+<script lang="ts">
 
-    import Error from "./Main.vue";
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
+    import Error         from "./Main.vue";
 
-    export default
-    {
-        name: 'ErrorServerError',
-
+    @Component({
         components: {
             Error
-        },
-
-        computed: {
-
-            config()
-            {
-                return this.$store.getters.app.config;
-            }
+        }
+    })
+    export default class ErrorServerError extends Vue
+    {
+        get config()
+        {
+            return this.$store.getters.app.config;
         }
     }
 

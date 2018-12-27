@@ -5,46 +5,49 @@
     </v-snackbar>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
+
+    interface SnackbarEvent {
+        message: string;
+        color: string;
+        timeout: number;
+        error: boolean;
+    }
+
+    @Component
+    export default class SnackbarGlobal extends Vue
     {
-        name: 'SnackbarGlobal',
+        /**
+         * The color of the message.
+         */
+        color: string = 'primary';
 
-        data()
-        {
-            return {
+        /**
+         * Display an error snackbar.
+         */
+        error: boolean = false;
 
-                /**
-                 * Display an error snackbar.
-                 */
-                error: false,
+        /**
+         * Message.
+         */
+        message: string = '';
 
-                /**
-                 * The color of the message.
-                 */
-                color: 'primary',
+        /**
+         * Visibility timeout.
+         */
+        timeout: number = 2000;
 
-                /**
-                 * Message.
-                 */
-                message: '',
-
-                /**
-                 * Visibility timeout.
-                 */
-                timeout: 2000,
-
-                /**
-                 * Controls the snackbar visibilty.
-                 */
-                visible: false
-            }
-        },
+        /**
+         * Controls the snackbar visibilty.
+         */
+        visible: boolean = false;
 
         mounted()
         {
-            this.$eh.$on('SnackbarDisplayMessage', event =>
+            this.$eh.$on('SnackbarDisplayMessage', (event: SnackbarEvent) =>
             {
                 if(typeof event === 'string')
                 {

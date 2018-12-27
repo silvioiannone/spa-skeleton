@@ -1,61 +1,48 @@
 <script lang="ts">
 
-    import Vue from 'vue';
+    import Vue, { VNode }              from 'vue';
+    import { Component as _Component } from 'vue-property-decorator';
 
-    /**
-     * This mixin can be used to create base components.
-     */
-    export default Vue.extend({
+    @_Component
+    export default class Component extends Vue
+    {
+        // Use this in order to override the value of a prop.
+        protected __props: {}
 
-        data()
+        /**
+         * Use this computed prop in order to set props reactive default values.
+         */
+        get computedProps(): any
         {
+            return {};
+        }
+
+        /**
+         * Get the props.
+         *
+         * @returns {{}}
+         */
+        getProps(): any
+        {
+            // The merge priority is the following:
+            // 1. Component props
+            // 2. Computed props
+            // 3. Data props
+
             return {
-                // Use this in order to override the value of a prop.
-                __props: {}
-            }
-        },
-
-        computed: {
-
-            /**
-             * Use this computed prop in order to set props reactive default values.
-             */
-            computedProps(): any
-            {
-                return {};
-            }
-        },
-
-        methods: {
-
-            /**
-             * Get the props.
-             *
-             * @returns {{}}
-             */
-            getProps(): any
-            {
-                // The merge priority is the following:
-                // 1. Component props
-                // 2. Computed props
-                // 3. Data props
-
-                return {
-                    ...this.$props,
-                    ...this.computedProps,
-                    ...this.__props
-                }
-            },
-
-
-            /**
-             * Get the selected slot.
-             */
-            getSlot(slot: string): Array<any> | null
-            {
-                return this.$slots[slot] ? this.$slots[slot] : null
+                ...this.$props,
+                ...this.computedProps,
+                ...this.__props
             }
         }
-    });
+
+        /**
+         * Get the selected slot.
+         */
+        getSlot(slot: string): VNode[] | undefined
+        {
+            return this.$slots[slot];
+        }
+    }
 
 </script>
