@@ -4,8 +4,7 @@ import Logger         from './Logger';
 import DirectivesList from '../../../../../resources/ts/App/Directives';
 
 // Skeleton directives
-const SkeletonDirectives = {
-}
+const SkeletonDirectives = {};
 
 /**
  * This service registers the Vue directives.

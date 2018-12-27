@@ -21,6 +21,11 @@ const SkeletonModules = {
     View
 };
 
+export type StoreType = {
+    [P in keyof (typeof SkeletonModules & typeof Modules)]
+        : (typeof SkeletonModules & typeof Modules)[P];
+};
+
 /**
  * This service provides the application with a state machine.
  */
@@ -34,7 +39,7 @@ export default class StateMachine extends Service
     /**
      * State machine store.
      */
-    protected store: Store<any> | null;
+    protected store: Store<StoreType> | null;
 
     /**
      * Boot the state machine.
@@ -47,13 +52,12 @@ export default class StateMachine extends Service
     /**
      * Get the store.
      */
-    getStore(): Store<any>
+    getStore(): Store<StoreType>
     {
         // Make sure only once store instance is created.
         if (this.store) {
             return this.store;
         }
-
         // Register all the modules with the state machine
         let vuexModules = {};
         let availableModules = {...SkeletonModules, ...Modules};

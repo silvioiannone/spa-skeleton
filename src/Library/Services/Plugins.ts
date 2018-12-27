@@ -40,7 +40,7 @@ export default class Plugins extends Service
     /**
      * Actions to perform before registering a plug-in.
      */
-    protected beforeActions: any = {};
+    protected beforeActions: { [key: string]: Array<Function> } = {};
 
     /**
      * Constructor.
@@ -95,7 +95,7 @@ export default class Plugins extends Service
     /**
      * Register a callback that should be executed before a plugin is registered.
      */
-    before(plugin: any, callback: Function)
+    before(plugin: string, callback: Function): Plugins
     {
         if (! this.beforeActions[plugin]) {
             this.beforeActions[plugin] = [];
