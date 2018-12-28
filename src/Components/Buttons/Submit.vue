@@ -7,72 +7,60 @@
 
 <script lang="ts">
 
-    import Vue from 'vue';
+    import Vue           from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
-    export default Vue.extend({
+    @Component
+    export default class ButtonSubmit extends Vue
+    {
+        /**
+         * Whether the button is in a disabled state.
+         */
+        @Prop({ type: Boolean, default: false }) disabled: boolean;
 
-        name: 'button-submit',
+        /**
+         * On click callback action.
+         *
+         * This function should be a callback executor compatible function.
+         */
+        @Prop({ type: Function }) onClick: () => Promise<any>;
 
-        props: {
+        /**
+         * Button's color.
+         */
+        @Prop({ type: String }) color: string;
 
-            /**
-             * If set to true disabled the button.
-             */
-            disabled: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Display an icon button.
+         */
+        @Prop({ type: String }) icon: string;
 
-            /**
-             * On click callback action. This function should be a callback executor compatible
-             * function.
-             */
-            onClick: {
-                type: Function
-            },
+        /**
+         * Display a flat button.
+         */
+        @Prop({ type: Boolean, default: false }) flat: boolean;
 
-            /**
-             * Button states.
-             */
-            color: String,
-            icon: Boolean,
+        /**
+         * The button status. Accepted values are 'ready' and 'loading'.
+         */
+        status: 'ready' | 'loading' = 'ready';
 
-            /**
-             * If the button should be flat.
-             */
-            flat: Boolean
-        },
-
-        data()
+        _onClick()
         {
-            return {
+            let self = this;
 
-                /**
-                 * The button status. Accepted values are 'ready' and 'loading'.
-                 */
-                status: 'ready'
-            }
-        },
+            this.status = 'loading';
 
-        methods:
-        {
-            _onClick()
-            {
-                let self = this;
-
-                this.status = 'loading';
-
-                this.onClick()
-                    .then(() =>
-                    {
-                        self.status = 'ready';
-                    })
-                    .catch(() =>
-                    {
-                        self.status = 'ready';
-                    });
-            }
+            this.onClick()
+                .then(() =>
+                {
+                    self.status = 'ready';
+                })
+                .catch(() =>
+                {
+                    self.status = 'ready';
+                });
         }
-    });
+    }
 
 </script>

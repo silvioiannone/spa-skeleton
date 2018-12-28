@@ -1,10 +1,10 @@
 <script lang="ts">
 
-    import Vue, { VNode }              from 'vue';
-    import { Component as _Component } from 'vue-property-decorator';
+    import Vue, { VNode } from 'vue';
+    import { Component }  from 'vue-property-decorator';
 
-    @_Component
-    export default class Component extends Vue
+    @Component
+    export default class MixinComponent extends Vue
     {
         // Use this in order to override the value of a prop.
         protected __props: {}

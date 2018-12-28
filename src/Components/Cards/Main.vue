@@ -5,22 +5,15 @@
     </v-card>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue                 from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
-        name: 'CardMain',
-
-        props: {
-
-            /**
-              * Title displayed by the card.
-              */
-            title: {
-                type: String,
-                default: ''
-            }
-        }
+    @Component
+    export default class CardMain extends Vue
+    {
+        @Prop({ type: String, default: '' }) title: string;
     }
 
 </script>

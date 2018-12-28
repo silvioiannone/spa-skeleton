@@ -75,7 +75,7 @@
         /**
          * Toolbar title.
          */
-        @Prop({type: String, default: Config.name}) title: string;
+        @Prop({type: String, default: Config.app.name}) title: string;
 
         /**
          * Display a toolbar with tabs.

@@ -1,6 +1,7 @@
 <script lang="ts">
 
-    import Vue, { VNode } from 'vue';
+    import Vue, { VNode }      from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
     /**
      * Use this mixin when you need to create a component wrapping another component.
@@ -16,132 +17,118 @@
      *
      * Just set the `__component` $data property.
      */
-    export default Vue.extend({
+    @Component
+    export default class Wrapper extends Vue
+    {
+        @Prop() value: any;
 
-        props: {
+        /**
+         * The component being wrapped.
+         */
+        __component: any;
 
-            /*
-             * v-model.
-             */
-            value: {}
-        },
-
-        data()
+        get _hasModel(): boolean
         {
-            return {
-
-                // The component being wrapped.
-                __component: '',
-            }
-        },
-
-        computed: {
-
-            _hasModel(): boolean
-            {
-                if (this._component.mixins) {
-                    if (typeof this._component.mixins[0].props.value !== 'undefined')
+            if (this._component.mixins) {
+                if (typeof this._component.mixins[0].props.value !== 'undefined')
                     return true;
-                }
-
-                if (this._component.props) {
-                    return this._component.props.value;
-                }
-
-                return false;
-            },
-
-            _component(): any
-            {
-                return this.$data.__component;
             }
-        },
 
-        methods: {
-
-            /**
-             * Get the props.
-             */
-            getProps(): any
-            {
-                let props = {};
-
-                let propsToMerge = {
-                    ...this.$props,
-                    ...this.$attrs
-                };
-
-                for(let propKey in propsToMerge) {
-                    this.$set(props, propKey, propsToMerge[propKey]);
-                }
-
-                // If the component has a model we also need to include the value prop.
-                if (this._hasModel) {
-                    this.$set(props, 'value', this.value);
-                }
-
-                return props;
-            },
-
-            /**
-             * Get the on event listeners.
-             */
-            getOn(): any
-            {
-                let on = {};
-
-                // Model input event
-                if (this._hasModel) {
-                    on['input'] = value => { this.$emit('input', value) }
-                }
-
-                return on;
-            },
-
-            /**
-             * Return the slots of the wrapped component.
-             *
-             * @returns {*}
-             */
-            getSlots(): any
-            {
-                return this.$slots.default;
-            },
-
-            /**
-             * Override the wrapped's `$emit` function.
-             */
-            overrideWrapped$emit(): void
-            {
-                if (! this.$children.length) {
-                    throw "The wrapper has no children.";
-                }
-
-                // We need to override the $emit function so that we will be able to catch and fire
-                // all the events fired by the wrapped component.
-                let wrapped = this.$children[0];
-                let childEmit = wrapped.$emit;
-
-                wrapped.$emit = (event: any, payload: any): void =>
-                {
-                    childEmit.apply(wrapped, [event, payload]);
-                    this.$emit(event, payload);
-                }
+            if (this._component.props) {
+                return this._component.props.value;
             }
-        },
+
+            return false;
+        }
+
+        get _component(): any
+        {
+            return this.$data.__component;
+        }
+
+        /**
+         * Get the props.
+         */
+        getProps(): any
+        {
+            let props = {};
+
+            let propsToMerge = {
+                ...this.$props,
+                ...this.$attrs
+            };
+
+            for(let propKey in propsToMerge) {
+                this.$set(props, propKey, propsToMerge[propKey]);
+            }
+
+            // If the component has a model we also need to include the value prop.
+            if (this._hasModel) {
+                this.$set(props, 'value', this.value);
+            }
+
+            return props;
+        }
+
+        /**
+         * Get the on event listeners.
+         */
+        getOn(): any
+        {
+            let on = {};
+
+            // Model input event
+            if (this._hasModel) {
+                on['input'] = (value: any) => { this.$emit('input', value) }
+            }
+
+            return on;
+        }
+
+        /**
+         * Return the slots of the wrapped component.
+         *
+         * @returns {*}
+         */
+        getSlots(): any
+        {
+            return this.$slots.default;
+        }
+
+        /**
+         * Override the wrapped's `$emit` function.
+         */
+        overrideWrapped$emit(): void
+        {
+            if (! this.$children.length) {
+                throw "The wrapper has no children.";
+            }
+
+            // We need to override the $emit function so that we will be able to catch and fire
+            // all the events fired by the wrapped component.
+            let wrapped = this.$children[0];
+            let childEmit = wrapped.$emit;
+
+            wrapped.$emit = (event: any, payload: any): Vue =>
+            {
+                childEmit.apply(wrapped, [event, payload]);
+                this.$emit(event, payload);
+                return this;
+            };
+        }
 
         created(): void
         {
             if (! this.$data.__component) {
                 throw 'Wrapped component not set. Please set it using the `__component` data ' +
-                      'property.';
+                'property.';
             }
-        },
+        }
 
         mounted(): void
         {
             this.overrideWrapped$emit();
-        },
+        }
 
         render(createElement: Function): VNode
         {
@@ -157,6 +144,6 @@
                 this.getSlots()
             );
         }
-    });
+    }
 
 </script>

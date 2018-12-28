@@ -25,16 +25,13 @@
 
 <script lang="ts">
 
-    import Vue       from 'vue';
-    import MixinForm from '../Mixins/Form.vue';
+    import { Component, Mixins } from 'vue-property-decorator';
+    import Form                  from '../Mixins/Form.vue';
 
-    export default Vue.extend({
+    @Component
+    export default class FormMain extends Mixins(Form)
+    {
 
-        name: 'FormMain',
-
-        mixins: [
-            MixinForm
-        ]
-    });
+    }
 
 </script>
