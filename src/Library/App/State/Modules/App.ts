@@ -220,11 +220,6 @@ export default class APP extends AbstractModule
              */
             settings: null,
 
-            /**
-             * The application name.
-             */
-            name: APP_NAME,
-
             /*
              * Marks whether the app just finished loading or not.
              */
