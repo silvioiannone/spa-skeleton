@@ -3,7 +3,7 @@ import VueRouter, { Route } from 'vue-router';
 import { sync }             from 'vuex-router-sync';
 import Api                  from '../Api';
 import Config               from '../../Config';
-import Guard                from '../App/Guard';
+import Guard                from '../Guard';
 import Logger               from './Logger';
 import Service              from './Service';
 import Translator           from './Translator';
@@ -45,7 +45,7 @@ export default class Router extends Service
     boot(): void
     {
         let store = (new StateMachine).getStore();
-        let guard = new Guard();
+        let guard = new Guard;
         let scrollPromise = new Promise((resolve: Function, reject: Function) =>
         {
             guard.onComplete((to: Route, from: Route) =>
@@ -98,7 +98,8 @@ export default class Router extends Service
         });
 
         // Execute the guard before loading each route
-        guard.init(router, store).run();
+        guard.init(router, store)
+            .run();
 
         // Router root component
         let app = new Vue({

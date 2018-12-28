@@ -6,18 +6,20 @@ import Router, {
     RouteRecord,
     RawLocation }    from 'vue-router';
 import { Store }     from 'vuex';
-import Log           from '../Services/Logger';
-import Guards        from '../../../../../resources/ts/App/Guards';
-import Routes        from '../../../../../resources/ts/App/Routes';
+import Log           from './Services/Logger';
+import Guards        from '../../../../resources/ts/App/Guards';
+import Routes        from '../../../../resources/ts/App/Routes';
 
 // Skeleton guards
-import Auth        from './Guards/Auth';
-import UserIsAdmin from './Guards/UserIsAdmin';
+import Auth        from './App/Guards/Auth';
+import UserIsAdmin from './App/Guards/UserIsAdmin';
 
 const SkeletonGuards = {
     Auth,
     UserIsAdmin
 }
+
+type VueRouterNext = (to?: RawLocation | false | ((vm: Vue) => any) | void) => void;
 
 /**
  * Router middleware.
@@ -48,6 +50,20 @@ export default class Guard
     protected completedHooks: Array<any> = [];
 
     /**
+     * Application readiness according to the guard.
+     */
+    protected ready: boolean = false;
+
+    /**
+     * Errors mapped to the app status.
+     */
+    protected errorStatusMap: {[key: number]: string} = {
+        401: 'unauthorized',
+        404: 'notFound',
+        503: 'serviceUnavailable'
+    }
+
+    /**
      * Initializes the guard.
      */
     init(router: Router, store: Store<any>): Guard
@@ -64,14 +80,17 @@ export default class Guard
      */
     run(): void
     {
-        let ready = true;
+        this.registerBeforeHook();
+        this.registerAfterHook();
+    }
 
-        this.router.beforeEach((
-            to: Route,
-            from: Route,
-            next: (to?: RawLocation | false | ((vm: Vue) => any) | void) => void) =>
+    /**
+     * Register the `beforeEach` vue router hook.
+     */
+    protected registerBeforeHook(): void
+    {
+        this.router.beforeEach((to: Route, from: Route, next: VueRouterNext) =>
         {
-            ready = true;
             Log.debug('Loading ' + to.path + '...');
 
             this.store.commit('app/SET_STATUS', 'loading');
@@ -89,45 +108,47 @@ export default class Guard
                         .catch(error =>
                         {
                             this.store.commit('app/SET_STATUS', 'unauthorized');
-                            ready = false;
+                            this.ready = false;
                             next();
                         });
                 })
                 .catch((error: any) =>
                 {
-                    ready = false;
+                    this.ready = false;
 
-                    this.store.commit('app/SET_ERROR', error);
-
-                    if(error.statusCode === 401) {
-                        this.store.commit('app/SET_STATUS', 'unauthorized');
-                        next();
-                        return;
-                    }
-
-                    if(error.statusCode === 404) {
-                        this.store.commit('app/SET_STATUS', 'notFound');
-                        next();
-                        return;
-                    }
-
-                    if(error.statusCode === 503) {
-                        this.store.commit('app/SET_STATUS', 'serviceUnavailable');
-                        next();
-                        return;
-                    }
-
-                    Log.error('View ' + to.path + ' failed to load.');
-                    Log.error(error);
-
-                    this.store.commit('app/SET_STATUS', 'error');
-                    next();
+                    this.handleRouteActionError(error, to, next);
                 });
         });
+    }
 
+    /**
+     * Handle a route action error.
+     */
+    protected handleRouteActionError(error: any, to: Route, next: Function): void
+    {
+        Log.error('View ' + to.path + ' failed to load.');
+        Log.error(error);
+
+        this.store.commit('app/SET_ERROR', error);
+
+        let errorStatus = this.errorStatusMap[error.statusCode];
+        if (errorStatus) {
+            this.store.commit('app/SET_STATUS', errorStatus);
+            return next();
+        }
+
+        this.store.commit('app/SET_STATUS', 'error');
+        next();
+    }
+
+    /**
+     *
+     */
+    protected registerAfterHook(): void
+    {
         this.router.afterEach((to: Route, from: Route) =>
         {
-            if (ready) {
+            if (this.ready) {
                 this.store.commit('app/SET_STATUS', 'ready');
 
                 Log.info('Loaded ' + to.path + '.');
@@ -137,7 +158,7 @@ export default class Guard
             this.router.app.$nextTick(() =>
             {
                 this.completedHooks.forEach(hook => hook(to, from));
-            })
+            });
         });
     }
 
