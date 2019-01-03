@@ -1,5 +1,4 @@
-import ModuleInterface from 'spa-skeleton/src/Library/State/ModuleInterface';
-import Api             from '../Api';
+import Api from '../Api';
 
 /**
  * Abstract state machine module.
@@ -11,7 +10,7 @@ export default abstract class AbstractModule
     /**
      * Module name.
      */
-    protected name: string = '';
+    protected abstract name: string = '';
 
     /**
      * Api client.
@@ -29,45 +28,45 @@ export default abstract class AbstractModule
     /**
      * Return the module structure.
      */
-    get(): ModuleInterface
+    get()
     {
         return {
             actions: this.actions(),
-            mutations : this.mutations(),
-            state : this.state(),
-            getters: this.getters()
+            getters: this.getters(),
+            mutations: this.mutations(),
+            state: this.state()
         }
     }
 
     /**
      * Define the actions here.
      */
-    actions(): any
+    protected actions()
     {
         return {};
-    };
+    }
 
     /**
      * Define the getters here.
      */
-    getters(): any
+    protected getters()
     {
         return {};
-    };
+    }
 
     /**
      * Define the mutations here.
      */
-    mutations(): any
+    protected mutations()
     {
         return {};
-    };
+    }
 
     /**
      * Define the state here.
      */
-    state(): any
+    protected state()
     {
-        return {}
-    };
+        return {};
+    }
 }

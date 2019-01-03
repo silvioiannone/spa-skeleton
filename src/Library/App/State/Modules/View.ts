@@ -8,14 +8,12 @@ import { Store }         from 'vuex';
  */
 export default class View extends AbstractModule
 {
-    constructor()
-    {
-        super();
+    /**
+     * Module name.
+     */
+    protected name: string = 'view';
 
-        this.name = 'view';
-    }
-
-    actions()
+    protected actions()
     {
         let self = this;
         let actions = {};
@@ -110,7 +108,7 @@ export default class View extends AbstractModule
      * @param payload
      * @return {Object}
      */
-    getQueryParameters(payload: any, defaultParameters: any = {})
+    protected getQueryParameters(payload: any, defaultParameters: any = {})
     {
         let pageSizeParameter = Config.app.paginationSize;
         if (defaultParameters['page[size]']) {

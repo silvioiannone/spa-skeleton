@@ -1,7 +1,3 @@
-export default interface ModuleInterface
-{
-    actions: any,
-    mutations: any,
-    state: any,
-    getters: any
-}
+import { Module } from 'vuex';
+
+export default interface ModuleInterface<S> extends Module<S, S> {}

@@ -5,10 +5,8 @@ import CollectionModule from '../../../State/CollectionModule';
  */
 export default class Roles extends CollectionModule
 {
-    constructor()
-    {
-        super();
-
-        this.name = 'roles';
-    }
+    /**
+     * Module name.
+     */
+    protected name: string = 'roles';
 }

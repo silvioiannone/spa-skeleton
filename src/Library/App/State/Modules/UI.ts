@@ -5,17 +5,15 @@ import AbstractModule from '../../../State/AbstractModule';
  */
 export default class UI extends AbstractModule
 {
-    constructor()
-    {
-        super();
-
-        this.name = 'ui';
-    }
+    /**
+     * Module name.
+     */
+    protected name: string = 'ui';
 
     /**
      * UI state gtters.
      */
-    getters()
+    protected getters()
     {
         return {
 
@@ -31,7 +29,7 @@ export default class UI extends AbstractModule
     /**
      * UI state mutations.
      */
-    mutations()
+    protected mutations()
     {
         return {
 
@@ -73,7 +71,7 @@ export default class UI extends AbstractModule
     /**
      * State definition.
      */
-    state()
+    protected state()
     {
         return {
 

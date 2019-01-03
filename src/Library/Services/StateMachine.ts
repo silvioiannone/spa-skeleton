@@ -1,3 +1,4 @@
+import _               from 'lodash';
 import Log             from './Logger';
 import Vue             from 'vue';
 import Vuex, { Store } from 'vuex';
@@ -39,7 +40,7 @@ export default class StateMachine extends Service
     /**
      * State machine store.
      */
-    protected store: Store<StoreType> | null;
+    protected store: Store<StoreType>;
 
     /**
      * Boot the state machine.
@@ -52,24 +53,23 @@ export default class StateMachine extends Service
     /**
      * Get the store.
      */
-    getStore(): Store<StoreType>
+    getStore()
     {
         // Make sure only once store instance is created.
         if (this.store) {
             return this.store;
         }
+
         // Register all the modules with the state machine
-        let vuexModules = {};
-        let availableModules = {...SkeletonModules, ...Modules};
+        let vuexModules = { modules: {}};
+        let availableModules = _.merge(Modules, SkeletonModules);
 
         for (let key in availableModules) {
-            let module = (new availableModules[key]()).get();
-
+            vuexModules.modules[key.toLowerCase()] = (new availableModules[key]()).get();
             Log.debug('State machine "' + key + '" module registered.');
-            vuexModules[key] = module;
         }
 
-        this.store = new Vuex.Store({ modules: vuexModules });
+        this.store = new Vuex.Store(vuexModules);
 
         return this.store;
     }

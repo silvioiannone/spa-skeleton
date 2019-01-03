@@ -9,14 +9,15 @@ import { Store }         from 'vuex';
  */
 export default class APP extends AbstractModule
 {
-    constructor()
-    {
-        super();
+    /**
+     * Module name.
+     */
+    protected name: string = 'app';
 
-        this.name = 'app';
-    }
-
-    actions(): any
+    /**
+     * Define the App module actions.
+     */
+    protected actions()
     {
         let self = this;
 
@@ -116,13 +117,9 @@ export default class APP extends AbstractModule
     /**
      * Define the APP module getters.
      */
-    getters()
+    protected getters()
     {
         return {
-
-            /**
-             * Whether the app from the state.
-             */
             'app': (state: any) => state,
         }
     }
@@ -130,7 +127,7 @@ export default class APP extends AbstractModule
     /**
      * Define the APP module mutations.
      */
-    mutations()
+    protected mutations()
     {
         return {
 
@@ -206,7 +203,7 @@ export default class APP extends AbstractModule
     /**
      * Define the APP state.
      */
-    state()
+    protected state()
     {
         return {
 
@@ -228,7 +225,7 @@ export default class APP extends AbstractModule
             /*
              * The app status.
              */
-            status: null,
+            status: 'loading',
 
             /*
              * The error preventing the app from loading.

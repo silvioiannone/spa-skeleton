@@ -5,10 +5,8 @@ import CollectionModule from '../../../State/CollectionModule';
  */
 export default class Notifications extends CollectionModule
 {
-    constructor()
-    {
-        super();
-
-        this.name = 'notifications';
-    }
+    /**
+     * Module name.
+     */
+    protected name: string = 'notifications';
 }
