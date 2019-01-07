@@ -2,31 +2,24 @@
     <v-breadcrumbs :divider="divider" :items="_items"></v-breadcrumbs>
 </template>
 
-<script>
+<script lang="ts">
 
-    import Breadcrumbs from '../Mixins/Breadcrumbs';
+    import { Component, Mixins } from 'vue-property-decorator';
+    import Breadcrumbs           from '../Mixins/Breadcrumbs';
 
-    export default {
-
-        name: 'BreadcrumbsMain',
-
-        mixins: [
-            Breadcrumbs
-        ],
-
-        computed: {
-
-            _items()
+    @Component
+    export default class BreadcrumbsMain extends Mixins(Breadcrumbs)
+    {
+        get _items()
+        {
+            return this.items.map(item =>
             {
-                return this.items.map(item =>
-                {
-                    return {
-                        disabled: ! item.to,
-                        exact: true,
-                        ...item,
-                    }
-                });
-            }
+                return {
+                    disabled: ! item.to,
+                    exact: true,
+                    ...item,
+                }
+            });
         }
     }
 

@@ -17,66 +17,53 @@
 </template>
 
 <script lang="ts">
+    
+    import Vue                 from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
+    
+    @Component
+    export default class NavigationDrawerMain extends Vue
+    {
+        /**
+         * Put the navigation drawer on the right side.
+         */
+        @Prop({ type: Boolean, default: false }) right: boolean;
 
-    import Vue from 'vue';
+        /**
+         * Navigation drawer's title.
+         */
+        @Prop({ type: String, default: '' }) title: string;
 
-    export default Vue.extend({
-
-        name: 'NavigationDrawerMain',
-
-        props: {
-
-            /**
-             * Put the navigation drawer on the right side.
-             */
-            right: {
-                type: Boolean,
-                default: false
-            },
-
-            /**
-             * Navigation drawer's title.
-             */
-            title: {
-                type: String,
-                default: ''
-            }
-        },
-
-        computed: {
-
-            visible: {
-                get(): boolean
-                {
-                    if (this.right)
-                    {
-                        return this.$store.getters.ui.rightNavigationDrawerVisible;
-                    }
-
-                    return this.$store.getters.ui.navigationDrawerVisible;
-                },
-                set(value: boolean): void
-                {
-                    if (this.right)
-                    {
-                        this.$store.commit('ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY', value);
-                        return;
-                    }
-
-                    this.$store.commit('ui/SET_NAVIGATION_DRAWER_VISIBILITY', value);
-                }
-            },
-
-            user(): any
+        get visible(): boolean
+        {
+            if (this.right)
             {
-                return this.$store.getters.app.user;
+                return this.$store.getters.app.ui.rightNavigationDrawerVisible;
             }
-        },
+
+            return this.$store.getters.app.ui.navigationDrawerVisible;
+        }
+
+        set visible(value: boolean)
+        {
+            if (this.right)
+            {
+                this.$store.commit('ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY', value);
+                return;
+            }
+
+            this.$store.commit('ui/SET_NAVIGATION_DRAWER_VISIBILITY', value);
+        }
+
+        get user(): any
+        {
+            return this.$store.getters.app.user;
+        }
 
         created(): void
         {
             this.visible = this.$vuetify.breakpoint.lgAndUp && !this.right;
         }
-    })
-
+    }
+    
 </script>

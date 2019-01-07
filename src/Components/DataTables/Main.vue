@@ -1,52 +1,37 @@
-<script>
+<script lang="ts">
 
-    import Config from 'spa-skeleton/src/Config';
+    import Config              from '../../Config';
+    import Vue                 from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
-    export default {
+    @Component
+    export default class DataTableMain extends Vue
+    {
+        /**
+         * Table headers.
+         */
+        @Prop({ type: Array, default: () => [] }) headers: Array<any>
 
-        name: 'DataTableMain',
+        /**
+         * Items displayed by the table.
+         */
+        @Prop({ type: Array, default: () => [] }) items: Array<any>
 
-        props: {
+        /**
+         * Pagination object,
+         */
+        @Prop({ type: Object, default: () => ({}) }) pagination: any
 
-            /**
-             * Table headers.
-             */
-            headers: {
-                type: Array,
-                default: () => []
-            },
-
-            /**
-             * Items displayed by the table.
-             */
-            items: {
-                type: Array,
-                default: () => []
-            },
-
-            /**
-             * Pagination object.
-             */
-            pagination: {
-                type: Object,
-                default: () => { return {} }
-            }
-        },
-
-        methods: {
-
-            rowsPerPageItems()
-            {
-                let paginationSize = Config.app.paginationSize;
-
-                return [paginationSize, paginationSize * 2, paginationSize * 4];
-            }
-        },
-
-        render(createElement)
+        rowsPerPageItems()
         {
-            let self = this;
-            return createElement('v-data-table', {
+            let paginationSize = Config.app.paginationSize;
+
+            return [paginationSize, paginationSize * 2, paginationSize * 4];
+        }
+
+        render(createElement: Function)
+        {
+            let component = {
                 props: {
                     headers: this.headers,
                     items: this.items,
@@ -55,10 +40,15 @@
                     rowsPerPageItems: this.rowsPerPageItems(),
                 },
                 on: {
-                    'update:pagination': value => this.$emit('update:pagination', value)
-                },
-                scopedSlots: this.$vnode.data.scopedSlots
-            });
+                    'update:pagination': (value: any) => this.$emit('update:pagination', value)
+                }
+            };
+
+            if (this.$vnode.data) {
+                component['scopedSlots'] = this.$vnode.data.scopedSlots;
+            }
+
+            return createElement('v-data-table', component);
         }
     }
 

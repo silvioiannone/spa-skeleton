@@ -1,6 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="visible" class="scroll-y" right app fixed width="450"
-                         temporary>
+    <v-navigation-drawer v-model="visible" class="scroll-y" right app fixed width="450" temporary>
         <v-toolbar class="elevation-0">
             <v-toolbar-title>{{ $t('navigationDrawer.notifications') }}</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -36,57 +35,56 @@
     </v-navigation-drawer>
 </template>
 
-<script>
+<script lang="ts">
 
-    export default {
+    import Vue                   from 'vue';
+    import {
+        ResponseInterface,
+        Models
+    } from 'spa-skeleton';
+    import { Component }         from 'vue-property-decorator';
 
-        name: 'NavigationDrawerNotifications',
+    @Component
+    export default class NavigationDrawerNotifications extends Vue
+    {
+        get notifications()
+        {
+            return Models.Notification.all();
+        }
 
-        computed: {
+        get unreadNotifications()
+        {
+            return this.notifications.filter((notification: any) => notification.read_at === null)
+        }
 
-            notifications()
-            {
-                return this.$store.getters.notifications;
-            },
+        get visible()
+        {
+            return this.$store.getters.app.ui.notificationsDrawerVisible;
+        }
 
-            unreadNotifications()
-            {
-                return this.notifications.filter(notification => notification.read_at === null)
-            },
+        set visible(value)
+        {
+            this.$store.commit('ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY', value);
+        }
 
-            visible: {
-                get()
+        /**
+         * Mark all the notifications as read.
+         */
+        markAllAsRead()
+        {
+            this.$api.notifications.markAllAsRead()
+                .then(() =>
                 {
-                    return this.$store.getters.ui.notificationsDrawerVisible;
-                },
-                set(value)
-                {
-                    this.$store.commit('ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY', value);
-                }
-            }
-        },
-
-        methods: {
-
-            /**
-             * Mark all the notifications as read.
-             */
-            markAllAsRead()
-            {
-                this.$api.notifications.markAllAsRead()
-                    .then(() =>
-                    {
-                        this.$api.users
-                            .setParameters({
-                                include: 'unread_notifications'
-                            })
-                            .find('me')
-                            .then(response =>
-                            {
-                                this.$store.commit('notifications/STORE', {data: []});
-                            });
-                    });
-            }
+                    this.$api.users
+                        .setParameters({
+                            include: 'unread_notifications'
+                        })
+                        .find('me')
+                        .then((response: ResponseInterface) =>
+                        {
+                            this.$store.commit('notifications/STORE', {data: []});
+                        });
+                });
         }
     }
 

@@ -27,51 +27,37 @@
 
 </style>
 
-<script>
+<script lang="ts">
 
-    import VueAvatar from 'vue-avatar';
+    import VueAvatar           from 'vue-avatar';
+    import Vue                 from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
-    export default {
-
-        name: 'AvatarUser',
-
+    @Component({
         components: {
             VueAvatar
-        },
+        }
+    })
+    export default class AvatarUser extends Vue
+    {
+        /**
+         * Avatar's size.
+         */
+        @Prop({ type: Number, default: 48 }) size: number;
 
-        props: {
+        /**
+         * User whose avatar will be displayed.
+         */
+        @Prop({ type: Object, required: true }) user: any;
 
-            /**
-             * Avatar's size.
-             */
-            size: {
-                type: Number,
-                default: 48
-            },
+        /**
+         * Link of the router.
+         */
+        @Prop({ type: String, default: '' }) to: string;
 
-            /**
-             * User whose avatar will be displayed.
-             */
-            user: {
-                type: Object,
-                required: true
-            },
-
-            /**
-             * Link of the router.
-             */
-            to: {
-                type: String,
-                default: ''
-            }
-        },
-
-        computed: {
-
-            _to()
-            {
-                return this.to.length ? this.to : '/users/' + this.user.id;
-            }
+        get _to()
+        {
+            return this.to.length ? this.to : '/users/' + this.user.id;
         }
     }
 

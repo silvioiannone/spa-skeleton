@@ -1,29 +1,22 @@
-<script>
+<script lang="ts">
+
+    import Vue           from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
     /**
      * This mixin allows data tables to behave correctly when dealing with paginated data.
      *
      * It should be used by all tables that display paginated data.
      */
-    export default {
+    @Component
+    export default class Paginated extends Vue
+    {
+        /**
+         * Pagination meta.
+         */
+        @Prop({ type: Object, required: true }) pagination: any;
 
-        props: {
-
-            /**
-             * Pagination meta.
-             */
-            pagination: {
-                type: Object,
-                required: true
-            }
-        },
-
-        data()
-        {
-            return {
-                _pagination: {}
-            }
-        },
+        _pagination = {};
 
         created()
         {
