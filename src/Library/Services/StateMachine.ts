@@ -1,26 +1,32 @@
-import _               from 'lodash';
 import Log             from './Logger';
 import Vue             from 'vue';
 import Vuex, { Store } from 'vuex';
+import VuexORM         from '@vuex-orm/core';
 import Service         from './Service';
 import Modules         from '../../../../../resources/ts/App/State';
+import Models          from '../../../../../resources/ts/App/State/Models';
 
 // Skeleton modules
 import App           from '../App/State/Modules/App';
 import Notifications from '../App/State/Modules/Notifications';
 import Roles         from '../App/State/Modules/Roles';
 import Users         from '../App/State/Modules/Users';
-import UI            from '../App/State/Modules/UI';
 import View          from '../App/State/Modules/View';
+
+// Skeleton models
+import Notification from '../App/State/Models/Notification';
 
 const SkeletonModules = {
     App,
-    Notifications,
-    Roles,
-    Users,
-    UI,
+    //Notifications,
+    //Roles,
+    //Users,
     View
 };
+
+const SkeletonModels = {
+    Notification
+}
 
 export type StoreType = {
     [P in keyof (typeof SkeletonModules & typeof Modules)]
@@ -60,16 +66,31 @@ export default class StateMachine extends Service
             return this.store;
         }
 
-        // Register all the modules with the state machine
-        let vuexModules = { modules: {}};
-        let availableModules = _.merge(Modules, SkeletonModules);
+        const database = new VuexORM.Database;
 
-        for (let key in availableModules) {
-            vuexModules.modules[key.toLowerCase()] = (new availableModules[key]()).get();
-            Log.debug('State machine "' + key + '" module registered.');
+        let availableModels = {...SkeletonModels, ...Models};
+
+        // Register all the models with the state machine
+        for (let key in availableModels) {
+            Log.debug(`Model "${key}" registered.`);
+            database.register(availableModels[key]);
         }
 
-        this.store = new Vuex.Store(vuexModules);
+        // Set the state machine configuration.
+        let configuration = {
+            modules: {},
+            plugins: [VuexORM.install(database)]
+        };
+
+        let availableModules = {...SkeletonModules, ...Modules};
+
+        for (let key in availableModules) {
+            let module = new availableModules[key]();
+            configuration.modules[module.getName()] = module.get();
+            Log.debug(`State machine "${key}" module registered.`);
+        }
+
+        this.store = new Vuex.Store(configuration);
 
         return this.store;
     }

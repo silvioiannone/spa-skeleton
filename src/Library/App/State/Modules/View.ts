@@ -13,6 +13,9 @@ export default class View extends AbstractModule
      */
     protected name: string = 'view';
 
+    /**
+     * Get the module's actions.
+     */
     protected actions()
     {
         let self = this;
@@ -103,12 +106,8 @@ export default class View extends AbstractModule
     /**
      * Get the parameters that should be passed to the API if the view will display paginated data
      * (a list of users for example).
-     *
-     * @param defaultParameters
-     * @param payload
-     * @return {Object}
      */
-    protected getQueryParameters(payload: any, defaultParameters: any = {})
+    protected getQueryParameters(payload: any, defaultParameters: any = {}): any
     {
         let pageSizeParameter = Config.app.paginationSize;
         if (defaultParameters['page[size]']) {

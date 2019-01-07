@@ -160,6 +160,39 @@ export default class APP extends AbstractModule
             },
 
             /**
+             * Show or hide the left navigationDrawer.
+             *
+             * @param state
+             * @param value
+             */
+            'ui/SET_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any)
+            {
+                state.navigationDrawerVisible = value;
+            },
+
+            /**
+             * Show or hide the right navigationDrawer.
+             *
+             * @param state
+             * @param value
+             */
+            'ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any)
+            {
+                state.rightNavigationDrawerVisible = value;
+            },
+
+            /**
+             * Show or hide the notifications drawer.
+             *
+             * @param state
+             * @param value
+             */
+            'ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY'(state: any, value: any)
+            {
+                state.notificationsDrawerVisible = value;
+            },
+
+            /**
              * Store the authenticated user.
              */
             'user/STORE_AUTHENTICATED_USER'(state: any, user: any): void
@@ -231,6 +264,18 @@ export default class APP extends AbstractModule
              * The error preventing the app from loading.
              */
             error: null,
+
+            /*
+             * UI state.
+             */
+            ui: {
+
+                navigationDrawerVisible: true,
+
+                rightNavigationDrawerVisible: false,
+
+                notificationsDrawerVisible: false
+            },
 
             /*
              * The currently logged in user.

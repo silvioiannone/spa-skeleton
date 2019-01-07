@@ -4,20 +4,27 @@ import { VuetifyObject }       from 'vuetify';
 import { Store }               from 'vuex';
 import { ErrorBag, Validator } from 'vee-validate';
 import VueI18n, { IVueI18n }   from 'vue-i18n';
-import Api                     from '../Library/Api';
+import { ApiClient }           from '../Library/Api';
+import WebSocket               from '../Library/WebSocket';
 
 declare module 'vue/types/vue'
 {
     interface Vue
     {
-        readonly $api: Api,
+        readonly $api: ApiClient,
         readonly $i18n: VueI18n & IVueI18n;
+        $t: typeof VueI18n.prototype.t;
+        $tc: typeof VueI18n.prototype.tc;
+        $te: typeof VueI18n.prototype.te;
+        $d: typeof VueI18n.prototype.d;
+        $n: typeof VueI18n.prototype.n;
         $eh: Vue
         $route: Route,
         $router: Router,
         $store: Store<any>,
         $vuetify: VuetifyObject,
         $validator: Validator,
+        $ws: WebSocket,
         errors: ErrorBag
     }
 }
