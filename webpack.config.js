@@ -10,8 +10,8 @@ module.exports = {
             'spa-skeleton$': path.resolve(__dirname, 'src/index.ts')
         },
         modules: [
-            path.resolve('./resources'),
-            path.resolve('./node_modules')
+            'resources',
+            'node_modules'
         ]
     },
     module: {
