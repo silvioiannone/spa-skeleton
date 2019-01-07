@@ -6,6 +6,7 @@ import Logger  from './Library/Services/Logger';
 import Directives   from './Library/Services/Directives';
 import Components   from './Library/Services/Components';
 import StateMachine from './Library/Services/StateMachine';
+import Translator   from './Library/Services/Translator';
 import Plugins      from './Library/Services/Plugins';
 import Filters      from './Library/Services/Filters';
 import Validator    from './Library/Services/Validator';
@@ -38,6 +39,7 @@ export default class App
         Components,
         StateMachine,
         Plugins,
+        Translator,
         Filters,
         Validator,
         Router,
