@@ -4,6 +4,7 @@ import Log             from './Services/Logger';
 import Vue             from 'vue';
 import Config          from '../Config';
 import Subscriptions   from '../../../../resources/ts/App/Subscriptions';
+import ApiFactory      from './Api';
 import AdminChannel    from './WebSocket/Channels/Admin';
 import AppChannel      from './WebSocket/Channels/App';
 import UserChannel     from './WebSocket/Channels/User';
@@ -268,7 +269,7 @@ export default class WebSocket
         this.echo.connector.socket._callbacks.$connect.push(() =>
         {
             // Set the socket ID in the API
-            this.vue.$api.setSocketId(this.echo.socketId());
+            ApiFactory.setSocketId(this.echo.socketId());
             this.isConnected = true;
             Log.debug('Connected to the WebSocket server (ID: ' + this.echo.socketId() + ')');
         });

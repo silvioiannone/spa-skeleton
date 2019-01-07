@@ -1,5 +1,6 @@
 import AbstractResource from './Api/Resources/AbstractResource';
-import AppApi           from '../../../../resources/ts/App/Api';
+import AbstractApiDriver from './Api/Drivers/AbstractApiDriver';
+import AppResources     from '../../../../resources/ts/App/Api';
 
 // Skeleton API resources
 import App           from './Api/Resources/App';
@@ -8,39 +9,60 @@ import Roles         from './Api/Resources/Roles';
 import Users         from './Api/Resources/Users';
 
 const ApiResources = {
-    App,
-    Notifications,
-    Roles,
-    Users
+    app: App,
+    notifications: Notifications,
+    roles: Roles,
+    users: Users
 };
+
+export type ResourcesList = typeof ApiResources & typeof AppResources;
+export type Resources = {
+    [P in keyof ResourcesList]: ResourcesList[P]['prototype'] & AbstractApiDriver
+}
+export type ApiClient = Api & Resources;
 
 /**
  * App API interface.
  */
-export default class Api extends AppApi
+class Api
 {
-    app: App;
-    notifications: Notifications;
-    roles: Roles;
-    users: Users;
 
-    constructor()
+}
+
+/**
+ * A factory that creates API clients.
+ */
+export default class ApiFactory
+{
+    /**
+     * Api resources.
+     */
+    static resources: Resources;
+
+    /**
+     * Make an Api client.
+     */
+    static make(): ApiClient
     {
-        super();
+        let client = new Api;
 
-        let availableAPIResources = {...ApiResources, ...AppApi};
+        let availableResources = { ...ApiResources, ...AppResources };
 
-        for (let key in availableAPIResources) {
-            this[this.getResourceName(key)] = new availableAPIResources[key];
+        let resources = {};
+
+        for (let key in availableResources) {
+            resources[key] = new availableResources[key];
         }
+
+        ApiFactory.resources = <Resources>resources;
+
+        return { ...client, ...ApiFactory.resources };
     }
 
     /**
      * Set the socket ID.
-     *
-     * @param socketId
      */
-    setSocketId(socketId: string): void
+    static setSocketId(socketId: string): void
     {
         this.mapResources(resource => resource.setSocketId(socketId));
     }
@@ -48,32 +70,25 @@ export default class Api extends AppApi
     /**
      * Remove the socket ID.
      */
-    removeSocketId(): void
+    static removeSocketId(): void
     {
         this.mapResources(resource => resource.setSocketId(''));
     }
 
     /**
      * Loop through the resources and execute a callback.
-     *
-     * @protected
-     * @param {Function} callback The first parameter of the callback is an API resource.
      */
-    mapResources(callback: (resource: AbstractResource) => AbstractResource)
+    protected static mapResources(callback: (resource: AbstractResource) => AbstractResource): void
     {
-        for (let key in this) {
-            callback(this[this.getResourceName(key)]);
+        for (let key in ApiFactory.resources) {
+            callback(ApiFactory.resources[ApiFactory.getResourceName(key)]);
         }
     }
 
     /**
      * Get the api resource name.
-     *
-     * @protected
-     * @param key
-     * @returns {string}
      */
-    getResourceName(key: string)
+    static getResourceName(key: string): string
     {
         // The resource name is just the lowercased key in the API resources.
         return key.charAt(0).toLowerCase() + key.slice(1);

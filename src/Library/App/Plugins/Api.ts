@@ -1,5 +1,5 @@
-import Vue       from 'vue';
-import ApiClient from '../../Api';
+import Vue        from 'vue';
+import ApiFactory from '../../Api';
 
 /**
  * This plugin makes available the api client to every component.
@@ -8,5 +8,5 @@ import ApiClient from '../../Api';
  */
 export default function Api(vue: typeof Vue, options?: any): void
 {
-    vue.prototype.$api = new ApiClient;
+    vue.prototype.$api = ApiFactory.make();
 }

@@ -53,7 +53,7 @@ export default abstract class AbstractApiDriver
     /**
      * Set the parameters to be sent with the request.
      */
-    setParameters(parameters: any): AbstractApiDriver
+    setParameters(parameters: any): this
     {
         this.parameters = parameters;
 
@@ -103,7 +103,7 @@ export default abstract class AbstractApiDriver
     /**
      * Attach a file to the request. This will only work with a POST request.
      */
-    attach(name: string, file: File): AbstractApiDriver
+    attach(name: string, file: File): this
     {
         this.attachments.push({
             name, file

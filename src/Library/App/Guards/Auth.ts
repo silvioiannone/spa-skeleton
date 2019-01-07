@@ -1,5 +1,5 @@
 import AbstractGuard from '../../Guards/AbstractGuard';
-import API           from '../../Api';
+import ApiFactory    from '../../Api';
 import Token         from '../../Api/Token';
 
 /**
@@ -21,7 +21,7 @@ export default class Auth extends AbstractGuard
     handle(): Promise<any>
     {
         let token = new Token();
-        let api = new API();
+        let api = ApiFactory.make();
 
         return new Promise((resolve: Function, reject: Function) =>
         {
@@ -35,13 +35,13 @@ export default class Auth extends AbstractGuard
             if(token.isExpired())
             {
                 api.users.refreshToken()
-                    .then(response =>
+                    .then((response: any) =>
                     {
                         token.save(response.body.access_token);
                         sessionStorage.removeItem('fetchingToken');
                         resolve();
                     })
-                    .catch(response =>
+                    .catch((response: any) =>
                     {
                         token.remove();
                         sessionStorage.removeItem('fetchingToken');

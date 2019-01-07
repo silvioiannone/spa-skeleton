@@ -25,9 +25,9 @@ export default class Users extends AbstractResource
     /**
      * Get a list of all the users.
      */
-    get(): Promise<ResponseInterface>
+    get(id: string = ''): Promise<ResponseInterface>
     {
-        return this._get('');
+        return this._get(id);
     }
 
     /**
