@@ -1,13 +1,14 @@
-import AbstractModule    from '../../../State/AbstractModule';
+import { Store }         from 'vuex';
+import _                 from 'lodash';
+import Module            from '../../../State/Module';
 import Config            from '../../../../Config';
 import ResponseInterface from '../../../Api/ResponseInterface';
 import Token             from '../../../Api/Token';
-import { Store }         from 'vuex';
 
 /**
  * State machine App module.
  */
-export default class APP extends AbstractModule
+export default class APP extends Module
 {
     /**
      * Module name.
@@ -130,6 +131,14 @@ export default class APP extends AbstractModule
     protected mutations()
     {
         return {
+
+            /**
+             * Merge the given state with the app state.
+             */
+            'app/insert'(state: any, newState: any): void
+            {
+                state = _.merge(state, newState);
+            },
 
             /**
              * Set the error preventing the app from loading.
@@ -270,11 +279,13 @@ export default class APP extends AbstractModule
              */
             ui: {
 
-                navigationDrawerVisible: true,
+                navigationDrawers: {
+                    notificationsVisible: false,
+                    rightVisible: false,
+                    leftVisible: true
+                },
 
-                rightNavigationDrawerVisible: false,
-
-                notificationsDrawerVisible: false
+                pagination: null
             },
 
             /*
