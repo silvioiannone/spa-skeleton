@@ -4,10 +4,16 @@
 
 <script lang="ts">
 
-    import Vue       from 'vue';
-    import Component from 'vue-class-component';
+    import { Component, Mixins } from 'vue-property-decorator';
+    import RootMixin             from '../Mixins/Root';
 
     @Component
-    export default class Root extends Vue {}
+    export default class Root extends Mixins(RootMixin)
+    {
+        created()
+        {
+            this.$ws.connect();
+        }
+    }
 
 </script>

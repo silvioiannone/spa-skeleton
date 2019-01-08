@@ -21,14 +21,14 @@
 
         mounted()
         {
-            this.$ws.subscribe(this, this.user);
+            this.$ws.subscribe(this);
         },
 
         watch: {
 
             user()
             {
-                this.$ws.subscribe(this, this.user);
+                this.$ws.subscribe(this);
             }
         }
     }
