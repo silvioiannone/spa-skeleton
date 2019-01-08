@@ -50,6 +50,12 @@ export class Get extends Action
         store.dispatch(`create`, {
             data: response.body.data
         });
+
+        store.commit('app/insert', {
+            ui: {
+                pagination: response.body.meta
+            }
+        }, { root: true });
     }
 }
 
