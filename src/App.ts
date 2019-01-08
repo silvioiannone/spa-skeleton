@@ -39,7 +39,6 @@ export default class App
         Components,
         StateMachine,
         Plugins,
-        Translator,
         Filters,
         Validator,
         Router,
