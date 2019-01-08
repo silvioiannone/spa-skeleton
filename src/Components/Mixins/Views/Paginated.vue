@@ -17,14 +17,18 @@
     @Component
     export default class ViewPaginated extends Vue
     {
-        pagination: Pagination;
+        pagination: Pagination = {
+            page: '',
+            rowsPerPage: '',
+            totalItems: '',
+            totalPages: '',
+            descending: false,
+            sortBy: ''
+        };
 
-        /**
-         * This function needs to be overridden by the component using this mixin and it should
-         * return the.
-         */
-        get meta(): any {
-            return {}
+        get meta(): any
+        {
+            return this.$store.getters.app.ui.pagination;
         }
 
         /**
@@ -70,7 +74,7 @@
          * Whenever the pagination changes we need to redirect the router to the right view.
          */
         @Watch('pagination')
-        onPaginationChanged(newPagination: any, oldPagination: any)
+        onPaginationChanged(newPagination: Pagination, oldPagination: Pagination)
         {
             // Do not redirect the user if the pagination parameters are the same.
             if (JSON.stringify(newPagination) === JSON.stringify(oldPagination)) {
