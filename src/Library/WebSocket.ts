@@ -5,6 +5,7 @@ import Vue             from 'vue';
 import Config          from '../Config';
 import Subscriptions   from '../../../../resources/ts/App/Subscriptions';
 import ApiFactory      from './Api';
+import StateMachine    from './Services/StateMachine';
 import AdminChannel    from './WebSocket/Channels/Admin';
 import AppChannel      from './WebSocket/Channels/App';
 import UserChannel     from './WebSocket/Channels/User';
@@ -62,6 +63,9 @@ export default class WebSocket
      */
     protected isConnected: boolean = false;
 
+    /**
+     * Constructor.
+     */
     constructor()
     {
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
@@ -197,7 +201,9 @@ export default class WebSocket
      */
     makeChannel(channel: any): AbstractChannel
     {
-        return typeof channel === 'object' ? channel : new channel(this.vue.$store)
+        let store = (new StateMachine).getStore()
+
+        return typeof channel === 'object' ? channel : new channel(store);
     }
 
     /**
@@ -255,7 +261,7 @@ export default class WebSocket
     /**
      * Connect to the WebSocket server.
      */
-    connect(): WebSocket
+    connect(): this
     {
         if (this.isConnected) {
             return this;
