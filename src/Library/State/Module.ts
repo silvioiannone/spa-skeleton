@@ -5,7 +5,7 @@ import ApiFactory, { ApiClient } from 'spa-skeleton/src/Library/Api';
  *
  * @abstract
  */
-export default abstract class AbstractModule
+export default abstract class Module
 {
     /**
      * Module name.

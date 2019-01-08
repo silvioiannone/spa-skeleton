@@ -47,7 +47,7 @@ export default class StateMachine extends Service
     /**
      * State machine store.
      */
-    protected store: Store<StoreType>;
+    protected static store: Store<StoreType>;
 
     /**
      * Boot the state machine.
@@ -63,8 +63,8 @@ export default class StateMachine extends Service
     getStore()
     {
         // Make sure only once store instance is created.
-        if (this.store) {
-            return this.store;
+        if (StateMachine.store) {
+            return StateMachine.store;
         }
 
         const database = new VuexORM.Database;
@@ -93,8 +93,8 @@ export default class StateMachine extends Service
             Log.debug(`State machine "${key}" module registered.`);
         }
 
-        this.store = new Vuex.Store(configuration);
+        StateMachine.store = new Vuex.Store(configuration);
 
-        return this.store;
+        return StateMachine.store;
     }
 }

@@ -19,6 +19,11 @@ import RootViewComponent    from '../../Components/Views/Root.vue';
 export default class Router extends Service
 {
     /**
+     * The service name.
+     */
+    name: string = 'Router';
+
+    /**
      * API client.
      */
     protected api: Api;

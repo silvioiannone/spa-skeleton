@@ -1,4 +1,4 @@
-import AbstractModule    from '../../../State/AbstractModule';
+import Module    from '../../../State/Module';
 import Config            from 'spa-skeleton/src/Config';
 import ResponseInterface from '../../../Api/ResponseInterface';
 import { Store }         from 'vuex';
@@ -6,7 +6,7 @@ import { Store }         from 'vuex';
 /**
  * State machine view module.
  */
-export default class View extends AbstractModule
+export default class View extends Module
 {
     /**
      * Module name.
