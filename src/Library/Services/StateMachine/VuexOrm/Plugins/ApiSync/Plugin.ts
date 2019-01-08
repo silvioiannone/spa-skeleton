@@ -25,6 +25,8 @@ export class Plugin
      */
     protected static setupActions(components: Components): void
     {
+        Get.boot();
+
         components.Actions.$get = Get.execute.bind(Get);
     }
 }
