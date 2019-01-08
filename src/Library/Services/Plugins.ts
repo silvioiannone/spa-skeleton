@@ -53,7 +53,7 @@ export default class Plugins extends Service
 
         this.before('Vuetify', () =>
         {
-            let translatorInstance = (new Translator).get();
+            let translatorInstance = (new Translator).boot().get();
 
             return {
                 lang: {
