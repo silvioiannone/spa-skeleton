@@ -33,6 +33,7 @@
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.119",
     "@types/loglevel": "^1.5.3",
+    "@types/pluralize": "0.0.29",
     "@types/socket.io-client": "^1.4.32",
     "@types/superagent": "^3.8.5",
     "@types/vue-markdown": "^2.2.1",
