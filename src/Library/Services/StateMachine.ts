@@ -1,10 +1,11 @@
-import Log             from './Logger';
-import Vue             from 'vue';
-import Vuex, { Store } from 'vuex';
-import VuexORM         from '@vuex-orm/core';
-import Service         from './Service';
-import Modules         from '../../../../../resources/ts/App/State';
-import Models          from '../../../../../resources/ts/App/State/Models';
+import Log                   from './Logger';
+import Vue                   from 'vue';
+import Vuex, { Store }       from 'vuex';
+import VuexORM               from '@vuex-orm/core';
+import Service               from './Service';
+import Modules               from '../../../../../resources/ts/App/State';
+import Models                from '../../../../../resources/ts/App/State/Models';
+import { Plugin as ApiSync } from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin';
 
 // Skeleton modules
 import App           from '../App/State/Modules/App';
@@ -75,6 +76,8 @@ export default class StateMachine extends Service
             Log.debug(`Model "${key}" registered.`);
             database.register(availableModels[key]);
         }
+
+        VuexORM.use(ApiSync);
 
         // Set the state machine configuration.
         let configuration = {
