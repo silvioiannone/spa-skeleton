@@ -67,6 +67,16 @@ export default class StateMachine extends Service
             return StateMachine.store;
         }
 
+        this.init();
+
+        return StateMachine.store;
+    }
+
+    /**
+     * Initialize the store.
+     */
+    protected init()
+    {
         const database = new VuexORM.Database;
 
         let availableModels = {...SkeletonModels, ...Models};
@@ -94,7 +104,5 @@ export default class StateMachine extends Service
         }
 
         StateMachine.store = new Vuex.Store(configuration);
-
-        return StateMachine.store;
     }
 }
