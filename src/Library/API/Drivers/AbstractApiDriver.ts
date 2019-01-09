@@ -32,7 +32,7 @@ export default abstract class AbstractApiDriver
     /**
      * Parameters that will be sent with the request.
      */
-    parameters: {[key: string]: any};
+    parameters: {[key: string]: any} = {};
 
     /**
      * Constructor.
