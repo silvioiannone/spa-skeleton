@@ -55,7 +55,7 @@ const defaultConfig = {
          *
          * Must match one of the keys in `api.drivers`.
          */
-        driver: 'axios',
+        driver: 'superAgent',
 
         /**
          * Available API drivers.
