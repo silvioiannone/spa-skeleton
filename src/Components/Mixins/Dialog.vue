@@ -1,106 +1,119 @@
-<script type="text/jsx">
+<script lang="ts">
 
-    import MixinComponent from './Component.vue';
+    import { VNode, CreateElement } from 'vue';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import MixinComponent        from './Component.vue';
 
     /*
      * This mixin can be used in order to create new dialogs.
      */
-    export default {
+    @Component
+    export default class Dialog extends Mixins(MixinComponent)
+    {
+        /**
+         * V-model. Determines the dialog visibility.
+         */
+        @Prop({ type: Boolean, default: true }) value: boolean;
 
-        mixins: [
-            MixinComponent
-        ],
+        /**
+         * Set the maximum width of the dialog.
+         */
+        @Prop({ type: Number, default: 500 }) maxWidth: number;
 
-        props: {
+        /**
+         * The dialog will be persistent and that will prevent it from closing when clicking on
+         * the backdrop.
+         */
+        @Prop({ type: Boolean, default: false }) persistent: boolean;
 
-            /**
-             * V-model. Determines the dialog visibility.
-             */
-            value: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Display a fullscreen dialog.
+         */
+        @Prop({ type: Boolean, default: false }) fullscreen: boolean;
 
-            /**
-             * Set the maximum width of the dialog.
-             */
-            maxWidth: {
-                type: Number,
-                default: 500
-            },
-
-            /**
-             * The dialog will be persistent and that will prevent it from closing when clicking on
-             * the backdrop.
-             */
-            persistent: {
-                type: Boolean,
-                default: false
-            },
-
-            /**
-             * Display a fullscreen dialog.
-             */
-            fullscreen: {
-                type: Boolean,
-                default: false
-            }
-        },
-
-        computed: {
-
-            model: {
-                get() {
-                    return this.value;
-                },
-                set(value) {
-                    this.$emit('input', value);
-                }
-            },
-
-            _fullscreen()
-            {
-                // Make the dialog fullscreen on small devices.
-                return this.fullscreen || this.$vuetify.breakpoint.xs;
-            },
-
-            computedProps()
-            {
-                return {
-                    fullscreen: this._fullscreen
-                }
-            }
-        },
-
-        methods: {
-
-            /**
-             * Close the dialog.
-             */
-            close()
-            {
-                this.model = false;
-            },
-
-            updateModel(value)
-            {
-                this.model = value;
-            }
-        },
-
-        render(h)
+        get _fullscreen()
         {
-            return (
-                <v-dialog value={this.value} onInput={this.updateModel} width={this.maxWidth}
-                          fullscreen={this._fullscreen} persistent={this.persistent}>
-                    {this._fullscreen &&
-                        <v-btn class="dialog--button-close" icon onClick={this.close}>
-                            <v-icon color="primary">close</v-icon>
-                        </v-btn>
+            // Make the dialog fullscreen on small devices.
+            return this.fullscreen || this.$vuetify.breakpoint.xs;
+        }
+
+        get model() {
+            return this.value;
+        };
+
+        set model(value: boolean) {
+            this.$emit('input', value);
+        }
+
+        get computedProps()
+        {
+            return {
+                fullscreen: this._fullscreen
+            }
+        }
+
+        /**
+         * Close the dialog.
+         */
+        close(): void
+        {
+            this.model = false;
+        }
+
+        updateModel(value: boolean): void
+        {
+            this.model = value;
+        }
+
+        render(createElement: CreateElement): VNode
+        {
+            if (this._fullscreen) {
+                let button = createElement('v-btn', {
+                    class: {
+                        'dialog--button-close': true
+                    },
+                    props: {
+                        icon: true
+                    },
+                    on: {
+                        click: this.close
                     }
-                    { this.$slots.default }
-                </v-dialog>
-            );
+                }, [
+                    createElement('v-icon', {
+                        props: {
+                            color: 'primary'
+                        }
+                    }, 'close')
+                ]);
+
+                if (this.$slots.default) {
+                    this.$slots.default.push(button);
+                }
+            }
+
+            return createElement('v-dialog', {
+                props: {
+                    fullscreen: this._fullscreen,
+                    persistent: this.persistent,
+                    value: this.value,
+                    width: this.maxWidth
+                },
+                on: {
+                    input: this.updateModel
+                }
+            }, this.$slots.default)
+
+            //return (
+            //    <v-dialog value={this.value} onInput={this.updateModel} width={this.maxWidth}
+            //    fullscreen={this._fullscreen} persistent={this.persistent}>
+            //    {this._fullscreen &&
+            //            <v-btn class="dialog--button-close" icon onClick={this.close}>
+            //            <v-icon color="primary">close</v-icon>
+            //        </v-btn>
+            //    }
+            //    { this.$slots.default }
+            //    </v-dialog>
+            //);
         }
     }
 

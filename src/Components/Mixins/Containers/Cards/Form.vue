@@ -1,31 +1,25 @@
-<script>
+<script lang="ts">
 
-    /*
-     * This mixin is intented to be used with cards holding forms.
-     */
-    export default {
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
 
-        methods: {
+    @Component
+    export default class Form extends Vue
+    {
+        /**
+         * Propagates the cancel form event to the parent.
+         */
+        bubbleCancelEvent(event: Event)
+        {
+            this.$emit('cancel', event);
+        }
 
-            /**
-             * Propagates the cancel form event to the parent.
-             *
-             * @param event
-             */
-            bubbleCancelEvent(event)
-            {
-                this.$emit('cancel', event);
-            },
-
-            /**
-             * Propagates the submit form event to the parent.
-             *
-             * @param event
-             */
-            bubbleSubmitEvent(event)
-            {
-                this.$emit('submit', event)
-            }
+        /**
+         * Propagates the submit form event to the parent.
+         */
+        bubbleSubmitEvent(event: Event)
+        {
+            this.$emit('submit', event)
         }
     }
 

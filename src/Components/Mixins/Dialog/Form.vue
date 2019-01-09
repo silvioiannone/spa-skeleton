@@ -1,72 +1,54 @@
-<script>
+<script lang="ts">
+
+    import Vue                        from 'vue';
+    import { Component, Prop, Watch } from 'vue-property-decorator';
 
     /*
      * This mixin adds some functionality to dialogs that are only supposed to display a form.
      */
-    export default {
+    @Component
+    export default class Form extends Vue
+    {
+        /**
+         * Dialog's visibility.
+         */
+        @Prop({ type: Boolean, default: true }) value: boolean;
 
-        props: {
+        get model()
+        {
+            return this.value;
+        }
 
-            /**
-             * Dialog's visibility.
-             */
-            value: {
-                type: Boolean,
-                default: true
+        set model(value: boolean)
+        {
+            if (! value) {
+                this.$emit('hidden');
             }
-        },
 
-        computed: {
+            this.$emit('input', value);
+        }
 
-            /**
-             * Determines the dialog's visibility.
-             */
-            model: {
-                get() {
-                    return this.value;
-                },
-                set(value) {
-                    if (! value) {
-                        this.$emit('hidden');
-                    }
-
-                    this.$emit('input', value);
-                }
-            }
-        },
-
-        methods: {
-
-            /**
-             * Focus the first input of the dialog.
-             */
-            focus()
+        /**
+         * Focus the first input of the dialog.
+         */
+        focus()
+        {
+            this.$nextTick(() =>
             {
-                this.$nextTick(() =>
-                {
-                    let firstFormInput = document.querySelector('.v-dialog--active form input');
+                let firstFormInput =
+                    <HTMLElement>document.querySelector('.v-dialog--active form input');
 
-                    if (firstFormInput) {
-                        firstFormInput.focus();
-                    }
-                });
-            }
-        },
+                if (firstFormInput) {
+                    firstFormInput.focus();
+                }
+            });
+        }
 
-        mounted()
+        @Watch('value', { immediate: true })
+        onValueChange()
         {
             if (this.value) {
                 this.focus();
-            }
-        },
-
-        watch: {
-
-            value()
-            {
-                if (this.value) {
-                    this.focus();
-                }
             }
         }
     }
