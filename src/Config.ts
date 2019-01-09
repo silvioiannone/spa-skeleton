@@ -42,7 +42,24 @@ const defaultConfig = {
         /**
          * Pagination size.
          */
-        paginationSize: parseInt(PAGINATION_DEFAULT_SIZE)
+        paginationSize: parseInt(PAGINATION_DEFAULT_SIZE),
+
+        /**
+         * Services configuration.
+         */
+        services: {
+
+            /**
+             * Translator service.
+             */
+            translator: {
+
+                /**
+                 * Hide the translator warnings.
+                 */
+                hideWarnings: false
+            }
+        }
     },
 
     /**

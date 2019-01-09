@@ -47,7 +47,8 @@ export default class Translator extends Service
         Translator.instance = new VueI18N({
             locale,
             fallbackLocale: 'en',
-            messages
+            messages,
+            silentTranslationWarn: Config.app.services.translator.hideWarnings
         });
 
         return this;
