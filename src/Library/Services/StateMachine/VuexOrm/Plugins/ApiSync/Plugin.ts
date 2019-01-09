@@ -2,6 +2,7 @@ import { Components, Options } from '@vuex-orm/core/lib/plugins/use';
 
 // Actions
 import { Get } from './Actions/Get';
+import { Create } from './Actions/Create';
 
 /**
  * This plugin synchronizes the state machine against the API.
@@ -26,8 +27,10 @@ export class Plugin
     protected static setupActions(components: Components): void
     {
         Get.boot();
+        Create.boot();
 
         components.Actions.$get = Get.execute.bind(Get);
+        components.Actions.$create = Create.execute.bind(Create);
     }
 }
 

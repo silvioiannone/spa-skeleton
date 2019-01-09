@@ -2,6 +2,7 @@ import ApiFactory, { ApiClient } from '../../../../../../Api';
 import { Store } from 'vuex';
 import Pluralize from 'pluralize';
 import ResponseInterface from "spa-skeleton/src/Library/API/ResponseInterface";
+import AbstractResource from '../../../../../../Api/Resources/AbstractResource';
 
 /**
  * An action.
@@ -44,6 +45,28 @@ export abstract class Action
     }
 
     /**
+     * Get the related resource.
+     */
+    protected static getResource(store: Store<any>): AbstractResource
+    {
+        let name = Action.getResourceName(store);
+
+        Action.checkResourceName(name);
+
+        return Action.api[name];
+    }
+
+    /**
+     * Check the existance of the given resource in the API client.
+     */
+    protected static checkResourceName(name: string): void
+    {
+        if (! Action.api[name]) {
+            throw `Resource "${name}" was not found in the API client.`;
+        }
+    }
+
+    /**
      * Handle a successful response.
      */
     protected static onSuccess(response: ResponseInterface, store: Store<any>)
@@ -56,6 +79,6 @@ export abstract class Action
      */
     protected static onError(response: ResponseInterface, store: Store<any>)
     {
-        throw 'Define the `onError` function in the extending class.'
+        //throw 'Define the `onError` function in the extending class.'
     }
 }
