@@ -1,5 +1,5 @@
-import { Route }  from 'vue-router';
 import Vue        from 'vue';
+import { Route }  from 'vue-router';
 import _Navigator from '../../Utils/Navigator';
 
 export default function Navigator(vue: typeof Vue, options?: any): void
@@ -20,6 +20,10 @@ export default function Navigator(vue: typeof Vue, options?: any): void
             {
                 navigator.setInstance(vm);
             });
+        },
+        mounted()
+        {
+            navigator.setInstance(<any>this);
         }
     });
 

@@ -73,7 +73,7 @@ const defaultConfig = {
 
                 /**
                  * Date format.
-                 * 
+                 *
                  * Formatting help: https://momentjs.com/docs/#/displaying/format/
                  */
                 dateFormat: 'Do MMMM YYYY'

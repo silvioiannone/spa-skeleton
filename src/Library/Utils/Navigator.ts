@@ -8,11 +8,6 @@ import String            from './String';
 export default class Navigator
 {
     /**
-     * Vue instance.
-     */
-    protected vue: Vue;
-
-    /**
      * Vue router.
      */
     protected router: Router;
@@ -29,9 +24,8 @@ export default class Navigator
      */
     setInstance(vue: Vue)
     {
-        this.vue = vue;
-        this.router = this.vue.$router;
-        this.route = this.vue.$route;
+        this.router = vue.$router;
+        this.route = vue.$route;
     }
 
     /**
@@ -58,7 +52,7 @@ export default class Navigator
     /**
      * Go to the parent route.
      */
-    toParent(levels = 1)
+    toParent(levels = 1): void
     {
         this.router.push({
             path: String.parentPath(this.route.path, levels),
