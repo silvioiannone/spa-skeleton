@@ -44,7 +44,24 @@ const defaultConfig = {
         /**
          * Pagination size.
          */
-        paginationSize: parseInt(PAGINATION_DEFAULT_SIZE)
+        paginationSize: parseInt(PAGINATION_DEFAULT_SIZE),
+
+        /**
+         * System settings.
+         */
+        system: {
+
+            /**
+             * Date and time settings.
+             */
+            dateAndTime: {
+
+                /**
+                 * Date format.
+                 */
+                dateFormat: 'Do MMMM YYYY'
+            }
+        }
     },
 
     /**
