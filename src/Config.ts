@@ -59,6 +59,25 @@ const defaultConfig = {
                  */
                 hideWarnings: false
             }
+        },
+
+        /**
+         * System settings.
+         */
+        system: {
+
+            /**
+             * Date and time settings.
+             */
+            dateAndTime: {
+
+                /**
+                 * Date format.
+                 * 
+                 * Formatting help: https://momentjs.com/docs/#/displaying/format/
+                 */
+                dateFormat: 'Do MMMM YYYY'
+            }
         }
     },
 
