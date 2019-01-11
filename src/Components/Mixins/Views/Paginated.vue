@@ -5,14 +5,16 @@
     import { Route }            from 'vue-router';
     import Config               from '../../../../src/Config';
     import Pagination           from 'spa-skeleton/src/Library/Interfaces/Pagination';
+    import { Model }            from 'spa-skeleton';
 
     /*
-     * This mixin can be used by all the views that need to display paginated data. E.g.: a view displaying a table with
+     * This mixin can be used by all the views that need to display paginated data. E.g.: a view
+     * displaying a table with
      * a list of users.
      *
      * How to use it:
      *
-     * Override the meta computed value with the pagination object.
+     * Override the resource computed value.
      */
     @Component
     export default class ViewPaginated extends Vue
@@ -29,6 +31,24 @@
         get meta(): any
         {
             return this.$store.getters.app.ui.pagination;
+        }
+
+        /**
+         * Get the paginated resource.
+         */
+        getPaginatedResource(resource: typeof Model)
+        {
+            let query = resource.query();
+            let sortQueryParam = this.$route.query.sort;
+
+            if (sortQueryParam) {
+                query.orderBy(
+                    <string>this.pagination.sortBy,
+                    sortQueryParam[0] === '-' ? 'desc': 'asc'
+                );
+            }
+
+            return query.all();
         }
 
         /**
