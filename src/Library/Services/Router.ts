@@ -71,10 +71,10 @@ export default class Router extends Service
             routes: [
                 {
                     path: '',
+                    component: RootViewComponent,
                     meta: {
                         actions: ['view/ROOT']
                     },
-                    component: RootViewComponent,
                     children: Routes
                 }
             ],
