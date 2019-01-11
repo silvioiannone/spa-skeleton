@@ -41,7 +41,7 @@ export class Get extends Action
      */
     static onSuccess(response: ResponseInterface, store: Store<any>)
     {
-        store.dispatch(`create`, {
+        store.dispatch('create', {
             data: response.body.data
         });
 

@@ -18,11 +18,23 @@ export class ExtendedModel extends Model
     }
 
     /**
-     * Create the model(s) on the server and the state machine.
+     * Create the model on the server and the state machine.
      */
     static async $create(data: any = '', options: any = null): Promise<any>
     {
         return this.dispatch('$create', {
+            data,
+            options,
+            model: this
+        });
+    }
+
+    /**
+     * Update the model on the server and the state machine.
+     */
+    static async $update(data: any = '', options: any = null): Promise<any>
+    {
+        return this.dispatch('$update', {
             data,
             options,
             model: this
