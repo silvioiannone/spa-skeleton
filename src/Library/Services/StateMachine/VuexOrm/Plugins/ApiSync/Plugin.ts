@@ -1,8 +1,9 @@
 import { Components, Options } from '@vuex-orm/core/lib/plugins/use';
 
 // Actions
-import { Get } from './Actions/Get';
 import { Create } from './Actions/Create';
+import { Delete } from './Actions/Delete';
+import { Get } from './Actions/Get';
 import { Update } from './Actions/Update';
 
 /**
@@ -30,10 +31,12 @@ export class Plugin
         Get.boot();
         Create.boot();
         Update.boot();
+        Delete.boot();
 
         components.Actions.$get = Get.execute.bind(Get);
         components.Actions.$create = Create.execute.bind(Create);
         components.Actions.$update = Update.execute.bind(Update);
+        components.Actions.$delete = Delete.execute.bind(Delete);
     }
 }
 

@@ -11,7 +11,7 @@ export class Get extends Action
     /**
      * Execute the action.
      */
-    static execute(store: Store<any>, params: GetParameters): Promise<any>
+    static execute(store: Store<any>, params: ActionParameters): Promise<any>
     {
         return new Promise((resolve: Function, reject: Function) =>
         {
@@ -54,11 +54,19 @@ export class Get extends Action
 }
 
 /**
+ * Action parameters.
+ */
+interface ActionParameters
+{
+    id: string,
+    model: ExtendedModel,
+    options: GetParameters
+}
+
+/**
  * Get action parameters.
  */
 export interface GetParameters
 {
-    id: string,
-    options: any,
-    model: ExtendedModel
+    parameters: any
 }

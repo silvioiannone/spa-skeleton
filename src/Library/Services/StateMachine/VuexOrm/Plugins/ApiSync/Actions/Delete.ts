@@ -1,32 +1,32 @@
 import { ExtendedModel } from '../../../Support/ExtendedModel';
 import ResponseInterface from '../../../../../../Api/ResponseInterface';
-import { Action } from './Action';
-import { Store } from 'vuex';
+import { Action }        from './Action';
+import { Store }         from 'vuex';
 
 
 /**
- * Update ($update) action.
+ * Delete ($delete) action.
  */
-export class Update extends Action
+export class Delete extends Action
 {
     /**
      * Execute the action.
      */
-    static execute(store: Store<any>, params: UpdateParameters): Promise<any>
+    static execute(store: Store<any>, params: DeleteParameters): Promise<any>
     {
         return new Promise((resolve: Function, reject: Function) =>
         {
-            let resource = Update.getResource(store);
+            let resource = Delete.getResource(store);
 
-            resource.update(params.data)
+            resource.delete(params.data)
                 .then((response: ResponseInterface) =>
                 {
-                    Update.onSuccess(response, store);
+                    Delete.onSuccess(response, store);
                     resolve(response);
                 })
                 .catch((response: ResponseInterface) =>
                 {
-                    Update.onError(response, store);
+                    Delete.onError(response, store);
                     reject(response);
                 });
         });
@@ -37,7 +37,7 @@ export class Update extends Action
      */
     static onSuccess(response: ResponseInterface, store: Store<any>)
     {
-        store.dispatch('update', {
+        store.dispatch('delete', {
             where: response.body.data.id,
             data: response.body.data
         });
@@ -45,9 +45,9 @@ export class Update extends Action
 }
 
 /**
- * Update action parameters.
+ * Delete action parameters.
  */
-export interface UpdateParameters
+export interface DeleteParameters
 {
     data: any,
     options: any,
