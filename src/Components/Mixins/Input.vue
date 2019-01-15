@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Prop, Mixins } from 'vue-property-decorator';
-    import MixinComponent from './Component';
+    import MixinComponent from './Component.vue';
 
     /**
      * This mixin can be used in order to create inputs.

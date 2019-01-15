@@ -16,7 +16,8 @@
         "removeComments": true,
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "skipLibCheck": true
     },
     "include": [
         "./src/**/*.ts"

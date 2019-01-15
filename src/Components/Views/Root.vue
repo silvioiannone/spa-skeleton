@@ -5,7 +5,7 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import RootMixin             from '../Mixins/Root';
+    import RootMixin             from '../Mixins/Root.vue';
 
     @Component
     export default class Root extends Mixins(RootMixin)

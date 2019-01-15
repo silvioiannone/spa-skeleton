@@ -47,6 +47,7 @@
     "cross-env": "^5.2.0",
     "css-loader": "^2.1.0",
     "flag-icon-css": "^3.2.1",
+    "fork-ts-checker-webpack-plugin": "^0.5.2",
     "github-markdown-css": "^2.10.0",
     "imports-loader": "^0.8.0",
     "jwt-decode": "^2.2.0",

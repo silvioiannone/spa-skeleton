@@ -5,7 +5,7 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import Breadcrumbs           from '../Mixins/Breadcrumbs';
+    import Breadcrumbs           from '../Mixins/Breadcrumbs.vue';
 
     @Component
     export default class BreadcrumbsMain extends Mixins(Breadcrumbs)

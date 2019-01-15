@@ -49,7 +49,7 @@
 
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import LayoutApp     from 'spa-skeleton/src/Components/Layouts/App';
+    import LayoutApp     from 'spa-skeleton/src/Components/Layouts/App.vue';
 
     @Component({
         components: {

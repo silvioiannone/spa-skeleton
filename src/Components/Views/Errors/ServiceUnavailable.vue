@@ -16,7 +16,7 @@
     
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import Error         from './Main';
+    import Error         from './Main.vue';
 
     @Component({
         components: {

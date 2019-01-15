@@ -1,7 +1,3 @@
-<template>
-    
-</template>
-
 <script lang="ts">
     
     import Vue           from 'vue';
@@ -22,29 +18,3 @@
     }
     
 </script>
-
-<script2>
-
-    export default {
-
-        props: {
-
-            /**
-             * An array containing the items that will be displayed.
-             */
-            items: {
-                type: Array,
-                default: () => []
-            },
-
-            /**
-             * Specifies the dividing character.
-             */
-            divider: {
-                type: String,
-                divider: '/'
-            }
-        }
-    }
-
-</script2>

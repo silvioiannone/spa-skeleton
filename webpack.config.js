@@ -1,6 +1,7 @@
 const path = require('path'),
-      webpack = require('webpack'),
-      mix = require('laravel-mix');
+      Webpack = require('webpack'),
+      LaravelMix = require('laravel-mix'),
+      ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     profile: true,
@@ -21,7 +22,7 @@ module.exports = {
                 exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
                 use: [{
                     loader: 'babel-loader',
-                    options: mix.config.babel()
+                    options: LaravelMix.config.babel()
                 }]
             },
             {
@@ -30,13 +31,18 @@ module.exports = {
                 exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
                 options: {
                     appendTsSuffixTo: [/\.vue$/],
-                    configFile: path.resolve(__dirname, "tsconfig.json")
+                    configFile: path.resolve(__dirname, "tsconfig.json"),
+                    transpileOnly: true
                 }
             }
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
+        new ForkTsCheckerWebpackPlugin({
+            tsconfig: path.resolve(__dirname, "tsconfig.json"),
+            vue: true
+        }),
+        new Webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),
             APP_NAME: JSON.stringify(process.env.APP_NAME),
