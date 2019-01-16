@@ -122,26 +122,26 @@ export default class Users extends AbstractResource
     /**
      * Sign up a new user.
      */
-    signup(userData: any): Promise<ResponseInterface>
+    create(data: any): Promise<ResponseInterface>
     {
-        return this._post('', userData);
+        return this._post('', data);
     }
 
     /**
      * Update a user.
      */
-    update(userData: any): Promise<ResponseInterface>
+    update(data: any): Promise<ResponseInterface>
     {
-        return this._patch('', userData);
+        return this._patch('', data);
     }
 
     /**
      * Update avatar.
      */
-    updateAvatar(userId: string, avatar: File): Promise<ResponseInterface>
+    updateAvatar(id: string, avatar: File): Promise<ResponseInterface>
     {
         return this
             .attach('avatar', avatar)
-            ._post(userId + '/avatar');
+            ._post(id + '/avatar');
     }
 }
