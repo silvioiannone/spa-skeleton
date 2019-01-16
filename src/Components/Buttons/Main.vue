@@ -1,77 +1,55 @@
 <script lang="ts">
 
-    import Button       from '../Mixins/Button.vue';
-    import Component    from '../Mixins/Component.vue';
-    import Vue, {VNode} from 'vue';
+    import { VNode }                   from 'vue';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import Button                      from '../Mixins/Button.vue';
+    import _Component                  from '../Mixins/Component.vue';
 
-    export default Vue.extend({
-
-        name: 'ButtonMain',
-
-        mixins: [
-            Button,
-            Component
-        ],
-
-        props: {
-
-            /**
-             * An action that will be performed when clicking on the button.
-             */
-            action: {
-                validator: (value: any): boolean =>
-                {
-                    return typeof value === 'function';
-                }
+    @Component
+    export default class ButtonMain extends Mixins(Button, _Component)
+    {
+        @Prop({
+            validator(value: any): boolean
+            {
+                return typeof value === 'function'
             }
-        },
+        }) action: Function;
 
-        data()
+        _loading: false
+
+        get propLoading(): boolean
+        {
+            return this.$data._loading;
+        }
+
+        get computedProps(): any
         {
             return {
-                _loading: false
+                loading: this.propLoading
             }
-        },
+        }
 
-        computed: {
+        /**
+         * React to `click` event.
+         */
+        onClick(): void
+        {
+            if (this.action) {
+                this.$data._loading = true;
 
-            propLoading(): boolean
-            {
-                return this.$data._loading;
-            },
-
-            computedProps(): any
-            {
-                return {
-                    loading: this.propLoading
-                }
+                this.action()
+                    .then(() =>
+                    {
+                        this.$data._loading = false;
+                    })
+                    .catch(() =>
+                    {
+                        this.$data._loading = false;
+                    });
             }
-        },
 
-        methods: {
-
-            /**
-             * React to `click` event.
-             */
-            onClick(): void
-            {
-                if (this.action) {
-                    this.$data._loading = true;
-
-                    this.action()
-                        .then(() =>
-                        {
-                            this.$data._loading = false;
-                        })
-                        .catch(() =>
-                        {
-                            this.$data._loading = false;
-                        });
-                }
-
-                this.$emit('click', event);
-            }
-        },
+            this.$emit('click', event);
+        }
 
         render(createElement: Function): VNode
         {
@@ -87,6 +65,6 @@
                 self.$slots.default
             );
         }
-    });
+    }
 
 </script>

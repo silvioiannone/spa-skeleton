@@ -1,79 +1,57 @@
 <script lang="ts">
 
-    import Vue, {VNode} from 'vue';
+    import Vue, { VNode }      from 'vue';
+    import { Component, Prop } from 'vue-property-decorator';
 
     /**
      * This mixin can be used in order to create buttons.
      */
-    export default Vue.extend({
+    @Component
+    export default class Button extends Vue
+    {
+        /**
+         * Applies specified color to the control.
+         */
+        @Prop({ type: String, default: '' }) color: string;
 
-        props: {
+        /**
+         * Designates the button as icon - round and flat.
+         */
+        @Prop({ type: Boolean, default: false }) icon: boolean;
 
-            /**
-             * Applies specified color to the control.
-             */
-            color: {
-                type: String,
-                default: ''
-            },
+        /**
+         * Designates the button as icon - round and flat.
+         */
+        @Prop({ type: Boolean, default: false }) small: boolean;
 
-            /**
-             * Designates the button as icon - round and flat.
-             */
-            icon: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Display a large button.
+         */
+        @Prop({ type: Boolean, default: false }) large: boolean;
 
-            /**
-             * Display a small button.
-             */
-            small: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Display the button in a loading state.
+         */
+        @Prop({ type: Boolean, default: false }) loading: boolean;
 
-            /**
-             * Display a large button.
-             */
-            large: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Display a flat button.
+         */
+        @Prop({ type: Boolean, default: false }) flat: boolean;
 
-            /**
-             * Display the button in a loading state.
-             */
-            loading: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Override this function in order to define what to do when `click` event is emitted.
+         */
+        onClick(): void {}
 
-            /**
-             * Display a flat button.
-             */
-            flat: {
-                type: Boolean,
-                default: false
-            }
-        },
-
-        methods: {
-
-            /**
-             * Override this function in order to define what to do when `click` event is emitted.
-             */
-            onClick(): void {},
-
-            /**
-             * Handle `click` event.
-             */
-            handleClick(event: any): void
-            {
-                this.$emit('click', event);
-                this.onClick();
-            }
-        },
+        /**
+         * Handle `click` event.
+         */
+        handleClick(event: any): void
+        {
+            this.$emit('click', event);
+            this.onClick();
+        }
 
         render(createElement: Function): VNode
         {
@@ -86,6 +64,6 @@
                 }
             }, this.$slots.default);
         }
-    });
+    }
 
 </script>

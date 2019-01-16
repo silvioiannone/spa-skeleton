@@ -6,7 +6,7 @@ import AppComponents from '../../../../../resources/ts/App/Components';
 // Skeleton components
 import AnimatedRouterView  from '../../Components/Misc/AnimatedRouterView.vue';
 // import ButtonConfirm        from '../../Components/Buttons/Confirm.vue';
-// import ButtonMain           from '../../Components/Buttons/Main.vue';
+import ButtonMain           from '../../Components/Buttons/Main.vue';
 import ButtonSubmit        from '../../Components/Buttons/Submit.vue';
 import FormMain            from '../../Components/Forms/Main.vue';
 // import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
@@ -20,7 +20,7 @@ import ToolbarMain         from '../../Components/Toolbars/Main.vue';
 const SkeletonComponents = {
     AnimatedRouterView,
     //'button-confirm': ButtonConfirm,
-    //'button-main': ButtonMain,
+    ButtonMain,
     ButtonSubmit,
     FormMain,
     //'navigation-drawer-main': NavigationDrawerMain,
