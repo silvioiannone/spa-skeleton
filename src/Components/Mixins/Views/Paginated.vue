@@ -20,10 +20,10 @@
     export default class ViewPaginated extends Vue
     {
         pagination: Pagination = {
-            page: '',
-            rowsPerPage: '',
-            totalItems: '',
-            totalPages: '',
+            page: 0,
+            rowsPerPage: 0,
+            totalItems: 0,
+            totalPages: 0,
             descending: false,
             sortBy: ''
         };
@@ -56,8 +56,10 @@
          */
         initPagination()
         {
-            this.pagination.page = this.$route.query.page || this.meta.current_page || '1';
-            this.pagination.rowsPerPage = this.$route.query.size || this.meta.per_page
+            this.pagination.page = parseInt(<string>this.$route.query.page)
+                || this.meta.current_page || '1';
+            this.pagination.rowsPerPage = parseInt(<string>this.$route.query.size)
+                || this.meta.per_page
                 || Config.app.paginationSize;
             this.pagination.totalItems = this.meta.total;
             this.pagination.totalPages = this.meta.last_page;
@@ -85,7 +87,7 @@
 
         beforeRouteUpdate(to: Route, from: Route, next: Function)
         {
-            this.pagination.page = to.query.page || '1';
+            this.pagination.page = parseInt(<string>to.query.page) || 1;
 
             next();
         }
@@ -103,15 +105,21 @@
 
             let query = {
                 ...this.$route.query,
-                page: this.pagination.page
+                page: this.pagination.page.toString()
             };
 
-            if (this.pagination.rowsPerPage !== Config.app.paginationSize) {
-                query['size'] = this.pagination.rowsPerPage;
+
+            if (newPagination.rowsPerPage !== oldPagination.rowsPerPage ||
+                this.pagination.rowsPerPage !== Config.app.paginationSize) {
+                query['size'] = this.pagination.rowsPerPage.toString();
             }
 
             if (this.pagination.descending !== null) {
-                query['sort'] = this.pagination.descending ? '-' + this.pagination.sortBy : this.pagination.sortBy;
+                query['sort'] = this.pagination.sortBy;
+                
+                if(this.pagination.descending) {
+                    query['sort'] = '-' + query['sort'];
+                }
             } else {
                 delete query['sort'];
             }
