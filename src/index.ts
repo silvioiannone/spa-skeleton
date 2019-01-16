@@ -17,6 +17,7 @@ export namespace Models {
  * Components
  */
 export { default as CardMain } from './Components/Cards/Main.vue';
+export { default as DataTableMain } from './Components/DataTables/Main.vue';
 export { default as DialogMain } from './Components/Dialogs/Main.vue';
 export { default as FormMain } from './Components/Forms/Main.vue';
 export { default as Wrapper } from './Components/Mixins/Wrapper.vue';
