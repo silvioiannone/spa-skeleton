@@ -16,7 +16,11 @@ export class Get extends Action
         return new Promise((resolve: Function, reject: Function) =>
         {
             let resource = Get.getResource(store);
-            let requestParameters = params.options.parameters;
+            let requestParameters = null;
+
+            if (params.options && params.options.parameters) {
+                requestParameters = params.options.parameters;
+            }
 
             if (requestParameters) {
                 resource.setParameters(requestParameters);
