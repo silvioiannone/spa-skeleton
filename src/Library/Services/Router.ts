@@ -49,7 +49,7 @@ export default class Router extends Service
      */
     boot(): void
     {
-        let store = (new StateMachine).getStore();
+        let store = StateMachine.getStore();
         let guard = new Guard;
         let scrollPromise = new Promise((resolve: Function, reject: Function) =>
         {

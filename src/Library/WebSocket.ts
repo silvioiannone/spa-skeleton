@@ -201,7 +201,7 @@ export default class WebSocket
      */
     makeChannel(channel: any): AbstractChannel
     {
-        let store = (new StateMachine).getStore()
+        let store = StateMachine.getStore()
 
         return typeof channel === 'object' ? channel : new channel(store);
     }

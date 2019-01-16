@@ -45,7 +45,7 @@ export default class Filters extends Service
     boot(): void
     {
         let availableFilters = {... SkeletonFilters, ...AppFilters};
-        let store = (new StateMachine).getStore();
+        let store = StateMachine.getStore();
 
         for (let key in availableFilters) {
             let filter = (new availableFilters[key](store)).run.bind(this);

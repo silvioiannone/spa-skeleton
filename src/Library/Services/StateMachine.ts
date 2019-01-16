@@ -9,9 +9,6 @@ import { Plugin as ApiSync } from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin
 
 // Skeleton modules
 import App           from '../App/State/Modules/App';
-import Notifications from '../App/State/Modules/Notifications';
-import Roles         from '../App/State/Modules/Roles';
-import Users         from '../App/State/Modules/Users';
 import View          from '../App/State/Modules/View';
 
 // Skeleton models
@@ -19,9 +16,6 @@ import Notification from '../App/State/Models/Notification';
 
 const SkeletonModules = {
     App,
-    //Notifications,
-    //Roles,
-    //Users,
     View
 };
 
@@ -55,20 +49,15 @@ export default class StateMachine extends Service
     boot(): void
     {
         Vue.use(Vuex);
+
+        this.init();
     }
 
     /**
      * Get the store.
      */
-    getStore()
+    static getStore()
     {
-        // Make sure only once store instance is created.
-        if (StateMachine.store) {
-            return StateMachine.store;
-        }
-
-        this.init();
-
         return StateMachine.store;
     }
 
