@@ -11,6 +11,7 @@ import AppChannel      from './WebSocket/Channels/App';
 import UserChannel     from './WebSocket/Channels/User';
 import AbstractChannel from './WebSocket/AbstractChannel';
 import AppHandler      from './Events/AppHandler';
+import ModelHandler    from './Events/ModelHandler';
 import Token           from './Api/Token';
 
 /**
@@ -23,7 +24,7 @@ export default class WebSocket
      */
     protected skeletonSubscriptions: Array<any> = [
         {
-            event: 'Models.UserUpdated',
+            event: 'Models.User.Updated',
             channels: [AdminChannel, UserChannel],
             handlers: {AppHandler}
         },
@@ -74,18 +75,12 @@ export default class WebSocket
 
     /**
      * Subscribe the client.
-     *
-     * @param vue Needed in order to access the root component and use it to fire events.
      */
-    subscribe(vue: Vue): void
+    subscribe(): void
     {
-        this.vue = vue;
-
         if(! Config.webSocket.enabled) {
             return;
         }
-
-        this.connect();
 
         let subscriptions = this.skeletonSubscriptions
             .concat(Subscriptions)
@@ -209,12 +204,12 @@ export default class WebSocket
     /**
      * Broadcast an event to all vue components and execute the state mutations needed.
      */
-    broadcast(event: string, message: any): void
+    broadcast(event: string, payload: any): void
     {
         // Fire the event globally using the EventHub
-        this.vue.$eh.$emit(event, message);
+        this.vue.$eh.$emit(event, payload);
 
-        this.handleEvent(event, message);
+        this.handleEvent(event, payload);
 
         Log.debug('Broadcasted event ' + event + '.');
     }
@@ -245,7 +240,7 @@ export default class WebSocket
         // If it's a model related event...
         if (event.startsWith('Models.') || event.indexOf('App\\Events\\Models') >= 0) {
             // ...let it be handled by the model handler.
-            // handlers.push(new ModelHandler(this.vue));
+            handlers.push(new ModelHandler(this.vue));
         }
 
         for (let handler in subscription.handlers) {
@@ -261,11 +256,13 @@ export default class WebSocket
     /**
      * Connect to the WebSocket server.
      */
-    connect(): this
+    connect(vue: Vue): this
     {
         if (this.isConnected) {
             return this;
         }
+
+        this.vue = vue;
 
         this.echo = new Echo({
             broadcaster: 'socket.io',
