@@ -23,6 +23,12 @@ export { default as DialogMain } from './Components/Dialogs/Main.vue';
 export { default as FormMain } from './Components/Forms/Main.vue';
 export { default as NavigationDrawerMain } from './Components/NavigationDrawers/Main.vue';
 export { default as ToolbarMain } from './Components/Toolbars/Main.vue';
+
+/**
+ * Mixins
+ */
+export { default as ViewPaginated } from './Components/Mixins/Views/Paginated.vue';
+export { default as Subscribable } from './Components/Mixins/Subscribable.vue';
 export { default as Wrapper } from './Components/Mixins/Wrapper.vue';
 
 import App from './App';
