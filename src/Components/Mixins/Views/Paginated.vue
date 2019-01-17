@@ -76,7 +76,8 @@
             }
         }
 
-        created()
+        @Watch('meta', { deep: true, immediate: true})
+        onMetaChange()
         {
             this.initPagination();
         }
