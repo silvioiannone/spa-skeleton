@@ -12,7 +12,7 @@
     {
         created()
         {
-            this.$ws.connect();
+            this.$ws.connect(this);
         }
     }
 
