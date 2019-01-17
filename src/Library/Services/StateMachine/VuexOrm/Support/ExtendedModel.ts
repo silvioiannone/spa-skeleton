@@ -76,20 +76,24 @@ export class ExtendedModel extends Model
     ): Promise<ResponseInterface>
     {
         let api = ApiFactory.make();
-        let promise = execute(api);
 
-        promise.then(response =>
-        {
-            if (response.body.meta) {
-                ExtendedModel.store()
-                   .commit('app/insert', {
-                       ui: {
-                           pagination: response.body.meta
-                       }
-                   });
-            }
-        });
+        let response = await execute(api);
+        this.handleApiResponse(response);
+        return response;
+    }
 
-        return promise;
+    /**
+     * Handle an API response.
+     */
+    protected static handleApiResponse(response: ResponseInterface): void
+    {
+        if (response.body.meta) {
+            ExtendedModel.store()
+                .commit('app/insert', {
+                    ui: {
+                        pagination: response.body.meta
+                    }
+                });
+        }
     }
 }
