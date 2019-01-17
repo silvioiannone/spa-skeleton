@@ -4,24 +4,17 @@ import Vuex, { Store }       from 'vuex';
 import VuexORM               from '@vuex-orm/core';
 import Service               from './Service';
 import Modules               from '../../../../../resources/ts/App/State';
-import Models                from '../../../../../resources/ts/App/State/Models';
+import Models                from '../App/State/Models';
 import { Plugin as ApiSync } from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin';
 
 // Skeleton modules
-import App           from '../App/State/Modules/App';
-import View          from '../App/State/Modules/View';
-
-// Skeleton models
-import Notification from '../App/State/Models/Notification';
+import App  from '../App/State/Modules/App';
+import View from '../App/State/Modules/View';
 
 const SkeletonModules = {
     App,
     View
 };
-
-const SkeletonModels = {
-    Notification
-}
 
 export type StoreType = {
     [P in keyof (typeof SkeletonModules & typeof Modules)]
@@ -68,12 +61,10 @@ export default class StateMachine extends Service
     {
         const database = new VuexORM.Database;
 
-        let availableModels = {...SkeletonModels, ...Models};
-
         // Register all the models with the state machine
-        for (let key in availableModels) {
+        for (let key in Models) {
             Log.debug(`Model "${key}" registered.`);
-            database.register(availableModels[key]);
+            database.register(Models[key]);
         }
 
         VuexORM.use(ApiSync);
