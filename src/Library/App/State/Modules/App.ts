@@ -176,7 +176,7 @@ export default class APP extends Module
              */
             'ui/SET_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any)
             {
-                state.navigationDrawerVisible = value;
+                state.ui.navigationDrawers.leftVisible = value;
             },
 
             /**
@@ -187,7 +187,7 @@ export default class APP extends Module
              */
             'ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any)
             {
-                state.rightNavigationDrawerVisible = value;
+                state.ui.navigationDrawers.rightVisible = value;
             },
 
             /**
@@ -198,7 +198,7 @@ export default class APP extends Module
              */
             'ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY'(state: any, value: any)
             {
-                state.notificationsDrawerVisible = value;
+                state.ui.navigationDrawers.notificationsVisible = value;
             },
 
             /**

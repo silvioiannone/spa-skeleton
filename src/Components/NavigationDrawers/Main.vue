@@ -36,12 +36,8 @@
 
         get visible(): boolean
         {
-            if (this.right)
-            {
-                return this.$store.getters.app.ui.rightNavigationDrawerVisible;
-            }
-
-            return this.$store.getters.app.ui.navigationDrawerVisible;
+            return this.$store.getters.app.ui
+                .navigationDrawers[this.right ? 'rightVisible': 'leftVisible'];
         }
 
         set visible(value: boolean)
