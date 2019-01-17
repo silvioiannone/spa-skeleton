@@ -1,39 +1,38 @@
-<script>
+<script lang="ts">
 
-    let timeout = null;
+    import Vue           from 'vue';
+    import { Component } from 'vue-property-decorator';
 
-    export default {
+    @Component
+    export default class Searchable extends Vue
+    {
+        timeout: NodeJS.Timeout;
 
-        methods: {
+        /**
+         * Perform a server-side search.
+         */
+        search(subject: string)
+        {
+            if (this.timeout) {
+                clearTimeout(this.timeout);
+            }
 
-            /**
-             * Perform a server-side search.
-             *
-             * @param subject
-             */
-            search(subject)
+            this.timeout = setTimeout(() =>
             {
-                if (timeout) {
-                    clearTimeout(timeout);
+                let query = {
+                    ...this.$route.query,
+                    search: subject
+                };
+
+                if (!subject) {
+                    delete query['search'];
                 }
 
-                timeout = setTimeout(() =>
-                {
-                    let query = {
-                        ...this.$route.query,
-                        search: subject
-                    };
-
-                    if (!subject) {
-                        delete query['search'];
-                    }
-
-                    this.$router.push({
-                        path: this.$route.path,
-                        query
-                    });
-                }, 500)
-            }
+                this.$router.push({
+                    path: this.$route.path,
+                    query
+                });
+            }, 500)
         }
     }
 

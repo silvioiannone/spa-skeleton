@@ -1,17 +1,12 @@
-<template>
-
-</template>
-
 <script lang="ts">
 
-    import Vue, { VNode } from 'vue';
+    import { VNode }                          from 'vue';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import Input from './Input.vue';
+    import Input                              from './Input.vue';
 
     declare module 'vue/types/vue' {
 
         interface Vue {
-
             isDirty: any
         }
     }

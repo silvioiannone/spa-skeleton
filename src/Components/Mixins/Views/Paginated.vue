@@ -2,7 +2,6 @@
 
     import Vue                  from 'vue';
     import { Component, Watch } from 'vue-property-decorator';
-    import { Route }            from 'vue-router';
     import Config               from '../../../../src/Config';
     import Pagination           from 'spa-skeleton/src/Library/Interfaces/Pagination';
     import { Model }            from 'spa-skeleton';
@@ -56,11 +55,8 @@
          */
         initPagination()
         {
-            this.pagination.page = parseInt(<string>this.$route.query.page)
-                || this.meta.current_page || '1';
-            this.pagination.rowsPerPage = parseInt(<string>this.$route.query.size)
-                || this.meta.per_page
-                || Config.app.paginationSize;
+            this.pagination.page = this.meta.current_page || '1';
+            this.pagination.rowsPerPage = this.meta.per_page || Config.app.paginationSize;
             this.pagination.totalItems = this.meta.total;
             this.pagination.totalPages = this.meta.last_page;
 
@@ -85,18 +81,11 @@
             this.initPagination();
         }
 
-        beforeRouteUpdate(to: Route, from: Route, next: Function)
-        {
-            this.pagination.page = parseInt(<string>to.query.page) || 1;
-
-            next();
-        }
-
         /**
          * Whenever the pagination changes we need to redirect the router to the right view.
          */
-        @Watch('pagination')
-        onPaginationChanged(newPagination: Pagination, oldPagination: Pagination)
+        @Watch('pagination', { deep: true })
+        onPaginationChange(newPagination: Pagination, oldPagination: Pagination)
         {
             // Do not redirect the user if the pagination parameters are the same.
             if (JSON.stringify(newPagination) === JSON.stringify(oldPagination)) {
@@ -107,7 +96,6 @@
                 ...this.$route.query,
                 page: this.pagination.page.toString()
             };
-
 
             if (newPagination.rowsPerPage !== oldPagination.rowsPerPage ||
                 this.pagination.rowsPerPage !== Config.app.paginationSize) {

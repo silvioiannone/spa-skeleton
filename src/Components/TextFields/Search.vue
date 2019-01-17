@@ -1,58 +1,35 @@
 <script lang="ts">
 
-    import Vue            from 'vue';
-    import MixinTextField from '../Mixins/TextField.vue';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import MixinTextField              from '../Mixins/TextField.vue';
 
-    export default Vue.extend({
+    @Component
+    export default class TextFieldSearch extends Mixins(MixinTextField)
+    {
+        /**
+         * Placeholder.
+         */
+        @Prop({ type: String, default: 'Search...' }) placeholder: string;
 
-        name: 'TextFieldSearch',
+        /**
+         * Display the text field with a "solo" style.
+         */
+        @Prop({ type: Boolean, default: true }) solo: boolean;
 
-        props: {
+        /**
+         * Append an icon to the text field.
+         */
+        @Prop({ type: String, default: 'search' }) appendIcon: string;
 
-            /**
-             * Placeholder.
-             */
-            placeholder: {
-                type: String,
-                default: 'Search...'
-            },
+        /**
+         * Make the text field clearable.
+         */
+        @Prop({ type: Boolean, default: true }) clearable: boolean;
 
-            /**
-             * Display the text field with a "solo" style.
-             */
-            solo: {
-                type: Boolean,
-                default: true
-            },
-
-            /**
-             * Append an incon to the text field.
-             */
-            appendIcon: {
-                type: String,
-                default: 'search'
-            },
-
-            /**
-             * Make the text field clearable.
-             */
-            clearable: {
-                type: Boolean,
-                default: true
-            },
-
-            /**
-             * Value of the name attribute.
-             */
-            name: {
-                type: String,
-                default: 'search'
-            },
-        },
-
-        mixins: [
-            MixinTextField
-        ]
-    });
+        /**
+         * Value of the name attribute.
+         */
+        @Prop({ type: String, default: 'search' }) name: string;
+    }
 
 </script>

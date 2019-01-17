@@ -31,13 +31,10 @@
 
 <script lang="ts">
 
-    import Vue from 'vue';
-    import {
-        Component,
-        Prop,
-        Watch }            from 'vue-property-decorator';
-    import Config          from '../../Config';
-    import TextFieldSearch from '../TextFields/Search.vue'
+    import Vue                        from 'vue';
+    import { Component, Prop, Watch } from 'vue-property-decorator';
+    import Config                     from '../../Config';
+    import TextFieldSearch            from '../TextFields/Search.vue'
 
     @Component({
         components: {
@@ -83,6 +80,7 @@
         @Prop({type: Boolean, default: false}) tabs: boolean;
 
         protected showingSearch: boolean = false;
+
         protected searchQuery: string | string[] = '';
 
         get toolbarTitleRedirectUrl(): string
@@ -109,7 +107,7 @@
 
         get ui(): any
         {
-            return this.$store.getters.ui;
+            return this.$store.getters.app.ui;
         }
 
         get user(): any
