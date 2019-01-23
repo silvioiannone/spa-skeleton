@@ -151,9 +151,8 @@ export default class ModelHandler extends AbstractHandler
      */
     getStateModuleName(event, modelEvent)
     {
-        // Fetch the state module name from the event: '/Models/CampaignCreated' becomes 'Campaign'.
-        let stateModule = event.replace(modelEvent, '');
-        stateModule = /(\w+)$/.exec(stateModule)[0];
+        // Fetch the state module name from the event: '/Models/Campaign/Created' becomes 'Campaign'.
+        let stateModule = /(\w+).\w+$/.exec(event)[1];
         stateModule = stateModule.charAt(0).toLowerCase() + stateModule.slice(1);
         return Pluralize(stateModule);
     }
