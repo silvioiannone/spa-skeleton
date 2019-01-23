@@ -137,7 +137,7 @@
                         });
                         this.errors.add({
                             field: '_server',
-                            msg: response.body.message,
+                            msg: response.body.title,
                             scope: '_server'
                         });
                     }
