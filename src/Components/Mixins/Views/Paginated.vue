@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import { Query }            from '@vuex-orm/core';
     import Vue                  from 'vue';
     import { Component, Watch } from 'vue-property-decorator';
     import Config               from '../../../../src/Config';
@@ -8,12 +9,7 @@
 
     /*
      * This mixin can be used by all the views that need to display paginated data. E.g.: a view
-     * displaying a table with
-     * a list of users.
-     *
-     * How to use it:
-     *
-     * Override the resource computed value.
+     * displaying a table with a list of users.
      */
     @Component
     export default class ViewPaginated extends Vue
@@ -35,10 +31,11 @@
         /**
          * Get the paginated resource.
          */
-        getPaginatedResource(resource: typeof Model)
+        getPaginatedResource(resource: typeof Model | Query)
         {
-            let query = resource.query();
-            let sortQueryParam = this.$route.query.sort;
+            let query = resource instanceof Query ? resource : resource.query();
+
+            let sortQueryParam = <string>this.$route.query.sort;
 
             if (sortQueryParam) {
                 query.orderBy(
@@ -47,7 +44,7 @@
                 );
             }
 
-            return query.all();
+            return query.get();
         }
 
         /**
