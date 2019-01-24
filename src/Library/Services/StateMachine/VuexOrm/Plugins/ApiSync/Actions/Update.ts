@@ -21,12 +21,12 @@ export class Update extends Action
             resource.update(params.data)
                 .then((response: ResponseInterface) =>
                 {
-                    Update.onSuccess(response, store);
+                    Update.onSuccess(response, store, params);
                     resolve(response);
                 })
                 .catch((response: ResponseInterface) =>
                 {
-                    Update.onError(response, store);
+                    Update.onError(response, store, params);
                     reject(response);
                 });
         });
@@ -35,9 +35,9 @@ export class Update extends Action
     /**
      * Handle a successfull response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>)
+    static onSuccess(response: ResponseInterface, store: Store<any>, params: UpdateParameters)
     {
-        store.dispatch('update', {
+        params.model.update({
             where: response.body.data.id,
             data: response.body.data
         });
@@ -51,5 +51,5 @@ export interface UpdateParameters
 {
     data: any,
     options: any,
-    model: ExtendedModel
+    model: typeof ExtendedModel
 }

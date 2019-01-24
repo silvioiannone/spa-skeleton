@@ -69,7 +69,7 @@ export abstract class Action
     /**
      * Handle a successful response.
      */
-    protected static onSuccess(response: ResponseInterface, store: Store<any>)
+    protected static onSuccess(response: ResponseInterface, store: Store<any>, params: any)
     {
         throw 'Define the `onSuccess` function in the extending class.'
     }
@@ -77,7 +77,7 @@ export abstract class Action
     /**
      * Handle an error response.
      */
-    protected static onError(response: ResponseInterface, store: Store<any>)
+    protected static onError(response: ResponseInterface, store: Store<any>, params: any)
     {
         //throw 'Define the `onError` function in the extending class.'
     }

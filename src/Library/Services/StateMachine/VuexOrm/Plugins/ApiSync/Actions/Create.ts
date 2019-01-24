@@ -18,12 +18,12 @@ export class Create extends Action
             resource.create(params.data)
                 .then((response: ResponseInterface) =>
                 {
-                    Create.onSuccess(response, store);
+                    Create.onSuccess(response, store, params);
                     resolve(response);
                 })
                 .catch((response: ResponseInterface) =>
                 {
-                    Create.onError(response, store);
+                    Create.onError(response, store, params);
                     reject(response);
                 });
         });
@@ -32,11 +32,9 @@ export class Create extends Action
     /**
      * Handle a successfull response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>)
+    static onSuccess(response: ResponseInterface, store: Store<any>, params: CreateParameters)
     {
-        store.dispatch('insert', {
-            data: response.body.data
-        });
+        params.model.insert(response.body);
     }
 }
 
@@ -47,5 +45,5 @@ export interface CreateParameters
 {
     data: any,
     options: any,
-    model: ExtendedModel
+    model: typeof ExtendedModel
 }

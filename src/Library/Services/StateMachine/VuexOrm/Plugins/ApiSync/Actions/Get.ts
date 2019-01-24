@@ -1,7 +1,7 @@
 import { ExtendedModel } from '../../../Support/ExtendedModel';
 import ResponseInterface from '../../../../../../Api/ResponseInterface';
-import { Action } from './Action';
-import { Store } from 'vuex';
+import { Action }        from './Action';
+import { Store }         from 'vuex';
 
 /**
  * Get ($get) action.
@@ -29,12 +29,12 @@ export class Get extends Action
             resource.get(params.id)
                 .then((response: ResponseInterface) =>
                 {
-                    Get.onSuccess(response, store);
+                    Get.onSuccess(response, store, params);
                     resolve(response);
                 })
                 .catch((response: ResponseInterface) =>
                 {
-                    Get.onError(response, store);
+                    Get.onError(response, store, params);
                     reject(response);
                 });
         });
@@ -43,11 +43,9 @@ export class Get extends Action
     /**
      * Handle a successful response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>)
+    static onSuccess(response: ResponseInterface, store: Store<any>, params: ActionParameters)
     {
-        store.dispatch('create', {
-            data: response.body.data
-        });
+        params.model.create(response.body);
 
         store.commit('app/insert', {
             ui: {
@@ -63,7 +61,7 @@ export class Get extends Action
 interface ActionParameters
 {
     id: string,
-    model: ExtendedModel,
+    model: typeof ExtendedModel,
     options: GetParameters
 }
 

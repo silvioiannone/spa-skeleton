@@ -21,12 +21,12 @@ export class Delete extends Action
             resource.delete(params.data)
                 .then((response: ResponseInterface) =>
                 {
-                    Delete.onSuccess(response, store);
+                    Delete.onSuccess(response, store, params);
                     resolve(response);
                 })
                 .catch((response: ResponseInterface) =>
                 {
-                    Delete.onError(response, store);
+                    Delete.onError(response, store, params);
                     reject(response);
                 });
         });
@@ -35,11 +35,10 @@ export class Delete extends Action
     /**
      * Handle a successfull response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>)
+    static onSuccess(response: ResponseInterface, store: Store<any>, params: DeleteParameters)
     {
-        store.dispatch('delete', {
-            where: response.body.data.id,
-            data: response.body.data
+        params.model.delete({
+            where: response.body.data.id
         });
     }
 }
@@ -51,5 +50,5 @@ export interface DeleteParameters
 {
     data: any,
     options: any,
-    model: ExtendedModel
+    model: typeof ExtendedModel
 }
