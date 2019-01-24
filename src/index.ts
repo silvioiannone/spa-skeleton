@@ -1,6 +1,6 @@
 export { default as Config } from './Config';
 export { default as Api } from './Library/Api';
-export { default as ResponseInterface } from './Library/API/ResponseInterface';
+export { default as ResponseInterface } from './Library/Api/ResponseInterface';
 export { default as StateMachineModule } from './Library/State/Module';
 
 /*

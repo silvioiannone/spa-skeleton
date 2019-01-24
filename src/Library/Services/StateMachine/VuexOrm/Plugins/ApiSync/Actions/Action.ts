@@ -1,7 +1,7 @@
 import ApiFactory, { ApiClient } from '../../../../../../Api';
 import { Store } from 'vuex';
 import Pluralize from 'pluralize';
-import ResponseInterface from "spa-skeleton/src/Library/API/ResponseInterface";
+import ResponseInterface from "spa-skeleton/src/Library/Api/ResponseInterface";
 import AbstractResource from '../../../../../../Api/Resources/AbstractResource';
 
 /**
