@@ -269,12 +269,24 @@ export default class WebSocket
             host: Config.webSocket.host + ':' + Config.webSocket.port
         });
         this.updateEchoHeaders();
-        this.echo.connector.socket._callbacks.$connect.push(() =>
+
+        let callbacks = this.echo.connector.socket._callbacks;
+
+        callbacks.$connect.push(() =>
         {
             // Set the socket ID in the API
             ApiFactory.setSocketId(this.echo.socketId());
             this.isConnected = true;
             Log.debug('Connected to the WebSocket server (ID: ' + this.echo.socketId() + ')');
+        });
+
+        if (! callbacks.$reconnect) {
+            callbacks.$reconnect = [];
+        }
+
+        callbacks.$reconnect.push(() =>
+        {
+            Log.debug('Reconnecting to the WebSocket server...');
         });
 
         return this;
