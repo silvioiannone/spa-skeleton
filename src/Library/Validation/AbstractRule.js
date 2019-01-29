@@ -10,7 +10,7 @@ export default class AbstractRule
      */
     constructor(translator)
     {
-        this.vue = translator;
+        this.translator = translator;
     }
 
     /**

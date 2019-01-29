@@ -32,7 +32,6 @@ export default class Validator
     {
         Log.debug('Booting validator...');
 
-        //VeeValidate.Validator.localize(ValidatorDictionary);
         this.vue.use(VeeValidate, {
             i18nRootKey: 'validations',
             i18n: this.translator,
