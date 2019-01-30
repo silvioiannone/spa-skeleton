@@ -17,10 +17,16 @@
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "sourceMap": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "spa-skeleton": ["./src/index.ts"],
+            "spa-skeleton/*": ["./src/*"]
+        }
     },
     "include": [
-        "./src/**/*.ts"
+        "./src/**/*.ts",
+        "./src/**/*.vue"
     ],
     "exclude": [
         "node_modules"
