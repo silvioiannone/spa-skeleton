@@ -59,5 +59,8 @@ module.exports = {
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
         })
-    ]
+    ],
+    devServer: {
+        disableHostCheck: true
+    }
 };
