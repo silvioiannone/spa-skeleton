@@ -103,35 +103,32 @@
          */
         handleErrors(response: ResponseInterface): void
         {
+            if (response.status === 500) {
+                this.$eh.$emit('SnackbarDisplayMessage', {
+                    color: 'error',
+                    message: 'Server error.'
+                });
+                return;
+            }
+
+            this.errors.add({
+                field: '_server',
+                msg: response.body.title,
+                scope: '_server'
+            });
+
             if (! response.body.errors) {
                 return;
             }
 
             // Assign the errors to the validator.
             for (let index in response.body.errors) {
-                // If the error's index is a number then it is a server error not linked to a
-                // form input.
-                let parsedIndex = parseInt(index);
-                if (!Number.isNaN(parsedIndex) && typeof parsedIndex === 'number') {
-                    this.errors.add({
-                        field: '_server',
-                        msg: response.body.errors[index]['details'] ||
-                            response.body.errors[index]['title'],
-                        scope: '_server'
-                    });
-                } else {
-                    // These errors need to be set on the parent form because that's where the
-                    // other components are located.
-                    this.$parent.errors.add({
-                        field: index,
-                        msg: response.body.errors[index][0]
-                    });
-                    this.errors.add({
-                        field: '_server',
-                        msg: response.body.message,
-                        scope: '_server'
-                    });
-                }
+                // These errors need to be set on the parent form because that's where the
+                // other components are located.
+                this.$parent.errors.add({
+                    field: index,
+                    msg: response.body.errors[index][0]
+                });
             }
         }
 
