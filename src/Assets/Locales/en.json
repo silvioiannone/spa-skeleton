@@ -59,5 +59,10 @@
       "rowsPerPageText": "Rows per page:"
     },
     "noDataText": "@:common.no data available"
+  },
+  "validations": {
+    "messages": {
+      "required": "The field is required."
+    }
   }
 }
