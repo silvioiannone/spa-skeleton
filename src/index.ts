@@ -1,4 +1,5 @@
 export { default as Config } from './Config';
+export { default as ApiResource } from './Library/Api/Resources/ApiResource';
 export { default as Api } from './Library/Api';
 export { default as ResponseInterface } from './Library/Api/ResponseInterface';
 export { default as StateMachineModule } from './Library/State/Module';
@@ -17,9 +18,12 @@ export namespace Models {
  * Components
  */
 export { default as BreadcrumbsMain } from './Components/Breadcrumbs/Main.vue';
+export { default as CardForm } from './Components/Cards/Form.vue';
 export { default as CardMain } from './Components/Cards/Main.vue';
+export { default as ChipMain } from './Components/Chips/Main.vue';
 export { default as DataTableMain } from './Components/DataTables/Main.vue';
 export { default as DialogMain } from './Components/Dialogs/Main.vue';
+export { default as DialogForm } from './Components/Dialogs/Form.vue';
 export { default as FormMain } from './Components/Forms/Main.vue';
 export { default as LayoutApp } from './Components/Layouts/App.vue';
 export { default as NavigationDrawerMain } from './Components/NavigationDrawers/Main.vue';
@@ -37,4 +41,5 @@ export { default as Subscribable } from './Components/Mixins/Subscribable.vue';
 export { default as Wrapper } from './Components/Mixins/Wrapper.vue';
 
 import App from './App';
+
 export default App;
