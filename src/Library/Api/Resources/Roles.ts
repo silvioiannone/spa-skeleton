@@ -1,10 +1,10 @@
-import AbstractResource  from './AbstractResource';
+import ApiResource  from './ApiResource';
 import ResponseInterface from '../ResponseInterface';
 
 /**
  * Roles resource.
  */
-export default class Roles extends AbstractResource
+export default class Roles extends ApiResource
 {
     constructor()
     {

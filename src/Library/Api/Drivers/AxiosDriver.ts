@@ -170,7 +170,8 @@ export default class AxiosDriver extends AbstractApiDriver
     parseResponse(response: AxiosResponse): ResponseInterface
     {
         return {
-            body: response.data
+            body: response.data,
+            status: response.status
         }
     }
 }

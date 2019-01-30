@@ -5,7 +5,7 @@ const ApiDriver = Config.api.drivers[Config.api.driver];
 /**
  * An API abstract resource.
  */
-export default abstract class AbstractResource extends ApiDriver
+export default abstract class ApiResource extends ApiDriver
 {
-    protected moduleName: string;
+
 }

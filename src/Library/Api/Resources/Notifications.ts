@@ -1,10 +1,10 @@
-import AbstractResource  from './AbstractResource';
+import ApiResource  from './ApiResource';
 import ResponseInterface from '../ResponseInterface';
 
 /**
  * Notifications resource.
  */
-export default class Notifications extends AbstractResource
+export default class Notifications extends ApiResource
 {
     constructor()
     {

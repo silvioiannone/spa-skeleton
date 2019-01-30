@@ -1,6 +1,6 @@
-import AbstractResource from './Api/Resources/AbstractResource';
+import ApiResource       from './Api/Resources/ApiResource';
 import AbstractApiDriver from './Api/Drivers/AbstractApiDriver';
-import AppResources     from '../../../../resources/ts/App/Api';
+import AppResources      from '../../../../resources/ts/App/Api';
 
 // Skeleton API resources
 import App           from './Api/Resources/App';
@@ -78,7 +78,7 @@ export default class ApiFactory
     /**
      * Loop through the resources and execute a callback.
      */
-    protected static mapResources(callback: (resource: AbstractResource) => AbstractResource): void
+    protected static mapResources(callback: (resource: ApiResource) => ApiResource): void
     {
         for (let key in ApiFactory.resources) {
             callback(ApiFactory.resources[ApiFactory.getResourceName(key)]);

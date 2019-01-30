@@ -1,11 +1,11 @@
-import AbstractResource  from './AbstractResource';
+import ApiResource  from './ApiResource';
 import Config            from '../../../Config';
 import ResponseInterface from '../ResponseInterface';
 
 /**
  * Users resource.
  */
-export default class Users extends AbstractResource
+export default class Users extends ApiResource
 {
     constructor()
     {

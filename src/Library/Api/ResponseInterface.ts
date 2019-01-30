@@ -1,4 +1,7 @@
+import HttpStatusCodes from './HttpStatusCodes';
+
 export default interface ResponseInterface
 {
-    body: any
+    body: any,
+    status: HttpStatusCodes
 }

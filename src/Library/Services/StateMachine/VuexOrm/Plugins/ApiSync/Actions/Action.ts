@@ -2,7 +2,7 @@ import ApiFactory, { ApiClient } from '../../../../../../Api';
 import { Store } from 'vuex';
 import Pluralize from 'pluralize';
 import ResponseInterface from "spa-skeleton/src/Library/Api/ResponseInterface";
-import AbstractResource from '../../../../../../Api/Resources/AbstractResource';
+import ApiResource from '../../../../../../Api/Resources/ApiResource';
 
 /**
  * An action.
@@ -47,7 +47,7 @@ export abstract class Action
     /**
      * Get the related resource.
      */
-    protected static getResource(store: Store<any>): AbstractResource
+    protected static getResource(store: Store<any>): ApiResource
     {
         let name = Action.getResourceName(store);
 
