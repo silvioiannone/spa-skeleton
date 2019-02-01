@@ -10,6 +10,7 @@
     "search": "Search",
     "showAll": "Show all",
     "showMore": "Show more",
+    "unauthorized": "Unauthorized.",
     "upload": "Upload"
   },
   "form": {
@@ -45,6 +46,12 @@
   },
   "toolbar": {
     "logIn": "@:common.logIn"
+  },
+  "views": {
+    "errors": {
+      "authenticateInOrderToContinue": "Authenticate in order to continue.",
+      "youAreNotAuthorizedToViewThisPage": "You're not authorized to view this page."
+    }
   },
   "$vuetify": {
     "dataIterator": {

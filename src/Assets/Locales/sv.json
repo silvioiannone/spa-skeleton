@@ -10,6 +10,7 @@
     "search": "Sök",
     "showAll": "Visa alla",
     "showMore": "Visa fler",
+    "unauthorized": "Obehörig",
     "upload": "Ladda up"
   },
   "form": {
@@ -45,6 +46,12 @@
   },
   "toolbar": {
     "logIn": "@:common.logIn"
+  },
+  "views": {
+    "errors": {
+      "authenticateInOrderToContinue": "Logga in för att fortsätta.",
+      "youAreNotAuthorizedToViewThisPage": "Du är inte behörig att visa den här sidan."
+    }
   },
   "$vuetify": {
     "dataIterator": {

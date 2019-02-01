@@ -6,13 +6,13 @@
                     <div class="text-xs-center mb-5">
                         <v-icon x-large class="red--text">error_outline</v-icon>
                     </div>
-                    <h3 class="text-xs-center">Unauthorized.</h3>
+                    <h3 class="text-xs-center">{{ $t('common.unauthorized') }}</h3>
                 </v-flex>
                 <v-flex xs12 offset-md3 md6 offset-lg4 lg4 class="mt-5">
                     <v-card>
                         <v-alert icon="warning" color="warning" :value="true">
-                            You are not authorized to view this page.
-                            Authenticate in order to continue.
+                            {{ $t('views.errors.youAreNotAuthorizedToViewThisPage') }}
+                            {{ $t('views.errors.authenticateInOrderToContinue') }}
                         </v-alert>
                         <slot></slot>
                     </v-card>
