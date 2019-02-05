@@ -12,16 +12,18 @@ import Date               from '../App/Filters/Date';
 import FileSize           from '../App/Filters/FileSize';
 import OrganizationNumber from '../App/Filters/OrganizationNumber';
 import Phone              from '../App/Filters/Phone';
+import Plural             from '../App/Filters/Plural';
 import ReadableDate       from '../App/Filters/ReadableDate';
 
 const SkeletonFilters = {
     capitalize: Capitalize,
     currency: Currency,
     date: Date,
-    readableDate: ReadableDate,
     fileSize: FileSize,
     organizationNumber: OrganizationNumber,
-    phone: Phone
+    phone: Phone,
+    plural: Plural,
+    readableDate: ReadableDate
 };
 
 /**
