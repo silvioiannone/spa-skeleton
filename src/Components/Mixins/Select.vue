@@ -1,228 +1,188 @@
-<script>
+<script lang="ts">
 
-    import _ from 'lodash';
+    import _                                  from 'lodash';
+    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
+    import Input                              from './Input.vue';
 
     /**
      * This mixin can be used in order to bootstrap the creation of a select box.
      *
-     * If the models that you want to be available in the selectbox do not have a value/text
-     * properties you can create a `transformModel` in the component using this mixin that will
-     * add those two properties to each model. For example:
+     * If the items that you want to be available in the selectbox do not have a value/text
+     * properties you can create a `transformItem` in the component using this mixin that will
+     * add those two properties to each item. For example:
      *
-     *     transformModel(model)
+     *     transformItem(item)
      *     {
-     *         model.text = model.first_name + ' ' + model.last_name;
-     *         model.value = model.id;
+     *         item.text = item.first_name + ' ' + item.last_name;
+     *         item.value = item.id;
      *
-     *         return model;
+     *         return item;
      *     }
      */
-    export default {
+    @Component
+    export default class Select extends Mixins(Input)
+    {
+        /**
+         * Display chips in the selectbox.
+         */
+        @Prop({ type: Boolean, default: false }) chips: boolean;
 
-        props: {
+        /**
+         * Whether or not to display a button to clean the selectbox.
+         */
+        @Prop({ type: Boolean, default: false }) clearable: boolean;
 
-            /**
-             * Display chips in the selectbox.
-             */
-            chips: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Tagging functionality, allows you to enter/navigate/delete items.
+         */
+        @Prop({ type: Boolean, default: false }) tags: boolean;
 
-            /**
-             * Whether or not to display a button to clean the selectbox.
-             */
-            clearable: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * items that will be available in the selectbox.
+         */
+        @Prop({ type: Array, required: true }) items: Array<any>;
 
-            /**
-             * Tagging functionality, allows you to enter/navigate/delete items.
-             */
-            tags: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Already selected subjects.
+         *
+         * If it is an array then multiple elements will be allowed to be selected.
+         */
+        @Prop({ }) selected: any;
 
-            /**
-             * Selectbox label.
-             */
-            label: {
-                type: String,
-                default: 'Users'
-            },
+        /**
+         * Item transformation function.
+         */
+        @Prop({ type: Function, default: () => {} }) transformation: (item: any) => any;
 
-            /**
-             * Models that will be available in the selectbox.
-             */
-            models: {
-                type: Array,
-                required: true
-            },
+        /**
+         * Contains the list of the manually newly created tags.
+         */
+        addedTags: Array<any> = [];
 
-            /**
-             * Already selected subjects.
-             *
-             * If it is an array then multiple elements will be allowed to be selected.
-             */
-            selected: {},
+        /**
+         * Selected items.
+         */
+        _selected: Array<any> = [];
 
-            /**
-             * Model transformation function.
-             */
-            transformation: {
-                type: Function,
-                default: () => {}
-            }
-        },
+        /**
+         * Items available for selection.
+         */
+        _items: Array<any> = [];
 
-        data()
+        get multiple()
         {
-            return {
+            return Array.isArray(this.selected);
+        }
 
-                /**
-                 * Contains the list of the manually newly created tags.
-                 */
-                addedTags: [],
-
-                /**
-                 * Selected items.
-                 */
-                _selected: [],
-
-                /**
-                 * Items available for selection.
-                 */
-                _models: []
+        /**
+         * Fire the needed event.
+         */
+        fire(selected: any)
+        {
+            if (selected === null) {
+                this.$emit('input', {});
+                return;
             }
-        },
 
-        computed: {
-
-            multiple()
-            {
-                return Array.isArray(this.selected);
+            if (this.tags) {
+                // Each tag created by Vuetify needs to be transformed and added to the
+                // `addedTags` data property.
+                selected.forEach((item: any) =>
+                {
+                    if (typeof item === 'string') {
+                        this.addedTags.push(this.transformItem({
+                            name: item
+                        }));
+                    }
+                });
             }
-        },
 
-        methods: {
+            let selectedCopy = _.clone(selected);
 
-            /**
-             * Fire the needed event.
-             */
-            fire(selected)
-            {
-                if (selected === null) {
-                    this.$emit('selected', {});
-                    return;
-                }
+            selectedCopy = this.multiple ?
+                selectedCopy.map((item: any) => this.cleanItem(item)) : this.cleanItem(selectedCopy);
 
-                if (this.tags) {
-                    // Each tag created by Vuetify needs to be transformed and added to the
-                    // `addedTags` data property.
-                    selected.forEach(model =>
-                    {
-                        if (typeof model === 'string') {
-                            this.addedTags.push(this.transformModel({
-                                name: model
-                            }));
-                        }
-                    });
-                }
+            this.$emit('input', selectedCopy);
+        }
 
-                let selectedCopy = _.clone(selected);
-
-                selectedCopy = this.multiple ?
-                    selectedCopy.map(item => this.cleanItem(item)) : this.cleanItem(selectedCopy);
-
-                this.$emit('selected', selectedCopy);
-            },
-
-            /**
-             * Clean an item.
-             */
-            cleanItem(item)
-            {
-                if (typeof item === 'string') {
-                    return {
-                        name: item
-                    }
-                }
-
-                delete item['pivot'];
-                delete item['text'];
-                delete item['value'];
-
-                return item;
-            },
-
-            /**
-             * Transform the models.
-             */
-            transformModels()
-            {
-                this.$data._models = this.models.map(model => this._transformModel(model));
-            },
-
-            /**
-             * Transform a model so that it can be used by the select box.
-             */
-            _transformModel(model)
-            {
-                if (typeof this.transformModel === 'function') {
-                    let localModel = Object.assign({}, model);
-
-                    if (localModel) {
-                        return this.transformModel(localModel)
-                    }
-                }
-
-                return model;
-            },
-
-            /**
-             * Init the selected items.
-             */
-            initSelected()
-            {
-                if (this.multiple) {
-                    this.$data._selected = this.selected
-                        .filter(selected => typeof selected !== 'undefined')
-                        .map(selected =>
-                            this.$data._models.find(model => model.id === selected.id) || selected);
-                } else {
-                    if (typeof this.selected !== 'undefined') {
-                        this.$data._selected = this._transformModel(this.selected);
-                    }
+        /**
+         * Clean an item.
+         */
+        cleanItem(item: any): any
+        {
+            if (typeof item === 'string') {
+                return {
+                    name: item
                 }
             }
-        },
+
+            delete item['pivot'];
+            delete item['text'];
+            delete item['value'];
+
+            return item;
+        }
+
+        /**
+         * Transform the items.
+         */
+        transformItems(): void
+        {
+            this.$data._items = this.items.map((item: any) => this._transformItem(item));
+        }
+
+        /**
+         * Transform a item so that it can be used by the select box.
+         */
+        _transformItem(item: any)
+        {
+            let localItem = Object.assign({}, item);
+
+            return this.transformItem(localItem);
+        }
+
+        /**
+         * Init the selected items.
+         */
+        initSelected(): void
+        {
+            if (this.multiple) {
+                this.$data._selected = this.selected
+                    .filter((selected: any) => typeof selected !== 'undefined')
+                    .map((selected: any) =>
+                        this.$data._items.find((item: any) => item.id === selected.id) || selected);
+            } else {
+                if (typeof this.selected !== 'undefined') {
+                    this.$data._selected = this._transformItem(this.selected);
+                }
+            }
+        }
+
+        /**
+         * Override this function if the item should be transformed.
+         */
+        transformItem(item: any): any
+        {
+            return item;
+        }
 
         created()
         {
-            this.transformModel = this.transformation;
-        },
+            this.transformItem = this.transformation;
+        }
 
-        mounted()
+        @Watch('items', { immediate: true })
+        onItemsChange()
         {
-            this.transformModels();
+            this.transformItems();
+        }
+
+        @Watch('selected', { immediate: true })
+        onSelectedChange()
+        {
+            this.transformItems();
             this.initSelected();
-        },
-
-        watch: {
-
-            models()
-            {
-                this.transformModels();
-            },
-
-            selected()
-            {
-                this.transformModels();
-                this.initSelected();
-            }
         }
     }
-
+    
 </script>
