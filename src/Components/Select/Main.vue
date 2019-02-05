@@ -1,25 +1,27 @@
-<script>
+<script lang="ts">
 
-    import Select from '../Mixins/Select.vue';
+    import { VNode, CreateElement } from 'vue';
+    import { Component, Mixins }    from 'vue-property-decorator';
+    import Select                   from '../Mixins/Select.vue';
 
-    export default {
-
-        name: 'SelectMain',
-
-        mixins: [
-            Select
-        ],
-
-        render(createElement)
+    @Component
+    export default class SelectMain extends Mixins(Select)
+    {
+        render(createElement: CreateElement): VNode
         {
+            let scopedSlots = this.$vnode.data ? this.$vnode.data.scopedSlots : undefined;
+
             return createElement(
                 'v-select',
                 {
+                    attrs: {
+                        name: this.name
+                    },
                     props: this.$props,
                     on: {
-                        input: value => this.fire(value)
+                        input: (value: any) => this.fire(value)
                     },
-                    scopedSlots: this.$vnode.data.scopedSlots
+                    scopedSlots
                 }
             )
         }
