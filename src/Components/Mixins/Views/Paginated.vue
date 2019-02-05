@@ -5,6 +5,7 @@
     import { Component, Watch } from 'vue-property-decorator';
     import Config               from '../../../../src/Config';
     import Pagination           from 'spa-skeleton/src/Library/Interfaces/Pagination';
+    import PaginationUtil       from '../../../Library/Utils/Pagination';
     import { Model }            from 'spa-skeleton';
 
     /*
@@ -14,14 +15,7 @@
     @Component
     export default class ViewPaginated extends Vue
     {
-        pagination: Pagination = {
-            page: 0,
-            rowsPerPage: 0,
-            totalItems: 0,
-            totalPages: 0,
-            descending: false,
-            sortBy: ''
-        };
+        pagination: Pagination = PaginationUtil.initialValue();
 
         get meta(): any
         {
