@@ -1,21 +1,40 @@
-import Config from '../../Config';
-import URIjs from 'urijs';
+import Config            from '../../Config';
+import URIjs             from 'urijs';
+import ResponseInterface from '../Api/ResponseInterface';
+import Pagination        from '../Interfaces/Pagination';
+
+type PartialPagination = {
+    [P in keyof Pagination]?: Pagination[P]
+}
 
 /**
  * Provides pagination utilities.
  */
-export default
-{
+export default {
+
+    /**
+     * Get the initial value for the pagination.
+     */
+    initialValue(override: PartialPagination = {}): Pagination
+    {
+        return {
+            page: 1,
+            rowsPerPage: Config.app.paginationSize,
+            totalItems: 0,
+            totalPages: 1,
+            sortBy: <string | Array<string>>'',
+            descending: <boolean | null>null,
+            ...override
+        }
+    },
+
     /**
      * Create a pagination object from a server response.
-     *
-     * @param data
-     * @return Object
      */
-    makeFromResponse(response)
+    makeFromResponse(response: ResponseInterface): Pagination
     {
         let meta = response.body.meta;
-        let uri = URIjs(response.req.url);
+        let uri = URIjs(response.request.url);
 
         let pagination = this.makeFromMetaObject(meta);
 
@@ -26,7 +45,7 @@ export default
                 pagination.descending = true;
             } else {
                 pagination.sortBy = sortValue;
-                pagination.descending = ''
+                pagination.descending = null;
             }
         } else {
             pagination.sortBy = '';
@@ -38,17 +57,16 @@ export default
 
     /**
      * Create a pagination object from a meta object.
-     *
-     * @param meta
-     * @returns Object
      */
-    makeFromMetaObject(meta)
+    makeFromMetaObject(meta: any): Pagination
     {
         return {
             page: meta.current_page,
             rowsPerPage: meta.per_page,
             totalItems: meta.total,
-            totalPages: meta.last_page
+            totalPages: meta.last_page,
+            sortBy: [],
+            descending: null
         }
     },
 
@@ -57,16 +75,18 @@ export default
      *
      * @param pagination {Object} Vuetify pagination object.
      */
-    makeQueryParamsFromVuetifyPagination(pagination)
+    makeQueryParamsFromVuetifyPagination(pagination: Pagination)
     {
         let parameters = {
             'page[size]': pagination.rowsPerPage || Config.app.paginationSize,
-            'page[number]': pagination.page || 1
+            'page[number]': pagination.page || 1,
+            'sort': ''
         }
 
         if(pagination.sortBy && pagination.descending !== null) {
-            parameters.sort = pagination.descending ?
-                '-' + pagination.sortBy : pagination.sortBy;
+            parameters.sort = <string>(
+                pagination.descending ? '-' + pagination.sortBy : pagination.sortBy
+            );
         }
 
         return parameters;
