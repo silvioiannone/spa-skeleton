@@ -334,6 +334,12 @@ export default class SuperAgentDriver extends AbstractApiDriver
      */
     protected parseResponse(response: SuperAgent.Response): ResponseInterface
     {
-        return response;
+        return {
+            body: response.body,
+            status: response.status,
+            request: {
+                url: response['req'].url
+            }
+        };
     }
 }
