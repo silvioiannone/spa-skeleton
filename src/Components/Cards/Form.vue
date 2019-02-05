@@ -1,7 +1,7 @@
 <template>
     <card-main v-on="getOn()" v-bind="getProps()">
         <v-card-text>
-            <slot></slot>
+            <slot :bubble-cancel="bubbleCancel" :bubble-submit="bubbleSubmit"></slot>
         </v-card-text>
     </card-main>
 </template>
@@ -24,7 +24,7 @@
         /**
          * Propagates the cancel form event to the parent.
          */
-        bubbleCancelEvent(event: Event)
+        bubbleCancel(event: Event): void
         {
             this.$emit('cancel', event);
         }
@@ -32,7 +32,7 @@
         /**
          * Propagates the submit form event to the parent.
          */
-        bubbleSubmitEvent(event: Event)
+        bubbleSubmit(event: Event): void
         {
             this.$emit('submit', event)
         }

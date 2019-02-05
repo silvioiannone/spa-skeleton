@@ -31,17 +31,29 @@
          */
         @Prop({ type: Boolean, default: false }) fullscreen: boolean;
 
+        /**
+         * When set to true, expects a card, card-title, card-text and card-actions. Additionally,
+         * card-text should have specified height. Will set card-text to overflow-y.
+         */
+        @Prop({ type: Boolean, default: false }) scrollable: Boolean;
+
         get _fullscreen()
         {
             // Make the dialog fullscreen on small devices.
             return this.fullscreen || this.$vuetify.breakpoint.xs;
         }
 
-        get model() {
+        get model()
+        {
             return this.value;
-        };
+        }
 
-        set model(value: boolean) {
+        set model(value: boolean)
+        {
+            if (! value) {
+                this.$emit('hidden');
+            }
+
             this.$emit('input', value);
         }
 
@@ -102,18 +114,6 @@
                     input: this.updateModel
                 }
             }, this.$slots.default)
-
-            //return (
-            //    <v-dialog value={this.value} onInput={this.updateModel} width={this.maxWidth}
-            //    fullscreen={this._fullscreen} persistent={this.persistent}>
-            //    {this._fullscreen &&
-            //            <v-btn class="dialog--button-close" icon onClick={this.close}>
-            //            <v-icon color="primary">close</v-icon>
-            //        </v-btn>
-            //    }
-            //    { this.$slots.default }
-            //    </v-dialog>
-            //);
         }
     }
 
