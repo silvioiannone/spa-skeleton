@@ -8,7 +8,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.vue'],
         alias: {
-            'spa-skeleton$': path.resolve(__dirname, 'src/index.ts')
+            'spa-skeleton$': path.resolve(__dirname, 'index.ts')
         },
         modules: [
             'resources',
