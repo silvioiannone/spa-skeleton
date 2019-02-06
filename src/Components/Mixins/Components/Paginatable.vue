@@ -19,7 +19,7 @@
          *
          * This function needs to be overridden.
          */
-        getPaginatedData(paramters: any): Promise<ResponseInterface>
+        getPaginatedData(parameters: any): Promise<ResponseInterface>
         {
             return <Promise<ResponseInterface>><unknown>false;
         }
@@ -27,7 +27,7 @@
         /**
          * Get the paginated data.
          */
-        async localGetPaginatedData()
+        async localGetPaginatedData(): Promise<any>
         {
             let parameters = Pagination.makeQueryParamsFromVuetifyPagination(this.pagination);
 
@@ -36,7 +36,7 @@
             this.pagination = { ...Pagination.makeFromResponse(response) }
         }
 
-        mounted()
+        mounted(): void
         {
             this.localGetPaginatedData();
         }

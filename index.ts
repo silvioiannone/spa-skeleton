@@ -1,5 +1,6 @@
 export { default as Config } from './src/Config';
 export { default as ApiResource } from './src/Library/Api/Resources/ApiResource';
+export { default as CrudResource } from './src/Library/Api/Resources/CrudResource';
 export { default as Api } from './src/Library/Api';
 export { default as ResponseInterface } from './src/Library/Api/ResponseInterface';
 export { default as StateMachineModule } from './src/Library/State/Module';
@@ -43,7 +44,9 @@ export { default as ViewErrorNotFound } from './src/Components/Views/Errors/NotF
 /**
  * Mixins
  */
+export { default as ComponentFilterable } from './src/Components/Mixins/Components/Filterable.vue';
 export { default as ComponentPaginatable } from './src/Components/Mixins/Components/Paginatable.vue';
+export { default as ComponentSearchable } from './src/Components/Mixins/Components/Searchable.vue';
 export { default as ViewFilterable } from './src/Components/Mixins/Views/Filterable.vue';
 export { default as ViewSearchable } from './src/Components/Mixins/Views/Searchable.vue';
 export { default as ViewPaginated } from './src/Components/Mixins/Views/Paginated.vue';
