@@ -11,13 +11,18 @@
         {
             let scopedSlots = this.$vnode.data ? this.$vnode.data.scopedSlots : undefined;
 
+            let props = {
+                ...this.$props,
+                multiple: this.multiple
+            }
+
             return createElement(
                 'v-select',
                 {
                     attrs: {
                         name: this.name
                     },
-                    props: this.$props,
+                    props,
                     on: {
                         input: (value: any) => this.fire(value)
                     },

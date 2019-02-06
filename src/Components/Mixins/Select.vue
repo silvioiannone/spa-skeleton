@@ -47,12 +47,17 @@
          *
          * If it is an array then multiple elements will be allowed to be selected.
          */
-        @Prop({ }) selected: any;
+        @Prop({ }) value: any;
 
         /**
          * Item transformation function.
          */
         @Prop({ type: Function, default: () => {} }) transformation: (item: any) => any;
+
+        /**
+         * Changes the style of the input
+         */
+        @Prop({ type: Boolean, default: false }) solo: boolean;
 
         /**
          * Contains the list of the manually newly created tags.
@@ -71,7 +76,7 @@
 
         get multiple()
         {
-            return Array.isArray(this.selected);
+            return Array.isArray(this.value);
         }
 
         /**
@@ -111,9 +116,10 @@
         cleanItem(item: any): any
         {
             if (typeof item === 'string') {
-                return {
-                    name: item
+                if (this.tags) {
+                    return { name: item }
                 }
+                return item;
             }
 
             delete item['pivot'];
@@ -147,13 +153,13 @@
         initSelected(): void
         {
             if (this.multiple) {
-                this.$data._selected = this.selected
+                this.$data._selected = this.value
                     .filter((selected: any) => typeof selected !== 'undefined')
                     .map((selected: any) =>
                         this.$data._items.find((item: any) => item.id === selected.id) || selected);
             } else {
-                if (typeof this.selected !== 'undefined') {
-                    this.$data._selected = this._transformItem(this.selected);
+                if (typeof this.value !== 'undefined') {
+                    this.$data._selected = this._transformItem(this.value);
                 }
             }
         }

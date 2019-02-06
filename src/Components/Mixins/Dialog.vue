@@ -1,8 +1,8 @@
 <script lang="ts">
 
-    import { VNode, CreateElement } from 'vue';
+    import { VNode, CreateElement }    from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import MixinComponent        from './Component.vue';
+    import MixinComponent              from './Component.vue';
 
     /*
      * This mixin can be used in order to create new dialogs.
@@ -35,7 +35,7 @@
          * When set to true, expects a card, card-title, card-text and card-actions. Additionally,
          * card-text should have specified height. Will set card-text to overflow-y.
          */
-        @Prop({ type: Boolean, default: false }) scrollable: Boolean;
+        @Prop({ type: Boolean, default: false }) scrollable: boolean;
 
         get _fullscreen()
         {
@@ -84,9 +84,7 @@
                     class: {
                         'dialog--button-close': true
                     },
-                    props: {
-                        icon: true
-                    },
+                    props: this.getProps(),
                     on: {
                         click: this.close
                     }
@@ -104,12 +102,7 @@
             }
 
             return createElement('v-dialog', {
-                props: {
-                    fullscreen: this._fullscreen,
-                    persistent: this.persistent,
-                    value: this.value,
-                    width: this.maxWidth
-                },
+                props: this.getProps(),
                 on: {
                     input: this.updateModel
                 }
