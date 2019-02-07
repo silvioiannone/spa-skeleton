@@ -37,6 +37,16 @@
          */
         @Prop({ type: Boolean, default: false }) scrollable: boolean;
 
+        /**
+         * Hides the display of the overlay.
+         */
+        @Prop({ type: Boolean, default: false }) hideOverlay: boolean;
+
+        /**
+         * Sets the component transition. Can be one of the built in transitions or your own.
+         */
+        @Prop({ type: String, default: 'dialog-transition' }) transition: string;
+
         get _fullscreen()
         {
             // Make the dialog fullscreen on small devices.

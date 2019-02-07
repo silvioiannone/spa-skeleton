@@ -38,9 +38,21 @@
         @Prop({ type: Boolean, default: false }) tags: boolean;
 
         /**
-         * items that will be available in the selectbox.
+         * Items that will be available in the selectbox.
          */
         @Prop({ type: Array, required: true }) items: Array<any>;
+
+        /**
+         * Pass props through to the v-menu component. Accepts either a string for boolean props
+         * `menu-props="auto, overflowY"`, or an object
+         * `:menu-props="{ auto: true, overflowY: true }`.
+         */
+        @Prop({ type: Object, default: {
+            closeOnClick: false,
+            closeOnContentClick: false,
+            openOnClick: false,
+            maxHeight: 300
+        }}) menuProps: object;
 
         /**
          * Already selected subjects.
