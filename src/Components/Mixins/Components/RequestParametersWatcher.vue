@@ -103,8 +103,6 @@
 
                 return response;
             });
-
-            console.log(this);
         }
     }
 
