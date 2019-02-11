@@ -22,6 +22,12 @@
          */
         @Prop({ type: Object, default: () => ({}) }) pagination: any
 
+        /**
+         * Adds header row select all checkbox. Can either be a String which specifies which color
+         * is applied to the button, or a Boolean (which uses the default color).
+         */
+        @Prop({ type: [Boolean, String], default: false }) selectAll: boolean | string;
+
         rowsPerPageItems()
         {
             let paginationSize = Config.app.paginationSize;
@@ -38,6 +44,7 @@
                     pagination: this.pagination,
                     totalItems: this.pagination.totalItems,
                     rowsPerPageItems: this.rowsPerPageItems(),
+                    selectAll: this.selectAll
                 },
                 on: {
                     'update:pagination': (value: any) => this.$emit('update:pagination', value)
