@@ -47,7 +47,8 @@
                     selectAll: this.selectAll
                 },
                 on: {
-                    'update:pagination': (value: any) => this.$emit('update:pagination', value)
+                    'input': (value: any) => this.$emit('input', value),
+                    'update:pagination': (value: any) => this.$emit('update:pagination', value),
                 }
             };
 
