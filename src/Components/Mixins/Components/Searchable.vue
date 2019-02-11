@@ -1,25 +1,18 @@
 <script lang="ts">
 
-    import Vue                  from 'vue';
-    import { Component, Watch } from 'vue-property-decorator';
+    import { Component, Watch, Mixins } from 'vue-property-decorator';
+    import Pagination                   from '../../../Library/Utils/Pagination';
+    import RequestParametersWatcher     from './RequestParametersWatcher.vue';
 
     /**
      * This mixin handles searches performed by a component that can search for data.
      */
     @Component
-    export default class Searchable extends Vue
+    export default class Searchable extends Mixins(RequestParametersWatcher)
     {
         timeout: NodeJS.Timeout;
 
         searchQuery: string = '';
-
-        /**
-         * Get searched data.
-         *
-         * This function needs to be overridden.
-         */
-        getSearchedData(parameters: any): void
-        {}
 
         /**
          * Get the searched data.
@@ -32,14 +25,24 @@
 
             this.timeout = setTimeout(() =>
             {
-                let parameters = {};
+                let parameters = this.getParameters();
 
-                if (this.searchQuery) {
-                    parameters['search'] = this.searchQuery;
+                parameters.search = this.searchQuery ? this.searchQuery : null;
+
+                // If the view has any pagination related parameters we need to reset those.
+                if (parameters.hasOwnProperty('page[number]')) {
+                    parameters['page[number]'] = 1;
                 }
 
-                this.getSearchedData(parameters);
+                this.setParameters(parameters);
             }, 500);
+        }
+
+        created()
+        {
+            this.setParameters({
+                search: null
+            });
         }
 
         @Watch('searchQuery')

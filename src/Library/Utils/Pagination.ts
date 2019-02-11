@@ -23,7 +23,7 @@ export default {
             totalItems: 0,
             totalPages: 1,
             sortBy: <string | Array<string>>'',
-            descending: <boolean | null>null,
+            descending: false,
             ...override
         }
     },
@@ -45,7 +45,7 @@ export default {
                 pagination.descending = true;
             } else {
                 pagination.sortBy = sortValue;
-                pagination.descending = null;
+                pagination.descending = false;
             }
         } else {
             pagination.sortBy = '';
@@ -66,16 +66,14 @@ export default {
             totalItems: meta.total,
             totalPages: meta.last_page,
             sortBy: [],
-            descending: null
+            descending: false
         }
     },
 
     /**
      * Create an object containing query parameters starting from the Vuetify pagination object.
-     *
-     * @param pagination {Object} Vuetify pagination object.
      */
-    makeQueryParamsFromVuetifyPagination(pagination: Pagination)
+    makeQueryParamsFromVuetifyPagination(pagination: Pagination): any
     {
         let parameters = {
             'page[size]': pagination.rowsPerPage || Config.app.paginationSize,
