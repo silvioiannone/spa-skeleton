@@ -12,27 +12,27 @@ export default abstract class AbstractApiDriver
     /**
      * Attachments.
      */
-    attachments: Array<any> = [];
+    protected attachments: Array<any> = [];
 
     /**
      * Resource name.
      */
-    resourceName: string;
+    protected resourceName: string;
 
     /**
      * Socket ID for the WS connection.
      */
-    socketId: string;
+    protected socketId: string;
 
     /**
      * Authentication token.
      */
-    token: Token;
+    protected token: Token;
 
     /**
      * Parameters that will be sent with the request.
      */
-    parameters: {[key: string]: any} = {};
+    protected parameters: {[key: string]: any} = {};
 
     /**
      * Constructor.
