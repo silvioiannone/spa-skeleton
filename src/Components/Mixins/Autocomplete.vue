@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
 
-    import TextField from 'spa-skeleton/src/Components/Mixins/TextField';
+    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
+    import TextField                          from '../Mixins/TextField.vue';
 
     /**
      * This mixin can be used to build autocomplete inputs.
@@ -9,205 +10,159 @@
      *
      * Use `$data._search` as the search string.
      */
-    export default {
+    @Component
+    export default class Autocomplete extends Mixins(TextField)
+    {
+        /**
+         * Model.
+         */
+        @Prop() value: any;
 
-        name: 'Autocomplete',
+        /**
+         * Can be an array of objects or array of strings. When using objects, will look for a
+         * text and value field. This can be changed using the item-text and item-value props.
+         */
+        @Prop({ type: Array, default: () => [] }) items: Array<any>
 
-        mixins: [
-            TextField
-        ],
+        /**
+         * Set property of items's text value
+         */
+        @Prop({ type: String, default: '' }) itemText: string;
 
-        props: {
+        /**
+         * Set property of items's value.
+         */
+        @Prop({ type: String, default: '' }) itemValue: string;
 
-            /**
-             * Model.
-             */
-            value: {},
+        /**
+         * Hides the menu when there are no options to show. Useful for preventing the menu from
+         * opening before results are fetched asynchronously. Also has the effect of opening the
+         * menu when the items array changes if not already open.
+         */
+        @Prop({ type: Boolean, default: false }) hideNoData: boolean;
 
-            /**
-             * Can be an array of objects or array of strings. When using objects, will look for a
-             * text and value field. This can be changed using the item-text and item-value props.
-             */
-            items: {
-                type: Array,
-                default: () => []
-            },
+        /**
+         * Displays linear progress bar.
+         */
+        @Prop({ type: Boolean, default: false }) loading: boolean;
 
-            /**
-             * Set property of items's text value
-             */
-            itemText: {
-                type: String,
-                default: ''
-            },
+        /**
+         * Changes select to multiple. Accepts array for value.
+         */
+        @Prop({ type: Boolean, default: false }) multiple: boolean;
 
-            /**
-             * Set property of items's value.
-             */
-            itemValue: {
-                type: String,
-                default: ''
-            },
+        /**
+         * Changes the selection behavior to return the object directly rather than the value
+         * specified with item-value.
+         */
+        @Prop({ type: Boolean, default: false }) returnObject: boolean;
 
-            /**
-             * Hides the menu when there are no options to show. Useful for preventing the menu from
-             * opening before results are fetched asynchronously. Also has the effect of opening the
-             * menu when the items array changes if not already open.
-             */
-            hideNoData: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Changes display of selections to chips
+         */
+        @Prop({ type: Boolean, default: false }) chips: boolean;
 
-            /**
-             * Displays linear progress bar.
-             */
-            loading: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Keeps a local unique copy of all items that have been passed through the items prop.
+         */
+        @Prop({ type: Boolean, default: false }) cacheItems: boolean;
 
-            /**
-             * Changes select to multiple. Accepts array for value.
-             */
-            multiple: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Custom filter function.
+         */
+        @Prop({ type: Function, default: null }) filter: Function | null;
 
-            /**
-             * Changes the selection behavior to return the object directly rather than the value
-             * specified with item-value.
-             */
-            returnObject: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Perform local search.
+         */
+        @Prop({ type: Boolean, default: false }) local: boolean;
 
-            /**
-             * Changes display of selections to chips
-             */
-            chips: {
-                type: Boolean,
-                default: false
-            },
+        _selected = null;
 
-            /**
-             * Keeps a local unique copy of all items that have been passed through the items prop.
-             */
-            cacheItems: {
-                type: Boolean,
-                default: false
-            },
+        _items: Array<any> = [];
 
-            /**
-             * Custom filter function.
-             */
-            filter: {
-                default: null
-            }
-        },
+        _loading: boolean = false;
 
-        data()
+        searchQuery: string = '';
+
+        timeout: NodeJS.Timeout | null = null;
+
+        /**
+         * Override this method in order to define what to do when querying the search.
+         */
+        _search() {}
+
+        /**
+         * Handle the search.
+         */
+        handleSearch(): void
         {
-            return {
-                _selected: null,
-                _items: [],
-                _loading: false,
-                searchQuery: '',
-                timeout: null
+            // Don't perform the search if we already retrieved the items from the server.
+            if (this.local && this.$data._items.length) {
+                return;
             }
-        },
 
-        methods: {
+            this.$data._loading = true;
 
-            /**
-             * Override this method in order to define what to do when querying the search.
-             */
-            _search() {},
-
-            /**
-             * Handle the search.
-             */
-            handleSearch()
-            {
-                // Don't perform the search if we already retrieved the items from the server.
-                if (this.local && this.$data._items.length) {
-                    return;
-                }
-
-                this.$data._loading = true;
-
-                if (this.timeout) {
-                    clearTimeout(this.timeout);
-                }
-
-                this.timeout = setTimeout(() =>
-                {
-                    this._search();
-                }, 250);
-            },
-
-            /**
-             * Stop the propagation of the enter keypress event.
-             *
-             * This is needed in order to avoid accidentally submitting the form containing this
-             * input element.
-             *
-             * @param event
-             */
-            stopEnterPropagation(event)
-            {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                }
-            },
-
-            /**
-             * Remove an item from the selection.
-             *
-             * @param item
-             */
-            remove(item)
-            {
-                let match = this.$data._selected.find(current => current.id === item.id);
-
-                if (match) {
-                    let index = this.$data._selected.indexOf(match);
-                    this.$data._selected.splice(index, 1);
-                    this.$emit('input', this.$data._selected);
-                }
-            },
-
-            /**
-             * Emit the input event.
-             *
-             * @param value
-             */
-            emitInput(value)
-            {
-                this.$data._selected = value;
-                this.$emit('input', value);
+            if (this.timeout) {
+                clearTimeout(this.timeout);
             }
-        },
 
-        watch: {
+            this.timeout = setTimeout(() =>
+            {
+                this._search();
+            }, 250);
+        }
 
-            searchQuery: {
-                handler: function()
-                {
-                    this.handleSearch();
-                },
-                immediate: true
-            },
-
-            value: {
-                handler: function()
-                {
-                    this.$data._selected = this.value;
-                },
-                immediate: true
+        /**
+         * Stop the propagation of the enter keypress event.
+         *
+         * This is needed in order to avoid accidentally submitting the form containing this input
+         * element.
+         */
+        stopEnterPropagation(event: any): void
+        {
+            if (event.key === 'Enter') {
+                event.preventDefault();
             }
+        }
+
+        /**
+         * Remove an item from the selection.
+         */
+        remove(item: any): void
+        {
+            let selected = this.$data._selected;
+            let match = selected.find((current: any) => current.id === item.id);
+
+            if (! match) {
+                return;
+            }
+
+            let index = selected.indexOf(match);
+            selected.splice(index, 1);
+            this.$emit('input', selected);
+        }
+
+        /**
+         * Emit the input event.
+         */
+        emitInput(value: any): void
+        {
+            this.$data._selected = value;
+            this.$emit('input', value);
+        }
+
+        @Watch('searchQuery', { immediate: true })
+        onSearchQueryChange()
+        {
+            this.handleSearch();
+        }
+
+        @Watch('value', { immediate: true })
+        onValueChange()
+        {
+            this.$data._selected = this.value;
         }
     }
 
