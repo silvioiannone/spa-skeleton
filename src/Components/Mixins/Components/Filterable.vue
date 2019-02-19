@@ -29,6 +29,11 @@
                 }
             }
 
+            // If the view has any pagination related parameters we need to reset those.
+            if (this.getParameters().hasOwnProperty('page[number]')) {
+                parameters['page[number]'] = 1;
+            }
+
             return parameters;
         }
 
