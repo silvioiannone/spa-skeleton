@@ -1,14 +1,15 @@
 <template>
     <div class="button--submit">
-        <v-btn v-if="confirmed" error @click="abort" color="error" :flat="flat">
-            Abort ({{ countdown }})
+        <v-btn v-if="confirmed" error @click="abort" color="error" :flat="flat" :large="large">
+            <div>Abort</div>
+            <v-progress-circular class="ml-3" :value="progress" :rotate="270"></v-progress-circular>
         </v-btn>
         <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color" :flat="flat"
-               @click.stop="handleConfirmation">
+               :large="large" @click.stop="handleConfirmation">
             <slot></slot>
         </v-btn>
-        <button-submit v-if="showConfirmation && !confirmed" :on-click="handleClick" :flat="flat"
-                       color="warning">
+        <button-submit v-if="showConfirmation && !confirmed" :on-click="verificationClick"
+                       :flat="flat" color="warning" :large="large">
             {{ verificationText }}
         </button-submit>
     </div>
@@ -24,134 +25,105 @@
 
 <script lang="ts">
 
-    import Vue          from 'vue';
-    import ButtonSubmit from './Submit.vue';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import Button                      from '../Mixins/Button.vue';
 
-    export default Vue.extend({
+    @Component
+    export default class ButtonConfirm extends Mixins(Button)
+    {
+        /**
+         * What to do once the action is confirmed. It should be a function returning a Promise.
+         */
+        @Prop({ type: Function }) afterConfirmation: () => Promise<any>;
 
-        mixins: [
-            ButtonSubmit
-        ],
+        /**
+         * Text that will be displayed on the button after the first click.
+         */
+        @Prop({ type: String, default: 'Are you sure?' }) verificationText: string;
 
-        props: {
+        /**
+         * Abort button timeout (in seconds).
+         */
+        @Prop({ type: Number, default: 10 }) timeout: number;
 
-            /**
-             * Whether or not the button should be disabled.
-             */
-            disabled: {
-                type: Boolean,
-                default: false
-            },
+        confirmed = false;
 
-            /**
-             * Whether the button should be flat.
-             */
-            flat: {
-                type: Boolean,
-                default: false
-            },
+        countdown = this.timeout;
 
-            /**
-             * What to do once the action is confirmed. It should be a function returning a Promise.
-             */
-            afterConfirmation: {
-                type: Function
-            },
+        progress = 100;
 
-            /**
-             * Text that will be displayed on the button after the first click.
-             */
-            verificationText: {
-                type: String,
-                default: 'Are you sure?'
-            },
+        showConfirmation = false;
 
-            /**
-             * Abort button timeout.
-             */
-            timeout: {
-                type: Number,
-                default: 10
-            }
-        },
+        abortCountdown = null;
 
-        data()
+        /**
+         * Abort the action.
+         */
+        abort()
         {
-            return {
-                confirmed: false,
-                countdown: this.timeout,
-                showConfirmation: false,
-                abortCountdown: null
-            }
-        },
+            this.reset();
 
-        methods:
+            clearInterval(<any>this.abortCountdown);
+        };
+
+        reset()
         {
-            /**
-             * Abort the action.
-             */
-            abort()
-            {
-                this.confirmed = false;
-                this.showConfirmation = false;
-                this.countdown = this.timeout;
-
-                clearInterval(<any>this.abortCountdown);
-            },
-
-            /**
-             * Handles the click on the button.
-             *
-             * @param resolve
-             * @param reject
-             */
-            handleClick(resolve: Function, reject: Function)
-            {
-                let self = this;
-                this.confirmed = true;
-
-                return new Promise((resolve, reject) =>
-                {
-                    self.abortCountdown = <any>setInterval(() =>
-                    {
-                        self.countdown--;
-
-                        if(self.countdown === 0)
-                        {
-                            clearInterval(<any>self.abortCountdown);
-
-                            this.afterConfirmation()
-                                .then(() => {
-                                    this.confirmed = false;
-                                    this.showConfirmation = false;
-                                    resolve();
-                                })
-                                .catch(() => {
-                                    this.confirmed = false;
-                                    this.showConfirmation = false;
-                                    reject();
-                                });
-                        }
-                    }, 1000);
-                })
-
-            },
-
-            /**
-             * Handles the confirmation.
-             */
-            handleConfirmation()
-            {
-                this.showConfirmation = true;
-
-                setTimeout(() => {
-                    if(!this.confirmed)
-                    {
-                        this.showConfirmation = false;
-                    }
-                }, 3000);
-            }
+            this.confirmed = false;
+            this.showConfirmation = false;
+            this.progress = 100;
+            this.countdown = this.timeout;
         }
-    });
+
+        /**
+         * Handles the click on the button.
+         *
+         * @param resolve
+         * @param reject
+         */
+        async verificationClick(resolve: Function, reject: Function): Promise<any>
+        {
+            this.confirmed = true;
+
+            this.abortCountdown = <any>setInterval(async () =>
+            {
+                this.countdown--;
+                this.progress = this.countdown / this.timeout * 100;
+
+                if(this.countdown === 0)
+                {
+                    clearInterval(<any>this.abortCountdown);
+
+                    let error;
+
+                    try {
+                        await this.afterConfirmation();
+                    } catch (_error) {
+                        error = _error;
+                    }
+
+                    this.reset();
+
+                    if (error) {
+                        throw error;
+                    }
+                }
+            }, 1000);
+        }
+
+        /**
+         * Handles the confirmation.
+         */
+        handleConfirmation(): void
+        {
+            this.showConfirmation = true;
+
+            setTimeout(() => {
+                if(!this.confirmed)
+                {
+                    this.showConfirmation = false;
+                }
+            }, 3000)
+        }
+    }
 
 </script>

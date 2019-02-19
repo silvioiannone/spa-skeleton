@@ -32,7 +32,7 @@
         /**
          * React to `click` event.
          */
-        onClick(): void
+        _onClick(): void
         {
             if (this.action) {
                 this.$data._loading = true;

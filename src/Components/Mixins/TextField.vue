@@ -111,6 +111,16 @@
          */
         @Prop({ type: Boolean, default: false }) returnMaskedValue: boolean;
 
+        /**
+         * Applies the alternate box input style.
+         */
+         @Prop({ type: Boolean, default: false }) box: boolean;
+
+        /**
+         * Applies the alternate outline input style.
+         */
+         @Prop({ type: Boolean, default: false }) outline: boolean;
+
         protected isFocused: boolean = false;
 
         /**

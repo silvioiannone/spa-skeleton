@@ -1,13 +1,14 @@
 <script lang="ts">
 
-    import Vue, { VNode }      from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+    import { VNode }                   from 'vue';
+    import { Component, Prop, Mixins } from 'vue-property-decorator';
+    import ComponentMixin              from './Component.vue';
 
     /**
      * This mixin can be used in order to create buttons.
      */
     @Component
-    export default class Button extends Vue
+    export default class Button extends Mixins(ComponentMixin)
     {
         /**
          * Applies specified color to the control.
@@ -40,17 +41,29 @@
         @Prop({ type: Boolean, default: false }) flat: boolean;
 
         /**
-         * Override this function in order to define what to do when `click` event is emitted.
+         * Whether or not the button should be disabled.
          */
-        onClick(): void {}
+        @Prop({ type: Boolean, default: false }) disabled: boolean;
+
+        /**
+         * On click callback action.
+         *
+         * This function should be a callback executor compatible function.
+         */
+        @Prop({ type: Function }) onClick: () => Promise<any>;
+
+        _onClick()
+        {
+            this.onClick();
+        }
 
         /**
          * Handle `click` event.
          */
-        handleClick(event: any): void
+        handleClick(event: any): any
         {
             this.$emit('click', event);
-            this.onClick();
+            this._onClick();
         }
 
         render(createElement: Function): VNode
@@ -58,7 +71,7 @@
             let self = this;
 
             return createElement('v-btn', {
-                props: this.$props,
+                props: this.getProps(),
                 on: {
                     click: (event: any) => self.handleClick(event)
                 }
