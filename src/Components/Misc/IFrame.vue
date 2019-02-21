@@ -1,11 +1,19 @@
 <template>
-    <iframe :frameborder="frameBorder" :src="_content"></iframe>
+    <iframe :frameborder="frameBorder"></iframe>
 </template>
+
+<style lang="stylus">
+
+    iframe
+        width 100%
+        height 100%
+
+</style>
 
 <script lang="ts">
 
-    import Vue                 from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+    import Vue                        from 'vue';
+    import { Component, Prop, Watch } from 'vue-property-decorator';
 
     @Component
     export default class IFrame extends Vue
@@ -20,9 +28,16 @@
          */
         @Prop({ type: String, required: true }) content: string;
 
-        get _content()
+        @Watch('content', { immediate: true })
+        onContentChange()
         {
-            return 'data:text/html;charset=utf-8,' + escape(this.content);
+            this.$nextTick(() =>
+            {
+                let frame = (<HTMLIFrameElement>this.$el).contentWindow.document;
+                frame.open();
+                frame.write(this.content);
+                frame.close();
+            });
         }
     }
 
