@@ -33,10 +33,13 @@
         {
             this.$nextTick(() =>
             {
-                let frame = (<HTMLIFrameElement>this.$el).contentWindow.document;
-                frame.open();
-                frame.write(this.content);
-                frame.close();
+                let iframeWindow = (<HTMLIFrameElement>this.$el).contentWindow;
+                if (iframeWindow) {
+                    let frame = iframeWindow.document;
+                    frame.open();
+                    frame.write(this.content);
+                    frame.close();
+                }
             });
         }
     }
