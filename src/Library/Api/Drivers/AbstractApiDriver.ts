@@ -115,10 +115,10 @@ export default abstract class AbstractApiDriver
     /**
      * Get the action URI.
      */
-    protected getAction(action: string): string
+    protected getAction(action: string | number): string
     {
         // If the action starts with a `.` return it immediately.
-        if (action.charAt(0) === '.') {
+        if (typeof action === 'string' && action.charAt(0) === '.') {
             return action.slice(1);
         }
 

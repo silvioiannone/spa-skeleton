@@ -44,7 +44,7 @@ export class ExtendedModel extends Model
      * Get the model(s) from the server and stores it in the state machine.
      */
     static async $get(
-        id: string = '',
+        id: string | number = '',
         options: GetParameters | null = null): Promise <ResponseInterface>
     {
         return this.dispatch('$get', {
