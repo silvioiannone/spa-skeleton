@@ -1,6 +1,6 @@
 <template>
     <component :is="component" :label="_label" :solo="solo" :box="box" :outline="outline"
-               :name="_name" @input="bubbleInput" :value="value">
+               :name="_name" @input="bubbleInput" @blur="bubbleBlur" :value="value">
     </component>
 </template>
 
@@ -50,6 +50,14 @@
         bubbleInput(value: any): void
         {
             this.$emit('input', value);
+        }
+
+        /**
+         * Bubble up the `blur` event.
+         */
+        bubbleBlur(value: any): void
+        {
+            this.$emit('blur', value);
         }
     }
 
