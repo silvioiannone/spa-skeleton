@@ -49,15 +49,7 @@
         {
             this.$eh.$on('SnackbarDisplayMessage', (event: SnackbarEvent) =>
             {
-                if(typeof event === 'string')
-                {
-                    this.message = event;
-                }
-                else
-                {
-                    this.message = event.message;
-                }
-
+                this.message = typeof event === 'string' ? event: event.message;
                 this.color = event.color || 'primary';
                 this.timeout = event.timeout || 2000;
                 this.visible = true;
