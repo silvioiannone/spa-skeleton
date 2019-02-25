@@ -7,7 +7,7 @@
     export default class MixinComponent extends Vue
     {
         // Use this in order to override the value of a prop.
-        protected __props: {}
+        __props = {};
 
         /**
          * Use this computed prop in order to set props reactive default values.
@@ -32,7 +32,7 @@
             return {
                 ...this.$props,
                 ...this.computedProps,
-                ...this.__props
+                ...this.$data.__props
             }
         }
 
