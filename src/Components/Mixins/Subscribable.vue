@@ -1,15 +1,8 @@
 <script lang="ts">
 
-    import Vue             from 'vue';
-    import { Component }   from 'vue-property-decorator';
-    import AbstractChannel from '../../Library/WebSocket/AbstractChannel';
-    import AbstractHandler from '../../Library/Events/AbstractHandler';
-
-    interface Subscription {
-        event: string,
-        channels: Array<AbstractChannel | typeof AbstractChannel>,
-        handlers?: Array<typeof AbstractHandler>
-    }
+    import Vue              from 'vue';
+    import { Component }    from 'vue-property-decorator';
+    import { Subscription } from '../../Library/Interfaces/Subscription';
 
     /**
      * Use this mixin to make a component subscribe to certain events.

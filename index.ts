@@ -24,6 +24,7 @@ export namespace Models {
  * Interfaces.
  */
 export { InputDescription } from './src/Library/Interfaces/InputDescription';
+export { Subscription }     from './src/Library/Interfaces/Subscription';
 
 /**
  * Mixins

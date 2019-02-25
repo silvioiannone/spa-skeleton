@@ -22,8 +22,7 @@ export default class AbstractHandler
      */
     handle(event: string, message: any)
     {
-        if(!this[event])
-        {
+        if(!this[event]) {
             throw 'The event handler method cannot be found. Event: ' + event + '.';
         }
 

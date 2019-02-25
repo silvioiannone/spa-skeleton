@@ -1,18 +1,19 @@
-import Echo            from 'laravel-echo';
-import IO              from 'socket.io-client';
-import Log             from './Services/Logger';
-import Vue             from 'vue';
-import Config          from '../Config';
-import Subscriptions   from '../../../../resources/ts/App/Subscriptions';
-import ApiFactory      from './Api';
-import StateMachine    from './Services/StateMachine';
-import AdminChannel    from './WebSocket/Channels/Admin';
-import AppChannel      from './WebSocket/Channels/App';
-import UserChannel     from './WebSocket/Channels/User';
-import AbstractChannel from './WebSocket/AbstractChannel';
-import AppHandler      from './Events/AppHandler';
-import ModelHandler    from './Events/ModelHandler';
-import Token           from './Api/Token';
+import Echo                      from 'laravel-echo';
+import IO                        from 'socket.io-client';
+import Log                       from './Services/Logger';
+import Vue                       from 'vue';
+import Config                    from '../Config';
+import Subscriptions             from '../../../../resources/ts/App/Subscriptions';
+import ApiFactory                from './Api';
+import StateMachine              from './Services/StateMachine';
+import AdminChannel              from './WebSocket/Channels/Admin';
+import AppChannel                from './WebSocket/Channels/App';
+import UserChannel               from './WebSocket/Channels/User';
+import AbstractChannel           from './WebSocket/AbstractChannel';
+import AppHandler                from './Events/AppHandler';
+import ModelHandler              from './Events/ModelHandler';
+import Token                     from './Api/Token';
+import { Subscription, Channel } from './Interfaces/Subscription';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -22,20 +23,20 @@ export default class WebSocket
     /**
      * The Skeleton's subscriptions.
      */
-    protected skeletonSubscriptions: Array<any> = [
+    protected skeletonSubscriptions: Array<Subscription> = [
         {
             event: 'Models.User.Updated',
             channels: [AdminChannel, UserChannel],
-            handlers: {AppHandler}
+            handlers: [AppHandler]
         },
         {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
-            channels: [UserChannel],
+            channels: [UserChannel]
         },
         {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated',
             channels: [AppChannel],
-            handlers: {AppHandler}
+            handlers: [AppHandler]
         }
     ];
 
@@ -47,12 +48,12 @@ export default class WebSocket
     /**
      * Pending subscriptions.
      */
-    protected pendingSubscriptions: Array<any> = [];
+    protected pendingSubscriptions: Array<Subscription> = [];
 
     /**
      * List of active subscriptions.
      */
-    protected activeSubscriptions: Array<any> = [];
+    protected activeSubscriptions: Array<Subscription> = [];
 
     /**
      * Vue.
@@ -92,7 +93,7 @@ export default class WebSocket
     /**
      * Subscribe to a channel and listen to an event.
      */
-    listen(subscriptions: Array<any>): void
+    listen(subscriptions: Array<Subscription>): void
     {
         if (! this.echo) {
             this.pendingSubscriptions = this.pendingSubscriptions.concat(subscriptions);
@@ -107,7 +108,7 @@ export default class WebSocket
 
             // TODO: add the subscription to the list of the active subscriptions only if the
             // joining was successful (use a promise).
-            subscription.channels.forEach((channel: any) => this.join(channel, subscription.event));
+            subscription.channels.forEach(channel => this.join(channel, subscription.event));
 
             // Add the subscription to the active subscriptions.
             this.activeSubscriptions = this.activeSubscriptions.concat(subscription);
@@ -117,7 +118,7 @@ export default class WebSocket
     /**
      * Remove the subscriptions.
      */
-    silence(subscriptions: Array<any>): void
+    silence(subscriptions: Array<Subscription>): void
     {
         subscriptions.forEach(subscription =>
         {
@@ -139,7 +140,7 @@ export default class WebSocket
     /**
      * Leave a channel if it's not used by any event.
      */
-    leaveChannelIfUnused(channel: any): void
+    leaveChannelIfUnused(channel: Channel): void
     {
         let channelName = this.makeChannel(channel).name();
         let channelInUse = false;
@@ -166,7 +167,7 @@ export default class WebSocket
     /**
      * Listen for an event on a channel.
      */
-    protected join(channel: any, event: any): void
+    protected join(channel: Channel, event: any): void
     {
         let self = this;
         let channelInstance = this.makeChannel(channel);
@@ -194,9 +195,9 @@ export default class WebSocket
     /**
      * Make a channel instance.
      */
-    makeChannel(channel: any): AbstractChannel
+    makeChannel(channel: Channel): AbstractChannel
     {
-        let store = StateMachine.getStore()
+        let store = StateMachine.getStore();
 
         return typeof channel === 'object' ? channel : new channel(store);
     }
@@ -237,6 +238,7 @@ export default class WebSocket
             throw new Error('Event ' + event + ' cannot be handled.');
         }
 
+        debugger;
         // If it's a model related event...
         if (event.startsWith('Models.') || event.indexOf('App\\Events\\Models') >= 0) {
             // ...let it be handled by the model handler.
