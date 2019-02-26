@@ -238,7 +238,6 @@ export default class WebSocket
             throw new Error('Event ' + event + ' cannot be handled.');
         }
 
-        debugger;
         // If it's a model related event...
         if (event.startsWith('Models.') || event.indexOf('App\\Events\\Models') >= 0) {
             // ...let it be handled by the model handler.
