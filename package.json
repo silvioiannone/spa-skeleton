@@ -1,6 +1,6 @@
 {
   "_from": "github:silvioiannone/spa-skeleton#next",
-  "_id": "spa-skeleton@",
+  "_id": "spa-skeleton@0.1.3-next",
   "_inBundle": false,
   "_integrity": "",
   "_location": "/spa-skeleton",
@@ -18,7 +18,7 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "github:silvioiannone/spa-skeleton#0ffa57c7a98fb3e6c1d1555f0f6a220d1d0411ca",
+  "_resolved": "github:silvioiannone/spa-skeleton#7f1193b1bb4eacbd86996a5650aebdf9a1c14d56",
   "_spec": "spa-skeleton@github:silvioiannone/spa-skeleton#next",
   "_where": "/Users/silvioiannone/Programming/Projects/BloomEstateNew",
   "author": {
@@ -36,8 +36,8 @@
     "@types/pluralize": "^0.0.29",
     "@types/socket.io-client": "^1.4.32",
     "@types/superagent": "^3.8.6",
-    "@types/vue-markdown": "^2.2.1",
     "@types/urijs": "^1.15.38",
+    "@types/vue-markdown": "^2.2.1",
     "@vuex-orm/core": "^0.31.6",
     "axios": "^0.18.0",
     "babel-preset-env": "^1.7.0",
