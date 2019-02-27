@@ -1,9 +1,15 @@
 <template>
     <toolbar-main fixed :sidebar="false" :title="title" :color="color">
-        <slot slot="title" name="title"></slot>
-        <slot slot="toolbar-text" class="v-toolbar__text" name="toolbar-text"></slot>
-        <slot slot="toolbar-text-right" class="v-toolbar__text" name="toolbar-text-right"></slot>
-        <template slot="toolbar-items">
+        <template #title>
+            <slot name="title"></slot>
+        </template>
+        <template #toolbar-text>
+            <slot class="v-toolbar__text" name="toolbar-text"></slot>
+        </template>
+        <template #toolbar-text-right>
+            <slot class="v-toolbar__text" name="toolbar-text-right"></slot>
+        </template>
+        <template #toolbar-items>
             <slot></slot>
             <v-btn flat to="/login">{{ $t('toolbar.logIn') }}</v-btn>
         </template>

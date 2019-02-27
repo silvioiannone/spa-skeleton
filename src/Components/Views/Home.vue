@@ -1,8 +1,14 @@
 <template>
     <layout-app>
-        <animated-router-view name="navigationDrawer" slot="navigationDrawer"></animated-router-view>
-        <router-view name="navigationDrawerRight" slot="navigationDrawerRight"></router-view>
-        <router-view name="toolbar" slot="toolbar"></router-view>
+        <template #navigatino-drawer>
+            <animated-router-view name="navigationDrawer"></animated-router-view>
+        </template>
+        <template #navigation-drawer-right>
+            <router-view name="navigationDrawerRight"></router-view>
+        </template>
+        <template #toolbar>
+            <router-view name="toolbar"></router-view>
+        </template>
         <animated-router-view></animated-router-view>
     </layout-app>
 </template>

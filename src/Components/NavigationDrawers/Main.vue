@@ -6,9 +6,11 @@
             <v-spacer></v-spacer>
             <slot name="toolbar"></slot>
             <v-tooltip bottom>
-                <v-btn icon slot="activator" @click="visible = false">
-                    <v-icon>close</v-icon>
-                </v-btn>
+                <template #activator="data">
+                    <v-btn icon @click="visible = false" v-on="data.on">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </template>
                 <span>Close</span>
             </v-tooltip>
         </v-toolbar>

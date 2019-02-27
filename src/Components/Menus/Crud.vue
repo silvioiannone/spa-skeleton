@@ -1,8 +1,10 @@
 <template>
     <v-menu>
-        <v-btn slot="activator" icon>
-            <v-icon>more_vert</v-icon>
-        </v-btn>
+        <tempalte #activator="data">
+            <v-btn icon v-on="data.on">
+                <v-icon>more_vert</v-icon>
+            </v-btn>
+        </tempalte>
         <v-list>
             <v-list-tile v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
                 <v-list-tile-avatar>

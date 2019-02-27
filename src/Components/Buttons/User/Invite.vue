@@ -1,9 +1,11 @@
 <template>
     <v-tooltip top>
-        <button-submit :text="buttonText" :on-click="invite()" :disabled="buttonDisabled" icon
-                       slot="activator">
-            <v-icon>send</v-icon>
-        </button-submit>
+        <template #activator="data">
+            <button-submit :text="buttonText" :on-click="invite()" :disabled="buttonDisabled" icon
+                           v-on="data.on">
+                <v-icon>send</v-icon>
+            </button-submit>
+        </template>
     </v-tooltip>
 </template>
 

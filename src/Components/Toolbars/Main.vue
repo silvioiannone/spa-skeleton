@@ -25,7 +25,9 @@
         <v-toolbar-items>
             <slot name="toolbar-items"></slot>
         </v-toolbar-items>
-        <slot name="tabs" slot="extension"></slot>
+        <template #extension>
+            <slot name="tabs"></slot>
+        </template>
     </v-toolbar>
 </template>
 

@@ -1,8 +1,12 @@
 <template>
     <layout-app>
-        <navigation-drawer-settings name="navigationDrawer" slot="navigationDrawer">
-        </navigation-drawer-settings>
-        <toolbar-settings slot="toolbar"></toolbar-settings>
+        <template #navigation-drawer>
+            <navigation-drawer-settings name="navigationDrawer">
+            </navigation-drawer-settings>
+        </template>
+        <template #toolbar>
+            <toolbar-settings></toolbar-settings>
+        </template>
         <animated-router-view></animated-router-view>
     </layout-app>
 </template>

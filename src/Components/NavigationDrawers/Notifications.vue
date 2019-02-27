@@ -4,15 +4,19 @@
             <v-toolbar-title>{{ $t('navigationDrawer.notifications') }}</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-tooltip bottom>
-                <v-btn icon slot="activator" @click="markAllAsRead">
-                    <v-icon>done_all</v-icon>
-                </v-btn>
+                <template #activator="data">
+                    <v-btn icon @click="markAllAsRead" v-on="data.on">
+                        <v-icon>done_all</v-icon>
+                    </v-btn>
+                </template>
                 <span>{{ $t('navigationDrawer.markAllAsRead') }}</span>
             </v-tooltip>
             <v-tooltip bottom>
-                <v-btn icon slot="activator" @click="visible = false">
-                    <v-icon>close</v-icon>
-                </v-btn>
+                <template #activator="data">
+                    <v-btn icon @click="visible = false" v-on="data.on">
+                        <v-icon>close</v-icon>
+                    </v-btn>
+                </template>
                 <span>{{ $t('navigationDrawer.close') }}</span>
             </v-tooltip>
         </v-toolbar>

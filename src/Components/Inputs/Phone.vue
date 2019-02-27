@@ -4,7 +4,7 @@
             <v-flex xs3 @keydown.enter="stopEnterPropagation">
                 <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
                                 item-value="prefix" :filter="filter" :disabled="disabled">
-                    <template slot="item" slot-scope="props">
+                    <template #item slot-scope="props">
                         <v-list-tile-avatar>
                             <span :class="'flag-icon flag-icon-' + props.item.iso"></span>
                         </v-list-tile-avatar>
@@ -15,7 +15,7 @@
                             </v-list-tile-title>
                         </v-list-tile-content>
                     </template>
-                    <template slot="selection" slot-scope="props">
+                    <template #selection slot-scope="props">
                         <strong>+{{ props.item.prefix }}</strong>
                     </template>
                 </v-autocomplete>

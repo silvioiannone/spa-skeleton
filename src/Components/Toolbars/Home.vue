@@ -1,21 +1,29 @@
 <template>
     <toolbar-main fixed :title="title" :search="search" :search-subject="searchSubject"
                   :tabs="tabs" :title-to="titleTo" @search:update="bubbleSearchUpdateEvent">
-        <slot slot="title" name="title"></slot>
-        <slot slot="toolbar-text" name="toolbar-text"></slot>
-        <slot slot="toolbar-text-right" name="toolbar-text-right"></slot>
-        <slot slot="toolbar-items" name="toolbar-items"></slot>
-        <template slot="toolbar-items">
+        <template #title>
+            <slot name="title"></slot>
+        </template>
+        <template #toolbar-text>
+            <slot name="toolbar-text"></slot>
+        </template>
+        <template #toolbar-text-right>
+           <slot name="toolbar-text-right"></slot>
+        </template>
+        <template #toolbar-items>
+            <slot name="toolbar-items"></slot>
             <v-btn icon @click="toggleNotificationsDrawer">
                 <v-badge color="red">
-                    <span slot="badge" v-if="unreadNotificationsCount">
+                    <span #badge v-if="unreadNotificationsCount">
                         {{ unreadNotificationsCount }}
                     </span>
                     <v-icon>notifications</v-icon>
                 </v-badge>
             </v-btn>
         </template>
-        <slot slot="tabs" name="tabs"></slot>
+        <template #tabs>
+            <slot name="tabs"></slot>
+        </template>
     </toolbar-main>
 </template>
 

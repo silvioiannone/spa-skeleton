@@ -12,9 +12,11 @@
                 </v-list-tile-content>
                 <v-list-tile-action>
                     <v-menu left>
-                        <v-btn icon slot="activator">
-                            <v-icon>more_vert</v-icon>
-                        </v-btn>
+                        <template #activator="data">
+                            <v-btn icon v-on="data.on">
+                                <v-icon>more_vert</v-icon>
+                            </v-btn>
+                        </template>
                         <v-list>
                             <v-list-tile to="/settings/account">
                                 <v-list-tile-title>Settings</v-list-tile-title>
