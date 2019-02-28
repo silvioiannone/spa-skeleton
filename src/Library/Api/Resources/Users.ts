@@ -1,18 +1,14 @@
-import ApiResource  from './ApiResource';
+import ApiResource       from './ApiResource';
 import Config            from '../../../Config';
 import ResponseInterface from '../ResponseInterface';
+import Token             from '../Token';
 
 /**
  * Users resource.
  */
 export default class Users extends ApiResource
 {
-    constructor()
-    {
-        super();
-
-        this.resourceName = 'users';
-    }
+    resourceName: string = 'users';
 
     /**
      * Activate a user account. The user must have been invited before.
@@ -76,6 +72,10 @@ export default class Users extends ApiResource
      */
     async login(userCredentials: {username: string, password: string}): Promise<ResponseInterface>
     {
+        // Delete the old token in order to avoid issues since the authentication endpoint doesnt
+        // expect it.
+        (new Token).remove();
+
         return this._post('./api/v1/oauth/token', {
             ...userCredentials,
             grant_type: 'password',
