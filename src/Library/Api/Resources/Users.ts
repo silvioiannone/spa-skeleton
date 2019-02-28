@@ -72,7 +72,7 @@ export default class Users extends ApiResource
      */
     async login(userCredentials: {username: string, password: string}): Promise<ResponseInterface>
     {
-        // Delete the old token in order to avoid issues since the authentication endpoint doesnt
+        // Delete the old token in order to avoid issues since the authentication endpoint doesn't
         // expect it.
         (new Token).remove();
 

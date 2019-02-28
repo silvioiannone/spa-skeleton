@@ -5,43 +5,6 @@ import SuperAgent        from 'superagent';
 import URLPattern        from 'url-pattern';
 
 /**
- * Paths that should be ignored.
- *
- * Requests saved here will not be intercepted and treated as a regular API request.
- *
- * @type {*[]}
- */
-let ignoredPaths = [
-    {
-        method: 'GET',
-        action: '/users/activation(/:activationId)'
-    },
-    // Ignore the refresh token
-    {
-        method: 'GET',
-        action: '/users/token'
-    },
-    {
-        method: 'POST',
-        action: '/users/activate'
-    },
-    {
-        method: 'POST',
-        action: '/users/resetPassword'
-    },
-    // Ignore the login
-    {
-        method: 'POST',
-        action: '/oauth/token'
-    },
-    // Ignore the signup
-    {
-        method: 'POST',
-        action: '/users'
-    },
-];
-
-/**
  * API driver that makes use of SuperAgent.
  */
 export default class SuperAgentDriver extends AbstractApiDriver
@@ -50,6 +13,13 @@ export default class SuperAgentDriver extends AbstractApiDriver
      * SuperAgent HTTP client.
      */
     protected httpClient: SuperAgent.SuperAgentStatic;
+
+    /**
+     * Paths that should be ignored.
+     *
+     * Requests saved here will not be intercepted and treated as a regular API request.
+     */
+    protected ignoredPaths: Array<any> = [];
 
     /**
      * Constructor.
@@ -68,8 +38,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     {
         let actionURI = this.getAction(action);
 
-        if(Object.keys(this.parameters).length !== 0)
-        {
+        if(Object.keys(this.parameters).length !== 0) {
             actionURI += '?' + this.getURIEncodedParameters();
         }
 
@@ -89,8 +58,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     {
         let actionUri = this.getAction(action);
 
-        if(Object.keys(this.parameters).length !== 0)
-        {
+        if(Object.keys(this.parameters).length !== 0) {
             actionUri += '?' + this.getURIEncodedParameters();
         }
 
@@ -169,17 +137,13 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
                     request.end(function(error, response)
                     {
-                        if (error)
-                        {
+                        if (error) {
                             reject(response);
                             return;
                         }
 
                         self.interceptResponse(response)
-                            .then(() =>
-                            {
-                                resolve(response);
-                            });
+                            .then(() => resolve(response));
                     });
                 })
                 .catch(error => reject(error));
@@ -206,9 +170,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
         return new Promise((resolve, reject) =>
         {
             // Check if the request shouldn't be intercepted (example: it's the authentication
-            // request)
-            if (request.url === '/oauth/token')
-            {
+            // request).
+            if (request.url.includes('/oauth/token')) {
                 request.set('Accept', 'application/json');
                 resolve({request});
                 return;
@@ -216,8 +179,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
             request = this.setHeaders(request);
 
-            if(self.skipIgnoredRequests(request))
-            {
+            if(self.skipIgnoredRequests(request)) {
                 // We need to wrap 'currentRequest' otherwise it will be sent to the server and we
                 // haven't finished yet.
                 resolve({request});
@@ -225,8 +187,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
             }
 
             // Before making any request, we need to check that the token is not expired.
-            if(self.token.getAccessToken() && self.token.isExpired())
-            {
+            if(self.token.getAccessToken() && self.token.isExpired()) {
                 this.refreshToken()
                     .then(() => resolve({request}))
                     .catch(error => reject(error));
@@ -259,8 +220,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
                 })
                 .end(function (error, response)
                 {
-                    if (error)
-                    {
+                    if (error) {
                         self.token.remove();
                         reject(error);
                         return;
@@ -280,8 +240,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
         request.set('Accept', 'application/json');
 
         // Include the bearer header if the JWT cookie is set
-        if (this.token.getAccessToken())
-        {
+        if (this.token.getAccessToken()) {
             request.set('Authorization', 'Bearer ' + this.token.getAccessToken());
         }
 
@@ -303,8 +262,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
         return new Promise((resolve, reject) =>
         {
             // If there's a token in the response...
-            if(response.body && response.body.access_token)
-            {
+            if(response.body && response.body.access_token) {
                 // ...save it.
                 self.token.save(response.body.access_token, response.body.refresh_token);
             }
@@ -318,10 +276,8 @@ export default class SuperAgentDriver extends AbstractApiDriver
      */
     protected skipIgnoredRequests(request: any)
     {
-        for(let i = 0; i < ignoredPaths.length; i++)
-        {
-            if((new URLPattern('/api' + ignoredPaths[i].action).match(request.url)))
-            {
+        for(let i = 0; i < this.ignoredPaths.length; i++) {
+            if((new URLPattern('/api' + this.ignoredPaths[i].action).match(request.url))) {
                 return true;
             }
         }

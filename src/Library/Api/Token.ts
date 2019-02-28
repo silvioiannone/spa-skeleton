@@ -73,8 +73,7 @@ export default class Token
         let refreshTokenCookie = this.refreshTokenName + "=" + refreshToken + "; path=/;";
 
         // If production send only over HTTPS
-        if(Config.env !== 'local')
-        {
+        if(Config.env !== 'local') {
             accessTokenCookie += " Secure;";
             refreshTokenCookie += " Secure;";
         }
