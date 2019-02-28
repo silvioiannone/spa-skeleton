@@ -1,0 +1,11 @@
+.v-navigation-drawer
+
+  // Sometimes the navigation drawer's lists are wrapped by a <div> tag. This ensures that the same
+  // styles are applied.
+  > div
+    > .v-list .v-list__tile
+      font-weight $navigation-drawer-item-font-weight
+
+    > .v-list:not(.v-list--dense) .v-list__tile
+      font-size $navigation-drawer-item-font-size
+
