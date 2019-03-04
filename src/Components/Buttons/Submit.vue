@@ -23,7 +23,9 @@
         {
             this.status = 'loading';
 
-            await this.onClick();
+            try {
+                await this.onClick();
+            } catch (error) {}
 
             this.status = 'ready';
         }
