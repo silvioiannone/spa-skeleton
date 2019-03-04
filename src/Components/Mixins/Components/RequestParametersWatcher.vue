@@ -79,7 +79,21 @@
             this.afterResponseCallbacks.push(callback);
         }
 
-        created()
+        /**
+         * Request the data from the server.
+         */
+        async requestData(): Promise<ResponseInterface>
+        {
+            let response = await this.onRequestParametersChange(
+                this.cleanParameters(this.getParameters())
+            );
+
+            this.afterResponseCallbacks.forEach(callback => callback(response));
+
+            return response;
+        }
+
+        mounted()
         {
             // We need to define the watcher inside the `created` hook in order to avoid it from
             // being triggered multiple times. If the watcher is defined using `@Watch` then the
@@ -87,22 +101,7 @@
             // mixin causing it to be called multiple times.
             // Since this will only be called once then we don't even need to compare the new
             // parameters with the old ones in order to determine if something changed.
-            this.$watch('parameters', async () =>
-            {
-                let response = await this.onRequestParametersChange(
-                    this.cleanParameters(
-                        this.getParameters()
-                    )
-                );
-
-                if (! response) {
-                    return;
-                }
-
-                this.afterResponseCallbacks.forEach(callback => callback(response));
-
-                return response;
-            });
+            this.$watch('parameters', async () => this.requestData());
         }
     }
 
