@@ -1,8 +1,8 @@
 <script lang="ts">
 
-    import { VNode, CreateElement }    from 'vue';
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import MixinComponent              from './Component.vue';
+    import { VNode, CreateElement }           from 'vue';
+    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
+    import MixinComponent                     from './Component.vue';
 
     /*
      * This mixin can be used in order to create new dialogs.
@@ -82,6 +82,9 @@
             this.model = false;
         }
 
+        /**
+         * Update the model.
+         */
         updateModel(value: boolean): void
         {
             this.model = value;
@@ -117,6 +120,12 @@
                     input: this.updateModel
                 }
             }, this.$slots.default)
+        }
+
+        @Watch('value')
+        onValueChange()
+        {
+            this.$emit('input', this.value);
         }
     }
 
