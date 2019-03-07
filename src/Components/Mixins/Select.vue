@@ -72,6 +72,11 @@
         @Prop({ type: Boolean, default: false }) solo: boolean;
 
         /**
+         * Changes the style of the input.
+         */
+        @Prop({ type: Boolean, default: false }) outline: boolean;
+
+        /**
          * Contains the list of the manually newly created tags.
          */
         addedTags: Array<any> = [];
