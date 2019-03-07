@@ -47,12 +47,12 @@
          * `menu-props="auto, overflowY"`, or an object
          * `:menu-props="{ auto: true, overflowY: true }`.
          */
-        @Prop({ type: Object, default: {
+        @Prop({ type: Object, default: () => ({
             closeOnClick: false,
             closeOnContentClick: false,
             openOnClick: false,
             maxHeight: 300
-        }}) menuProps: object;
+        })}) menuProps: object;
 
         /**
          * Already selected subjects.
