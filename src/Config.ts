@@ -45,6 +45,11 @@ const defaultConfig = {
         paginationSize: parseInt(PAGINATION_DEFAULT_SIZE),
 
         /**
+         * E-mail address to contact in case of need.
+         */
+        support: MAIL_SUPPORT_ADDRESS,
+
+        /**
          * Services configuration.
          */
         services: {
