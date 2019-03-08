@@ -32,6 +32,9 @@
             let sortQueryParam = <string>this.$route.query.sort;
 
             if (sortQueryParam) {
+                // Any query applied before should be ignored otherwise the result of the order will
+                // be influenced by the previously run query.
+                query = query.newQuery(query.entity);
                 query.orderBy(
                     <string>this.pagination.sortBy,
                     sortQueryParam[0] === '-' ? 'desc': 'asc'
