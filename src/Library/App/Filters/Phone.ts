@@ -8,11 +8,16 @@ export default class Phone extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(value: string): string
+    run(): (value: string) => string
     {
-        if (! value) return '';
+        return (value: string) =>
+        {
+            if (! value) {
+                return '';
+            }
 
-        return value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5, 8) +  ' '
-            + value.slice(8, value.length);
+            return value.slice(0, 3) + ' ' + value.slice(3, 5) + ' ' + value.slice(5, 8) +  ' '
+                + value.slice(8, value.length);
+        }
     }
 }

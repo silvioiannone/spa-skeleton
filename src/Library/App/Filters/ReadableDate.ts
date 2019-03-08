@@ -10,11 +10,14 @@ export default class Date extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(value: string): string
+    run(): (value: string) => string
     {
-        let settings = this.store.getters.app.user.settings;
+        return (value: string) =>
+        {
+            let settings = this.store.getters.app.user.settings;
 
-        return Moment(value).locale(settings.language)
-            .format(Config.app.system.dateAndTime.dateFormat);
+            return Moment(value).locale(settings.language)
+                .format(Config.app.system.dateAndTime.dateFormat);
+        }
     }
 }

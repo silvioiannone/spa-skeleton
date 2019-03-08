@@ -8,12 +8,15 @@ export default class Capitalize extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(value: string): string
+    run(): (value: string) => string
     {
-        if (!value) {
-            return '';
-        }
+        return (value: string) =>
+        {
+            if (!value) {
+                return '';
+            }
 
-        return value.charAt(0).toUpperCase() + value.slice(1);
+            return value.charAt(0).toUpperCase() + value.slice(1);
+        }
     }
 }

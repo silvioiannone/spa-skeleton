@@ -37,11 +37,6 @@ export default class Filters extends Service
     name: string = 'Filters';
 
     /**
-     * State machine store.
-     */
-    protected store: Store<any>;
-
-    /**
      * Boot the service.
      */
     boot(): void
@@ -50,8 +45,8 @@ export default class Filters extends Service
         let store = StateMachine.getStore();
 
         for (let key in availableFilters) {
-            let filter = (new availableFilters[key](store)).run.bind(this);
-            Vue.filter(key, filter);
+            let filter = new availableFilters[key](store);
+            Vue.filter(key, filter.run());
             Logger.debug('Filter "' + key + '" registered.');
         }
     }

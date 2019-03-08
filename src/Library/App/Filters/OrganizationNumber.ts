@@ -8,10 +8,15 @@ export default class OrganizationNumber extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(value: string): string
+    run(): (value: string) => string
     {
-        if (!value) return '';
+        return (value: string) =>
+        {
+            if (!value) {
+                return '';
+            }
 
-        return value.slice(0, 6) + '-' + value.slice(6, value.length);
+            return value.slice(0, 6) + '-' + value.slice(6, value.length);
+        }
     }
 }
