@@ -1,6 +1,8 @@
 <template>
     <v-tooltip v-if="tooltip" top>
-        <span slot="activator">{{ $data._time }}</span>
+        <template #activator="data">
+            <span slot="activator" v-on="data.on">{{ $data._time }}</span>
+        </template>
         <span>{{ time }}</span>
     </v-tooltip>
     <span v-else>{{ $data._time }}</span>
