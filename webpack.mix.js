@@ -36,6 +36,12 @@ module.exports = {
      */
     build: function ()
     {
+        mix.options({
+            hmrOptions: {
+                port: 8081
+            }
+        })
+
         this.mix = mix;
 
         // Load the Configuration from SPA-Skeleton
