@@ -17,7 +17,7 @@ import UserIsAdmin from './App/Guards/UserIsAdmin';
 const SkeletonGuards = {
     Auth,
     UserIsAdmin
-}
+};
 
 type VueRouterNext = (to?: RawLocation | false | ((vm: Vue) => any) | void) => void;
 
@@ -61,7 +61,7 @@ export default class Guard
         401: 'unauthorized',
         404: 'notFound',
         503: 'serviceUnavailable'
-    }
+    };
 
     /**
      * Initializes the guard.

@@ -40,7 +40,7 @@ module.exports = {
             hmrOptions: {
                 port: 8081
             }
-        })
+        });
 
         this.mix = mix;
 

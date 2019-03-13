@@ -120,7 +120,7 @@ export default class View extends Module
         let parameters = {
             'page[number]': payload.route.query.page || 1,
             'page[size]': pageSizeParameter
-        }
+        };
 
         let sortParameter = payload.route.query.sort || defaultParameters.sort || null;
         if (sortParameter) {
