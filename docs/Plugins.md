@@ -4,25 +4,22 @@ Plugins can be imported in *resources/assets/js/App/Plugins.js*.
 
 Example plugin:
 
-    export default
+    export default function Api(vue: typeof Vue, options?: any): void
     {
-        install(Vue, options)
-        {
-            Vue.prototype.$myplugin = ...
-        }
-    };
+        vue.prototype.$api = // Do something here
+    }
 
-    // resources/assets/js/App/Plugins/AwesomePlugin.js
+    // resources/ts/App/Plugins/Api.js
 
 Import the plugin:
 
-    import AwesomePlugin from './Plugins/AwesomePlugin'
+    import Api from './Plugins/Api'
 
     export default {
-        AwesomePlugin
+        Api
     }
 
-    // resources/assets/js/App/Plugins.js
+    // resources/ts/App/Plugins.js
 
 ## Available plugins
 

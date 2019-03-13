@@ -1,25 +1,43 @@
 # Filters
 
-Filters can be imported using *resources/assets/js/App/Filters.js*.
+Filters can be imported using *resources/assets/ts/App/Filters.ts*.
 
 Filter example:
 
-    export default function (value)
+    import AbstractFilter from './AbstractFilter';
+    
+    /**
+     * This filter capitalizes the given string.
+     */
+    export default class Capitalize extends AbstractFilter
     {
-        return value + value;
+        /**
+         * Run the filter.
+         */
+        run(): (value: string) => string
+        {
+            return (value: string) =>
+            {
+                if (!value) {
+                    return '';
+                }
+    
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            }
+        }
     }
     
-    // resources/assets/js/App/Filters/ShinyFilter.js
+    // resources/ts/App/Filters/Capitalize.ts
     
 Import the filter:
 
-    import ShinyFilter from './Filters/ShinyFilter'
+    import Capitalize from './Filters/ShiCapitalizenyFilter'
         
     export default {
-        shiny: ShinyFilter
+        capitalize: Capitalize
     }
     
-    // resources/assets/js/App/Filters.js
+    // resources/ts/App/Filters.ts
     
 The filter can be used in any component's template:
 

@@ -14,6 +14,7 @@ moment.
 
 ## Features
 
+- Writte in TS
 - VueJS 2 core
 - State machine (Vuex)
 - Realtime translations (VueI18n)
@@ -31,16 +32,15 @@ Require the package using **npm**:
 
 Bootstrap the SPA simply using:
 
-    import SPASkeleton from 'spa-skeleton';
-
-    (new SPASkeleton).boot();
+    import App from 'spa-skeleton';
+    
+    (new App).start();
 
 Add the following to your *webpack.mix.js* in order to build the SPA-Skeleton:
 
-    const mix            = require('laravel-mix');
     const SPASkeletonMix = require('spa-skeleton/webpack.mix.js');
-
-    SPASkeletonMix.build(mix);
+    
+    SPASkeletonMix.build();
 
 ## Documentation
 

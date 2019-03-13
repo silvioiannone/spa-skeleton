@@ -1,6 +1,6 @@
 # Routes
 
-New routes must be defined in the *resources/assets/js/App/Routes.js*:
+New routes must be defined in the *resources/ts/App/Routes.ts*:
 
     export default [
 
@@ -8,7 +8,7 @@ New routes must be defined in the *resources/assets/js/App/Routes.js*:
         path: '/home',
 
         // Component that should render the view.
-        component: resolve => { require(['../Components/Views/Home.vue'], resolve); },
+        component: Component,
 
         meta: {
         
@@ -24,9 +24,9 @@ New routes must be defined in the *resources/assets/js/App/Routes.js*:
             {
                 path: '',
                 components: {
-                    default: resolve => { require(['../Components/Views/Home/Index.vue'], resolve); },
-                    toolbar: resolve => { require(['../Components/Toolbars/Home.vue'], resolve); },
-                    navigationDrawer: resolve => { require(['../Components/NavigationDrawers/Home.vue'], resolve); }
+                    default: DefaultComponent,
+                    toolbar: ToolbarComponent,
+                    navigationDrawer: NavigationDrawerComponent
                 }
             }
         ]
@@ -65,25 +65,24 @@ Here is an example of a Guard that checks if the user is authenticated:
         }
     }
     
-    // resources/assets/js/App/Guards/UserIsAdmin.js
+    // resources/ts/App/Guards/UserIsAdmin.ts
 
 The `handle()` method must return a promise.
 
-Once the guard is defined you can import it in *resources/assets/js/App/Guards.js*:
+Once the guard is defined you can import it in *resources/ts/App/Guards.ts*:
 
-    import UserIsAdmin from './Guards/UserIsAdmin.js';
+    import UserIsAdmin from './Guards/UserIsAdmin';
     
     export default {
         UserIsAdmin
     }
     
-    // resources/assets/js/App/Guards.js
+    // resources/ts/App/Guards.ts
 
 After the guard is imported it can be used to protect a route:
 
     export default [
         path: '/home',
-        component: resolve => { require(['../Components/Views/Home.vue'], resolve); },
         meta: {
             guards: ['UserIsAdmin']
         }
@@ -100,46 +99,46 @@ just the state machine module action that will be executed.
 You can define an action for each view. For example, using the *View.js* state machine module:
 
     import SkeletonViewModule from 'spa-skeleton/src/Library/App/State/Modules/View';
-        import ObjectUtil from 'spa-skeleton/src/Library/Utils/Objects';
-        
-        /**
-         * State machine view module.
-         */
-        export default class View extends SkeletonViewModule
+    import ObjectUtil from 'spa-skeleton/src/Library/Utils/Objects';
+    
+    /**
+     * State machine view module.
+     */
+    export default class View extends SkeletonViewModule
+    {
+        constructor()
         {
-            constructor()
+            super();
+            this.moduleName = 'view';
+        }
+    
+        actions()
+        {
+            let self = this;
+            let actions = super.actions();
+            let api = this.api;
+    
+            actions['view/USER'] = (store, payload) =>
             {
-                super();
-                this.moduleName = 'view';
-            }
-        
-            actions()
-            {
-                let self = this;
-                let actions = super.actions();
-                let api = this.api;
-        
-                actions['view/USER'] = (store, payload) =>
+                return new Promise((resolve, reject) =>
                 {
-                    return new Promise((resolve, reject) =>
-                    {
-                        let userId = store.getters.app.user.id;
-        
-                        self.api.users
-                            .find(parseInt(payload.route.params.id))
-                            .then(response =>
-                            {
-                                let user = response.body.data;
-        
-                                store.commit('users/STORE', user);
-                                store.commit('notifications/STORE', {data: user.unread_notifications});
-                                resolve();
-                            })
-                            .catch(error => reject(error));
-                    });
-                }
+                    let userId = store.getters.app.user.id;
+    
+                    self.api.users
+                        .find(parseInt(payload.route.params.id))
+                        .then(response =>
+                        {
+                            let user = response.body.data;
+    
+                            store.commit('users/STORE', user);
+                            store.commit('notifications/STORE', {data: user.unread_notifications});
+                            resolve();
+                        })
+                        .catch(error => reject(error));
+                });
             }
         }
+    }
 
 Once the routes's actions resolve the view is loaded.
 

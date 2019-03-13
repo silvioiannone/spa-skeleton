@@ -1,6 +1,6 @@
 ### Translations
 
-Translations files can be defined in *resources/assets/locales/<locale>.json*.
+Translations files can be defined in *resources/locales/\<locale>.json*.
 
     {
         "settings": {
@@ -9,8 +9,8 @@ Translations files can be defined in *resources/assets/locales/<locale>.json*.
         }
     }
     
-    // resources/assets/locales/sv.json
+    // resources/locales/sv.json
 
 These files must be available in the *public/locales* folder. That can easily be accomplished using Laravel Mix:
 
-    Mix.copy('resources/assets/locales', 'public/locales');
+    Mix.copy('resources/locales', 'public/locales');
