@@ -50,12 +50,31 @@ const defaultConfig = {
         support: MAIL_SUPPORT_ADDRESS,
 
         /**
-         * Services configuration.
+         * Services settings.
          */
         services: {
 
             /**
-             * Translator service.
+             * Router settings.
+             *
+             * These settings change the way the router (in this case vue-router) behaves.
+             */
+            router: {
+
+                /**
+                 * This option allows you to set the router mode.
+                 */
+                mode: 'history',
+
+                /**
+                 * Class that will be applied to the elements holding the 'v-link' or
+                 * 'v-link-active' directive.
+                 */
+                linkActiveClass: 'active',
+            },
+
+            /**
+             * Translator settings.
              */
             translator: {
 
@@ -118,44 +137,14 @@ const defaultConfig = {
     client: {
 
         /**
-         * OAuth 2 web client ID.
+         * Laravel Passport web client ID.
          */
         id: WEB_CLIENT_ID,
 
         /**
-         * OAuth 2 web client secret.
+         * Laravel Passport web client secret.
          */
         secret: WEB_CLIENT_SECRET
-    },
-
-    /**
-     * Maps settings.
-     */
-    maps: {
-
-        /**
-         * Google Maps API key.
-         */
-        apiKey: GOOGLE_API_KEY
-    },
-
-    /**
-     * Router settings.
-     *
-     * These settings change the way the router (in this case vue-router) behaves.
-     */
-    router: {
-
-        /**
-         * This option allows you to set the router mode.
-         */
-        mode: 'history',
-
-        /**
-         * Class that will be applied to the elements holding the 'v-link' or 'v-link-active'
-         * directive.
-         */
-        linkActiveClass: 'active',
     },
 
     /**
@@ -218,7 +207,7 @@ const defaultConfig = {
             warning: '#FFC107'
         }
     }
-}
+};
 
 let config: any = _.merge(defaultConfig, AppConfig);
 
