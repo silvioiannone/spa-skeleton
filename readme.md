@@ -14,9 +14,10 @@ moment.
 
 ## Features
 
-- Writte in TS
+- Written in TS
 - VueJS 2 core
 - State machine (Vuex)
+- Client ORM (Vuex ORM)
 - Realtime translations (VueI18n)
 - Realtime WS events and global event hub
 - API client library
