@@ -1,9 +1,6 @@
-import { Store }         from 'vuex';
 import _                 from 'lodash';
 import Module            from '../../../State/Module';
 import Config            from '../../../../Config';
-import ResponseInterface from '../../../Api/ResponseInterface';
-import Token             from '../../../Api/Token';
 
 /**
  * State machine App module.
@@ -20,99 +17,7 @@ export default class APP extends Module
      */
     protected actions()
     {
-        let self = this;
-
-        return {
-
-            /**
-             * Fetch a user.
-             */
-            'user/FETCH'(store: Store<any>, params: any): Promise<any>
-            {
-                return new Promise((resolve, reject) =>
-                {
-                    if(store.getters.app.user.id)
-                    {
-                        resolve();
-                        return;
-                    }
-
-                    self.api.users
-                        .setParameters({
-                            with: 'role'
-                        })
-                        .get('me')
-                        .then((response: ResponseInterface) =>
-                        {
-                            // If the user was correctly logged in, save the data in the store.
-                            store.commit('user/STORE_AUTHENTICATED_USER', response.body.data);
-                            resolve();
-                        })
-                        .catch((error: any) => reject(error));
-                });
-            },
-
-            /**
-             * Log in a user.
-             */
-            'user/LOGIN'(store: Store<any>, userCredentials: any): Promise<any>
-            {
-                return new Promise((resolve, reject) =>
-                {
-                    self.api.users
-                        .login(userCredentials)
-                        .then((response: any) => resolve(response))
-                        .catch((error: any) => reject(error));
-                });
-            },
-
-            /**
-             * Log out a user.
-             */
-            'user/QUIT'(store: Store<any>): Promise<any>
-            {
-                return new Promise((resolve, reject) =>
-                {
-                    self.api.users.quit()
-                        .then((response: any) =>
-                        {
-                            resolve(response);
-                            (new Token()).remove();
-                            store.commit('user/REMOVE_AUTHENTICATED_USER');
-                        })
-                        .catch((error: any) => reject(error));
-                })
-            },
-
-            /**
-             * Set a setting.
-             */
-            'user/SET_SETTING'(store: Store<any>, params: any): Promise<any>
-            {
-                store.commit('user/CHANGE_SETTING', params);
-
-                return new Promise((resolve, reject) =>
-                {
-                    self.api.users.update(store.getters.app.user)
-                        .then((response: any) => resolve(response))
-                        .catch((error: any) => reject(error));
-                });
-            },
-
-            /**
-             * Update the user.
-             */
-            'user/UPDATE'(store: Store<any>, params: any): Promise<any>
-            {
-                return new Promise((resolve, reject) =>
-                {
-                    self.api.users
-                        .update(params)
-                        .then((response: any) => resolve(response))
-                        .catch((error: any) => reject(error));
-                });
-            }
-        }
+        return {};
     }
 
     /**
@@ -135,7 +40,7 @@ export default class APP extends Module
             /**
              * Merge the given state with the app state.
              */
-            'app/insert'(state: any, newState: any): void
+            'app/INSERT'(state: any, newState: any): void
             {
                 state = _.merge(state, newState);
             },
