@@ -66,8 +66,8 @@ export default class Router extends Service
 
         // Create a new router instance
         let router = new VueRouter({
-            linkActiveClass: Config.service.router.linkActiveClass,
-            mode : Config.service.router.mode,
+            linkActiveClass: Config.app.services.router.linkActiveClass,
+            mode : Config.app.services.router.mode,
             routes: [
                 {
                     path: '',
