@@ -1,4 +1,4 @@
-#API Client
+# API Client
 
 `spa-skeleton` ships with an API client that is ready to send requests to the backend server.
 
