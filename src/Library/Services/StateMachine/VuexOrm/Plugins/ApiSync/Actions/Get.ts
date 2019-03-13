@@ -47,7 +47,7 @@ export class Get extends Action
     {
         params.model.create(response.body);
 
-        store.commit('app/insert', {
+        store.commit('app/INSERT', {
             ui: {
                 pagination: response.body.meta
             }

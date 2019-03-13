@@ -89,7 +89,7 @@ export class ExtendedModel extends Model
     {
         if (response.body.meta) {
             ExtendedModel.store()
-                .commit('app/insert', {
+                .commit('app/INSERT', {
                     ui: {
                         pagination: response.body.meta
                     }
