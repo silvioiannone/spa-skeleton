@@ -9,13 +9,13 @@ Connecting to the WebSocket server is needed in order to receive real time event
         this.$ws.subscribe(this);
     }
 
-This will subscribe to all the events defined in *resources/assets/js/App/Subscriptions.js* and the
+This will subscribe to all the events defined in *resources/ts/App/Subscriptions.ts* and the
 default ones defined by `spa-skeleton`. If you're using the `layout-app` component it will
 automatically try to connect to the WS server when it's mounted.
 
 ## Events
 
-The events the SPA should listen must be defined in *resources/assets/js/App/Subscriptions.js*.
+The events the SPA should listen must be defined in *resources/ts/App/Subscriptions.ts*.
 
     import App from './Channels/App';
     import AppHandler form './Events/Handlers';
@@ -29,10 +29,10 @@ The events the SPA should listen must be defined in *resources/assets/js/App/Sub
         ...
     ]
     
-    // resources/assets/js/App/Subscriptions.js
+    // resources/ts/App/Subscriptions.ts
 
-Every event can be fired on multiple channel. A new channel (room) can be created within the
-*resources/assets/js/App/Channels* folder. Here's an example:
+Every event can be fired on multiple channels. A new channel (room) can be created within the
+*resources/ts/App/Channels* folder. Here's an example:
 
     import AbstractChannel from 'spa-skeleton/src/Library/WebSocket/AbstractChannel';
     
@@ -44,7 +44,7 @@ Every event can be fired on multiple channel. A new channel (room) can be create
         /**
          * Get the channel name.
          */
-        name()
+        name(): string
         {
             return 'App';
         }
