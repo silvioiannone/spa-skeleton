@@ -35,9 +35,9 @@ Here is an example:
     import AbstractModule from 'spa-skeleton/src/Library/State/AbstractModule';
 
     /**
-     * State machine user module.
+     * State machine App module.
      */
-    export default class APP extends AbstractModule
+    export default class App extends AbstractModule
     {
         constructor()
         {

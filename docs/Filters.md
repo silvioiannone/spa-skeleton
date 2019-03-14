@@ -31,7 +31,7 @@ Filter example:
     
 Import the filter:
 
-    import Capitalize from './Filters/ShiCapitalizenyFilter'
+    import Capitalize from './Filters/Capitalize';
         
     export default {
         capitalize: Capitalize

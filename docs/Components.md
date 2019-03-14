@@ -29,7 +29,7 @@ Components that are exported directly by `spa-skeleton` through `index.ts` can b
     import { ComponentName } from 'spa-skeleton';
     
     @Component({
-        compoents: {
+        components: {
             ComponentName
         }
     })
@@ -106,7 +106,7 @@ Some components are not yet exported directly by `index.ts` and need to be impor
  
 ### Menus
  
- - `menu-crud`: A menu pre-populated with and update and delete items.
+ - `menu-crud`: A menu pre-populated with an update and delete items.
  
 ### Misc
 
