@@ -1,19 +1,19 @@
-import Echo                      from 'laravel-echo';
-import IO                        from 'socket.io-client';
-import Log                       from './Services/Logger';
-import Vue                       from 'vue';
-import Config                    from '../Config';
-import Subscriptions             from '../../../../resources/ts/App/Subscriptions';
-import ApiFactory                from './Api';
-import StateMachine              from './Services/StateMachine';
-import AdminChannel              from './WebSocket/Channels/Admin';
-import AppChannel                from './WebSocket/Channels/App';
-import UserChannel               from './WebSocket/Channels/User';
-import AbstractChannel           from './WebSocket/AbstractChannel';
-import AppHandler                from './Events/AppHandler';
-import ModelHandler              from './Events/ModelHandler';
-import Token                     from './Api/Token';
-import { Subscription, Channel } from './Interfaces/Subscription';
+import Echo                            from 'laravel-echo';
+import IO                              from 'socket.io-client';
+import Log                             from './Services/Logger';
+import Vue                             from 'vue';
+import Config                          from '../Config';
+import Subscriptions                   from '../../../../resources/ts/App/Subscriptions';
+import ApiFactory                      from './Api';
+import AdminChannel                    from './WebSocket/Channels/Admin';
+import AppChannel                      from './WebSocket/Channels/App';
+import UserChannel                     from './WebSocket/Channels/User';
+import AppHandler                      from './Events/AppHandler';
+import ModelHandler                    from './Events/ModelHandler';
+import Token                           from './Api/Token';
+import { Subscription }                from './Interfaces/Subscription';
+import { Channel }                     from './Types/Channel';
+import { Channel as ChannelInterface } from './Interfaces/Channel';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -195,11 +195,9 @@ export default class WebSocket
     /**
      * Make a channel instance.
      */
-    makeChannel(channel: Channel): AbstractChannel
+    makeChannel(channel: Channel): ChannelInterface
     {
-        let store = StateMachine.getStore();
-
-        return typeof channel === 'object' ? channel : new channel(store);
+        return typeof channel === 'object' ? channel : new channel();
     }
 
     /**

@@ -1,7 +1,5 @@
-import AbstractChannel from '../WebSocket/AbstractChannel';
 import AbstractHandler from '../Events/AbstractHandler';
-
-export type Channel = typeof AbstractChannel | (new () => AbstractChannel);
+import { Channel }     from '../Types/Channel';
 
 export interface Subscription {
     event: string,

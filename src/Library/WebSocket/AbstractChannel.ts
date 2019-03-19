@@ -1,9 +1,11 @@
-import { Store } from 'vuex';
+import { Store }    from 'vuex';
+import StateMachine from '../Services/StateMachine';
+import Channel      from '../Interfaces/Channel';
 
 /**
  * A websocket channel.
  */
-export default abstract class AbstractChannel
+export default abstract class AbstractChannel implements Channel
 {
     /**
      * State machine store.
@@ -18,9 +20,9 @@ export default abstract class AbstractChannel
     /**
      * Constructor.
      */
-    constructor(store: Store<any>)
+    constructor()
     {
-        this.store = store;
+        this.store = StateMachine.getStore();
     }
 
     /**

@@ -4,7 +4,6 @@ export { default as CrudResource } from './src/Library/Api/Resources/CrudResourc
 export { default as Api } from './src/Library/Api';
 export { default as ResponseInterface } from './src/Library/Api/ResponseInterface';
 export { default as StateMachineModule } from './src/Library/State/Module';
-
 /*
  * Utils.
  */
@@ -25,6 +24,8 @@ export namespace Models {
  */
 export { InputDescription } from './src/Library/Interfaces/InputDescription';
 export { Subscription }     from './src/Library/Interfaces/Subscription';
+
+export { default as Channel } from './src/Library/WebSocket/AbstractChannel';
 
 /**
  * Mixins
