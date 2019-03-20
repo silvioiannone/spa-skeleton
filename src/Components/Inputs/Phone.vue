@@ -103,9 +103,14 @@
                 return;
             }
 
+            // First try to parse the phone number and init the component data accordingly.
             let parsedNumber = parseNumber(this.value, { extended: true });
 
             if (! parsedNumber.countryCallingCode) {
+                // If the parsed number doesn't have any country calling code but the value is still
+                // set then assume that the value only contains the country calling code and assign
+                // it to the country prefix.
+                this.countryPrefix = this.value.slice(1, this.value.length);
                 return;
             }
 
@@ -143,13 +148,8 @@
             this.$emit('input', this.e164FormattedNumber);
         }
 
-        @Watch('value')
+        @Watch('value', { immediate: true })
         onValueChange()
-        {
-            this.init();
-        }
-
-        created()
         {
             this.init();
         }
