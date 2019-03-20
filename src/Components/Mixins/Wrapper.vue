@@ -46,6 +46,8 @@
             return this.$data.__component;
         }
 
+        __eventOverrides = {};
+
         /**
          * Get the props.
          */
@@ -112,7 +114,14 @@
             wrapped.$emit = (event: any, payload: any): Vue =>
             {
                 childEmit.apply(wrapped, [event, payload]);
-                this.$emit(event, payload);
+
+                let override = this.$data.__eventOverrides[event];
+                
+                if (override) {
+                    override(payload);
+                } else {
+                    this.$emit(event, payload);
+                }
                 return this;
             };
         }
