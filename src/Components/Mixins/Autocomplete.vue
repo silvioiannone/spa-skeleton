@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import TextField                          from '../Mixins/TextField.vue';
+    import TextField                          from './TextField.vue';
 
     /**
      * This mixin can be used to build autocomplete inputs.
