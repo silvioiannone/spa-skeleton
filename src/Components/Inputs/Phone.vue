@@ -106,7 +106,7 @@
             // First try to parse the phone number and init the component data accordingly.
             let parsedNumber = parseNumber(this.value, { extended: true });
 
-            if (! parsedNumber.countryCallingCode) {
+            if (! parsedNumber.countryCallingCode && ! this.countryPrefix.length) {
                 // If the parsed number doesn't have any country calling code but the value is still
                 // set then assume that the value only contains the country calling code and assign
                 // it to the country prefix.
