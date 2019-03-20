@@ -57,6 +57,7 @@ export { default as FormMain } from './src/Components/Forms/Main.vue';
 export { default as IFrame } from './src/Components/Misc/IFrame.vue';
 export { default as InputAutocomplete } from './src/Components/Inputs/Autocomplete.vue';
 export { default as InputDynamic} from './src/Components/Inputs/Dynamic.vue';
+export { default as InputPhone } from './src/Components/Inputs/Phone.vue';
 export { default as LayoutApp } from './src/Components/Layouts/App.vue';
 export { default as NavigationDrawerMain } from './src/Components/NavigationDrawers/Main.vue';
 export { default as NavigationDrawerNotifications } from './src/Components/NavigationDrawers/Notifications.vue';

@@ -4,7 +4,7 @@
             <v-flex xs3 @keydown.enter="stopEnterPropagation">
                 <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
                                 item-value="prefix" :filter="filter" :disabled="disabled">
-                    <template #item slot-scope="props">
+                    <template #item="props">
                         <v-list-tile-avatar>
                             <span :class="'flag-icon flag-icon-' + props.item.iso"></span>
                         </v-list-tile-avatar>
@@ -15,154 +15,139 @@
                             </v-list-tile-title>
                         </v-list-tile-content>
                     </template>
-                    <template #selection slot-scope="props">
+                    <template #selection="props">
                         <strong>+{{ props.item.prefix }}</strong>
                     </template>
                 </v-autocomplete>
             </v-flex>
             <v-flex xs9>
-                <v-text-field label="Phone" v-model="phoneNumber" :disabled="! countryPrefix || disabled"
-                              name="phone" :error-messages="errorMessages" :required="required"
-                              :hint="hint" :persistent-hint="persistentHint"
-                              :label="label"
-                              :mask="selectedCountryPhonePrefix && selectedCountryPhonePrefix.mask || ''">
+                <v-text-field label="Phone" v-model="phoneNumber" name="phone" :required="required"
+                              :disabled="! countryPrefix || disabled" :label="label" :hint="hint"
+                              :error-messages="errorMessages" :persistent-hint="persistentHint"
+                              :mask="selectedCountryPhonePrefix &&
+                                     selectedCountryPhonePrefix.mask || ''">
                 </v-text-field>
             </v-flex>
         </v-layout>
     </v-input>
 </template>
 
-<script>
+<script lang="ts">
 
-    import { parseNumber } from 'libphonenumber-js';
-    import CountryPhonePrefixes from '../../Assets/Json/CountryPhonePrefixes.json';
-    import MixinInput from '../Mixins/Input';
+    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
+    import { parseNumber }                    from 'libphonenumber-js';
+    import CountryPhonePrefixes               from '../../Assets/Json/CountryPhonePrefixes.json';
+    import MixinInput                         from '../Mixins/Input.vue';
 
-    export default {
+    interface PrefixDescription {
+        name: string,
+        iso: string,
+        prefix: string
+    }
 
-        name: 'InputPhone',
+    @Component
+    export default class InputPhone extends Mixins(MixinInput)
+    {
+        /**
+         * Name of the input element.
+         */
+        @Prop({ type: String, default: 'phone' }) name: string;
 
-        mixins: [
-            MixinInput
-        ],
+        /**
+         * Label of the input element.
+         */
+        @Prop({ type: String, default: 'Phone' }) label: string;
 
-        data()
+        /**
+         * Make the phone input required.
+         */
+        @Prop({ type: Boolean, default: false }) required: boolean;
+
+        countryPhonePrefixes: Array<PrefixDescription> = CountryPhonePrefixes || [];
+
+        phoneNumber: string = '';
+
+        countryPrefix: string = '';
+
+        get selectedCountryPhonePrefix()
         {
-            return {
-                countryPhonePrefixes: CountryPhonePrefixes,
-                phoneNumber: '',
-                countryPrefix: ''
+            return this.countryPhonePrefixes
+                .find((item: PrefixDescription) => item.prefix === this.countryPrefix);
+        }
+
+        get e164FormattedNumber(): string
+        {
+            return '+' + this.countryPrefix + this.phoneNumber;
+        }
+
+        /**
+         * Filter the autocomplete items when typing.
+         */
+        filter(item: PrefixDescription, queryText: string, itemText: string): boolean
+        {
+            const textOne = item.name.toLowerCase();
+            const textTwo = '+' + item.prefix.toLowerCase();
+            const searchText = queryText.toLowerCase();
+
+            return textOne.indexOf(searchText) > -1 || textTwo.indexOf(searchText) > -1
+        }
+
+        /**
+         * Init the phone number.
+         */
+        init(): void
+        {
+            if (! this.value) {
+                this.phoneNumber = '';
+                this.countryPrefix = '';
+                return;
             }
-        },
 
-        props: {
+            let parsedNumber = parseNumber(this.value, { extended: true });
 
-            /**
-             * Name of the input element.
-             */
-            name: {
-                type: String,
-                default: 'phone'
-            },
-
-            /**
-             * Name of the input element.
-             */
-            label: {
-                type: String,
-                default: 'Phone'
-            },
-
-            /**
-             * Make the phone input required.
-             */
-            required: {
-                type: Boolean,
-                default: false
+            if (! parsedNumber.countryCallingCode) {
+                return;
             }
-        },
 
-        computed: {
+            let countryPhonePrefix = this.countryPhonePrefixes
+                .find((item: PrefixDescription) =>
+                {
+                    if (! parsedNumber.countryCallingCode) {
+                        return false;
+                    }
 
-            selectedCountryPhonePrefix()
-            {
-                return this.countryPhonePrefixes.find(item => item.prefix === this.countryPrefix);
-            },
+                    return item.prefix === parsedNumber.countryCallingCode.toString()
+                });
 
-            e164FormattedNumber()
-            {
-                return '+' + this.countryPrefix + this.phoneNumber;
+            if (countryPhonePrefix) {
+                this.countryPrefix = countryPhonePrefix.prefix;
             }
-        },
 
-        methods: {
+            this.phoneNumber = parsedNumber.phone.toString();
+        }
 
-            /**
-             * Filter the autocomplete items when typing.
-             *
-             * @param item
-             * @param queryText
-             * @param itemText
-             * @returns {boolean}
-             */
-            filter(item, queryText, itemText)
-            {
-                const textOne = item.name.toLowerCase();
-                const textTwo = '+' + item.prefix.toLowerCase();
-                const searchText = queryText.toLowerCase();
+        /**
+         * Stop the propagation of the enter keypress event.
+         *
+         * This is needed in order to avoid accidentally submitting the form containing this
+         * input element.
+         */
+        stopEnterPropagation(event: any)
+        {
+            event.preventDefault();
+        }
 
-                return textOne.indexOf(searchText) > -1 || textTwo.indexOf(searchText) > -1
-            },
+        @Watch('e164FormattedNumber')
+        onE164FormattedNumberChange()
+        {
+            this.$emit('input', this.e164FormattedNumber);
+        }
 
-            /**
-             * Init the phone number.
-             */
-            init()
-            {
-                if (! this.value) {
-                    this.phoneNumber = '';
-                    this.countryPrefix = '';
-                    return;
-                }
-
-                let parsedNumber = parseNumber(this.value, '', { extended: true });
-
-                if (! parsedNumber.countryCallingCode) {
-                    return;
-                }
-
-                this.countryPrefix = this.countryPhonePrefixes
-                    .find(item => item.prefix === parsedNumber.countryCallingCode.toString())
-                    .prefix;
-                this.phoneNumber = parsedNumber.phone;
-            },
-
-            /**
-             * Stop the propagation of the enter keypress event.
-             *
-             * This is needed in order to avoid accidentally submitting the form containing this
-             * input element.
-             *
-             * @param event
-             */
-            stopEnterPropagation(event)
-            {
-                event.preventDefault();
-            }
-        },
-
-        watch: {
-
-            e164FormattedNumber()
-            {
-                this.$emit('input', this.e164FormattedNumber);
-            },
-
-            value()
-            {
-                this.init();
-            }
-        },
+        @Watch('value')
+        onValueChange()
+        {
+            this.init();
+        }
 
         created()
         {
