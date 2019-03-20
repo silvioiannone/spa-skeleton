@@ -18,6 +18,7 @@
         "allowSyntheticDefaultImports": true,
         "sourceMap": true,
         "skipLibCheck": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "paths": {
             "spa-skeleton": ["./src/index.ts"],
