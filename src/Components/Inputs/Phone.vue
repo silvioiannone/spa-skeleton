@@ -128,7 +128,9 @@
                 this.countryPrefix = countryPhonePrefix.prefix;
             }
 
-            this.phoneNumber = parsedNumber.phone.toString();
+            if (parsedNumber.phone) {
+                this.phoneNumber = parsedNumber.phone.toString();
+            }
         }
 
         /**
