@@ -45,7 +45,11 @@ export class Get extends Action
      */
     static onSuccess(response: ResponseInterface, store: Store<any>, params: ActionParameters)
     {
-        params.model.create(response.body);
+        if (params.options.insert) {
+            params.model.insert(response.body);
+        } else {
+            params.model.create(response.body);
+        }
 
         store.commit('app/INSERT', {
             ui: {
@@ -70,5 +74,6 @@ interface ActionParameters
  */
 export interface GetParameters
 {
-    parameters: any
+    parameters: any,
+    insert?: undefined | boolean
 }
