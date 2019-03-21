@@ -18,11 +18,15 @@
         get computedProps()
         {
             return {
-                items: this.$data._items
+                items: this.$data._items,
+                loading: this.$data._loading
             }
         }
 
-        async _search(): void
+        /**
+         * Perform the search.
+         */
+        async _search(): Promise<any>
         {
             this.$data._loading = true;
 

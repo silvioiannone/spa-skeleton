@@ -116,7 +116,7 @@
                 childEmit.apply(wrapped, [event, payload]);
 
                 let override = this.$data.__eventOverrides[event];
-                
+
                 if (override) {
                     override(payload);
                 } else {
