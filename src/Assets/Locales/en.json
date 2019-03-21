@@ -62,7 +62,8 @@
   },
   "validations": {
     "messages": {
-      "required": "The field is required."
+      "required": "The field is required.",
+      "email": "Invalid e-mail address."
     }
   }
 }
