@@ -26,6 +26,7 @@ export { InputDescription } from './src/Library/Interfaces/InputDescription';
 export { Subscription }     from './src/Library/Interfaces/Subscription';
 
 export { default as Channel } from './src/Library/WebSocket/AbstractChannel';
+export { default as EventHandler } from './src/Library/Events/AbstractHandler';
 
 /**
  * Mixins
