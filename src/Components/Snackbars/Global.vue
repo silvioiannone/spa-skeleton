@@ -1,5 +1,5 @@
 <template>
-    <v-snackbar v-model="visible" :error="error" :timeout="timeout" :color="color">
+    <v-snackbar v-model="visible" :timeout="timeout" :color="color" :multi-line="multiLine">
         {{ message }}
         <v-btn flat class="white--text" @click="visible = false" :dark="error">Close</v-btn>
     </v-snackbar>
@@ -12,9 +12,9 @@
 
     interface SnackbarEvent {
         message: string;
+        multiLine: boolean;
         color: string;
         timeout: number;
-        error: boolean;
     }
 
     @Component
@@ -26,14 +26,14 @@
         color: string = 'primary';
 
         /**
-         * Display an error snackbar.
-         */
-        error: boolean = false;
-
-        /**
          * Message.
          */
         message: string = '';
+
+        /**
+         * Makes the snackbar higher (mobile).
+         */
+         multiLine: boolean = false;
 
         /**
          * Visibility timeout.
@@ -53,7 +53,7 @@
                 this.color = event.color || 'primary';
                 this.timeout = event.timeout || 2000;
                 this.visible = true;
-                this.error = !!event.error;
+                this.multiLine = event.multiLine;
             });
         }
     }
