@@ -45,9 +45,11 @@ export { default as Wrapper } from './src/Components/Mixins/Wrapper.vue';
 /**
  * Components
  */
+export { default as AvatarUser } from './src/Components/Avatars/User.vue';
 export { default as ButtonSubmit } from './src/Components/Buttons/Submit.vue';
 export { default as ButtonConfirm } from './src/Components/Buttons/Confirm.vue';
 export { default as BreadcrumbsMain } from './src/Components/Breadcrumbs/Main.vue';
+export { default as CardBackgroundJobs } from './src/Components/Cards/BackgroundJobs.vue';
 export { default as CardForm } from './src/Components/Cards/Form.vue';
 export { default as CardMain } from './src/Components/Cards/Main.vue';
 export { default as ChipMain } from './src/Components/Chips/Main.vue';

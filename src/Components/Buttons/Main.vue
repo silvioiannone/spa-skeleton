@@ -53,16 +53,15 @@
 
         render(createElement: Function): VNode
         {
-            let self = this;
             return createElement(
                 'v-btn',
                 {
-                    props: self.getProps(),
+                    props: this.getProps(),
                     on: {
-                        click: self.onClick
+                        click: this.onClick
                     }
                 },
-                self.$slots.default
+                this.$slots.default
             );
         }
     }
