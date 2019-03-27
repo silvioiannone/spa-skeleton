@@ -87,7 +87,7 @@ export class ExtendedModel extends Model
      */
     protected static handleApiResponse(response: ResponseInterface): void
     {
-        if (response.body.meta) {
+        if (response.body && response.body.meta) {
             ExtendedModel.store()
                 .commit('app/INSERT', {
                     ui: {
