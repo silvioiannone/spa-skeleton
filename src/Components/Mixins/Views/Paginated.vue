@@ -34,7 +34,9 @@
             if (sortQueryParam) {
                 // Any query applied before should be ignored otherwise the result of the order will
                 // be influenced by the previously run query.
+                let oldLoad = query.load;
                 query = query.newQuery(query.entity);
+                query.load = oldLoad;
                 query.orderBy(
                     <string>this.pagination.sortBy,
                     sortQueryParam[0] === '-' ? 'desc': 'asc'
