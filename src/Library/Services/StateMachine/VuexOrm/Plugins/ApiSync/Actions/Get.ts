@@ -45,7 +45,7 @@ export class Get extends Action
      */
     static onSuccess(response: ResponseInterface, store: Store<any>, params: ActionParameters)
     {
-        if (params.options.insert) {
+        if (params.options && params.options.insert) {
             params.model.insert(response.body);
         } else {
             params.model.create(response.body);
