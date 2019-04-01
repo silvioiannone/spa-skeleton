@@ -1,7 +1,7 @@
 <template>
     <div>
-        <editor-menu-bar :editor="editor">
-            <v-toolbar dense class="menubar" slot-scope="{commands, isActive}">
+        <editor-menu-bar :editor="editor" #default="{ commands, isActive }">
+            <v-toolbar dense class="menubar">
                 <editor-buttons-formats :commands="commands" :isActive="isActive">
                 </editor-buttons-formats>
                 <v-divider class="mr-2" vertical></v-divider>
