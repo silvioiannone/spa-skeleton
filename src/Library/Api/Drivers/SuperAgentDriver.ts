@@ -255,20 +255,17 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Intercept the response.
      */
-    interceptResponse(response: SuperAgent.Response): Promise<SuperAgent.Response>
+    async interceptResponse(response: SuperAgent.Response): Promise<SuperAgent.Response>
     {
         let self = this;
 
-        return new Promise((resolve, reject) =>
-        {
-            // If there's a token in the response...
-            if(response.body && response.body.access_token) {
-                // ...save it.
-                self.token.save(response.body.access_token, response.body.refresh_token);
-            }
+        // If there's a token in the response...
+        if(response.body && response.body.access_token) {
+            // ...save it.
+            await self.token.save(response.body.access_token, response.body.refresh_token);
+        }
 
-            resolve(response);
-        })
+        return response;
     }
 
     /**
@@ -292,6 +289,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     {
         return {
             body: response.body,
+            headers: response.header,
             status: response.status,
             request: {
                 url: response['req'].url

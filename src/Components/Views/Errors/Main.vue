@@ -34,7 +34,7 @@
                             </v-card-text>
                             <v-card-text class="monospaced">
                                 <pre>
-                                    <code>{{ error.body.trace | json }}</code>
+                                    <code>{{ error.body.trace }}</code>
                                 </pre>
                             </v-card-text>
                         </v-card>

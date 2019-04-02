@@ -171,6 +171,7 @@ export default class AxiosDriver extends AbstractApiDriver
     {
         return {
             body: response.data,
+            headers: response.headers,
             status: response.status,
             request: {
                 url: response.request.url

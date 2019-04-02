@@ -11,6 +11,7 @@ import Plugins      from './Library/Services/Plugins';
 import Filters      from './Library/Services/Filters';
 import Validator    from './Library/Services/Validator';
 import Router       from './Library/Services/Router';
+import ErrorHandler from './Library/Services/ErrorHandler';
 
 /**
  * The single page application.
@@ -42,6 +43,7 @@ export default class App
         Filters,
         Validator,
         Router,
+        ErrorHandler
     ]
 
     /**

@@ -14,6 +14,7 @@
             <error-not-found v-if="status === 'notFound'"></error-not-found>
             <error-service-unavailable v-if="status === 'serviceUnavailable'">
             </error-service-unavailable>
+            <error-too-many-attempts v-if="status === 'tooManyAttempts'"></error-too-many-attempts>
         </v-content>
         <snackbar-global></snackbar-global>
     </v-app>
@@ -26,6 +27,7 @@
     import ErrorServerError        from '../Views/Errors/ServerError.vue';
     import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
     import ErrorUnauthorized       from '../Views/Errors/Unauthorized.vue';
+    import ErrorTooManyAttempts    from '../Views/Errors/TooManyAttempts.vue';
 
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
@@ -35,15 +37,21 @@
             ErrorNotFound,
             ErrorServerError,
             ErrorServiceUnavailable,
+            ErrorTooManyAttempts,
             ErrorUnauthorized,
             SnackbarGlobal
         },
     })
     export default class App extends Vue
     {
+        get app()
+        {
+            return this.$store.getters.app;
+        }
+
         get status()
         {
-            return this.$store.getters.app.status;
+            return this.app.status;
         }
 
         get theme()
@@ -57,7 +65,7 @@
 
         get user()
         {
-            return this.$store.getters.app.user;
+            return this.app.user;
         }
     }
 

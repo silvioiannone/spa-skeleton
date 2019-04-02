@@ -184,12 +184,18 @@ export default class APP extends Module
              */
             ui: {
 
+                /**
+                 * The visibility state of the navigation drawers.
+                 */
                 navigationDrawers: {
                     notificationsVisible: false,
                     rightVisible: false,
                     leftVisible: true
                 },
 
+                /**
+                 * Stores the pagination object for views displaying paginated data.
+                 */
                 pagination: null
             },
 

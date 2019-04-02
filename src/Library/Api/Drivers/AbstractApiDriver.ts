@@ -35,11 +35,24 @@ export default abstract class AbstractApiDriver
     protected parameters: {[key: string]: any} = {};
 
     /**
+     * After response hooks.
+     */
+    protected static afterResponseHooks: Array<(response: ResponseInterface) => void> = [];
+
+    /**
      * Constructor.
      */
     protected constructor()
     {
         this.token = new Token;
+    }
+
+    /**
+     * Register a hook that will be called after a response has been received.
+     */
+    static afterResponse(callback: (response: ResponseInterface) => void): void
+    {
+        AbstractApiDriver.afterResponseHooks.push(callback);
     }
 
     /**
@@ -61,13 +74,31 @@ export default abstract class AbstractApiDriver
     }
 
     /**
-     * Send a GET HTTP request to the API.
+     * Send an HTTP request to the API.
      */
-    protected async _get(action: string): Promise<ResponseInterface>
+    protected async send(method: 'GET' | 'POST' | 'PATCH' | 'DELETE', action: string, data?: any)
     {
-        let response = await this.sendGet(action);
+        let functionName = 'send' + method[0].toUpperCase() + method.substr(1).toLowerCase();
+        let response: any = null;
+
+        try {
+            response = await this[functionName](action, data);
+        } catch (errorResponse) {
+            AbstractApiDriver.afterResponseHooks.forEach(callback => callback(errorResponse));
+            throw this.parseResponse(errorResponse);
+        }
+
+        AbstractApiDriver.afterResponseHooks.forEach(callback => callback(response));
 
         return this.parseResponse(response);
+    }
+
+    /**
+     * Send a GET HTTP request to the API.
+     */
+    protected _get(action: string): Promise<ResponseInterface>
+    {
+        return this.send('GET', action);
     }
 
     /**
@@ -75,9 +106,7 @@ export default abstract class AbstractApiDriver
      */
     protected async _post(action: string, data: any): Promise<ResponseInterface>
     {
-        let response = await this.sendPost(action, data);
-
-        return this.parseResponse(response);
+        return this.send('POST', action, data);
     }
 
     /**
@@ -85,9 +114,7 @@ export default abstract class AbstractApiDriver
      */
     protected async _patch(action: string, data: any): Promise<ResponseInterface>
     {
-        let response = await this.sendPatch(action, data);
-
-        return this.parseResponse(response);
+        return this.send('PATCH', action, data);
     }
 
     /**
@@ -95,9 +122,7 @@ export default abstract class AbstractApiDriver
      */
     protected async _delete(action: string, data: any): Promise<ResponseInterface>
     {
-        let response = await this.sendDelete(action, data);
-
-        return this.parseResponse(response);
+        return this.send('DELETE', action, data);
     }
 
     /**
