@@ -1,6 +1,8 @@
 import Vue               from 'vue';
 import Router, { Route } from 'vue-router'
 import String            from './String';
+import StateMachine      from '../Services/StateMachine';
+import Guard             from '../Guard';
 
 /**
  * Providers navigations and routing utilities.
@@ -58,5 +60,15 @@ export default class Navigator
             path: String.parentPath(this.route.path, levels),
             query: this.route.query
         });
+    }
+
+    /**
+     * Refresh the current route.
+     */
+    refresh(): void
+    {
+        // In order to refresh the current route we just need to execute the view actions.
+        (new Guard).init(this.router, StateMachine.getStore())
+            .refresh(this.route);
     }
 }
