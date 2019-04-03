@@ -43,7 +43,10 @@
         @Watch('filters', { deep: true })
         onFiltersChange()
         {
-            let query = {...this.$route.query};
+            let query = {
+                ...this.$route.query,
+                page: '1' // When applying a filter always reset the page number.
+            };
 
             for (let key in this.filters) {
                 let filterValue = this.filters[key];
