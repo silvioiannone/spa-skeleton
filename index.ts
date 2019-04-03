@@ -34,6 +34,7 @@ export { default as EventHandler } from './src/Library/Events/AbstractHandler';
 export { default as ComponentFilterable } from './src/Components/Mixins/Components/Filterable.vue';
 export { default as ComponentPaginatable } from './src/Components/Mixins/Components/Paginatable.vue';
 export { default as ComponentSearchable } from './src/Components/Mixins/Components/Searchable.vue';
+export { default as Headful } from './src/Components/Mixins/Components/Headful.vue';
 export { default as Input } from './src/Components/Mixins/Input.vue';
 export { default as TextField } from './src/Components/Mixins/TextField.vue';
 export { default as ViewFilterable } from './src/Components/Mixins/Views/Filterable.vue';

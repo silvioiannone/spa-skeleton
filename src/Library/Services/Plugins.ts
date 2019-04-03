@@ -11,6 +11,7 @@ import VueI18N   from 'vue-i18n';
 import VueRouter from 'vue-router';
 import Api       from '../App/Plugins/Api';
 import EventHub  from '../App/Plugins/EventHub';
+import Head      from '../App/Plugins/Head';
 import Navigator from '../App/Plugins/Navigator';
 import WebSocket from '../App/Plugins/WebSocket';
 
@@ -24,6 +25,7 @@ const SkeletonPlugins = {
     Api,
     Navigator,
     EventHub,
+    Head,
     WebSocket
 };
 

@@ -34,6 +34,8 @@ export default class App
 
     /**
      * App's services.
+     *
+     * Order is important.
      */
     protected static readonly services: Array<typeof Service> = [
         Directives,

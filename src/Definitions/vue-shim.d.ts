@@ -7,6 +7,7 @@ import VueI18n, { IVueI18n }   from 'vue-i18n';
 import { ApiClient }           from '../Library/Api';
 import WebSocket               from '../Library/WebSocket';
 import Navigator               from '../Library/Utils/Navigator';
+import Head                    from '../Library/Utils/Head';
 
 declare module 'vue/types/vue'
 {
@@ -20,6 +21,7 @@ declare module 'vue/types/vue'
         $d: typeof VueI18n.prototype.d;
         $n: typeof VueI18n.prototype.n;
         $eh: Vue
+        $head: typeof Head,
         $navigator: Navigator,
         $route: Route,
         $router: Router,
