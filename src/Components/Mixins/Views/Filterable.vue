@@ -17,16 +17,6 @@
     {
         filters = {};
 
-        initialFilters = {};
-
-        /**
-         * Whether filters are applied.
-         */
-        hasFilters(): boolean
-        {
-            return JSON.stringify(this.filters) !== this.initialFilters;
-        }
-
         /**
          * Whether the value is an empty array.
          */
@@ -37,10 +27,6 @@
 
         created()
         {
-            // Make a copy of the filters so that later on we can compare this copy with the actual
-            // filters in order to know whether there are filters applied.
-            this.initialFilters = JSON.stringify(this.filters);
-
             // Get the query parameters and if there's a parameter with the same name as the filter
             // then use it to initialize the filters.
             for (let key in this.$route.query)

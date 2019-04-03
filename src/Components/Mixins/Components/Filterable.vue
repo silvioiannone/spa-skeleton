@@ -8,8 +8,6 @@
     {
         filters = {};
 
-        initialFilters: string = '';
-
         /**
          * Get the filter query parameters.
          */
@@ -39,10 +37,6 @@
 
         created()
         {
-            // Make a copy of the filters so that later on we can compare this copy with the actual
-            // filters in order to know whether there are filters applied.
-            this.initialFilters = JSON.stringify(this.filters);
-
             this.setParameters(this.getFilterParameters());
         }
 
