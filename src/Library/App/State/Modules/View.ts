@@ -1,7 +1,6 @@
-import Module    from '../../../State/Module';
-import Config            from 'spa-skeleton/src/Config';
-import ResponseInterface from '../../../Api/ResponseInterface';
-import { Store }         from 'vuex';
+import Module                                    from '../../../State/Module';
+import { Config, ResponseInterface, ViewAction } from 'spa-skeleton';
+import { Store }                                 from 'vuex';
 
 /**
  * State machine view module.
@@ -16,9 +15,8 @@ export default class View extends Module
     /**
      * Get the module's actions.
      */
-    protected actions()
+    protected actions(): { (key: string): ViewAction } | {}
     {
-        let self = this;
         let actions = {};
 
         // / route.
@@ -31,7 +29,7 @@ export default class View extends Module
                     return;
                 }
 
-                self.api.app.getSettings()
+                this.api.app.getSettings()
                     .then((response: ResponseInterface) =>
                     {
                         store.commit('app/SET_SETTINGS', response.body.data);
@@ -55,7 +53,7 @@ export default class View extends Module
                     return;
                 }
 
-                self.api.users
+                this.api.users
                     .setParameters({
                         include: 'role,unread_notifications'
                     })
@@ -86,7 +84,7 @@ export default class View extends Module
                     return;
                 }
 
-                self.api.users
+                this.api.users
                     .setParameters({
                         include: 'role'
                     })
