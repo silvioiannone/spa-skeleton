@@ -6,14 +6,15 @@ import Translator from './Translator';
 import Config     from '../../Config';
 
 // Skeleton plugins
-import Vuetify   from 'vuetify';
-import VueI18N   from 'vue-i18n';
-import VueRouter from 'vue-router';
-import Api       from '../App/Plugins/Api';
-import EventHub  from '../App/Plugins/EventHub';
-import Head      from '../App/Plugins/Head';
-import Navigator from '../App/Plugins/Navigator';
-import WebSocket from '../App/Plugins/WebSocket';
+import Vuetify                     from 'vuetify';
+import VueI18N                     from 'vue-i18n';
+import VueRouter                   from 'vue-router';
+import Api                         from '../App/Plugins/Api';
+import { default as ConfigPlugin } from '../App/Plugins/Config';
+import EventHub                    from '../App/Plugins/EventHub';
+import Head                        from '../App/Plugins/Head';
+import Navigator                   from '../App/Plugins/Navigator';
+import WebSocket                   from '../App/Plugins/WebSocket';
 
 /**
  * SPA-Skeleton plugins. The order is important.
@@ -23,6 +24,7 @@ const SkeletonPlugins = {
     Vuetify,
     VueRouter,
     Api,
+    Config: ConfigPlugin,
     Navigator,
     EventHub,
     Head,
