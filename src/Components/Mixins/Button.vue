@@ -68,12 +68,11 @@
 
         render(createElement: Function): VNode
         {
-            let self = this;
-
             return createElement('v-btn', {
                 props: this.getProps(),
                 on: {
-                    click: (event: any) => self.handleClick(event)
+                    on: this.$listeners,
+                    click: (event: any) => this.handleClick(event)
                 }
             }, this.$slots.default);
         }
