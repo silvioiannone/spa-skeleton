@@ -77,7 +77,9 @@
          */
         getOn(): any
         {
-            let on = {};
+            let on = {
+                ...this.$listeners
+            };
 
             // Model input event
             if (this._hasModel) {
