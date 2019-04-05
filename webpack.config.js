@@ -50,7 +50,6 @@ module.exports = {
             APP_URL: JSON.stringify(process.env.APP_URL),
             MAIL_SUPPORT_ADDRESS: JSON.stringify(process.env.MAIL_SUPPORT_ADDRESS),
             PAGINATION_DEFAULT_SIZE: JSON.stringify(process.env.PAGINATION_DEFAULT_SIZE),
-            GOOGLE_API_KEY: JSON.stringify(process.env.GOOGLE_API_KEY),
             SENTRY_DSN_JS: JSON.stringify(process.env.SENTRY_DSN_JS),
             WEBSOCKET_SERVER_HOST: JSON.stringify(process.env.WEBSOCKET_SERVER_HOST),
             WEBSOCKET_SERVER_PORT: JSON.stringify(process.env.WEBSOCKET_SERVER_PORT),
