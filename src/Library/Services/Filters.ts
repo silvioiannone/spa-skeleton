@@ -1,5 +1,4 @@
 import Vue          from 'vue';
-import { Store }    from 'vuex';
 import Logger       from './Logger';
 import Service      from './Service';
 import StateMachine from './StateMachine';
@@ -9,6 +8,7 @@ import AppFilters   from '../../../../../resources/ts/App/Filters';
 import Capitalize         from '../App/Filters/Capitalize';
 import Currency           from '../App/Filters/Currency';
 import Date               from '../App/Filters/Date';
+import Duration           from '../App/Filters/Duration';
 import FileSize           from '../App/Filters/FileSize';
 import OrganizationNumber from '../App/Filters/OrganizationNumber';
 import Phone              from '../App/Filters/Phone';
@@ -19,6 +19,7 @@ const SkeletonFilters = {
     capitalize: Capitalize,
     currency: Currency,
     date: Date,
+    duration: Duration,
     fileSize: FileSize,
     organizationNumber: OrganizationNumber,
     phone: Phone,
