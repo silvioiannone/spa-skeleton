@@ -83,7 +83,7 @@
 
         protected showingSearch: boolean = false;
 
-        protected searchQuery: string | string[] = '';
+        protected searchQuery: string | (string | null)[] = '';
 
         get toolbarTitleRedirectUrl(): string
         {

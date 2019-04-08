@@ -4,6 +4,6 @@ export default interface Pagination
     rowsPerPage: number;
     totalItems: number;
     totalPages: number;
-    sortBy: string | string[];
+    sortBy: string | (string | null)[];
     descending: boolean | null;
 }
