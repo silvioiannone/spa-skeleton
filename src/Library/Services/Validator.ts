@@ -3,6 +3,7 @@ import Vue         from 'vue';
 import Log         from './Logger';
 import Service     from './Service';
 import Translator  from './Translator';
+import AppRules    from '../../../../../resources/ts/App/Rules';
 
 // Skeleton rules.
 import Count      from '../App/Rules/Count';
@@ -35,8 +36,10 @@ export default class Validator extends Service
             i18n: translator,
         });
 
-        for (let key in skeletonRules) {
-            let rule = new (skeletonRules[key])(translator);
+        let availableRules = { ...skeletonRules, ...AppRules };
+
+        for (let key in availableRules) {
+            let rule = new (availableRules[key])(translator);
             let ruleName = key.charAt(0).toLowerCase() + key.slice(1);
 
             Log.debug(`Registered rule '${ruleName}'.`);
