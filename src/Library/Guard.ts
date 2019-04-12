@@ -258,7 +258,7 @@ export default class Guard
     /**
      * Executes the guards for the specified route.
      */
-    protected async runRouteGuards(to: Route): Promise<any>
+    protected async runRouteGuards(to: Route, from: Route): Promise<any>
     {
         let guards: string[] = [];
         let guardPromises: Promise<any>[] = [];

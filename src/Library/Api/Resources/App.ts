@@ -18,21 +18,7 @@ export default class App extends ApiResource
      */
     public getLocale(locale: string): Promise<ResponseInterface>
     {
-        return new Promise((resolve, reject): void =>
-        {
-            this.httpClient
-                .get('/locales/' + locale + '.json')
-                .end((error: any, response: any): void =>
-                {
-                    if (error)
-                    {
-                        reject(response);
-                        return;
-                    }
-
-                    resolve(response);
-                });
-        });
+        return this.httpClient.get('/locales/' + locale + '.json');
     }
 
     /**

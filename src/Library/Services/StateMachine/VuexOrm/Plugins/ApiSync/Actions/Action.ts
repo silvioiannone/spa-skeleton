@@ -2,6 +2,7 @@ import ApiFactory, { ApiClient } from '../../../../../../Api';
 import { Store }                 from 'vuex';
 import Pluralize                 from 'pluralize';
 import ApiResource               from '../../../../../../Api/Resources/ApiResource';
+import ResponseInterface         from 'spa-skeleton/src/Library/Api/ResponseInterface';
 
 /**
  * An action.
@@ -28,7 +29,7 @@ export abstract class Action
      *
      * Override this function.
      */
-    public static execute(): Promise<any>
+    public static execute(store: Store<any>, params: any): Promise<any>
     {
         return new Promise((): void => {
             throw 'Define the default action in the extending class.'
@@ -68,7 +69,7 @@ export abstract class Action
     /**
      * Handle a successful response.
      */
-    protected static onSuccess(): void
+    protected static onSuccess(response: ResponseInterface, store: Store<any>, params: any): void
     {
         throw 'Define the `onSuccess` function in the extending class.'
     }
@@ -76,7 +77,7 @@ export abstract class Action
     /**
      * Handle an error response.
      */
-    protected static onError(): void
+    protected static onError(response: ResponseInterface, store: Store<any>, params: any): void
     {
         //throw 'Define the `onError` function in the extending class.'
     }
