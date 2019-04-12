@@ -12,24 +12,24 @@ export class Delete extends Action
     /**
      * Execute the action.
      */
-    public static execute(store: Store<any>, params: DeleteParameters): Promise<any>
+    public static async execute(
+        store: Store<any>,
+        params: DeleteParameters
+    ): Promise<ResponseInterface>
     {
-        return new Promise((resolve: Function, reject: Function): void =>
-        {
-            let resource = Delete.getResource(store);
+        let resource = Delete.getResource(store);
+        let response = null;
 
-            resource.delete(params.data)
-                .then((response: ResponseInterface): void =>
-                {
-                    Delete.onSuccess(response, store, params);
-                    resolve(response);
-                })
-                .catch((response: ResponseInterface): void =>
-                {
-                    Delete.onError(response, store, params);
-                    reject(response);
-                });
-        });
+        try {
+            response = await resource.delete(params.data)
+        } catch (error) {
+            Delete.onError(error, store, params);
+            throw error;
+        }
+
+        Delete.onSuccess(response, store, params);
+
+        return response;
     }
 
     /**

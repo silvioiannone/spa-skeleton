@@ -1,7 +1,7 @@
 import { ExtendedModel } from '../../../Support/ExtendedModel';
 import ResponseInterface from '../../../../../../Api/ResponseInterface';
-import { Action } from './Action';
-import { Store } from 'vuex';
+import { Action }        from './Action';
+import { Store }         from 'vuex';
 
 
 /**
@@ -12,24 +12,24 @@ export class Update extends Action
     /**
      * Execute the action.
      */
-    public static execute(store: Store<any>, params: UpdateParameters): Promise<any>
+    public static async execute(
+        store: Store<any>,
+        params: UpdateParameters
+    ): Promise<ResponseInterface>
     {
-        return new Promise((resolve: Function, reject: Function): void =>
-        {
-            let resource = Update.getResource(store);
+        let resource = Update.getResource(store);
+        let response = null;
 
-            resource.update(params.data)
-                .then((response: ResponseInterface): void =>
-                {
-                    Update.onSuccess(response, store, params);
-                    resolve(response);
-                })
-                .catch((response: ResponseInterface): void =>
-                {
-                    Update.onError(response, store, params);
-                    reject(response);
-                });
-        });
+        try {
+            response = await resource.update(params.data);
+        } catch (error) {
+            Update.onError(error, store, params);
+            throw error;
+        }
+
+        Update.onSuccess(response, store, params);
+
+        return response;
     }
 
     /**

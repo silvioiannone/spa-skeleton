@@ -9,24 +9,27 @@ import { Store }         from 'vuex';
  */
 export class Create extends Action
 {
-    public static execute(store: Store<any>, params: CreateParameters): Promise<any>
+    /**
+     * Execute the action.
+     */
+    public static async execute(
+        store: Store<any>,
+        params: CreateParameters
+    ): Promise<ResponseInterface>
     {
-        return new Promise((resolve: Function, reject: Function): void =>
-        {
-            let resource = Create.getResource(store);
+        let resource = Create.getResource(store);
+        let response = null;
 
-            resource.create(params.data)
-                .then((response: ResponseInterface): void =>
-                {
-                    Create.onSuccess(response, store, params);
-                    resolve(response);
-                })
-                .catch((response: ResponseInterface): void =>
-                {
-                    Create.onError(response, store, params);
-                    reject(response);
-                });
-        });
+        try {
+            response = await resource.create(params.data)
+        } catch (error) {
+            Create.onError(error, store, params);
+            throw error;
+        }
+
+        Create.onSuccess(response, store, params);
+
+        return response;
     }
 
     /**

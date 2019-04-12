@@ -11,33 +11,33 @@ export class Get extends Action
     /**
      * Execute the action.
      */
-    public static execute(store: Store<any>, params: ActionParameters): Promise<any>
+    public static async execute(
+        store: Store<any>,
+        params: ActionParameters
+    ): Promise<ResponseInterface>
     {
-        return new Promise((resolve: Function, reject: Function): void =>
-        {
-            let resource = Get.getResource(store);
-            let requestParameters = null;
+        let resource = Get.getResource(store);
+        let requestParameters = null;
+        let response = null;
 
-            if (params.options && params.options.parameters) {
-                requestParameters = params.options.parameters;
-            }
+        if (params.options && params.options.parameters) {
+            requestParameters = params.options.parameters;
+        }
 
-            if (requestParameters) {
-                resource.setParameters(requestParameters);
-            }
+        if (requestParameters) {
+            resource.setParameters(requestParameters);
+        }
 
-            resource.get(params.id)
-                .then((response: ResponseInterface): void =>
-                {
-                    Get.onSuccess(response, store, params);
-                    resolve(response);
-                })
-                .catch((response: ResponseInterface): void =>
-                {
-                    Get.onError(response, store, params);
-                    reject(response);
-                });
-        });
+        try {
+            response = await resource.get(params.id);
+        } catch (error) {
+            Get.onError(error, store, params);
+            throw error;
+        }
+
+        Get.onSuccess(response, store, params);
+
+        return response;
     }
 
     /**
