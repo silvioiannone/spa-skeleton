@@ -78,26 +78,27 @@ export default class Router extends Service
                     children: Routes
                 }
             ],
-            scrollBehavior(to: Route, from: Route, savedPosition: any): Promise<any>
+            async scrollBehavior(to: Route, from: Route, savedPosition: any): Promise<any>
             {
-                return new Promise((resolve, reject): void =>
+                return new Promise(async (resolve, reject): Promise<any> =>
                 {
-                    scrollPromise
-                        .then((solution: any): void => {
-                            // The timeout is needed because we need to wait for the view animation
-                            // to finish.
-                            setTimeout((): void => resolve(solution), 500);
-                        })
-                        .catch((reason: any): void => {
-                            if (reason !== {}) {
-                                Logger.error('Scroll behaviour failed.');
-                                Logger.error(reason);
-                                reject(reason);
-                                return;
-                            }
+                    try {
+                        await scrollPromise;
+                    } catch (error) {
+                        if (error !== {}) {
+                            Logger.error('Scroll behaviour failed.');
+                            Logger.error(error);
+                            reject(error);
+                            return;
+                        }
 
-                            resolve(savedPosition || { x: 0, y: 0 })
-                        })
+                        resolve(savedPosition || { x: 0, y: 0 });
+                        return;
+                    }
+
+                    // The timeout is needed because we need to wait for the view animation
+                    // to finish.
+                    setTimeout((): void => resolve(), 500);
                 })
             }
         });
