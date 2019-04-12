@@ -2,7 +2,7 @@ import HttpStatusCodes from './HttpStatusCodes';
 
 interface Request
 {
-    url: string
+    url: string;
 }
 
 /**
@@ -10,10 +10,10 @@ interface Request
  */
 export default interface ResponseInterface
 {
-    body: any,
+    body: any;
     headers: {
-        (key: string): string
-    }
-    status: HttpStatusCodes,
-    request: Request
+        (key: string): string;
+    };
+    status: HttpStatusCodes;
+    request: Request;
 }

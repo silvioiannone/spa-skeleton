@@ -20,7 +20,7 @@ export default abstract class AbstractChannel implements Channel
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         this.store = StateMachine.getStore();
     }
@@ -28,7 +28,7 @@ export default abstract class AbstractChannel implements Channel
     /**
      * Whether the channel is private or not.
      */
-    isPrivate(): boolean
+    public isPrivate(): boolean
     {
         return this.private;
     }
@@ -36,7 +36,7 @@ export default abstract class AbstractChannel implements Channel
     /**
      * Whether it's possible for the user to enter the channel.
      */
-    canEnter(): boolean
+    public canEnter(): boolean
     {
         return true;
     }

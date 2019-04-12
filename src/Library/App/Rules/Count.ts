@@ -15,7 +15,7 @@ export default class Count extends AbstractRule
     /**
      * Get the validation message.
      */
-    getMessage(field: string, params: Array<any>, data: any): string
+    public getMessage(field: string, params: any[]): string
     {
         return `You need to select ${params[0]} ${field}`;
     }
@@ -23,7 +23,7 @@ export default class Count extends AbstractRule
     /**
      * Validate.
      */
-    validate(value: string, params: Array<any>): boolean
+    public validate(value: string, params: any[]): boolean
     {
         return value.length === parseInt(params[0]);
     }

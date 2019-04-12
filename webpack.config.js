@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 const path = require('path'),
-      Webpack = require('webpack'),
-      LaravelMix = require('laravel-mix'),
-      ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+    Webpack = require('webpack'),
+    LaravelMix = require('laravel-mix'),
+    ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     profile: true,

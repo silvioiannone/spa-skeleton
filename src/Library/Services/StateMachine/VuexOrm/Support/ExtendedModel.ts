@@ -15,7 +15,7 @@ export class ExtendedModel extends Model
     /**
      * Create the model on the server and the state machine.
      */
-    static async $create(
+    public static async $create(
         data: any = '',
         options: CreateParameters | null = null): Promise<ResponseInterface>
     {
@@ -29,7 +29,7 @@ export class ExtendedModel extends Model
     /**
      * Delete the model on the server and the state machine.
      */
-    static async $delete(
+    public static async $delete(
         data: any = '',
         options: DeleteParameters | null = null): Promise<ResponseInterface>
     {
@@ -43,7 +43,7 @@ export class ExtendedModel extends Model
     /**
      * Get the model(s) from the server and stores it in the state machine.
      */
-    static async $get(
+    public static async $get(
         id: string | number = '',
         options: GetParameters | null = null): Promise <ResponseInterface>
     {
@@ -57,7 +57,7 @@ export class ExtendedModel extends Model
     /**
      * Update the model on the server and the state machine.
      */
-    static async $update(
+    public static async $update(
         data: any = '',
         options: UpdateParameters | null = null): Promise<ResponseInterface>
     {
@@ -71,7 +71,7 @@ export class ExtendedModel extends Model
     /**
      * Make an API call.
      */
-    static async api(
+    public static async api(
         execute: (client: ApiClient) => Promise<ResponseInterface>
     ): Promise<ResponseInterface>
     {

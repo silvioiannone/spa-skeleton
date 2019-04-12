@@ -1,14 +1,14 @@
 import * as Moment    from 'moment';
-import AsbtractFilter from './AbstractFilter';
+import AbstractFilter from './AbstractFilter';
 
 /**
  * Display an amount of time as a duration.
  */
-export default class Duration extends AsbtractFilter
+export default class Duration extends AbstractFilter
 {
-    run(): (value: string) => string
+    public run(): (value: string) => string
     {
-        return (value: string) =>
+        return (value: string): string =>
         {
             return Moment.utc(parseInt(value) * 1000).format('HH:mm:ss');
         }

@@ -21,7 +21,7 @@ export default class Router extends Service
     /**
      * The service name.
      */
-    name: string = 'Router';
+    public name: string = 'Router';
 
     /**
      * API client.
@@ -36,7 +36,7 @@ export default class Router extends Service
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         super();
 
@@ -47,13 +47,13 @@ export default class Router extends Service
     /**
      * Boot the router.
      */
-    boot(): void
+    public boot(): void
     {
         let store = StateMachine.getStore();
         let guard = new Guard;
-        let scrollPromise = new Promise((resolve: Function, reject: Function) =>
+        let scrollPromise = new Promise((resolve: Function): void =>
         {
-            guard.onComplete((to: Route, from: Route) =>
+            guard.onComplete((to: Route): void =>
             {
                 if (to.hash) {
                     resolve({ selector: to.hash });
@@ -78,17 +78,17 @@ export default class Router extends Service
                     children: Routes
                 }
             ],
-            scrollBehavior(to: Route, from: Route, savedPosition: any)
+            scrollBehavior(to: Route, from: Route, savedPosition: any): Promise<any>
             {
-                return new Promise((resolve, reject) =>
+                return new Promise((resolve, reject): void =>
                 {
                     scrollPromise
-                        .then((solution: any) => {
+                        .then((solution: any): void => {
                             // The timeout is needed because we need to wait for the view animation
                             // to finish.
-                            setTimeout(() => resolve(solution), 500);
+                            setTimeout((): void => resolve(solution), 500);
                         })
-                        .catch((reason: any) => {
+                        .catch((reason: any): void => {
                             if (reason !== {}) {
                                 Logger.error('Scroll behaviour failed.');
                                 Logger.error(reason);

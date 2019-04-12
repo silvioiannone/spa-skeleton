@@ -1,9 +1,10 @@
-import _          from 'lodash';
-import Vue        from 'vue';
-import Service    from './Service';
-import Logger     from './Logger'
-import Translator from './Translator';
-import Config     from '../../Config';
+import _                     from 'lodash';
+import Vue                   from 'vue';
+import Service               from './Service';
+import Logger                from './Logger'
+import Translator            from './Translator';
+import Config                from '../../Config';
+import { VuetifyUseOptions } from 'vuetify';
 
 // Skeleton plugins
 import Vuetify                     from 'vuetify';
@@ -31,7 +32,7 @@ const SkeletonPlugins = {
     WebSocket
 };
 
-export type BeforeActions = { [key: string]: Array<Function> };
+export interface BeforeActions { [key: string]: Function[] }
 
 /**
  * This service registers various Vue plugins.
@@ -41,7 +42,7 @@ export default class Plugins extends Service
     /**
      * Service name.
      */
-    name: string = 'Plugins';
+    public name: string = 'Plugins';
 
     /**
      * Actions to perform before registering a plug-in.
@@ -51,17 +52,18 @@ export default class Plugins extends Service
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         super();
 
-        this.before('Vuetify', () =>
+        this.before('Vuetify', (): VuetifyUseOptions =>
         {
             let translatorInstance = (new Translator).boot().get();
 
             return {
                 lang: {
-                    t: (key: string, ...params: any) => translatorInstance.t(key, params)
+                    t: (key: string, ...params: any): string =>
+                        translatorInstance.t(key, params) as string
                 }
             }
         });
@@ -70,7 +72,7 @@ export default class Plugins extends Service
     /**
      * Bind the plugins.
      */
-    boot(): void
+    public boot(): void
     {
         let availablePlugins = {...SkeletonPlugins};
 
@@ -85,7 +87,7 @@ export default class Plugins extends Service
             }
 
             if (this.beforeActions[key]) {
-                this.beforeActions[key].forEach((action: Function) =>
+                this.beforeActions[key].forEach((action: Function): void =>
                 {
                     let actionSettings = action();
                     settings = _.merge(settings, actionSettings)
@@ -101,7 +103,7 @@ export default class Plugins extends Service
     /**
      * Register a callback that should be executed before a plugin is registered.
      */
-    before(plugin: string, callback: Function): Plugins
+    public before(plugin: string, callback: Function): Plugins
     {
         if (! this.beforeActions[plugin]) {
             this.beforeActions[plugin] = [];

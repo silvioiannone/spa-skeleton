@@ -31,7 +31,7 @@ export default abstract class AbstractGuard
      *
      * @return {Promise}
      */
-    execute(): Promise<any>
+    public execute(): Promise<any>
     {
         Log.debug('Executing guard ' + this.name + '.');
 

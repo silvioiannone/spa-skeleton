@@ -12,7 +12,7 @@ export default class AbstractHandler
      *
      * @param vue
      */
-    constructor(vue: Vue)
+    public constructor(vue: Vue)
     {
         this.vue = vue;
     }
@@ -20,7 +20,7 @@ export default class AbstractHandler
     /**
      * Handle the event.
      */
-    handle(event: string, message: any)
+    public handle(event: string, message: any): void
     {
         if(!this[event]) {
             throw 'The event handler method cannot be found. Event: ' + event + '.';

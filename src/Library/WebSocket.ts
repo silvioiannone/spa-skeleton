@@ -23,7 +23,7 @@ export default class WebSocket
     /**
      * The Skeleton's subscriptions.
      */
-    protected skeletonSubscriptions: Array<Subscription> = [
+    protected skeletonSubscriptions: Subscription[] = [
         {
             event: 'Models.User.Updated',
             channels: [AdminChannel, UserChannel],
@@ -48,12 +48,12 @@ export default class WebSocket
     /**
      * Pending subscriptions.
      */
-    protected pendingSubscriptions: Array<Subscription> = [];
+    protected pendingSubscriptions: Subscription[] = [];
 
     /**
      * List of active subscriptions.
      */
-    protected activeSubscriptions: Array<Subscription> = [];
+    protected activeSubscriptions: Subscription[] = [];
 
     /**
      * Vue.
@@ -68,16 +68,16 @@ export default class WebSocket
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         // Make the Socket.IO client library global so that it can be accessed by Laravel Echo.
-        (<any>window).io = IO;
+        (window as any).io = IO;
     }
 
     /**
      * Subscribe the client.
      */
-    subscribe(): void
+    public subscribe(): void
     {
         if(! Config.webSocket.enabled) {
             return;
@@ -93,7 +93,7 @@ export default class WebSocket
     /**
      * Subscribe to a channel and listen to an event.
      */
-    listen(subscriptions: Array<Subscription>): void
+    public listen(subscriptions: Subscription[]): void
     {
         if (! this.echo) {
             this.pendingSubscriptions = this.pendingSubscriptions.concat(subscriptions);
@@ -102,13 +102,15 @@ export default class WebSocket
 
         this.updateEchoHeaders();
 
-        subscriptions.forEach(subscription =>
+        subscriptions.forEach((subscription): void =>
         {
             if (this.activeSubscriptions.indexOf(subscription) >= 0) return;
 
             // TODO: add the subscription to the list of the active subscriptions only if the
             // joining was successful (use a promise).
-            subscription.channels.forEach(channel => this.join(channel, subscription.event));
+            subscription.channels.forEach((channel): void =>
+                this.join(channel, subscription.event)
+            );
 
             // Add the subscription to the active subscriptions.
             this.activeSubscriptions = this.activeSubscriptions.concat(subscription);
@@ -118,16 +120,16 @@ export default class WebSocket
     /**
      * Remove the subscriptions.
      */
-    silence(subscriptions: Array<Subscription>): void
+    public silence(subscriptions: Subscription[]): void
     {
-        subscriptions.forEach(subscription =>
+        subscriptions.forEach((subscription): void =>
         {
             let index = this.activeSubscriptions.indexOf(subscription);
             this.activeSubscriptions.splice(index, 1);
 
-            subscription.channels.forEach((channel: any) =>
+            subscription.channels.forEach((channel: any): void =>
             {
-                let channelName = this.makeChannel(channel).name();
+                let channelName = WebSocket.makeChannel(channel).name();
 
                 Log.info('No longer listening to ' + subscription.event + ' in the ' + channelName
                     + ' room.');
@@ -140,18 +142,20 @@ export default class WebSocket
     /**
      * Leave a channel if it's not used by any event.
      */
-    leaveChannelIfUnused(channel: Channel): void
+    public leaveChannelIfUnused(channel: Channel): void
     {
-        let channelName = this.makeChannel(channel).name();
+        let channelName = WebSocket.makeChannel(channel).name();
         let channelInUse = false;
-        this.activeSubscriptions.forEach(subscription =>
+        this.activeSubscriptions.forEach((subscription): void =>
         {
             if (channelInUse) {
                 return;
             }
 
             let found = subscription.channels
-                .find((channel: any) => this.makeChannel(channel).name() === channelName);
+                .find((channel: any): boolean =>
+                    WebSocket.makeChannel(channel).name() === channelName
+                );
 
             if (found) {
                 channelInUse = true;
@@ -170,7 +174,7 @@ export default class WebSocket
     protected join(channel: Channel, event: any): void
     {
         let self = this;
-        let channelInstance = this.makeChannel(channel);
+        let channelInstance = WebSocket.makeChannel(channel);
 
         if (! channelInstance.canEnter()) {
             return;
@@ -182,7 +186,7 @@ export default class WebSocket
             this.echo.private(channelInstance.name()) :
             this.echo.channel(channelInstance.name());
 
-        _channel.listen(event, (payload: any) =>
+        _channel.listen(event, (payload: any): void =>
         {
             if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
                 self.handleNotification(payload.response);
@@ -195,7 +199,7 @@ export default class WebSocket
     /**
      * Make a channel instance.
      */
-    makeChannel(channel: Channel): ChannelInterface
+    public static makeChannel(channel: Channel): ChannelInterface
     {
         return typeof channel === 'object' ? channel : new channel();
     }
@@ -203,7 +207,7 @@ export default class WebSocket
     /**
      * Broadcast an event to all vue components and execute the state mutations needed.
      */
-    broadcast(event: string, payload: any): void
+    public broadcast(event: string, payload: any): void
     {
         // Fire the event globally using the EventHub
         this.vue.$eh.$emit(event, payload);
@@ -216,7 +220,7 @@ export default class WebSocket
     /**
      * Handle a notification.
      */
-    handleNotification(notification: any): void
+    public handleNotification(notification: any): void
     {
         this.vue.$store.commit('notifications/ADD', {data: notification});
 
@@ -226,10 +230,10 @@ export default class WebSocket
     /**
      * Handle an event received from the WebSocket server.
      */
-    handleEvent(event: string, message: any): void
+    public handleEvent(event: string, message: any): void
     {
         let subscription = this.activeSubscriptions
-            .find(subscription => subscription.event === event);
+            .find((subscription): boolean => subscription.event === event);
         let handlers = [];
 
         if (!subscription) {
@@ -246,16 +250,13 @@ export default class WebSocket
             handlers.push(new subscription.handlers[handler](this.vue));
         }
 
-        handlers.forEach(handler =>
-        {
-            handler.handle(event, message);
-        });
+        handlers.forEach((handler): void => handler.handle(event, message));
     }
 
     /**
      * Connect to the WebSocket server.
      */
-    connect(vue: Vue): this
+    public connect(vue: Vue): this
     {
         if (this.isConnected) {
             return this;
@@ -271,7 +272,7 @@ export default class WebSocket
 
         let callbacks = this.echo.connector.socket._callbacks;
 
-        callbacks.$connect.push(() =>
+        callbacks.$connect.push((): void =>
         {
             // Set the socket ID in the API
             ApiFactory.setSocketId(this.echo.socketId());
@@ -283,10 +284,7 @@ export default class WebSocket
             callbacks.$reconnect = [];
         }
 
-        callbacks.$reconnect.push(() =>
-        {
-            Log.debug('Reconnecting to the WebSocket server...');
-        });
+        callbacks.$reconnect.push((): void => Log.debug('Reconnecting to the WebSocket server...'));
 
         return this;
     }
@@ -294,7 +292,7 @@ export default class WebSocket
     /**
      * Update Laravel echo headers.
      */
-    updateEchoHeaders(): void
+    public updateEchoHeaders(): void
     {
         this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` +
             (new Token).getAccessToken();
@@ -303,7 +301,7 @@ export default class WebSocket
     /**
      * Disconnect from the WebSocket server.
      */
-    disconnect(): void
+    public disconnect(): void
     {
         if (this.echo) {
             this.echo.disconnect();

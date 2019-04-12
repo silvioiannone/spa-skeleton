@@ -8,12 +8,12 @@ import Token             from '../Token';
  */
 export default class Users extends ApiResource
 {
-    resourceName: string = 'users';
+    public resourceName: string = 'users';
 
     /**
      * Activate a user account. The user must have been invited before.
      */
-    activate(userData: any): Promise<ResponseInterface>
+    public activate(userData: any): Promise<ResponseInterface>
     {
         return this._post('activate', userData);
     }
@@ -21,7 +21,7 @@ export default class Users extends ApiResource
     /**
      * Get a list of all the users.
      */
-    get(id: string = ''): Promise<ResponseInterface>
+    public get(id: string = ''): Promise<ResponseInterface>
     {
         return this._get(id);
     }
@@ -29,8 +29,9 @@ export default class Users extends ApiResource
     /**
      * Change the user password after it has been reset.
      */
-    changePassword(data: {password: string, password_confirmation: string})
-        : Promise<ResponseInterface>
+    public changePassword(
+        data: {password: string; password_confirmation: string}
+    ): Promise<ResponseInterface>
     {
         return this._post('changePassword', data);
     }
@@ -38,7 +39,7 @@ export default class Users extends ApiResource
     /**
      * Get the user.
      */
-    find(userId: any): Promise<ResponseInterface>
+    public find(userId: any): Promise<ResponseInterface>
     {
         return this._get(userId);
     }
@@ -46,7 +47,7 @@ export default class Users extends ApiResource
     /**
      * Get the user email using the password reset token.
      */
-    findFromPasswordResetToken(token: any): Promise<ResponseInterface>
+    public findFromPasswordResetToken(token: any): Promise<ResponseInterface>
     {
         return this._get('resetToken/' + token);
     }
@@ -54,7 +55,7 @@ export default class Users extends ApiResource
     /**
      * Get the activation basic data.
      */
-    getActivation(activationId: any): Promise<ResponseInterface>
+    public getActivation(activationId: any): Promise<ResponseInterface>
     {
         return this._get('activation/' + activationId);
     }
@@ -62,7 +63,7 @@ export default class Users extends ApiResource
     /**
      * Invite the user to join the platform.
      */
-    invite(user: any): Promise<ResponseInterface>
+    public invite(user: any): Promise<ResponseInterface>
     {
         return this._post(user.id + '/invite', user);
     }
@@ -70,7 +71,9 @@ export default class Users extends ApiResource
     /**
      * Log in a user.
      */
-    async login(userCredentials: {username: string, password: string}): Promise<ResponseInterface>
+    public async login(
+        userCredentials: {username: string; password: string}
+    ): Promise<ResponseInterface>
     {
         // Delete the old token in order to avoid issues since the authentication endpoint doesn't
         // expect it.
@@ -88,7 +91,7 @@ export default class Users extends ApiResource
     /**
      * Log out the user.
      */
-    quit(): Promise<ResponseInterface>
+    public quit(): Promise<ResponseInterface>
     {
         return this._post('quit', {});
     }
@@ -96,7 +99,7 @@ export default class Users extends ApiResource
     /**
      * Refresh the user's JWT.
      */
-    refreshToken(): Promise<ResponseInterface>
+    public refreshToken(): Promise<ResponseInterface>
     {
         return this._get('token');
     }
@@ -104,7 +107,7 @@ export default class Users extends ApiResource
     /**
      * Reset the user password.
      */
-    resetPassword(data: any): Promise<ResponseInterface>
+    public resetPassword(data: any): Promise<ResponseInterface>
     {
         return this._post('resetPassword', data);
     }
@@ -112,7 +115,7 @@ export default class Users extends ApiResource
     /**
      * Reset the user's password.
      */
-    sendPasswordResetEmail(email: any): Promise<ResponseInterface>
+    public sendPasswordResetEmail(email: any): Promise<ResponseInterface>
     {
         return this._post('sendPasswordResetEmail', {
             'email': email
@@ -122,7 +125,7 @@ export default class Users extends ApiResource
     /**
      * Sign up a new user.
      */
-    create(data: any): Promise<ResponseInterface>
+    public create(data: any): Promise<ResponseInterface>
     {
         return this._post('', data);
     }
@@ -130,7 +133,7 @@ export default class Users extends ApiResource
     /**
      * Update a user.
      */
-    update(data: any): Promise<ResponseInterface>
+    public update(data: any): Promise<ResponseInterface>
     {
         return this._patch('', data);
     }
@@ -138,7 +141,7 @@ export default class Users extends ApiResource
     /**
      * Update avatar.
      */
-    updateAvatar(id: string, avatar: File): Promise<ResponseInterface>
+    public updateAvatar(id: string, avatar: File): Promise<ResponseInterface>
     {
         return this
             .attach('avatar', avatar)

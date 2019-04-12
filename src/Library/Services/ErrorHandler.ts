@@ -10,14 +10,14 @@ export default class ErrorHandler extends Service
     /**
      * The service name.
      */
-    name: string = 'Error handler';
+    public name: string = 'Error handler';
 
     /**
      * Boot the service.
      */
-    boot(): void
+    public boot(): void
     {
-        Guard.afterError(response =>
+        Guard.afterError((response): void =>
         {
             (new GuardHandler(response)).handle();
         });

@@ -5,12 +5,12 @@ import { Model } from '@vuex-orm/core';
  */
 export default class Notification extends Model
 {
-    static entity = 'notifications';
+    public static entity: string = 'notifications';
 
     /**
      * Model fields.
      */
-    static fields()
+    public static fields(): any
     {
         return {
             id: this.attr(null),

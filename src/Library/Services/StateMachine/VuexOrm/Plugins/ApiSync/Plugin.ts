@@ -1,9 +1,9 @@
-import { Components, Options } from '@vuex-orm/core/lib/plugins/use';
+import { Components } from '@vuex-orm/core/lib/plugins/use';
 
 // Actions
 import { Create } from './Actions/Create';
 import { Delete } from './Actions/Delete';
-import { Get } from './Actions/Get';
+import { Get }    from './Actions/Get';
 import { Update } from './Actions/Update';
 
 /**
@@ -18,7 +18,7 @@ export class Plugin
     /**
      * Install the plugin.
      */
-    static install(components: Components, options: Options)
+    public static install(components: Components): void
     {
         Plugin.setupActions(components);
     }

@@ -12,7 +12,7 @@ export default class Translator extends Service
     /**
      * Service name.
      */
-    name: string = 'Translator';
+    public name: string = 'Translator';
 
     /**
      * Translator instance.
@@ -22,7 +22,7 @@ export default class Translator extends Service
     /**
      * Get the translator instance.
      */
-    get(): VueI18N
+    public get(): VueI18N
     {
         return Translator.instance;
     }
@@ -30,13 +30,13 @@ export default class Translator extends Service
     /**
      * Boot the translator.
      */
-    boot(): Translator
+    public boot(): Translator
     {
         Log.debug('Loading language...');
 
         let locale = Config.locale;
-        let appLocale = require('locales/' + locale + '.json');
-        let skeletonLocale = require('./../../Assets/Locales/' + locale + '.json');
+        let appLocale = require('locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
+        let skeletonLocale = require('./../../Assets/Locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
 
         let messages = {};
 

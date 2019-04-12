@@ -3,8 +3,8 @@ import Models            from '../App/State/Models';
 import { ExtendedModel } from '../Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
 interface EventDescription {
-    model: string,
-    type: string
+    model: string;
+    type: string;
 }
 
 /**
@@ -17,7 +17,7 @@ export default class ModelHandler extends AbstractHandler
      *
      * The order of the events is important!
      */
-    protected static knownEvents: Array<string> = [
+    protected static knownEvents: string[] = [
         'Attached', 'Created', 'PivotUpdated', 'Updated', 'Deleted'
     ];
 
@@ -25,18 +25,18 @@ export default class ModelHandler extends AbstractHandler
      * Maps each model event to a function that will process it.
      */
     protected eventProcessors = {
-        'Created': this.createdProcessor,
-        'Updated': this.updatedProcessor
-    }
+        'Created': ModelHandler.createdProcessor,
+        'Updated': ModelHandler.updatedProcessor
+    };
 
     /**
      * Handle the event.
      */
-    handle(event: string, message: any)
+    public handle(event: string, message: any): void
     {
-        let eventDescription = this.describeEvent(event);
+        let eventDescription = ModelHandler.describeEvent(event);
 
-        ModelHandler.knownEvents.forEach(knownEvent =>
+        ModelHandler.knownEvents.forEach((knownEvent): void =>
         {
             if (eventDescription.type !== knownEvent) {
                 return;
@@ -61,7 +61,7 @@ export default class ModelHandler extends AbstractHandler
     /**
      * Process the created model event.
      */
-    protected createdProcessor(model: typeof ExtendedModel, message: any): void
+    protected static createdProcessor(model: typeof ExtendedModel, message: any): void
     {
         model.insert(message);
     }
@@ -69,7 +69,7 @@ export default class ModelHandler extends AbstractHandler
     /**
      * Process the the update model event.
      */
-    protected updatedProcessor(model: typeof ExtendedModel, message: any): void
+    protected static updatedProcessor(model: typeof ExtendedModel, message: any): void
     {
         model.update({
             where: message.data.id,
@@ -80,7 +80,7 @@ export default class ModelHandler extends AbstractHandler
     /**
      * Describe the event starting from its string representation.
      */
-    protected describeEvent(event: string): EventDescription
+    protected static describeEvent(event: string): EventDescription
     {
         let bits = event.split('.');
 

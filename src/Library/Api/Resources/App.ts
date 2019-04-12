@@ -6,7 +6,7 @@ import ResponseInterface from '../ResponseInterface';
  */
 export default class App extends ApiResource
 {
-    constructor()
+    public constructor()
     {
         super();
 
@@ -15,19 +15,14 @@ export default class App extends ApiResource
 
     /**
      * Get a locale.
-     *
-     * @param locale
-     * @param successCallback
-     * @param errorCallback
      */
-    getLocale(locale: string, successCallback: Function, errorCallback: Function)
-        : Promise<ResponseInterface>
+    public getLocale(locale: string): Promise<ResponseInterface>
     {
-        return new Promise((resolve, reject) =>
+        return new Promise((resolve, reject): void =>
         {
             this.httpClient
                 .get('/locales/' + locale + '.json')
-                .end(function (error: any, response: any)
+                .end((error: any, response: any): void =>
                 {
                     if (error)
                     {
@@ -43,7 +38,7 @@ export default class App extends ApiResource
     /**
      * Get the application settings.
      */
-    getSettings(): Promise<ResponseInterface>
+    public getSettings(): Promise<ResponseInterface>
     {
         return this._get('settings');
     }
@@ -51,7 +46,7 @@ export default class App extends ApiResource
     /**
      * Save the application settings.
      */
-    saveSettings(settings: any): Promise<ResponseInterface>
+    public saveSettings(settings: any): Promise<ResponseInterface>
     {
         return this._patch('settings', settings);
     }

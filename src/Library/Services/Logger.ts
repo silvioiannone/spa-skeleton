@@ -10,7 +10,7 @@ export default class Logger extends Service
     /**
      * Service's name.
      */
-    name: string = 'Logger';
+    public name: string = 'Logger';
 
     /**
      * The logger instance.
@@ -20,7 +20,7 @@ export default class Logger extends Service
     /**
      * Boot the service.
      */
-    boot(): void
+    public boot(): void
     {
         if (Logger.logger) {
             return;
@@ -35,7 +35,7 @@ export default class Logger extends Service
     /**
      * Write a debug message.
      */
-    static debug(message: string): void
+    public static debug(message: string): void
     {
         this.logger.debug(message);
     }
@@ -43,7 +43,7 @@ export default class Logger extends Service
     /**
      * Write an error message.
      */
-    static error(message: string): void
+    public static error(message: string): void
     {
         this.logger.error(message)
     }
@@ -51,7 +51,7 @@ export default class Logger extends Service
     /**
      * Write an info message.
      */
-    static info(message: string): void
+    public static info(message: string): void
     {
         this.logger.info(message);
     }

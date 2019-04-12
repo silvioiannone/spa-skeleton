@@ -1,7 +1,7 @@
 import { ExtendedModel } from '../../../Support/ExtendedModel';
 import ResponseInterface from '../../../../../../Api/ResponseInterface';
-import { Action } from './Action';
-import { Store } from 'vuex';
+import { Action }        from './Action';
+import { Store }         from 'vuex';
 
 
 /**
@@ -9,19 +9,19 @@ import { Store } from 'vuex';
  */
 export class Create extends Action
 {
-    static execute(store: Store<any>, params: CreateParameters): Promise<any>
+    public static execute(store: Store<any>, params: CreateParameters): Promise<any>
     {
-        return new Promise((resolve: Function, reject: Function) =>
+        return new Promise((resolve: Function, reject: Function): void =>
         {
             let resource = Create.getResource(store);
 
             resource.create(params.data)
-                .then((response: ResponseInterface) =>
+                .then((response: ResponseInterface): void =>
                 {
                     Create.onSuccess(response, store, params);
                     resolve(response);
                 })
-                .catch((response: ResponseInterface) =>
+                .catch((response: ResponseInterface): void =>
                 {
                     Create.onError(response, store, params);
                     reject(response);
@@ -30,9 +30,13 @@ export class Create extends Action
     }
 
     /**
-     * Handle a successfull response.
+     * Handle a successful response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>, params: CreateParameters)
+    public static onSuccess(
+        response: ResponseInterface,
+        store: Store<any>,
+        params: CreateParameters
+    ): void
     {
         params.model.insert(response.body);
     }
@@ -43,7 +47,7 @@ export class Create extends Action
  */
 export interface CreateParameters
 {
-    data: any,
-    options: any,
-    model: typeof ExtendedModel
+    data: any;
+    options: any;
+    model: typeof ExtendedModel;
 }

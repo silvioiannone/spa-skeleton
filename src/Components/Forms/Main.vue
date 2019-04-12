@@ -16,7 +16,9 @@
                         {{ submitText || $t('form.submit') }}
                     </button-submit>
                     <slot name="actions"></slot>
-                    <v-btn v-if="cancellable" flat @click="cancel">{{ $t('form.cancel') }}</v-btn>
+                    <v-btn v-if="cancellable" flat @click.stop="cancel">
+                        {{ $t('form.cancel') }}
+                    </v-btn>
                 </v-flex>
             </v-layout>
         </v-container>

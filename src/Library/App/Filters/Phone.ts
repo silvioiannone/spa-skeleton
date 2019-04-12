@@ -8,9 +8,9 @@ export default class Phone extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(): (value: string) => string
+    public run(): (value: string) => string
     {
-        return (value: string) =>
+        return (value: string): string =>
         {
             if (! value) {
                 return '';

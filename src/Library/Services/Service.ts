@@ -6,12 +6,12 @@ export default class Service
     /**
      * The service name.
      */
-    name: string = '';
+    public name: string = '';
 
     /**
      * Boot the application service.
      */
-    boot(): void
+    public boot(): void
     {
         throw `Implement the service!`;
     }

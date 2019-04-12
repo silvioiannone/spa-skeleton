@@ -6,7 +6,7 @@ import ApiFactory from '../../Api';
  *
  * The client API will be accessible using `this.$api` in any component.
  */
-export default function Api(vue: typeof Vue, options?: any): void
+export default function Api(vue: typeof Vue): void
 {
     vue.prototype.$api = ApiFactory.make();
 }

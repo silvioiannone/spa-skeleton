@@ -6,7 +6,7 @@ export default class Head
     /**
      * Set the window's title.
      */
-    static title(title: string): void
+    public static title(title: string): void
     {
         document.title = title;
     }

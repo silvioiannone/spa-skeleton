@@ -6,7 +6,7 @@ import ResponseInterface from '../ResponseInterface';
  */
 export default class Notifications extends ApiResource
 {
-    constructor()
+    public constructor()
     {
         super();
 
@@ -19,7 +19,7 @@ export default class Notifications extends ApiResource
      * @param notification
      * @returns {Promise}
      */
-    markAsRead(notification: any): Promise<ResponseInterface>
+    public markAsRead(notification: any): Promise<ResponseInterface>
     {
         return this._patch('markAsRead', notification);
     }
@@ -29,7 +29,7 @@ export default class Notifications extends ApiResource
      *
      * @returns {Promise}
      */
-    markAllAsRead(): Promise<ResponseInterface>
+    public markAllAsRead(): Promise<ResponseInterface>
     {
         return this._post('markAsRead/all');
     }

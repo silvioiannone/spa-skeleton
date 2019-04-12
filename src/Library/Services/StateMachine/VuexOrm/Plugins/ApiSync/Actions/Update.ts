@@ -12,19 +12,19 @@ export class Update extends Action
     /**
      * Execute the action.
      */
-    static execute(store: Store<any>, params: UpdateParameters): Promise<any>
+    public static execute(store: Store<any>, params: UpdateParameters): Promise<any>
     {
-        return new Promise((resolve: Function, reject: Function) =>
+        return new Promise((resolve: Function, reject: Function): void =>
         {
             let resource = Update.getResource(store);
 
             resource.update(params.data)
-                .then((response: ResponseInterface) =>
+                .then((response: ResponseInterface): void =>
                 {
                     Update.onSuccess(response, store, params);
                     resolve(response);
                 })
-                .catch((response: ResponseInterface) =>
+                .catch((response: ResponseInterface): void =>
                 {
                     Update.onError(response, store, params);
                     reject(response);
@@ -33,9 +33,12 @@ export class Update extends Action
     }
 
     /**
-     * Handle a successfull response.
+     * Handle a successful response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>, params: UpdateParameters)
+    public static onSuccess(
+        response: ResponseInterface,
+        store: Store<any>,
+        params: UpdateParameters): void
     {
         params.model.update({
             where: response.body.data.id,
@@ -49,7 +52,7 @@ export class Update extends Action
  */
 export interface UpdateParameters
 {
-    data: any,
-    options: any,
-    model: typeof ExtendedModel
+    data: any;
+    options: any;
+    model: typeof ExtendedModel;
 }

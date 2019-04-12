@@ -11,9 +11,9 @@ export class Get extends Action
     /**
      * Execute the action.
      */
-    static execute(store: Store<any>, params: ActionParameters): Promise<any>
+    public static execute(store: Store<any>, params: ActionParameters): Promise<any>
     {
-        return new Promise((resolve: Function, reject: Function) =>
+        return new Promise((resolve: Function, reject: Function): void =>
         {
             let resource = Get.getResource(store);
             let requestParameters = null;
@@ -27,12 +27,12 @@ export class Get extends Action
             }
 
             resource.get(params.id)
-                .then((response: ResponseInterface) =>
+                .then((response: ResponseInterface): void =>
                 {
                     Get.onSuccess(response, store, params);
                     resolve(response);
                 })
-                .catch((response: ResponseInterface) =>
+                .catch((response: ResponseInterface): void =>
                 {
                     Get.onError(response, store, params);
                     reject(response);
@@ -43,7 +43,11 @@ export class Get extends Action
     /**
      * Handle a successful response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>, params: ActionParameters)
+    public static onSuccess(
+        response: ResponseInterface,
+        store: Store<any>,
+        params: ActionParameters
+    ): void
     {
         if (params.options && params.options.insert) {
             params.model.insert(response.body);
@@ -64,9 +68,9 @@ export class Get extends Action
  */
 interface ActionParameters
 {
-    id: string,
-    model: typeof ExtendedModel,
-    options: GetParameters
+    id: string;
+    model: typeof ExtendedModel;
+    options: GetParameters;
 }
 
 /**
@@ -74,6 +78,6 @@ interface ActionParameters
  */
 export interface GetParameters
 {
-    parameters: any,
-    insert?: undefined | boolean
+    parameters: any;
+    insert?: undefined | boolean;
 }

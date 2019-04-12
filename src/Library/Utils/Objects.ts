@@ -10,7 +10,7 @@ export default {
      *
      * This only works for collection of items returned by the API.
      */
-    pluckUnique(subject: Array<any>, key: string): any
+    pluckUnique(subject: any[], key: string): any
     {
         let uniques = _(_.map(subject, key)).compact();
 
@@ -18,7 +18,7 @@ export default {
             uniques = uniques.flatten();
         }
 
-        return uniques.uniqBy(item => {
+        return uniques.uniqBy((item): any => {
             if (typeof item !== 'object') {
                 return item;
             }
@@ -30,9 +30,9 @@ export default {
     /**
      * Search the subject in an array of objects.
      */
-    search(subject: string, objects: Array<any>): Array<any>
+    search(subject: string, objects: any[]): any[]
     {
-        return objects.filter((currentObject) =>
+        return objects.filter((currentObject): boolean =>
         {
             let foundAMatch = false;
 
@@ -47,8 +47,7 @@ export default {
                     case 'string':
                         let string = currentObject[property].toLowerCase();
 
-                        if(string.indexOf(subject.toLowerCase()) !== -1)
-                        {
+                        if(string.indexOf(subject.toLowerCase()) !== -1) {
                             foundAMatch = true;
                         }
                         break;

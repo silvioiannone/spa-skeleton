@@ -6,7 +6,7 @@ import Logger  from './Library/Services/Logger';
 import Directives   from './Library/Services/Directives';
 import Components   from './Library/Services/Components';
 import StateMachine from './Library/Services/StateMachine';
-import Translator   from './Library/Services/Translator';
+//import Translator   from './Library/Services/Translator';
 import Plugins      from './Library/Services/Plugins';
 import Filters      from './Library/Services/Filters';
 import Validator    from './Library/Services/Validator';
@@ -21,14 +21,14 @@ export default class App
     /**
      * The app's name.
      */
-    protected name: string = Config.app.name
+    protected name: string = Config.app.name;
 
     /**
      * App's mandatory services.
      *
      * These services are booted regardless and are required by the app.
      */
-    protected static readonly mandatoryServices: Array<typeof Service> = [
+    protected static readonly mandatoryServices: typeof Service[] = [
         Logger
     ];
 
@@ -37,7 +37,7 @@ export default class App
      *
      * Order is important.
      */
-    protected static readonly services: Array<typeof Service> = [
+    protected static readonly services: typeof Service[] = [
         Directives,
         Components,
         StateMachine,
@@ -46,7 +46,7 @@ export default class App
         Validator,
         Router,
         ErrorHandler
-    ]
+    ];
 
     /**
      * Start the application.
@@ -55,18 +55,15 @@ export default class App
     {
         let t0 = performance.now();
 
-        App.mandatoryServices.forEach(service =>
-        {
-            this.bootService(service);
-        });
+        App.mandatoryServices.forEach((service): Service => App.bootService(service));
 
-        this.prepare();
+        App.prepare();
 
         Logger.info(`Starting the application...`);
 
-        App.services.forEach((service: typeof Service) =>
+        App.services.forEach((service: typeof Service): void =>
         {
-            let instance = this.bootService(service);
+            let instance = App.bootService(service);
             Logger.debug(`Service ${instance.name} booted.`);
         });
 
@@ -79,7 +76,7 @@ export default class App
     /**
      * Boot a service.
      */
-    protected bootService(service: typeof Service): Service
+    protected static bootService(service: typeof Service): Service
     {
         let instance = new service;
 
@@ -93,7 +90,7 @@ export default class App
      *
      * In here you can import for example the global dependencies and do other initialization stuff.
      */
-    protected prepare()
+    protected static prepare(): void
     {
         // Clean the session storage.
         window.sessionStorage.clear();

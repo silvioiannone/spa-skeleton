@@ -1,5 +1,10 @@
 import VueI18N from 'vue-i18n';
 
+interface Rule {
+    getMessage: (field: string, params: any[], data: any) => string;
+    validate: (value: string, params: any[]) => boolean;
+}
+
 /**
  * An abstract validation rule.
  */
@@ -8,12 +13,12 @@ export default abstract class AbstractRule
     /**
      * Translator.
      */
-    translator: VueI18N;
+    protected translator: VueI18N;
 
     /**
      * Constructor.
      */
-    constructor(translator: VueI18N)
+    public constructor(translator: VueI18N)
     {
         this.translator = translator;
     }
@@ -21,7 +26,8 @@ export default abstract class AbstractRule
     /**
      * Get the rule.
      */
-    get() {
+    public get(): Rule
+    {
         return {
             getMessage: this.getMessage,
             validate: this.validate
@@ -31,10 +37,10 @@ export default abstract class AbstractRule
     /**
      * Get the validation message.
      */
-    abstract getMessage(field: string, params: Array<any>, data: any): string
+    abstract getMessage(field: string, params: any[], data: any): string
 
     /**
      * Validate.
      */
-    abstract validate(value: string, params: Array<any>): boolean
+    abstract validate(value: string, params: any[]): boolean
 }

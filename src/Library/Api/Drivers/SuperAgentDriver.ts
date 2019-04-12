@@ -19,12 +19,12 @@ export default class SuperAgentDriver extends AbstractApiDriver
      *
      * Requests saved here will not be intercepted and treated as a regular API request.
      */
-    protected ignoredPaths: Array<any> = [];
+    protected ignoredPaths: any[] = [];
 
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         super();
 
@@ -100,7 +100,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     {
         let request = this.httpClient.post(this.getAction(action));
 
-        this.attachments.forEach(attachment =>
+        this.attachments.forEach((attachment): void =>
         {
             request.attach(attachment.name, attachment.file);
         });
@@ -128,14 +128,14 @@ export default class SuperAgentDriver extends AbstractApiDriver
     {
         let self = this;
 
-        return new Promise((resolve, reject) =>
+        return new Promise((resolve, reject): void =>
         {
             self.interceptRequest(request)
-                .then(resolved =>
+                .then((resolved): void =>
                 {
                     let request = resolved.request;
 
-                    request.end(function(error, response)
+                    request.end((error, response): void =>
                     {
                         if (error) {
                             reject(response);
@@ -143,10 +143,10 @@ export default class SuperAgentDriver extends AbstractApiDriver
                         }
 
                         self.interceptResponse(response)
-                            .then(() => resolve(response));
+                            .then((): void => resolve(response));
                     });
                 })
-                .catch(error => reject(error));
+                .catch((error): void => reject(error));
 
             // Clean the parameters
             this.parameters = {};
@@ -162,12 +162,11 @@ export default class SuperAgentDriver extends AbstractApiDriver
      * @param {Object} request
      * @returns {Promise}
      */
-    interceptRequest(request: SuperAgent.SuperAgentRequest)
-        : Promise<{request: SuperAgent.SuperAgentRequest}>
+    public interceptRequest(
+        request: SuperAgent.SuperAgentRequest
+    ): Promise<{request: SuperAgent.SuperAgentRequest}>
     {
-        let self = this;
-
-        return new Promise((resolve, reject) =>
+        return new Promise((resolve, reject): void =>
         {
             // Check if the request shouldn't be intercepted (example: it's the authentication
             // request).
@@ -179,7 +178,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
 
             request = this.setHeaders(request);
 
-            if(self.skipIgnoredRequests(request)) {
+            if(this.skipIgnoredRequests(request)) {
                 // We need to wrap 'currentRequest' otherwise it will be sent to the server and we
                 // haven't finished yet.
                 resolve({request});
@@ -187,12 +186,12 @@ export default class SuperAgentDriver extends AbstractApiDriver
             }
 
             // Before making any request, we need to check that the token is not expired.
-            if(self.token.getAccessToken() && self.token.isExpired()) {
+            if(this.token.getAccessToken() && this.token.isExpired()) {
                 this.refreshToken()
-                    .then(() => resolve({request}))
-                    .catch(error => reject(error));
+                    .then((): void => resolve({request}))
+                    .catch((error): void => reject(error));
 
-                request.set('Authorization', 'Bearer ' + self.token.getAccessToken());
+                request.set('Authorization', 'Bearer ' + this.token.getAccessToken());
                 return;
             }
 
@@ -203,30 +202,28 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Refresh the current API token.
      */
-    refreshToken(): Promise<any>
+    public refreshToken(): Promise<any>
     {
-        let self = this;
-
-        return new Promise((resolve, reject) =>
+        return new Promise((resolve, reject): void =>
         {
-            self.httpClient
+            this.httpClient
                 .post(Config.api.basePath + 'oauth/token')
                 .send({
                     grant_type: 'refresh_token',
-                    refresh_token: self.token.getRefreshToken(),
+                    refresh_token: this.token.getRefreshToken(),
                     client_id: Config.client.id,
                     client_secret: Config.client.secret,
                     scope: ''
                 })
-                .end(function (error, response)
+                .end((error, response): void =>
                 {
                     if (error) {
-                        self.token.remove();
+                        this.token.remove();
                         reject(error);
                         return;
                     }
 
-                    self.token.save(response.body.access_token, response.body.refresh_tokeh);
+                    this.token.save(response.body.access_token, response.body.refresh_tokeh);
                 });
         });
     }
@@ -234,7 +231,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Set the correct headers on the request.
      */
-    setHeaders(request: SuperAgent.SuperAgentRequest): SuperAgent.SuperAgentRequest
+    public setHeaders(request: SuperAgent.SuperAgentRequest): SuperAgent.SuperAgentRequest
     {
         // Set the API header on every request
         request.set('Accept', 'application/json');
@@ -255,7 +252,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Intercept the response.
      */
-    async interceptResponse(response: SuperAgent.Response): Promise<SuperAgent.Response>
+    public async interceptResponse(response: SuperAgent.Response): Promise<SuperAgent.Response>
     {
         let self = this;
 
@@ -271,7 +268,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Skip the ignored requests.
      */
-    protected skipIgnoredRequests(request: any)
+    protected skipIgnoredRequests(request: any): boolean
     {
         for(let i = 0; i < this.ignoredPaths.length; i++) {
             if((new URLPattern('/api' + this.ignoredPaths[i].action).match(request.url))) {

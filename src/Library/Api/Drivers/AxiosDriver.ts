@@ -20,7 +20,7 @@ export default class AxiosDriver extends AbstractApiDriver
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         super();
 
@@ -28,14 +28,18 @@ export default class AxiosDriver extends AbstractApiDriver
             url: Config.api.basePath,
         });
 
-        this.http.interceptors.request.use(config => this.interceptRequest(config));
-        this.http.interceptors.response.use(response => this.interceptResponse(response));
+        this.http.interceptors.request.use((config): Promise<AxiosRequestConfig> =>
+            this.interceptRequest(config)
+        );
+        this.http.interceptors.response.use((response): AxiosResponse =>
+            this.interceptResponse(response)
+        );
     }
 
     /**
      * Intercept a response.
      */
-    interceptResponse(response: AxiosResponse): AxiosResponse
+    public interceptResponse(response: AxiosResponse): AxiosResponse
     {
         if (response.data.access_token) {
             this.token.save(response.data.access_token, response.data.refresh_token);
@@ -49,9 +53,9 @@ export default class AxiosDriver extends AbstractApiDriver
      *
      * @param config
      */
-    async interceptRequest(config: AxiosRequestConfig): Promise<AxiosRequestConfig>
+    public async interceptRequest(config: AxiosRequestConfig): Promise<AxiosRequestConfig>
     {
-        return new Promise(async (resolve, reject) =>
+        return new Promise(async (resolve, reject): Promise<void> =>
         {
             // Do not intercept the authentication request.
             if (config.url === '/oauth/token') {
@@ -79,7 +83,7 @@ export default class AxiosDriver extends AbstractApiDriver
     /**
      * Refresh the current API token.
      */
-    async refreshToken(): Promise<any>
+    public async refreshToken(): Promise<any>
     {
         let response;
 
@@ -105,7 +109,7 @@ export default class AxiosDriver extends AbstractApiDriver
      * @param config
      * @returns {*}
      */
-    setHeaders(config: AxiosRequestConfig): AxiosRequestConfig
+    public setHeaders(config: AxiosRequestConfig): AxiosRequestConfig
     {
         config.headers.Accept = 'application/json';
 
@@ -120,7 +124,7 @@ export default class AxiosDriver extends AbstractApiDriver
         return config;
     }
 
-    protected async _download(action: string): Promise<any>
+    protected async _download(): Promise<any>
     {
         return undefined;
     }
@@ -147,7 +151,7 @@ export default class AxiosDriver extends AbstractApiDriver
     }
 
     /**
-     * Sebd a PATCH HTTP request to the API.
+     * Send a PATCH HTTP request to the API.
      */
     protected async sendPatch(action: string, data: any): Promise<any>
     {
@@ -157,7 +161,7 @@ export default class AxiosDriver extends AbstractApiDriver
     /**
      * Send a POST HTTP request to the API.
      */
-    async sendPost(action: string, data: any): Promise<any>
+    public async sendPost(action: string, data: any): Promise<any>
     {
         return this.http.post(this.getAction(action), data);
     }
@@ -167,7 +171,7 @@ export default class AxiosDriver extends AbstractApiDriver
      *
      * @param response
      */
-    parseResponse(response: AxiosResponse): ResponseInterface
+    public parseResponse(response: AxiosResponse): ResponseInterface
     {
         return {
             body: response.data,

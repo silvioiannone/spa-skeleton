@@ -3,7 +3,7 @@ import ResponseInterface from '../ResponseInterface';
 import Config            from '../../../Config';
 
 /**
- * Represents an abstract API resouce.
+ * Represents an abstract API resource.
  *
  * @abstract
  */
@@ -12,7 +12,7 @@ export default abstract class AbstractApiDriver
     /**
      * Attachments.
      */
-    protected attachments: Array<any> = [];
+    protected attachments: any[] = [];
 
     /**
      * Resource name.
@@ -37,7 +37,7 @@ export default abstract class AbstractApiDriver
     /**
      * After response hooks.
      */
-    protected static afterResponseHooks: Array<(response: ResponseInterface) => void> = [];
+    protected static afterResponseHooks: ((response: ResponseInterface) => void)[] = [];
 
     /**
      * Constructor.
@@ -50,7 +50,7 @@ export default abstract class AbstractApiDriver
     /**
      * Register a hook that will be called after a response has been received.
      */
-    static afterResponse(callback: (response: ResponseInterface) => void): void
+    public static afterResponse(callback: (response: ResponseInterface) => void): void
     {
         AbstractApiDriver.afterResponseHooks.push(callback);
     }
@@ -58,7 +58,7 @@ export default abstract class AbstractApiDriver
     /**
      * Set the socket ID that will be send with the headers.
      */
-    setSocketId(socketId: string): void
+    public setSocketId(socketId: string): void
     {
         this.socketId = socketId;
     }
@@ -66,7 +66,7 @@ export default abstract class AbstractApiDriver
     /**
      * Set the parameters to be sent with the request.
      */
-    setParameters(parameters: any): this
+    public setParameters(parameters: any): this
     {
         this.parameters = parameters;
 
@@ -76,7 +76,11 @@ export default abstract class AbstractApiDriver
     /**
      * Send an HTTP request to the API.
      */
-    protected async send(method: 'GET' | 'POST' | 'PATCH' | 'DELETE', action: string, data?: any)
+    protected async send(
+        method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
+        action: string, 
+        data?: any
+    ): Promise<ResponseInterface>
     {
         let functionName = 'send' + method[0].toUpperCase() + method.substr(1).toLowerCase();
         let response: any = null;
@@ -84,11 +88,12 @@ export default abstract class AbstractApiDriver
         try {
             response = await this[functionName](action, data);
         } catch (errorResponse) {
-            AbstractApiDriver.afterResponseHooks.forEach(callback => callback(errorResponse));
+            AbstractApiDriver.afterResponseHooks
+                .forEach((callback): void => callback(errorResponse));
             throw this.parseResponse(errorResponse);
         }
 
-        AbstractApiDriver.afterResponseHooks.forEach(callback => callback(response));
+        AbstractApiDriver.afterResponseHooks.forEach((callback): void => callback(response));
 
         return this.parseResponse(response);
     }
@@ -128,7 +133,7 @@ export default abstract class AbstractApiDriver
     /**
      * Attach a file to the request. This will only work with a POST request.
      */
-    attach(name: string, file: File): this
+    public attach(name: string, file: File): this
     {
         this.attachments.push({
             name, file
@@ -168,14 +173,14 @@ export default abstract class AbstractApiDriver
     /**
      * Return a string of URL parameter from an object.
      */
-    getURIEncodedParameters(): string
+    public getURIEncodedParameters(): string
     {
         let self = this;
 
-        return Object.keys(self.parameters).map(k =>
-        {
-            return encodeURIComponent(k) + '=' + encodeURIComponent(self.parameters[k])
-        }).join('&');
+        return Object.keys(self.parameters)
+            .map((k): string =>
+                encodeURIComponent(k) + '=' + encodeURIComponent(self.parameters[k])
+            ).join('&');
     }
 
     /**

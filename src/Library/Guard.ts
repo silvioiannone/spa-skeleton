@@ -25,7 +25,7 @@ type VueRouterNext = (to?: RawLocation | false | ((vm: Vue) => any) | void) => v
 /**
  * Router middleware.
  *
- * The purpose of this class is to define and apply the router middlewares to each route and
+ * The purpose of this class is to define and apply the router middleware to each route and
  * retrieve the data needed by each route.
  */
 export default class Guard
@@ -38,7 +38,7 @@ export default class Guard
     /**
      * Router routes.
      */
-    protected routes: Array<RouteConfig>;
+    protected routes: RouteConfig[];
 
     /**
      * State machine store.
@@ -48,7 +48,7 @@ export default class Guard
     /**
      * Completed hooks.
      */
-    protected completedHooks: Array<any> = [];
+    protected completedHooks: any[] = [];
 
     /**
      * Application readiness according to the guard.
@@ -58,12 +58,12 @@ export default class Guard
     /**
      * After error hooks.
      */
-    protected static afterErrorHooks: Array<(response: ResponseInterface) => void> = [];
+    protected static afterErrorHooks: ((response: ResponseInterface) => void)[] = [];
 
     /**
      * Register an hook that will be called after an error.
      */
-    static afterError(callback: (response: ResponseInterface) => void): void
+    public static afterError(callback: (response: ResponseInterface) => void): void
     {
         Guard.afterErrorHooks.push(callback);
     }
@@ -71,7 +71,7 @@ export default class Guard
     /**
      * Initializes the guard.
      */
-    init(router: Router, store: Store<any>): Guard
+    public init(router: Router, store: Store<any>): Guard
     {
         this.router = router;
         this.routes = Routes;
@@ -83,18 +83,23 @@ export default class Guard
     /**
      * Apply the middleware to the router.
      */
-    run(): void
+    public run(): void
     {
-        this.router.beforeEach((to: Route, from: Route, next: VueRouterNext) =>
-            this.beforeRouteLoads(to, from, next));
-        this.router.afterEach((to: Route, from: Route) =>
-            this.afterRouteLoads(to, from));
+        this.router.beforeEach((to: Route, from: Route, next: VueRouterNext): void =>
+        {
+            this.beforeRouteLoads(to, from, next);
+        });
+
+        this.router.afterEach((to: Route, from: Route): void =>
+        {
+            this.afterRouteLoads(to, from);
+        });
     }
 
     /**
      * Refresh a route.
      */
-    async refresh(to: Route): Promise<any>
+    public async refresh(to: Route): Promise<any>
     {
         Log.debug('Loading ' + to.path + '...');
 
@@ -119,28 +124,29 @@ export default class Guard
     /**
      * Load a route.
      */
-    async beforeRouteLoads(to: Route, from: Route, next: VueRouterNext): Promise<any>
+    public async beforeRouteLoads(to: Route, from: Route, next: VueRouterNext): Promise<any>
     {
         Log.debug('Loading ' + to.path + '...');
 
         this.store.commit('app/SET_STATUS', 'loading');
 
-        // Fetch all the needed data for the current view
+        // Fetch all the needed data for the current view.
         try {
             await this.runRouteActions(to, from);
         } catch (error) {
             this.ready = false;
             this.handleRouteActionError(error, to, next);
-            throw error;
+            next(error);
+            return;
         }
 
-        // Once all the data has been loaded run the guards
+        // Once all the data has been loaded run the guards.
         try {
             await this.runRouteGuards(to, from);
         } catch (error) {
             this.store.commit('app/SET_STATUS', 'unauthorized');
             this.ready = false;
-            next();
+            next(error);
             return;
         }
 
@@ -156,10 +162,10 @@ export default class Guard
         Log.error('View ' + to.path + ' failed to load.');
         Log.error(error);
 
-        Guard.afterErrorHooks.map(callback => callback(error));
+        Guard.afterErrorHooks.map((callback: Function): any => callback(error));
 
         if (next) {
-            next();
+            next(error);
         }
     }
 
@@ -175,16 +181,16 @@ export default class Guard
         }
 
         // Execute the completed hooks
-        this.router.app.$nextTick(() =>
+        this.router.app.$nextTick((): void =>
         {
-            this.completedHooks.forEach(hook => hook(to, from));
+            this.completedHooks.forEach((hook): any => hook(to, from));
         });
     }
 
     /**
      * Register a completed hook.
      */
-    onComplete(callback: Function): void
+    public onComplete(callback: Function): void
     {
         this.completedHooks.push(callback);
     }
@@ -197,18 +203,18 @@ export default class Guard
      */
     protected async runRouteActions(to: Route, from: Route, refresh: boolean = false): Promise<any>
     {
-        let actions: Array<String> = [];
-        let actionPromises: Array<Promise<any>> = [];
-        let fromActions: Array<any> = [];
+        let actions: string[] = [];
+        let actionPromises: Promise<any>[] = [];
+        let fromActions: any[] = [];
 
-        from.matched.forEach((match: RouteRecord) =>
+        from.matched.forEach((match: RouteRecord): void =>
         {
             if (match.meta.actions) {
                 fromActions = fromActions.concat(match.meta.actions)
             }
         });
 
-        to.matched.forEach((match: RouteRecord) =>
+        to.matched.forEach((match: RouteRecord): void =>
         {
             if (typeof match.meta.actions !== 'undefined') {
                 actions = actions.concat(match.meta.actions);
@@ -218,7 +224,7 @@ export default class Guard
         if (! refresh) {
             // We need to take only the actions that are not already defined by the previous
             // routes.
-            actions = actions.filter((action: string) =>
+            actions = actions.filter((action: string): boolean =>
             {
                 // Take the action if it's not in the previous route...
                 return fromActions.indexOf(action) < 0 ||
@@ -233,7 +239,7 @@ export default class Guard
 
         Log.debug('Executing actions: ' + actions.join(', ') + '.');
 
-        actions.forEach((action: string) =>
+        actions.forEach((action: string): void =>
         {
             actionPromises.push(this.store.dispatch(action, {
                 vue: this.store,
@@ -252,12 +258,12 @@ export default class Guard
     /**
      * Executes the guards for the specified route.
      */
-    protected async runRouteGuards(to: Route, from: Route): Promise<any>
+    protected async runRouteGuards(to: Route): Promise<any>
     {
-        let guards: Array<string> = [];
-        let guardPromises: Array<Promise<any>> = [];
+        let guards: string[] = [];
+        let guardPromises: Promise<any>[] = [];
 
-        to.matched.forEach(match =>
+        to.matched.forEach((match): void =>
         {
             if (typeof match.meta.guards !== 'undefined') {
                 guards = guards.concat(match.meta.guards);
@@ -266,14 +272,14 @@ export default class Guard
 
         let availableGuards = {...SkeletonGuards, ...Guards};
 
-        guards.forEach(guard =>
+        guards.forEach((guard): void =>
         {
             if (! availableGuards[guard]) {
                 throw 'The guard ' + guard + ' doesn\'t exist.';
             }
             let guardPromise = new availableGuards[guard](this.store).execute();
 
-            guardPromise.catch((error: any) =>
+            guardPromise.catch((error: any): void =>
             {
                 Log.error('The guard ' + guard + ' blocked the loading of the view.');
                 console.error(error);

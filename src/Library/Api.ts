@@ -37,12 +37,12 @@ export default class ApiFactory
     /**
      * Api resources.
      */
-    static resources: Resources;
+    public static resources: Resources;
 
     /**
      * Make an Api client.
      */
-    static make(): ApiClient
+    public static make(): ApiClient
     {
         let client = new Api;
 
@@ -54,7 +54,7 @@ export default class ApiFactory
             resources[key] = new availableResources[key];
         }
 
-        ApiFactory.resources = <Resources>resources;
+        ApiFactory.resources = resources as Resources;
 
         return { ...client, ...ApiFactory.resources };
     }
@@ -62,17 +62,17 @@ export default class ApiFactory
     /**
      * Set the socket ID.
      */
-    static setSocketId(socketId: string): void
+    public static setSocketId(socketId: string): void
     {
-        this.mapResources(resource => resource.setSocketId(socketId));
+        this.mapResources((resource): ApiResource => resource.setSocketId(socketId));
     }
 
     /**
      * Remove the socket ID.
      */
-    static removeSocketId(): void
+    public static removeSocketId(): void
     {
-        this.mapResources(resource => resource.setSocketId(''));
+        this.mapResources((resource): ApiResource => resource.setSocketId(''));
     }
 
     /**
@@ -88,9 +88,9 @@ export default class ApiFactory
     /**
      * Get the api resource name.
      */
-    static getResourceName(key: string): string
+    public static getResourceName(key: string): string
     {
-        // The resource name is just the lowercased key in the API resources.
+        // The resource name is just the lower-cased key in the API resources.
         return key.charAt(0).toLowerCase() + key.slice(1);
     }
 }

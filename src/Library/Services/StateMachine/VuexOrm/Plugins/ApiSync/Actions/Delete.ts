@@ -12,19 +12,19 @@ export class Delete extends Action
     /**
      * Execute the action.
      */
-    static execute(store: Store<any>, params: DeleteParameters): Promise<any>
+    public static execute(store: Store<any>, params: DeleteParameters): Promise<any>
     {
-        return new Promise((resolve: Function, reject: Function) =>
+        return new Promise((resolve: Function, reject: Function): void =>
         {
             let resource = Delete.getResource(store);
 
             resource.delete(params.data)
-                .then((response: ResponseInterface) =>
+                .then((response: ResponseInterface): void =>
                 {
                     Delete.onSuccess(response, store, params);
                     resolve(response);
                 })
-                .catch((response: ResponseInterface) =>
+                .catch((response: ResponseInterface): void =>
                 {
                     Delete.onError(response, store, params);
                     reject(response);
@@ -33,9 +33,13 @@ export class Delete extends Action
     }
 
     /**
-     * Handle a successfull response.
+     * Handle a successful response.
      */
-    static onSuccess(response: ResponseInterface, store: Store<any>, params: DeleteParameters)
+    public static onSuccess(
+        response: ResponseInterface,
+        store: Store<any>,
+        params: DeleteParameters
+    ): void
     {
         params.model.delete({
             where: response.body.data.id
@@ -48,7 +52,7 @@ export class Delete extends Action
  */
 export interface DeleteParameters
 {
-    data: any,
-    options: any,
-    model: typeof ExtendedModel
+    data: any;
+    options: any;
+    model: typeof ExtendedModel;
 }

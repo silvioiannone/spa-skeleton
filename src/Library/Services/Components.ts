@@ -46,12 +46,12 @@ export default class Components extends Service
     /**
      * Service name.
      */
-    name: string = 'Components';
+    public name: string = 'Components';
 
     /**
      * Register the components.
      */
-    boot(): void
+    public boot(): void
     {
         // Register the skeleton components
         let availableComponents = {...SkeletonComponents, ...AppComponents};

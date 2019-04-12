@@ -22,7 +22,7 @@ export default {
             rowsPerPage: Config.app.paginationSize,
             totalItems: 0,
             totalPages: 1,
-            sortBy: <string | Array<string>>'',
+            sortBy: '' as string | string[],
             descending: false,
             ...override
         }
@@ -79,12 +79,12 @@ export default {
             'page[size]': pagination.rowsPerPage || Config.app.paginationSize,
             'page[number]': pagination.page || 1,
             'sort': ''
-        }
+        };
 
         if(pagination.sortBy && pagination.descending !== null) {
-            parameters.sort = <string>(
+            parameters.sort = (
                 pagination.descending ? '-' + pagination.sortBy : pagination.sortBy
-            );
+            ) as string;
         }
 
         return parameters;

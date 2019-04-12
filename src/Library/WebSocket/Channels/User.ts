@@ -7,21 +7,16 @@ export default class User extends AbstractChannel
 {
     /**
      * Get the channel name.
-     *
-     * @return {String}
      */
-    name()
+    public name(): string
     {
         return 'User.' + this.store.getters.app.user.id;
     }
 
     /**
      * Whether it's possible for the user to enter the channel.
-     *
-     * @abstract
-     * @return {Boolean}
      */
-    canEnter()
+    public canEnter(): boolean
     {
         let user = this.store.getters.app.user;
 

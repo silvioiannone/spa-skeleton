@@ -17,8 +17,7 @@ const SkeletonModules = {
 };
 
 export type StoreType = {
-    [P in keyof (typeof SkeletonModules & typeof Modules)]
-        : (typeof SkeletonModules & typeof Modules)[P];
+    [P in keyof (typeof SkeletonModules & typeof Modules)]: (typeof SkeletonModules & typeof Modules)[P];
 };
 
 /**
@@ -29,7 +28,7 @@ export default class StateMachine extends Service
     /**
      * Service name.
      */
-    name: string = 'State Machine';
+    public name: string = 'State Machine';
 
     /**
      * State machine store.
@@ -39,17 +38,17 @@ export default class StateMachine extends Service
     /**
      * Boot the state machine.
      */
-    boot(): void
+    public boot(): void
     {
         Vue.use(Vuex);
 
-        this.init();
+        StateMachine.init();
     }
 
     /**
      * Get the store.
      */
-    static getStore()
+    public static getStore(): Store<StoreType>
     {
         return StateMachine.store;
     }
@@ -57,7 +56,7 @@ export default class StateMachine extends Service
     /**
      * Initialize the store.
      */
-    protected init()
+    protected static init(): void
     {
         const database = new VuexORM.Database;
 

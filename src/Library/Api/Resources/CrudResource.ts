@@ -8,7 +8,7 @@ export default abstract class CrudResource extends ApiResource
     /**
      * Create a resource.
      */
-    create(data: object): Promise<any>
+    public create(data: object): Promise<any>
     {
         return this._post('', data);
     }
@@ -16,7 +16,7 @@ export default abstract class CrudResource extends ApiResource
     /**
      * Update a resource.
      */
-    update(data: object): Promise<any>
+    public update(data: object): Promise<any>
     {
         return this._patch('', data);
     }
@@ -24,7 +24,7 @@ export default abstract class CrudResource extends ApiResource
     /**
      * Get resources.
      */
-    get(id: string = ''): Promise<any>
+    public get(id: string = ''): Promise<any>
     {
         return this._get(id);
     }
@@ -32,7 +32,7 @@ export default abstract class CrudResource extends ApiResource
     /**
      * Delete a resource.
      */
-    delete(data: object): Promise<any>
+    public delete(data: object): Promise<any>
     {
         return this._delete('', data);
     }

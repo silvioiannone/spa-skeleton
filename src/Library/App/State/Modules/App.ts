@@ -15,7 +15,7 @@ export default class APP extends Module
     /**
      * Define the App module actions.
      */
-    protected actions()
+    protected actions(): any
     {
         return {};
     }
@@ -23,17 +23,17 @@ export default class APP extends Module
     /**
      * Define the APP module getters.
      */
-    protected getters()
+    protected getters(): any
     {
         return {
-            'app': (state: any) => state,
+            'app': (state: any): any => state,
         }
     }
 
     /**
      * Define the APP module mutations.
      */
-    protected mutations()
+    protected mutations(): any
     {
         return {
 
@@ -79,7 +79,7 @@ export default class APP extends Module
              * @param state
              * @param value
              */
-            'ui/SET_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any)
+            'ui/SET_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any): void
             {
                 state.ui.navigationDrawers.leftVisible = value;
             },
@@ -90,7 +90,7 @@ export default class APP extends Module
              * @param state
              * @param value
              */
-            'ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any)
+            'ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY'(state: any, value: any): void
             {
                 state.ui.navigationDrawers.rightVisible = value;
             },
@@ -101,7 +101,7 @@ export default class APP extends Module
              * @param state
              * @param value
              */
-            'ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY'(state: any, value: any)
+            'ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY'(state: any, value: any): void
             {
                 state.ui.navigationDrawers.notificationsVisible = value;
             },
@@ -129,7 +129,7 @@ export default class APP extends Module
              *
              * @param state
              */
-            'user/REMOVE_AUTHENTICATED_USER'(state: any)
+            'user/REMOVE_AUTHENTICATED_USER'(state: any): void
             {
                 state.user.id = null;
             },
@@ -140,7 +140,7 @@ export default class APP extends Module
              * @param state
              * @param params
              */
-            'user/CHANGE_SETTING'(state: any, params: any)
+            'user/CHANGE_SETTING'(state: any, params: any): void
             {
                 Object.assign(state.user.settings, params);
             }
@@ -150,7 +150,7 @@ export default class APP extends Module
     /**
      * Define the APP state.
      */
-    protected state()
+    protected state(): any
     {
         return {
 

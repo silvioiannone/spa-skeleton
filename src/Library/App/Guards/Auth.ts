@@ -18,12 +18,12 @@ export default class Auth extends AbstractGuard
     /**
      * Run the guard.
      */
-    handle(): Promise<any>
+    public handle(): Promise<any>
     {
         let token = new Token();
         let api = ApiFactory.make();
 
-        return new Promise((resolve: Function, reject: Function) =>
+        return new Promise((resolve: Function, reject: Function): void =>
         {
             // Avoid requesting a token if there's already a request pending
             if(sessionStorage.getItem('fetchingToken'))
@@ -35,13 +35,13 @@ export default class Auth extends AbstractGuard
             if(token.isExpired())
             {
                 api.users.refreshToken()
-                    .then((response: any) =>
+                    .then((response: any): void =>
                     {
                         token.save(response.body.access_token);
                         sessionStorage.removeItem('fetchingToken');
                         resolve();
                     })
-                    .catch((response: any) =>
+                    .catch((response: any): void =>
                     {
                         token.remove();
                         sessionStorage.removeItem('fetchingToken');

@@ -15,7 +15,7 @@ export default abstract class AbstractFilter
      *
      * @param store
      */
-    constructor(store: Store<any>)
+    public constructor(store: Store<any>)
     {
         this.store = store;
     }
@@ -23,5 +23,5 @@ export default abstract class AbstractFilter
     /**
      * Run the filter.
      */
-    abstract run(): (value: string, ...args: Array<any>) => string
+    abstract run(): (value: string, ...args: any[]) => string
 }

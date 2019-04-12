@@ -7,7 +7,7 @@ import HeadUtil from '../../Utils/Head';
  *
  * It's possible to access the event hub using "this.$head" from inside any component.
  */
-export default function Head(vue: typeof Vue, options?: any): void
+export default function Head(vue: typeof Vue): void
 {
     vue.prototype.$head = HeadUtil;
 }

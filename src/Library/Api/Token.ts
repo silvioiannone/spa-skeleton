@@ -19,7 +19,7 @@ export default class Token
     /**
      * Get the access token.
      */
-    getAccessToken(): string
+    public static getAccessToken(): string
     {
         return document.cookie
             .replace(/(?:(?:^|.*;\s*)access_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -28,7 +28,7 @@ export default class Token
     /**
      * Get the refresh token.
      */
-    getRefreshToken(): string
+    public static getRefreshToken(): string
     {
         return document.cookie
             .replace(/(?:(?:^|.*;\s*)refresh_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
@@ -37,25 +37,25 @@ export default class Token
     /**
      * Decode the token.
      */
-    decode(): any
+    public static decode(): any
     {
-        return JwtDecode(this.getAccessToken());
+        return JwtDecode(Token.getAccessToken());
     }
 
     /**
-     * Wheter the token is expired or not.
+     * Whether the token is expired or not.
      *
      * @returns {boolean}
      */
-    isExpired(): boolean
+    public static isExpired(): boolean
     {
-        return this.decode().exp < Math.ceil(new Date().getTime() / 1000);
+        return Token.decode().exp < Math.ceil(new Date().getTime() / 1000);
     }
 
     /**
      * Remove the cookie.
      */
-    remove(): void
+    public remove(): void
     {
         document.cookie = this.accessTokenName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         document.cookie = this.refreshTokenName +'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -67,7 +67,7 @@ export default class Token
      * @param accessToken
      * @param refreshToken
      */
-    save(accessToken: string, refreshToken: string = ''): void
+    public save(accessToken: string, refreshToken: string = ''): void
     {
         let accessTokenCookie = this.accessTokenName + "=" + accessToken + "; path=/;";
         let refreshTokenCookie = this.refreshTokenName + "=" + refreshToken + "; path=/;";

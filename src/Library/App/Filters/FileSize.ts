@@ -8,9 +8,9 @@ export default class FileSize extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(): (value: string) => string
+    public run(): (value: string) => string
     {
-        return (value: string) =>
+        return (value: string): string =>
         {
             let valueNumber = parseInt(value);
             const units = ['B', 'KB', 'MB', 'GB', 'TB'];

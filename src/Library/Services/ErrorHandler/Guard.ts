@@ -24,7 +24,7 @@ export default class Guard extends Handler
     /**
      * Constructor.
      */
-    constructor(error: ResponseInterface)
+    public constructor(error: ResponseInterface)
     {
         super(error);
     }
@@ -32,7 +32,7 @@ export default class Guard extends Handler
     /**
      * Handle the error.
      */
-    handle(): void
+    public handle(): void
     {
         this.store.commit('app/SET_ERROR', this.error);
 

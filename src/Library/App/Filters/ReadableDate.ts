@@ -10,9 +10,9 @@ export default class Date extends AbstractFilter
     /**
      * Run the filter.
      */
-    run(): (value: string) => string
+    public run(): (value: string) => string
     {
-        return (value: string) =>
+        return (value: string): string =>
         {
             let settings = this.store.getters.app.user.settings;
 

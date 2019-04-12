@@ -13,7 +13,7 @@ export default class App extends AbstractChannel
     /**
      * Get the channel name.
      */
-    name(): string
+    public name(): string
     {
         return 'App';
     }

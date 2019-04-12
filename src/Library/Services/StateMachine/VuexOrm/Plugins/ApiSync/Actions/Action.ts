@@ -1,8 +1,7 @@
 import ApiFactory, { ApiClient } from '../../../../../../Api';
-import { Store } from 'vuex';
-import Pluralize from 'pluralize';
-import ResponseInterface from "spa-skeleton/src/Library/Api/ResponseInterface";
-import ApiResource from '../../../../../../Api/Resources/ApiResource';
+import { Store }                 from 'vuex';
+import Pluralize                 from 'pluralize';
+import ApiResource               from '../../../../../../Api/Resources/ApiResource';
 
 /**
  * An action.
@@ -17,7 +16,7 @@ export abstract class Action
     /**
      * Boot the action.
      */
-    static boot()
+    public static boot(): Action
     {
         Action.api = ApiFactory.make();
 
@@ -29,9 +28,9 @@ export abstract class Action
      *
      * Override this function.
      */
-    static execute(state: Store<any>, params: any): Promise<any>
+    public static execute(): Promise<any>
     {
-        return new Promise(() => {
+        return new Promise((): void => {
             throw 'Define the default action in the extending class.'
         })
     }
@@ -57,7 +56,7 @@ export abstract class Action
     }
 
     /**
-     * Check the existance of the given resource in the API client.
+     * Check the existence of the given resource in the API client.
      */
     protected static checkResourceName(name: string): void
     {
@@ -69,7 +68,7 @@ export abstract class Action
     /**
      * Handle a successful response.
      */
-    protected static onSuccess(response: ResponseInterface, store: Store<any>, params: any)
+    protected static onSuccess(): void
     {
         throw 'Define the `onSuccess` function in the extending class.'
     }
@@ -77,7 +76,7 @@ export abstract class Action
     /**
      * Handle an error response.
      */
-    protected static onError(response: ResponseInterface, store: Store<any>, params: any)
+    protected static onError(): void
     {
         //throw 'Define the `onError` function in the extending class.'
     }

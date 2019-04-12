@@ -1,26 +1,26 @@
 {
-  "_from": "spa-skeleton@0.1.25",
-  "_id": "spa-skeleton@0.1.25",
+  "_from": "spa-skeleton@0.1.26",
+  "_id": "spa-skeleton@0.1.26",
   "_inBundle": false,
-  "_integrity": "sha512-gbBN5u0c95dzJiiC6nVadYRf3zvylOecEZNkcxtJushCltU0/RC80YhIaVDv2MDVhy3NynP0dh661LBShKyAgQ==",
+  "_integrity": "sha512-8GV9T8/0W1s8NR11i0jyQ3AcSnsWpkNxYz38zOQeFirdFGFYI8NEI55D3oJVx93pX8S2CFGioWLUns2+FuBr7g==",
   "_location": "/spa-skeleton",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "spa-skeleton@0.1.25",
+    "raw": "spa-skeleton@0.1.26",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "0.1.25",
+    "rawSpec": "0.1.26",
     "saveSpec": null,
-    "fetchSpec": "0.1.25"
+    "fetchSpec": "0.1.26"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.1.25.tgz",
-  "_shasum": "3fe9f4ee7c229be4c65e971acdd9601f48522322",
-  "_spec": "spa-skeleton@0.1.25",
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.1.26.tgz",
+  "_shasum": "52d7702f4de27d58f21d4f7541a3d834c7df670c",
+  "_spec": "spa-skeleton@0.1.26",
   "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
   "author": {
     "name": "Silvio Iannone"
@@ -29,6 +29,11 @@
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
   "bundleDependencies": false,
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
+    "@typescript-eslint/parser": "^1.6.0",
+    "eslint": "^5.16.0"
+  },
   "dependencies": {
     "@mdi/font": "^3.5.95",
     "@types/jwt-decode": "^2.2.1",

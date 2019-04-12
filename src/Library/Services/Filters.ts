@@ -35,12 +35,12 @@ export default class Filters extends Service
     /**
      * Service name.
      */
-    name: string = 'Filters';
+    public name: string = 'Filters';
 
     /**
      * Boot the service.
      */
-    boot(): void
+    public boot(): void
     {
         let availableFilters = {... SkeletonFilters, ...AppFilters};
         let store = StateMachine.getStore();

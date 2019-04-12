@@ -14,7 +14,7 @@ export default class SwedishSsn extends AbstractRule
     /**
      * Get the validation message.
      */
-    getMessage(field: string, params: Array<any>, data: any): string
+    public getMessage(): string
     {
         return `Invalid SSN.`;
     }
@@ -22,7 +22,7 @@ export default class SwedishSsn extends AbstractRule
     /**
      * Validate.
      */
-    validate(value: string, params: Array<any>): boolean
+    public validate(value: string): boolean
     {
         // Remove the dash.
         value = value.replace('-', '');
@@ -33,7 +33,7 @@ export default class SwedishSsn extends AbstractRule
 
         let sums = [...Array.from(value)]
             .slice(0, 9)
-            .map((char, index) =>
+            .map((char, index): number =>
             {
                 let factor = index % 2 ? 1 : 2;
 
@@ -43,8 +43,8 @@ export default class SwedishSsn extends AbstractRule
         // Can't use reduce since the first time the validation is run it will only contain one
         // value and reduce will return it immediately causing the sum to not be processed.
         let total = sums
-            .map(number => number >= 10 ? (number % 10) + Math.trunc(number / 10) : number)
-            .reduce((total, current) => total + current);
+            .map((number): number => number >= 10 ? (number % 10) + Math.trunc(number / 10) : number)
+            .reduce((total, current): number => total + current);
 
         let totalLastDigit = total % 10;
         let checksum = (10 - totalLastDigit) % 10;

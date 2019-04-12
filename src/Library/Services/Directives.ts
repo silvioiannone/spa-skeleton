@@ -14,12 +14,12 @@ export default class Directives extends Service
     /**
      * The service's name.
      */
-    name: string = 'Directives';
+    public name: string = 'Directives';
 
     /**
      * Boot the service.
      */
-    boot(): void
+    public boot(): void
     {
         let availableDirectives = {...SkeletonDirectives, ...DirectivesList};
 

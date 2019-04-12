@@ -12,7 +12,7 @@ import SwedishSsn from '../App/Rules/SwedishSsn';
 const skeletonRules = {
     Count,
     SwedishSsn
-}
+};
 
 /**
  * This service provides an input validator.
@@ -22,12 +22,12 @@ export default class Validator extends Service
     /**
      * Service name.
      */
-    name: string = 'Validator';
+    public name: string = 'Validator';
 
     /**
      * Boot the validator.
      */
-    boot(): void
+    public boot(): void
     {
         let translator = (new Translator).get();
 

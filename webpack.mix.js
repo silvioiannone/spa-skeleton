@@ -1,8 +1,10 @@
+/* eslint-disable */
+
 const config = require('spa-skeleton/webpack.config'),
-      merge = require('webpack-merge'),
-      mix = require('laravel-mix'),
-      path = require('path'),
-      BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
+    merge = require('webpack-merge'),
+    mix = require('laravel-mix'),
+    path = require('path'),
+    BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
 
 module.exports = {
 

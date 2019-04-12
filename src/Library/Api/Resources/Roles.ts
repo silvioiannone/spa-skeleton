@@ -6,7 +6,7 @@ import ResponseInterface from '../ResponseInterface';
  */
 export default class Roles extends ApiResource
 {
-    constructor()
+    public constructor()
     {
         super();
 
@@ -16,7 +16,7 @@ export default class Roles extends ApiResource
     /**
      * Get the roles.
      */
-    get(): Promise<ResponseInterface>
+    public get(): Promise<ResponseInterface>
     {
         return this._get('');
     }

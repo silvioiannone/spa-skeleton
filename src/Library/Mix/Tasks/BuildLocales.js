@@ -1,8 +1,8 @@
 const Task = require('laravel-mix/src/tasks/Task'),
-      FS = require('fs'),
-      Path = require ('path'),
-      File = require('laravel-mix/src/File'),
-      _ = require('lodash');
+    FS = require('fs'),
+    Path = require ('path'),
+    File = require('laravel-mix/src/File'),
+    _ = require('lodash');
 
 /**
  * Laravel Mix task that builds locales for the app.
@@ -42,7 +42,7 @@ class BuildLocalesTask extends Task
         // `FilesCollection` because we need to look at the files from two different sources.
         // Instead we create a files that behaves in a a compatible way.
         //
-        // Files contains all the files that shoul be watched for changes.
+        // Files contains all the files that should be watched for changes.
         this.files = {
             get() {
                 return files.map(file => file.relativePath());

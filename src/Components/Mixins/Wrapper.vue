@@ -78,7 +78,7 @@
         getOn(): any
         {
             let on = {
-                ...this.$listeners
+                //...this.$listeners
             };
 
             // Model input event

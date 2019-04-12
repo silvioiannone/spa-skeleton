@@ -15,5 +15,3 @@ interface AppRequire {
         callback: (require: <T>(path: string) => T) => void
     ) => void;
 }
-
-interface NodeRequire extends AppRequire {}

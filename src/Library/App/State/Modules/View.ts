@@ -20,9 +20,9 @@ export default class View extends Module
         let actions = {};
 
         // / route.
-        actions['view/ROOT'] = (store: Store<any>, payload: any) =>
+        actions['view/ROOT'] = (store: Store<any>): Promise<ResponseInterface> =>
         {
-            return new Promise((resolve, reject) =>
+            return new Promise((resolve, reject): void =>
             {
                 if (store.getters.app.settings) {
                     resolve();
@@ -30,21 +30,21 @@ export default class View extends Module
                 }
 
                 this.api.app.getSettings()
-                    .then((response: ResponseInterface) =>
+                    .then((response: ResponseInterface): void =>
                     {
                         store.commit('app/SET_SETTINGS', response.body.data);
                         resolve();
                     })
-                    .catch((error: any) => reject(error));
+                    .catch((error: any): void => reject(error));
             })
         };
 
         /**
          * /home route
          */
-        actions['view/HOME'] = (store: Store<any>, payload: any) =>
+        actions['view/HOME'] = (store: Store<any>): Promise<ResponseInterface> =>
         {
-            return new Promise((resolve, reject) =>
+            return new Promise((resolve, reject): void =>
             {
                 let userId = store.getters.app.user.id;
 
@@ -58,7 +58,7 @@ export default class View extends Module
                         include: 'role,unread_notifications'
                     })
                     .find('me')
-                    .then((response: ResponseInterface) =>
+                    .then((response: ResponseInterface): void =>
                     {
                         let user = response.body.data;
 
@@ -66,16 +66,16 @@ export default class View extends Module
                         store.commit('notifications/STORE', {data: user.unread_notifications});
                         resolve();
                     })
-                    .catch((error: any) => reject(error));
+                    .catch((error: any): void => reject(error));
             });
         };
 
         /**
          * /settings route
          */
-        actions['view/SETTINGS'] = (store: Store<any>) =>
+        actions['view/SETTINGS'] = (store: Store<any>): Promise<ResponseInterface> =>
         {
-            return new Promise((resolve, reject) =>
+            return new Promise((resolve, reject): void =>
             {
                 let userId = store.getters.app.user.id;
 
@@ -89,12 +89,12 @@ export default class View extends Module
                         include: 'role'
                     })
                     .find('me')
-                    .then((response: ResponseInterface) =>
+                    .then((response: ResponseInterface): void =>
                     {
                         store.commit('user/STORE_AUTHENTICATED_USER', response.body.data);
                         resolve();
                     })
-                    .catch((error: any) => reject(error));
+                    .catch((error: any): void => reject(error));
             });
         };
 

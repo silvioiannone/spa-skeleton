@@ -24,7 +24,7 @@ export default class Navigator
      *
      * @param vue
      */
-    setInstance(vue: Vue)
+    public setInstance(vue: Vue): void
     {
         this.router = vue.$router;
         this.route = vue.$route;
@@ -33,7 +33,7 @@ export default class Navigator
     /**
      * Set the route.
      */
-    setRoute(route: Route): void
+    public setRoute(route: Route): void
     {
         this.route = route;
     }
@@ -43,7 +43,7 @@ export default class Navigator
      *
      * It behaves in the same way as $router.push but keeps the query parameters.
      */
-    toAndKeepQuery(path: string): void
+    public toAndKeepQuery(path: string): void
     {
         this.router.push({
             path,
@@ -54,7 +54,7 @@ export default class Navigator
     /**
      * Go to the parent route.
      */
-    toParent(levels = 1): void
+    public toParent(levels = 1): void
     {
         this.router.push({
             path: String.parentPath(this.route.path, levels),
@@ -65,7 +65,7 @@ export default class Navigator
     /**
      * Refresh the current route.
      */
-    refresh(): void
+    public refresh(): void
     {
         // In order to refresh the current route we just need to execute the view actions.
         (new Guard).init(this.router, StateMachine.getStore())

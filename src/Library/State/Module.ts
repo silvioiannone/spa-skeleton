@@ -2,8 +2,6 @@ import ApiFactory, { ApiClient } from 'spa-skeleton/src/Library/Api';
 
 /**
  * Abstract state machine module.
- *
- * @abstract
  */
 export default abstract class Module
 {
@@ -20,7 +18,7 @@ export default abstract class Module
     /**
      * Constructor.
      */
-    constructor()
+    public constructor()
     {
         this.api = ApiFactory.make();
     }
@@ -28,7 +26,7 @@ export default abstract class Module
     /**
      * Return the module structure.
      */
-    get()
+    public get(): any
     {
         return {
             actions: this.actions(),
@@ -41,7 +39,7 @@ export default abstract class Module
     /**
      * Get the module name.
      */
-    getName()
+    public getName(): string
     {
         return this.name;
     }
@@ -49,7 +47,7 @@ export default abstract class Module
     /**
      * Define the actions here.
      */
-    protected actions()
+    protected actions(): any
     {
         return {};
     }
@@ -57,7 +55,7 @@ export default abstract class Module
     /**
      * Define the getters here.
      */
-    protected getters()
+    protected getters(): any
     {
         return {};
     }
@@ -65,7 +63,7 @@ export default abstract class Module
     /**
      * Define the mutations here.
      */
-    protected mutations()
+    protected mutations(): any
     {
         return {};
     }
@@ -73,7 +71,7 @@ export default abstract class Module
     /**
      * Define the state here.
      */
-    protected state()
+    protected state(): any
     {
         return {};
     }
