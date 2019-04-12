@@ -77,7 +77,7 @@ export default class Users extends ApiResource
     {
         // Delete the old token in order to avoid issues since the authentication endpoint doesn't
         // expect it.
-        (new Token).remove();
+        Token.remove();
 
         return this._post('./api/v1/oauth/token', {
             ...userCredentials,

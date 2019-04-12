@@ -27,7 +27,7 @@ export default abstract class AbstractApiDriver
     /**
      * Authentication token.
      */
-    protected token: Token;
+    protected token: typeof Token;
 
     /**
      * Parameters that will be sent with the request.
@@ -44,7 +44,7 @@ export default abstract class AbstractApiDriver
      */
     protected constructor()
     {
-        this.token = new Token;
+        this.token = Token;
     }
 
     /**

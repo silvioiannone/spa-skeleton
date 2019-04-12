@@ -20,7 +20,6 @@ export default class Auth extends AbstractGuard
      */
     public handle(): Promise<any>
     {
-        let token = new Token();
         let api = ApiFactory.make();
 
         return new Promise((resolve: Function, reject: Function): void =>
@@ -32,18 +31,18 @@ export default class Auth extends AbstractGuard
                 return;
             }
 
-            if(token.isExpired())
+            if(Token.isExpired())
             {
                 api.users.refreshToken()
                     .then((response: any): void =>
                     {
-                        token.save(response.body.access_token);
+                        Token.save(response.body.access_token);
                         sessionStorage.removeItem('fetchingToken');
                         resolve();
                     })
                     .catch((response: any): void =>
                     {
-                        token.remove();
+                        Token.remove();
                         sessionStorage.removeItem('fetchingToken');
                         reject(response);
                     });

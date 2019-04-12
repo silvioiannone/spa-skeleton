@@ -9,12 +9,12 @@ export default class Token
     /**
      * Access token name.
      */
-    protected accessTokenName: string = 'access_token';
+    protected static accessTokenName: string = 'access_token';
 
     /**
      * Refresh token name.
      */
-    protected refreshTokenName: string = 'refresh_token';
+    protected static refreshTokenName: string = 'refresh_token';
 
     /**
      * Get the access token.
@@ -55,10 +55,10 @@ export default class Token
     /**
      * Remove the cookie.
      */
-    public remove(): void
+    public static remove(): void
     {
-        document.cookie = this.accessTokenName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = this.refreshTokenName +'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = Token.accessTokenName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = Token.refreshTokenName +'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
     /**
@@ -67,10 +67,10 @@ export default class Token
      * @param accessToken
      * @param refreshToken
      */
-    public save(accessToken: string, refreshToken: string = ''): void
+    public static save(accessToken: string, refreshToken: string = ''): void
     {
-        let accessTokenCookie = this.accessTokenName + "=" + accessToken + "; path=/;";
-        let refreshTokenCookie = this.refreshTokenName + "=" + refreshToken + "; path=/;";
+        let accessTokenCookie = Token.accessTokenName + "=" + accessToken + "; path=/;";
+        let refreshTokenCookie = Token.refreshTokenName + "=" + refreshToken + "; path=/;";
 
         // If production send only over HTTPS
         if(Config.env !== 'local') {

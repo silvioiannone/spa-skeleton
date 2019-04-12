@@ -295,7 +295,7 @@ export default class WebSocket
     public updateEchoHeaders(): void
     {
         this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` +
-            (new Token).getAccessToken();
+            Token.getAccessToken();
     }
 
     /**
