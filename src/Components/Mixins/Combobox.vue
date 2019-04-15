@@ -1,10 +1,10 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import TextField                          from './TextField.vue';
+    import { TextField }                      from './TextField.vue';
 
     @Component
-    export default class Combobox extends Mixins(TextField)
+    export class Combobox extends Mixins(TextField)
     {
         /**
          * Model.
@@ -174,5 +174,7 @@
             this.$data._selected = this.value;
         }
     }
+
+    export default Combobox;
 
 </script>

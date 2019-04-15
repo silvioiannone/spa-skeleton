@@ -1,22 +1,22 @@
-import Config  from './Config';
-import Service from './Library/Services/Service';
-import Logger  from './Library/Services/Logger';
+import { Config }  from './Config';
+import { Service } from './Library/Services/Service';
+import { Logger }  from './Library/Services/Logger';
 
 // Services.
-import Directives   from './Library/Services/Directives';
-import Components   from './Library/Services/Components';
-import StateMachine from './Library/Services/StateMachine';
+import { Directives }   from './Library/Services/Directives';
+import { Components }   from './Library/Services/Components';
+import { StateMachine } from './Library/Services/StateMachine';
 //import Translator   from './Library/Services/Translator';
-import Plugins      from './Library/Services/Plugins';
-import Filters      from './Library/Services/Filters';
-import Validator    from './Library/Services/Validator';
-import Router       from './Library/Services/Router';
-import ErrorHandler from './Library/Services/ErrorHandler';
+import { Plugins }      from './Library/Services/Plugins';
+import { Filters }      from './Library/Services/Filters';
+import { Validator }    from './Library/Services/Validator';
+import { Router }       from './Library/Services/Router';
+import { ErrorHandler } from './Library/Services/ErrorHandler';
 
 /**
  * The single page application.
  */
-export default class App
+export class App
 {
     /**
      * The app's name.

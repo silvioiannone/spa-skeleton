@@ -1,11 +1,11 @@
-import AbstractFilter from './AbstractFilter';
+import { AbstractFilter } from './AbstractFilter';
 
 /**
  * Currency filter.
  *
  * @param value
  */
-export default class Currency extends AbstractFilter
+export class Currency extends AbstractFilter
 {
     /**
      * Run the filter.

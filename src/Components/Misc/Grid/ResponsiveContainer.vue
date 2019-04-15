@@ -4,7 +4,7 @@
     import { Component }  from 'vue-property-decorator';
 
     @Component
-    export default class ResponsiveContainer extends Vue
+    export class ResponsiveContainer extends Vue
     {
         get attrs(): any
         {
@@ -47,5 +47,7 @@
             }, this.$slots.default);
         }
     }
+
+    export default ResponsiveContainer;
 
 </script>

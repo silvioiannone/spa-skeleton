@@ -10,15 +10,14 @@
 
 <script lang="ts">
 
-    import Vue                        from 'vue';
-    import { Component, Prop, Watch } from 'vue-property-decorator';
-    import Moment                     from 'moment';
-    import Config                     from '../../Config';
+    import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+    import Moment                          from 'moment';
+    import { Config }                      from '../../Config';
 
     let interval: any = null;
 
     @Component
-    export default class TimeFromNow extends Vue
+    export class TimeFromNow extends Vue
     {
         /**
          * The time that will be displayed in a human readable format.
@@ -57,5 +56,7 @@
             clearInterval(interval);
         }
     }
+
+    export default TimeFromNow;
 
 </script>

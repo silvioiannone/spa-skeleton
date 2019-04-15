@@ -59,7 +59,7 @@
     import VueDropzone from 'vue2-dropzone';
     import Token from '../../Library/Api/Token';
 
-    export default {
+    export {
 
         name: 'FileUpload',
 

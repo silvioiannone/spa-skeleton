@@ -1,12 +1,12 @@
-import ApiResource       from './ApiResource';
-import Config            from '../../../Config';
-import ResponseInterface from '../ResponseInterface';
-import Token             from '../Token';
+import { ApiResource }       from './ApiResource';
+import { Config }            from '../../../Config';
+import { ResponseInterface } from '../ResponseInterface';
+import { Token }             from '../Token';
 
 /**
  * Users resource.
  */
-export default class Users extends ApiResource
+export class Users extends ApiResource
 {
     public resourceName: string = 'users';
 

@@ -2,11 +2,11 @@
 
     import { VNode }                   from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Button                      from '../Mixins/Button.vue';
-    import _Component                  from '../Mixins/Component.vue';
+    import { Button }                  from '../Mixins/Button.vue';
+    import { MixinComponent }          from '../Mixins/Component.vue';
 
     @Component
-    export default class ButtonMain extends Mixins(Button, _Component)
+    export class ButtonMain extends Mixins(Button, MixinComponent)
     {
         @Prop({
             validator(value: any): boolean
@@ -65,5 +65,7 @@
             );
         }
     }
+
+    export default ButtonMain;
 
 </script>

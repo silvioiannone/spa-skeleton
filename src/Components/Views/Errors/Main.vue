@@ -49,7 +49,7 @@
 
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import LayoutApp     from 'spa-skeleton/src/Components/Layouts/App.vue';
+    import { LayoutApp } from 'spa-skeleton/src/Components/Layouts/App.vue';
 
     @Component({
         components: {
@@ -66,7 +66,7 @@
             }
         }
     })
-    export default class ErrorMain extends Vue
+    export class ErrorMain extends Vue
     {
         get app()
         {
@@ -83,5 +83,7 @@
             window.history.back();
         }
     }
+
+    export default ErrorMain;
 
 </script>

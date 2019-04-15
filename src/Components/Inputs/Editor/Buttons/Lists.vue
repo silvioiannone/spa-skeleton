@@ -15,7 +15,7 @@
 
     import MixinEditorCommand from '../Mixins/EditorCommand';
 
-    export default {
+    export {
 
         name: 'InputEditorButtonsLists',
 

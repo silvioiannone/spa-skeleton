@@ -11,7 +11,7 @@
     import { TextField }               from 'spa-skeleton';
 
     @Component
-    export default class InputDynamic extends Mixins(TextField)
+    export class InputDynamic extends Mixins(TextField)
     {
         /**
          * Input description.
@@ -60,5 +60,7 @@
             this.$emit('blur', value);
         }
     }
+
+    export default InputDynamic;
 
 </script>

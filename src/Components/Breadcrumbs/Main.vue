@@ -5,10 +5,10 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import Breadcrumbs           from '../Mixins/Breadcrumbs.vue';
+    import { Breadcrumbs }       from '../Mixins/Breadcrumbs.vue';
 
     @Component
-    export default class BreadcrumbsMain extends Mixins(Breadcrumbs)
+    export class BreadcrumbsMain extends Mixins(Breadcrumbs)
     {
         get _items()
         {
@@ -22,5 +22,7 @@
             });
         }
     }
+
+    export default BreadcrumbsMain;
 
 </script>

@@ -24,19 +24,21 @@
 
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import Error         from "./Main.vue";
+    import { ErrorMain } from './Main.vue';
 
     @Component({
         components: {
-            Error
+            ErrorMain
         }
     })
-    export default class ErrorServerError extends Vue
+    export class ErrorServerError extends Vue
     {
         get config()
         {
             return this.$store.getters.app.config;
         }
     }
+
+    export default ErrorServerError;
 
 </script>

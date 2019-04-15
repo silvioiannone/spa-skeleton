@@ -1,13 +1,13 @@
 import Vue               from 'vue';
 import Router, { Route } from 'vue-router'
-import String            from './String';
-import StateMachine      from '../Services/StateMachine';
-import Guard             from '../Guard';
+import { String }        from './String';
+import { StateMachine }  from '../Services/StateMachine';
+import { Guard }         from '../Guard';
 
 /**
  * Providers navigations and routing utilities.
  */
-export default class Navigator
+export class Navigator
 {
     /**
      * Vue router.

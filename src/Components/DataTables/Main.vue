@@ -1,11 +1,10 @@
 <script lang="ts">
 
-    import Config              from '../../Config';
-    import Vue                 from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
+    import { Config }               from '../../Config';
 
     @Component
-    export default class DataTableMain extends Vue
+    export class DataTableMain extends Vue
     {
         /**
          * Table headers.
@@ -59,5 +58,7 @@
             return createElement('v-data-table', component);
         }
     }
+
+    export default DataTableMain;
 
 </script>

@@ -1,12 +1,12 @@
-import ApiResource       from './Api/Resources/ApiResource';
-import AbstractApiDriver from './Api/Drivers/AbstractApiDriver';
-import AppResources      from '../../../../resources/ts/App/Api';
+import { ApiResource }       from './Api/Resources/ApiResource';
+import { AbstractApiDriver } from './Api/Drivers/AbstractApiDriver';
+import AppResources          from '../../../../resources/ts/App/Api';
 
 // Skeleton API resources
-import App           from './Api/Resources/App';
-import Notifications from './Api/Resources/Notifications';
-import Roles         from './Api/Resources/Roles';
-import Users         from './Api/Resources/Users';
+import { App }           from './Api/Resources/App';
+import { Notifications } from './Api/Resources/Notifications';
+import { Roles }         from './Api/Resources/Roles';
+import { Users }         from './Api/Resources/Users';
 
 const ApiResources = {
     app: App,
@@ -32,7 +32,7 @@ class Api
 /**
  * A factory that creates API clients.
  */
-export default class ApiFactory
+export class ApiFactory
 {
     /**
      * Api resources.

@@ -1,9 +1,9 @@
-import AbstractFilter from './AbstractFilter';
+import { AbstractFilter } from './AbstractFilter';
 
 /**
  * This filter capitalizes the given string.
  */
-export default class Capitalize extends AbstractFilter
+export class Capitalize extends AbstractFilter
 {
     /**
      * Run the filter.

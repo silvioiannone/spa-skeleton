@@ -1,19 +1,19 @@
 <script lang="ts">
 
-    import { Query }            from '@vuex-orm/core';
-    import Vue                  from 'vue';
-    import { Component, Watch } from 'vue-property-decorator';
-    import Config               from '../../../../src/Config';
-    import Pagination           from 'spa-skeleton/src/Library/Interfaces/Pagination';
-    import PaginationUtil       from '../../../Library/Utils/Pagination';
-    import { Model }            from 'spa-skeleton';
+    import { Query }                        from '@vuex-orm/core';
+    import Vue                              from 'vue';
+    import { Component, Watch }             from 'vue-property-decorator';
+    import { Config }                       from '../../../../src/Config';
+    import { Pagination }                   from 'spa-skeleton/src/Library/Interfaces/Pagination';
+    import { Pagination as PaginationUtil } from '../../../Library/Utils/Pagination';
+    import { Model }                        from 'spa-skeleton';
 
     /*
      * This mixin can be used by all the views that need to display paginated data. E.g.: a view
      * displaying a table with a list of users.
      */
     @Component
-    export default class ViewPaginated extends Vue
+    export class ViewPaginated extends Vue
     {
         pagination: Pagination = PaginationUtil.initialValue();
 
@@ -112,5 +112,7 @@
             this.$router.push({ path: this.$route.path, query });
         }
     }
+
+    export default ViewPaginated;
 
 </script>

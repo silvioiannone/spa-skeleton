@@ -8,7 +8,7 @@ interface Rule {
 /**
  * An abstract validation rule.
  */
-export default abstract class AbstractRule
+export abstract class AbstractRule
 {
     /**
      * Translator.

@@ -1,10 +1,10 @@
-import * as Moment    from 'moment';
-import AbstractFilter from './AbstractFilter';
+import * as Moment        from 'moment';
+import { AbstractFilter } from './AbstractFilter';
 
 /**
  * This filter formats a date taking into consideration the user's locale value.
  */
-export default class Date extends AbstractFilter
+export class Date extends AbstractFilter
 {
     /**
      * Run the filter.

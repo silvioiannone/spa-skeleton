@@ -44,7 +44,7 @@
     import EditorButtonsLists from './Editor/Buttons/Lists';
     import EditorButtonLink from "spa-skeleton/src/Components/Inputs/Editor/Buttons/Link";
 
-    export default {
+    export {
 
         name: 'InputEditor',
 

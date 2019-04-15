@@ -3,8 +3,7 @@ import Moment from 'moment';
 /**
  * String utilities.
  */
-export default
-{
+let String = {
     /**
      * Limit a string to the specified number of words.
      */
@@ -43,3 +42,5 @@ export default
         return '/' + parent.splice(1, parent.length - levels - 1).join('/');
     }
 }
+
+export { String };

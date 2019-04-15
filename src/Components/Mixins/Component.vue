@@ -4,7 +4,7 @@
     import { Component }  from 'vue-property-decorator';
 
     @Component
-    export default class MixinComponent extends Vue
+    export class MixinComponent extends Vue
     {
         // Use this in order to override the value of a prop.
         __props = {};
@@ -44,5 +44,7 @@
             return this.$slots[slot];
         }
     }
+
+    export default MixinComponent;
 
 </script>

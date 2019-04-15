@@ -7,7 +7,7 @@
 
     import _ from 'lodash';
 
-    export default {
+    export {
 
         name: 'SettingsSetter',
 

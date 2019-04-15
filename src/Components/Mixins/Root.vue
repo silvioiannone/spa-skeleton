@@ -1,13 +1,13 @@
 <script lang="ts">
 
     import { Vue, Component, Watch } from 'vue-property-decorator';
-    import Config                    from '../../Config';
+    import { Config }                from '../../Config';
 
     /**
      * This mixin adds multilanguage support to every component.
      */
     @Component
-    export default class Root extends Vue
+    export class Root extends Vue
     {
         get userLanguage(): any
         {
@@ -30,5 +30,7 @@
             this.$i18n.locale = this.userLanguage;
         }
     }
+
+    export default Root;
 
 </script>

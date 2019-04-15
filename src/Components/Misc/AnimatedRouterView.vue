@@ -13,7 +13,7 @@
     import { Component, Prop } from 'vue-property-decorator';
 
     @Component
-    export default class AnimatedRouterView extends Vue
+    export class AnimatedRouterView extends Vue
     {
         /**
          * Animation mode.
@@ -30,5 +30,7 @@
          */
         @Prop({ type: String, default: 'slide-x' }) transition: string;
     }
+
+    export default AnimatedRouterView;
 
 </script>

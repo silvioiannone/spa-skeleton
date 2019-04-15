@@ -2,7 +2,7 @@
 
     import TextField from '../Mixins/TextField';
 
-    export default {
+    export {
 
         name: 'TextFieldSwedishSsn',
 

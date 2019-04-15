@@ -3,7 +3,7 @@
     /**
      * This mixins should be required by any component that extends the editor functionality.
      */
-    export default {
+    export {
 
         name: 'EditorCommand',
 

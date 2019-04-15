@@ -3,7 +3,7 @@ import _ from 'lodash';
 /**
  * Object utilities.
  */
-export default {
+let Objects = {
 
     /**
      * Pluck a list of unique items from a collection.
@@ -58,3 +58,5 @@ export default {
         });
     }
 }
+
+export { Objects };

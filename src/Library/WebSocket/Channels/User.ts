@@ -1,9 +1,9 @@
-import AbstractChannel from '../AbstractChannel';
+import { AbstractChannel } from '../AbstractChannel';
 
 /**
  * User WS channel.
  */
-export default class User extends AbstractChannel
+export class User extends AbstractChannel
 {
     /**
      * Get the channel name.

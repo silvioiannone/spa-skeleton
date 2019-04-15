@@ -1,7 +1,7 @@
 <script lang="ts">
 
-    import Vue, { VNode }      from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+    import { VNode }                from 'vue';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
 
     /**
      * Use this mixin when you need to create a component wrapping another component.
@@ -18,7 +18,7 @@
      * Just set the `__component` $data property.
      */
     @Component
-    export default class Wrapper extends Vue
+    export class Wrapper extends Vue
     {
         @Prop() value: any;
 
@@ -156,5 +156,7 @@
             );
         }
     }
+
+    export default Wrapper;
 
 </script>

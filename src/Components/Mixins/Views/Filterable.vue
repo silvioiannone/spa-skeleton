@@ -1,7 +1,6 @@
 <script lang="ts">
 
-    import Vue                  from 'vue';
-    import { Component, Watch } from 'vue-property-decorator';
+    import { Vue, Component, Watch } from 'vue-property-decorator';
 
     /*
      * The purpose of this mixin is to facilitate the use of server-side filters.
@@ -13,7 +12,7 @@
      *     }
      */
     @Component
-    export default class Filterable extends Vue
+    export class Filterable extends Vue
     {
         filters = {};
 
@@ -68,5 +67,7 @@
             this.$router.push({ path: this.$route.path, query });
         }
     }
+
+    export default Filterable;
 
 </script>

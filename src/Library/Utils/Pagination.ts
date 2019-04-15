@@ -1,21 +1,21 @@
-import Config            from '../../Config';
-import URIjs             from 'urijs';
-import ResponseInterface from '../Api/ResponseInterface';
-import Pagination        from '../Interfaces/Pagination';
+import { Config }                            from '../../Config';
+import URIjs                                 from 'urijs';
+import { ResponseInterface }                 from '../Api/ResponseInterface';
+import { Pagination as PaginationInterface } from '../Interfaces/Pagination';
 
 type PartialPagination = {
-    [P in keyof Pagination]?: Pagination[P]
+    [P in keyof PaginationInterface]?: PaginationInterface[P]
 }
 
 /**
  * Provides pagination utilities.
  */
-export default {
+let Pagination = {
 
     /**
      * Get the initial value for the pagination.
      */
-    initialValue(override: PartialPagination = {}): Pagination
+    initialValue(override: PartialPagination = {}): PaginationInterface
     {
         return {
             page: 1,
@@ -31,7 +31,7 @@ export default {
     /**
      * Create a pagination object from a server response.
      */
-    makeFromResponse(response: ResponseInterface): Pagination
+    makeFromResponse(response: ResponseInterface): PaginationInterface
     {
         let meta = response.body.meta;
         let uri = URIjs(response.request.url);
@@ -58,7 +58,7 @@ export default {
     /**
      * Create a pagination object from a meta object.
      */
-    makeFromMetaObject(meta: any): Pagination
+    makeFromMetaObject(meta: any): PaginationInterface
     {
         return {
             page: meta.current_page,
@@ -73,7 +73,7 @@ export default {
     /**
      * Create an object containing query parameters starting from the Vuetify pagination object.
      */
-    makeQueryParamsFromVuetifyPagination(pagination: Pagination): any
+    makeQueryParamsFromVuetifyPagination(pagination: PaginationInterface): any
     {
         let parameters = {
             'page[size]': pagination.rowsPerPage || Config.app.paginationSize,
@@ -90,3 +90,5 @@ export default {
         return parameters;
     }
 }
+
+export { Pagination };

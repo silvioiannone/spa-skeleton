@@ -2,7 +2,7 @@
 
     import { VNode }                          from 'vue';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import Input                              from './Input.vue';
+    import { Input }                          from './Input.vue';
 
     declare module 'vue/types/vue' {
 
@@ -18,7 +18,7 @@
      * the same name.
      */
     @Component
-    export default class TextField extends Mixins(Input)
+    export class TextField extends Mixins(Input)
     {
         /**
          * Make the input required.
@@ -235,5 +235,7 @@
             });
         }
     }
+
+    export default TextField;
 
 </script>

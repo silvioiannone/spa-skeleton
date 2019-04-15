@@ -1,10 +1,10 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import MixinTextField              from '../Mixins/TextField.vue';
+    import { TextField }               from '../Mixins/TextField.vue';
 
     @Component
-    export default class TextFieldSearch extends Mixins(MixinTextField)
+    export class TextFieldSearch extends Mixins(TextField)
     {
         /**
          * Placeholder.
@@ -31,5 +31,7 @@
          */
         @Prop({ type: String, default: 'search' }) name: string;
     }
+
+    export default TextFieldSearch;
 
 </script>

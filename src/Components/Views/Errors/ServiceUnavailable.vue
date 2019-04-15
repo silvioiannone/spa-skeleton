@@ -16,15 +16,17 @@
     
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import Error         from './Main.vue';
+    import { ErrorMain } from './Main.vue';
 
     @Component({
         components: {
-            Error
+            ErrorMain
         }
     })
-    export default class ErrorServiceUnavailable extends Vue
+    export class ErrorServiceUnavailable extends Vue
     {
     }
+
+    export default ErrorServiceUnavailable;
     
 </script>

@@ -3,7 +3,7 @@ import { Store } from 'vuex';
 /**
  * An abstract filter.
  */
-export default abstract class AbstractFilter
+export abstract class AbstractFilter
 {
     /**
      * State machine store.

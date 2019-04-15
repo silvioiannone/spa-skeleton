@@ -3,7 +3,7 @@ import { Model } from '@vuex-orm/core';
 /**
  * Notification model.
  */
-export default class Notification extends Model
+export class Notification extends Model
 {
     public static entity: string = 'notifications';
 

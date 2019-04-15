@@ -5,7 +5,7 @@
 
 <script>
 
-    export default {
+    export {
 
         name: 'PaginationMain',
 

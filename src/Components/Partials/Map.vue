@@ -10,7 +10,7 @@
     let map = null;
     let google = null;
 
-    export default
+    export
     {
         selector: 'partial-map',
 

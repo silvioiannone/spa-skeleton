@@ -1,10 +1,10 @@
-import ApiResource  from './ApiResource';
-import ResponseInterface from '../ResponseInterface';
+import { ApiResource }       from './ApiResource';
+import { ResponseInterface } from '../ResponseInterface';
 
 /**
  * Notifications resource.
  */
-export default class Notifications extends ApiResource
+export class Notifications extends ApiResource
 {
     public constructor()
     {

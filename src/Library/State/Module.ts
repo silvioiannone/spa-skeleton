@@ -1,9 +1,9 @@
-import ApiFactory, { ApiClient } from 'spa-skeleton/src/Library/Api';
+import { ApiFactory, ApiClient } from 'spa-skeleton/src/Library/Api';
 
 /**
  * Abstract state machine module.
  */
-export default abstract class Module
+export abstract class Module
 {
     /**
      * Module name.
@@ -18,7 +18,7 @@ export default abstract class Module
     /**
      * Constructor.
      */
-    public constructor()
+    protected constructor()
     {
         this.api = ApiFactory.make();
     }

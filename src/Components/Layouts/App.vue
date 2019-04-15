@@ -22,15 +22,13 @@
 
 <script lang="ts">
 
-    import SnackbarGlobal          from '../Snackbars/Global.vue';
-    import ErrorNotFound           from '../Views/Errors/NotFound.vue';
-    import ErrorServerError        from '../Views/Errors/ServerError.vue';
-    import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
-    import ErrorUnauthorized       from '../Views/Errors/Unauthorized.vue';
-    import ErrorTooManyAttempts    from '../Views/Errors/TooManyAttempts.vue';
-
-    import Vue           from 'vue';
-    import { Component } from 'vue-property-decorator';
+    import { Vue, Component }          from 'vue-property-decorator';
+    import { SnackbarGlobal }          from '../Snackbars/Global.vue';
+    import { ErrorNotFound }           from '../Views/Errors/NotFound.vue';
+    import { ErrorServerError }        from '../Views/Errors/ServerError.vue';
+    import { ErrorServiceUnavailable } from '../Views/Errors/ServiceUnavailable.vue';
+    import { ErrorUnauthorized }       from '../Views/Errors/Unauthorized.vue';
+    import { ErrorTooManyAttempts }    from '../Views/Errors/TooManyAttempts.vue';
 
     @Component({
         components: {
@@ -42,7 +40,7 @@
             SnackbarGlobal
         },
     })
-    export default class App extends Vue
+    export class LayoutApp extends Vue
     {
         get app()
         {
@@ -68,5 +66,7 @@
             return this.app.user;
         }
     }
+
+    export default LayoutApp;
 
 </script>

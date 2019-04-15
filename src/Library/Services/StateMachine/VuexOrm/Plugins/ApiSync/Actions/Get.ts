@@ -1,7 +1,7 @@
-import { ExtendedModel } from '../../../Support/ExtendedModel';
-import ResponseInterface from '../../../../../../Api/ResponseInterface';
-import { Action }        from './Action';
-import { Store }         from 'vuex';
+import { ExtendedModel }     from '../../../Support/ExtendedModel';
+import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
+import { Action }            from './Action';
+import { Store }             from 'vuex';
 
 /**
  * Get ($get) action.

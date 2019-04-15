@@ -12,7 +12,7 @@
     import MixinEditorCommand from '../Mixins/EditorCommand';
     import EditorDialogAddLink from "spa-skeleton/src/Components/Inputs/Editor/Dialogs/AddLink";
 
-    export default {
+    export {
 
         name: 'EditorButtonLink',
 

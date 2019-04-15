@@ -1,12 +1,12 @@
-import Log       from '../Services/Logger';
-import { Store } from 'vuex';
+import { Logger as Log } from '../Services/Logger';
+import { Store }         from 'vuex';
 
 /**
  * This class should be extended by all guards.
  *
  * @abstract
  */
-export default abstract class AbstractGuard
+export abstract class AbstractGuard
 {
     /**
      * Guard name.

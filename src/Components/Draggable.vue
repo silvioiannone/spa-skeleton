@@ -8,7 +8,7 @@
 
     import VueDraggable from 'vuedraggable';
 
-    export default {
+    export {
 
         name: 'Draggable',
 

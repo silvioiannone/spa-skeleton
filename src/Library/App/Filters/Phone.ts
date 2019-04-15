@@ -1,9 +1,9 @@
-import AbstractFilter from './AbstractFilter';
+import { AbstractFilter } from './AbstractFilter';
 
 /**
  * This filter formats a phone number.
  */
-export default class Phone extends AbstractFilter
+export class Phone extends AbstractFilter
 {
     /**
      * Run the filter.

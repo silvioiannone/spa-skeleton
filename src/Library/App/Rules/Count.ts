@@ -1,4 +1,4 @@
-import AbstractRule from '../../Validation/AbstractRule';
+import { AbstractRule } from '../../Validation/AbstractRule';
 
 /**
  * Count validation rule.
@@ -10,7 +10,7 @@ import AbstractRule from '../../Validation/AbstractRule';
  *
  *  'count:3'
  */
-export default class Count extends AbstractRule
+export class Count extends AbstractRule
 {
     /**
      * Get the validation message.

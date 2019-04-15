@@ -1,22 +1,22 @@
-import Vue                  from 'vue';
-import VueRouter, { Route } from 'vue-router';
-import { sync }             from 'vuex-router-sync';
-import Api                  from '../Api';
-import Config               from '../../Config';
-import Guard                from '../Guard';
-import Logger               from './Logger';
-import Service              from './Service';
-import Translator           from './Translator';
-import Routes               from '../../../../../resources/ts/App/Routes';
-import StateMachine         from './StateMachine';
-import MixinRoot            from '../../Components/Mixins/Root.vue';
-import RootViewComponent    from '../../Components/Views/Root.vue';
+import Vue                           from 'vue';
+import VueRouter, { Route }          from 'vue-router';
+import { sync }                      from 'vuex-router-sync';
+import { ApiFactory as Api }         from '../Api';
+import { Config }                    from '../../Config';
+import { Guard }                     from '../Guard';
+import { Logger }                    from './Logger';
+import { Service }                   from './Service';
+import { Translator }                from './Translator';
+import Routes                        from '../../../../../resources/ts/App/Routes';
+import { StateMachine }              from './StateMachine';
+import { Root as MixinRoot }         from '../../Components/Mixins/Root.vue';
+import { Root as RootViewComponent } from '../../Components/Views/Root.vue';
 
 
 /**
  * This service provides a navigation router.
  */
-export default class Router extends Service
+export class Router extends Service
 {
     /**
      * The service name.

@@ -40,7 +40,7 @@
 
     import AvatarUser from "../Avatars/User.vue";
 
-    export default
+    export
     {
         name: 'NavigationDrawerHome',
 

@@ -1,11 +1,11 @@
-import Module                                    from '../../../State/Module';
+import { Module }                                from '../../../State/Module';
 import { Config, ResponseInterface, ViewAction } from 'spa-skeleton';
 import { Store }                                 from 'vuex';
 
 /**
  * State machine view module.
  */
-export default class View extends Module
+export class View extends Module
 {
     /**
      * Module name.

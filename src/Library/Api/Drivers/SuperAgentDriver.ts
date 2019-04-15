@@ -1,13 +1,13 @@
-import AbstractApiDriver from './AbstractApiDriver';
-import Config            from '../../../Config';
-import ResponseInterface from '../ResponseInterface';
-import SuperAgent        from 'superagent';
-import URLPattern        from 'url-pattern';
+import SuperAgent            from 'superagent';
+import URLPattern            from 'url-pattern';
+import { AbstractApiDriver } from './AbstractApiDriver';
+import { Config }            from '../../../Config';
+import { ResponseInterface } from '../ResponseInterface';
 
 /**
  * API driver that makes use of SuperAgent.
  */
-export default class SuperAgentDriver extends AbstractApiDriver
+export class SuperAgentDriver extends AbstractApiDriver
 {
     /**
      * SuperAgent HTTP client.

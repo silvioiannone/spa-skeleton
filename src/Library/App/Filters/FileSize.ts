@@ -1,9 +1,9 @@
-import AbstractFilter from './AbstractFilter';
+import { AbstractFilter } from './AbstractFilter';
 
 /**
  * This filter formats the given file size (in bytes) into a nice string.
  */
-export default class FileSize extends AbstractFilter
+export class FileSize extends AbstractFilter
 {
     /**
      * Run the filter.

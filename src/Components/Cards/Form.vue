@@ -9,15 +9,15 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import Wrapper               from '../Mixins/Wrapper.vue';
-    import CardMain              from './Main.vue';
+    import { Wrapper }           from '../Mixins/Wrapper.vue';
+    import { CardMain }          from './Main.vue';
 
     @Component({
         components: {
             CardMain
         }
     })
-    export default class CardForm extends Mixins(Wrapper)
+    export class CardForm extends Mixins(Wrapper)
     {
         __component = CardMain;
 
@@ -37,5 +37,7 @@
             this.$emit('submit', event)
         }
     }
+
+    export default CardForm;
 
 </script>

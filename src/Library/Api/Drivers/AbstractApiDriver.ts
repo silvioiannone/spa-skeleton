@@ -1,13 +1,13 @@
-import Token             from '../Token';
-import ResponseInterface from '../ResponseInterface';
-import Config            from '../../../Config';
+import { Token }             from '../Token';
+import { ResponseInterface } from '../ResponseInterface';
+import { Config }            from '../../../Config';
 
 /**
  * Represents an abstract API resource.
  *
  * @abstract
  */
-export default abstract class AbstractApiDriver
+export abstract class AbstractApiDriver
 {
     /**
      * Attachments.

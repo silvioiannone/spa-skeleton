@@ -1,10 +1,10 @@
-import Config    from '../../Config';
-import JwtDecode from 'jwt-decode';
+import { Config } from '../../Config';
+import JwtDecode  from 'jwt-decode';
 
 /**
  * This class handles the OAUTH 2 token received from the API.
  */
-export default class Token
+export class Token
 {
     /**
      * Access token name.

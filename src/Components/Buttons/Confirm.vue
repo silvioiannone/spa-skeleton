@@ -26,10 +26,10 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Button                      from '../Mixins/Button.vue';
+    import { Button }                  from '../Mixins/Button.vue';
 
     @Component
-    export default class ButtonConfirm extends Mixins(Button)
+    export class ButtonConfirm extends Mixins(Button)
     {
         /**
          * What to do once the action is confirmed. It should be a function returning a Promise.
@@ -125,5 +125,7 @@
             }, 3000)
         }
     }
+
+    export default ButtonConfirm;
 
 </script>

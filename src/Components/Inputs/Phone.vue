@@ -34,10 +34,10 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import { parseNumber }                    from 'libphonenumber-js';
-    import CountryPhonePrefixes               from '../../Assets/Json/CountryPhonePrefixes.json';
-    import MixinInput                         from '../Mixins/Input.vue';
+    import { Component, Mixins, Prop, Watch }  from 'vue-property-decorator';
+    import { parseNumber }                     from 'libphonenumber-js';
+    import CountryPhonePrefixes                from '../../Assets/Json/CountryPhonePrefixes.json';
+    import { Input }                           from '../Mixins/Input.vue';
 
     interface PrefixDescription {
         name: string,
@@ -46,7 +46,7 @@
     }
 
     @Component
-    export default class InputPhone extends Mixins(MixinInput)
+    export class InputPhone extends Mixins(Input)
     {
         /**
          * Name of the input element.
@@ -156,5 +156,7 @@
             this.init();
         }
     }
+
+    export default InputPhone;
 
 </script>

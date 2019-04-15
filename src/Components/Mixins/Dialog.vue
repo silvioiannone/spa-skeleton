@@ -2,13 +2,13 @@
 
     import { VNode, CreateElement }           from 'vue';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import MixinComponent                     from './Component.vue';
+    import { MixinComponent }                 from './Component.vue';
 
     /*
      * This mixin can be used in order to create new dialogs.
      */
     @Component
-    export default class Dialog extends Mixins(MixinComponent)
+    export class Dialog extends Mixins(MixinComponent)
     {
         /**
          * V-model. Determines the dialog visibility.
@@ -128,5 +128,7 @@
             this.$emit('input', this.value);
         }
     }
+
+    export default Dialog;
 
 </script>

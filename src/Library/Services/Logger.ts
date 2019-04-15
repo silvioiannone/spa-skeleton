@@ -1,11 +1,11 @@
-import Service from './Service';
-import _Logger from "loglevel";
-import Config  from "spa-skeleton/src/Config";
+import { Service } from './Service';
+import _Logger     from 'loglevel';
+import { Config }  from '../../Config';
 
 /**
  * Logger service.
  */
-export default class Logger extends Service
+export class Logger extends Service
 {
     /**
      * Service's name.

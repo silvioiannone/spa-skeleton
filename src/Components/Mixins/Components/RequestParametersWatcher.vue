@@ -1,15 +1,14 @@
 <script lang="ts">
 
-    import Vue               from 'vue';
-    import { Component }     from 'vue-property-decorator';
-    import ResponseInterface from '../../../Library/Api/ResponseInterface';
+    import { Vue, Component }    from 'vue-property-decorator';
+    import { ResponseInterface } from '../../../Library/Api/ResponseInterface';
 
     /**
      * This mixin is used in order to specify a list of parameters and, after one of the parameters
      * changes, the defined callback will be executed.
      */
     @Component
-    export default class RequestParametersWatcher extends Vue
+    export class RequestParametersWatcher extends Vue
     {
         parameters: any = {};
 
@@ -104,5 +103,7 @@
             this.$watch('parameters', async () => this.requestData());
         }
     }
+
+    export default RequestParametersWatcher;
 
 </script>

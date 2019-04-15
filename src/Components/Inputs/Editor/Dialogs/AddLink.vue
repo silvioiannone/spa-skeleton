@@ -10,7 +10,7 @@
     import MixinWrapper from '../../../Mixins/Wrapper';
     import DialogCard from "spa-skeleton/src/Components/Dialogs/Card";
 
-    export default {
+    export {
 
         name: 'EditorDialogAddLink',
 

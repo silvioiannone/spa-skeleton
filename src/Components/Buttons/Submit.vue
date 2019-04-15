@@ -8,11 +8,11 @@
 
 <script lang="ts">
 
-    import Button                from '../Mixins/Button.vue';
+    import { Button }            from '../Mixins/Button.vue';
     import { Component, Mixins } from 'vue-property-decorator';
 
     @Component
-    export default class ButtonSubmit extends Mixins(Button)
+    export class ButtonSubmit extends Mixins(Button)
     {
         /**
          * The button status. Accepted values are 'ready' and 'loading'.
@@ -30,5 +30,7 @@
             this.status = 'ready';
         }
     }
+
+    export default ButtonSubmit;
 
 </script>

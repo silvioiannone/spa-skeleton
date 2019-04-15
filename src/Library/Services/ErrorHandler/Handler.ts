@@ -1,10 +1,10 @@
-import { Store }    from 'vuex';
-import StateMachine from '../StateMachine';
+import { Store }        from 'vuex';
+import { StateMachine } from '../StateMachine';
 
 /**
  * Error handler.
  */
-export default abstract class Handler
+export abstract class Handler
 {
     /**
      * The error.

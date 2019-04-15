@@ -1,6 +1,6 @@
-import AbstractHandler   from './AbstractHandler';
-import Models            from '../App/State/Models';
-import { ExtendedModel } from '../Services/StateMachine/VuexOrm/Support/ExtendedModel';
+import { AbstractHandler } from './AbstractHandler';
+import Models              from '../App/State/Models';
+import { ExtendedModel }   from '../Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
 interface EventDescription {
     model: string;
@@ -10,7 +10,7 @@ interface EventDescription {
 /**
  * This handler manages the model related events and keeps the state machine updated.
  */
-export default class ModelHandler extends AbstractHandler
+export class ModelHandler extends AbstractHandler
 {
     /**
      * A list of events that should be handled.

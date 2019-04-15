@@ -1,11 +1,10 @@
-import { Model }            from '@vuex-orm/core';
-import ResponseInterface    from '../../../../Api/ResponseInterface';
-import { CreateParameters } from '../Plugins/ApiSync/Actions/Create';
-import { GetParameters }    from '../Plugins/ApiSync/Actions/Get';
-import { UpdateParameters } from '../Plugins/ApiSync/Actions/Update';
-import { DeleteParameters } from '../Plugins/ApiSync/Actions/Delete';
-import { ApiClient,
-    default as ApiFactory } from '../../../../Api';
+import { Model }                 from '@vuex-orm/core';
+import { ResponseInterface }     from '../../../../Api/ResponseInterface';
+import { CreateParameters }      from '../Plugins/ApiSync/Actions/Create';
+import { GetParameters }         from '../Plugins/ApiSync/Actions/Get';
+import { UpdateParameters }      from '../Plugins/ApiSync/Actions/Update';
+import { DeleteParameters }      from '../Plugins/ApiSync/Actions/Delete';
+import { ApiClient, ApiFactory } from '../../../../Api';
 
 /**
  * This class provides support for the ApiSync plugin.
@@ -17,7 +16,8 @@ export class ExtendedModel extends Model
      */
     public static async $create(
         data: any = '',
-        options: CreateParameters | null = null): Promise<ResponseInterface>
+        options: CreateParameters | null = null
+    ): Promise<ResponseInterface>
     {
         return this.dispatch('$create', {
             data,
@@ -31,7 +31,8 @@ export class ExtendedModel extends Model
      */
     public static async $delete(
         data: any = '',
-        options: DeleteParameters | null = null): Promise<ResponseInterface>
+        options: DeleteParameters | null = null
+    ): Promise<ResponseInterface>
     {
         return this.dispatch('$delete', {
             data,
@@ -45,7 +46,8 @@ export class ExtendedModel extends Model
      */
     public static async $get(
         id: string | number = '',
-        options: GetParameters | null = null): Promise <ResponseInterface>
+        options: GetParameters | null = null
+    ): Promise <ResponseInterface>
     {
         return this.dispatch('$get', {
             id,
@@ -59,7 +61,8 @@ export class ExtendedModel extends Model
      */
     public static async $update(
         data: any = '',
-        options: UpdateParameters | null = null): Promise<ResponseInterface>
+        options: UpdateParameters | null = null
+    ): Promise<ResponseInterface>
     {
         return this.dispatch('$update', {
             data,

@@ -1,10 +1,10 @@
-import AbstractFilter from './AbstractFilter';
-import Pluralize      from 'pluralize';
+import { AbstractFilter } from './AbstractFilter';
+import Pluralize          from 'pluralize';
 
 /**
  * This filter pluralizes the given word.
  */
-export default class Plural extends AbstractFilter
+export class Plural extends AbstractFilter
 {
     /**
      * Run the filter.

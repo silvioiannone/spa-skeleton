@@ -1,7 +1,7 @@
 import AppModels from '../../../../../../resources/ts/App/State/Models';
 
 // Skeleton models
-import Notification from '../../App/State/Models/Notification';
+import { Notification } from '../../App/State/Models/Notification';
 
 const SkeletonModels = {
     Notification

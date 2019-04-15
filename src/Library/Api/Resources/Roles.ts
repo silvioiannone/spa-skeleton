@@ -1,10 +1,10 @@
-import ApiResource  from './ApiResource';
-import ResponseInterface from '../ResponseInterface';
+import { ApiResource }  from './ApiResource';
+import { ResponseInterface } from '../ResponseInterface';
 
 /**
  * Roles resource.
  */
-export default class Roles extends ApiResource
+export class Roles extends ApiResource
 {
     public constructor()
     {

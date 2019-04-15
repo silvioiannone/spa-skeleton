@@ -1,6 +1,6 @@
 import Vue            from 'vue';
-import Service        from './Service';
-import Logger         from './Logger';
+import { Service }    from './Service';
+import { Logger }     from './Logger';
 import DirectivesList from '../../../../../resources/ts/App/Directives';
 
 // Skeleton directives
@@ -9,7 +9,7 @@ const SkeletonDirectives = {};
 /**
  * This service registers the Vue directives.
  */
-export default class Directives extends Service
+export class Directives extends Service
 {
     /**
      * The service's name.

@@ -41,15 +41,11 @@
 
 <script lang="ts">
 
-    import Vue                   from 'vue';
-    import {
-        ResponseInterface,
-        Models
-    } from 'spa-skeleton';
-    import { Component }         from 'vue-property-decorator';
+    import { ResponseInterface, Models } from 'spa-skeleton';
+    import { Vue, Component }            from 'vue-property-decorator';
 
     @Component
-    export default class NavigationDrawerNotifications extends Vue
+    export class NavigationDrawerNotifications extends Vue
     {
         get notifications()
         {
@@ -91,5 +87,7 @@
                 });
         }
     }
+
+    export default NavigationDrawerNotifications;
 
 </script>

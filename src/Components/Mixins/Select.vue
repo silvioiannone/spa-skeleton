@@ -2,7 +2,7 @@
 
     import _                                  from 'lodash';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import Input                              from './Input.vue';
+    import { Input }                          from './Input.vue';
 
     /**
      * This mixin can be used in order to bootstrap the creation of a select box.
@@ -20,7 +20,7 @@
      *     }
      */
     @Component
-    export default class Select extends Mixins(Input)
+    export class Select extends Mixins(Input)
     {
         /**
          * Display chips in the selectbox.
@@ -207,5 +207,7 @@
             this.initSelected();
         }
     }
+
+    export default Select;
     
 </script>

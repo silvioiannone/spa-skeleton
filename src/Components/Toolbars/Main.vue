@@ -35,15 +35,15 @@
 
     import Vue                        from 'vue';
     import { Component, Prop, Watch } from 'vue-property-decorator';
-    import Config                     from '../../Config';
-    import TextFieldSearch            from '../TextFields/Search.vue'
+    import { Config }                 from '../../Config';
+    import { TextFieldSearch }        from '../TextFields/Search.vue'
 
     @Component({
         components: {
             TextFieldSearch
         }
     })
-    export default class ToolbarMain extends Vue
+    export class ToolbarMain extends Vue
     {
         /**
          * Toolbar's color.
@@ -178,5 +178,7 @@
             this.$emit('search:update', this.searchQuery);
         }
     }
+
+    export default ToolbarMain;
 
 </script>

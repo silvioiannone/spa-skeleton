@@ -24,7 +24,7 @@
     import { Component, Prop } from 'vue-property-decorator';
     
     @Component
-    export default class NavigationDrawerMain extends Vue
+    export class NavigationDrawerMain extends Vue
     {
         /**
          * Put the navigation drawer on the right side.
@@ -63,5 +63,7 @@
             this.visible = this.$vuetify.breakpoint.lgAndUp && !this.right;
         }
     }
+
+    export default NavigationDrawerMain;
     
 </script>

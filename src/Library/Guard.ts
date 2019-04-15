@@ -1,19 +1,19 @@
-import _                 from 'lodash';
-import Vue               from 'vue';
+import _                     from 'lodash';
+import Vue                   from 'vue';
 import Router, {
     RouteConfig,
     Route,
     RouteRecord,
-    RawLocation }        from 'vue-router';
-import { Store }         from 'vuex';
-import Log               from './Services/Logger';
-import Guards            from '../../../../resources/ts/App/Guards';
-import Routes            from '../../../../resources/ts/App/Routes';
-import ResponseInterface from './Api/ResponseInterface';
+    RawLocation }            from 'vue-router';
+import { Store }             from 'vuex';
+import { Logger as Log }     from './Services/Logger';
+import Guards                from '../../../../resources/ts/App/Guards';
+import Routes                from '../../../../resources/ts/App/Routes';
+import { ResponseInterface } from './Api/ResponseInterface';
 
 // Skeleton guards
-import Auth        from './App/Guards/Auth';
-import UserIsAdmin from './App/Guards/UserIsAdmin';
+import { Auth }        from './App/Guards/Auth';
+import { UserIsAdmin } from './App/Guards/UserIsAdmin';
 
 const SkeletonGuards = {
     Auth,
@@ -28,7 +28,7 @@ type VueRouterNext = (to?: RawLocation | false | ((vm: Vue) => any) | void) => v
  * The purpose of this class is to define and apply the router middleware to each route and
  * retrieve the data needed by each route.
  */
-export default class Guard
+export class Guard
 {
     /**
      * Router.

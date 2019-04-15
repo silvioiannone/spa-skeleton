@@ -1,6 +1,6 @@
-import AbstractGuard from '../../Guards/AbstractGuard';
-import ApiFactory    from '../../Api';
-import Token         from '../../Api/Token';
+import { AbstractGuard } from '../../Guards/AbstractGuard';
+import { ApiFactory }    from '../../Api';
+import { Token }         from '../../Api/Token';
 
 /**
  * Auth guard.
@@ -8,7 +8,7 @@ import Token         from '../../Api/Token';
  * The purpose of this guard is to check that the token used to send API request is not expired.
  * If the token is expired then it proceeds to refresh it before continuing.
  */
-export default class Auth extends AbstractGuard
+export class Auth extends AbstractGuard
 {
     /**
      * Guard name.

@@ -1,7 +1,7 @@
 /**
  * An application service.
  */
-export default class Service
+export class Service
 {
     /**
      * The service name.

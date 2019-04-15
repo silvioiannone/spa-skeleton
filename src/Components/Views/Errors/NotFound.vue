@@ -17,15 +17,17 @@
 
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import Error         from "./Main.vue";
+    import { ErrorMain } from './Main.vue';
 
     @Component({
         components: {
-            Error
+            ErrorMain
         }
     })
-    export default class ErrorNotFound extends Vue
+    export class ErrorNotFound extends Vue
     {
     }
+
+    export default ErrorNotFound;
 
 </script>

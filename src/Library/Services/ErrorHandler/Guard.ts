@@ -1,10 +1,10 @@
-import Handler           from './Handler';
-import ResponseInterface from '../../Api/ResponseInterface';
+import { Handler }           from './Handler';
+import { ResponseInterface } from '../../Api/ResponseInterface';
 
 /**
  * Handle guard errors.
  */
-export default class Guard extends Handler
+export class Guard extends Handler
 {
     /**
      * The error.

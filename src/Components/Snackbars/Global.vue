@@ -18,7 +18,7 @@
     }
 
     @Component
-    export default class SnackbarGlobal extends Vue
+    export class SnackbarGlobal extends Vue
     {
         /**
          * The color of the message.
@@ -57,5 +57,7 @@
             });
         }
     }
+
+    export default SnackbarGlobal;
 
 </script>

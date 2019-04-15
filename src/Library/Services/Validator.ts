@@ -1,13 +1,13 @@
-import VeeValidate from 'vee-validate';
-import Vue         from 'vue';
-import Log         from './Logger';
-import Service     from './Service';
-import Translator  from './Translator';
-import AppRules    from '../../../../../resources/ts/App/Rules';
+import VeeValidate       from 'vee-validate';
+import Vue               from 'vue';
+import { Logger as Log } from './Logger';
+import { Service }       from './Service';
+import { Translator }    from './Translator';
+import AppRules          from '../../../../../resources/ts/App/Rules';
 
 // Skeleton rules.
-import Count      from '../App/Rules/Count';
-import SwedishSsn from '../App/Rules/SwedishSsn';
+import { Count }      from '../App/Rules/Count';
+import { SwedishSsn } from '../App/Rules/SwedishSsn';
 
 const skeletonRules = {
     Count,
@@ -17,7 +17,7 @@ const skeletonRules = {
 /**
  * This service provides an input validator.
  */
-export default class Validator extends Service
+export class Validator extends Service
 {
     /**
      * Service name.

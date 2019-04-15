@@ -2,13 +2,13 @@
 
     import { VNode }                   from 'vue';
     import { Component, Prop, Mixins } from 'vue-property-decorator';
-    import ComponentMixin              from './Component.vue';
+    import { MixinComponent }          from './Component.vue';
 
     /**
      * This mixin can be used in order to create buttons.
      */
     @Component
-    export default class Button extends Mixins(ComponentMixin)
+    export class Button extends Mixins(MixinComponent)
     {
         /**
          * Applies specified color to the control.
@@ -77,5 +77,7 @@
             }, this.$slots.default);
         }
     }
+
+    export default Button;
 
 </script>

@@ -9,7 +9,7 @@
      * It should be used by all tables that display paginated data.
      */
     @Component
-    export default class Paginated extends Vue
+    export class DataTablePaginated extends Vue
     {
         /**
          * Pagination meta.
@@ -28,5 +28,7 @@
             );
         }
     }
+
+    export default DataTablePaginated;
 
 </script>

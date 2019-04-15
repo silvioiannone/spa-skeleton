@@ -1,9 +1,9 @@
-import AbstractFilter from './AbstractFilter';
+import { AbstractFilter } from './AbstractFilter';
 
 /**
  * This filter formats a company organization number.
  */
-export default class OrganizationNumber extends AbstractFilter
+export class OrganizationNumber extends AbstractFilter
 {
     /**
      * Run the filter.

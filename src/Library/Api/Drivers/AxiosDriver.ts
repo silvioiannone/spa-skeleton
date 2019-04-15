@@ -3,14 +3,14 @@ import Axios, {
     AxiosResponse,
     AxiosRequestConfig
 } from 'axios';
-import AbstractApiDriver from './AbstractApiDriver';
-import Config            from '../../../Config';
-import ResponseInterface from '../ResponseInterface';
+import { AbstractApiDriver } from './AbstractApiDriver';
+import { Config }            from '../../../Config';
+import { ResponseInterface } from '../ResponseInterface';
 
 /**
  * API driver that makes use of Axios.
  */
-export default class AxiosDriver extends AbstractApiDriver
+export class AxiosDriver extends AbstractApiDriver
 {
     /**
      * Axios HTTP client.

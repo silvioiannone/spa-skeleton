@@ -1,14 +1,13 @@
 <script lang="ts">
 
     import { Component, Watch, Mixins } from 'vue-property-decorator';
-    import Pagination                   from '../../../Library/Utils/Pagination';
-    import RequestParametersWatcher     from './RequestParametersWatcher.vue';
+    import { RequestParametersWatcher } from './RequestParametersWatcher.vue';
 
     /**
      * This mixin handles searches performed by a component that can search for data.
      */
     @Component
-    export default class Searchable extends Mixins(RequestParametersWatcher)
+    export class Searchable extends Mixins(RequestParametersWatcher)
     {
         timeout: NodeJS.Timeout;
 
@@ -51,5 +50,7 @@
             this.localGetSearchedData();
         }
     }
+
+    export default Searchable;
 
 </script>

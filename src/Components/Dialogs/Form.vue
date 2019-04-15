@@ -7,9 +7,9 @@
 <script lang="ts">
 
     import { Component, Mixins, Watch } from 'vue-property-decorator';
-    import Wrapper                      from '../Mixins/Wrapper.vue';
-    import DialogMain                   from './Main.vue';
-    import Dialog                       from '../Mixins/Dialog.vue';
+    import { Wrapper }                  from '../Mixins/Wrapper.vue';
+    import { DialogMain }               from './Main.vue';
+    import { Dialog }                   from '../Mixins/Dialog.vue';
 
     /**
      * This is a dialog that can hold a form in it.
@@ -19,7 +19,7 @@
             DialogMain
         }
     })
-    export default class DialogForm extends Mixins(Wrapper, Dialog)
+    export class DialogForm extends Mixins(Wrapper, Dialog)
     {
         __component = DialogMain;
 
@@ -71,5 +71,7 @@
             this.model = false;
         }
     }
+
+    export default DialogForm;
 
 </script>

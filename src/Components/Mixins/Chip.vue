@@ -1,49 +1,37 @@
-<script>
+<script lang="ts">
 
-    export default {
+    import { Vue, Component, Prop } from 'vue-property-decorator';
 
-        props: {
+    @Component
+    export class Chip extends Vue
+    {
+        /**
+         * Adds remove button.
+         */
+        @Prop({ type: Boolean, default: false }) close: boolean;
 
-            /**
-             * Adds remove button.
-             */
-            close: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Removes circle edges.
+         */
+        @Prop({ type: Boolean, default: false }) label: boolean;
 
-            /**
-             * Removes circle edges.
-             */
-            label: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Removes background and applies border and text color.
+         */
+        @Prop({ type: Boolean, default: false }) outline: boolean;
 
-            /**
-             * Removes background and applies border and text color.
-             */
-            outline: {
-                type: Boolean,
-                default: false
-            },
+        /**
+         * Decreases the chip size.
+         */
+        @Prop({ type: Boolean, default: false }) small: boolean;
 
-            /**
-             * Decreases the chip size.
-             */
-            small: {
-                type: Boolean,
-                default: false
-            },
-
-            /**
-             * Applies specified color to the control - it can be the name of material color (for
-             * example `success` or `purple`) or css color (`#033` or `rgba(255, 0, 0, 0.5)`).
-             */
-            color: {
-                type: String
-            }
-        }
+        /**
+         * Applies specified color to the control - it can be the name of material color (for
+         * example `success` or `purple`) or css color (`#033` or `rgba(255, 0, 0, 0.5)`).
+         */
+        @Prop({ type: String }) color: string;
     }
+
+    export default Chip;
 
 </script>

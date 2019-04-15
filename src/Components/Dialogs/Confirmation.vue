@@ -18,7 +18,7 @@
 
     import DialogMain from './Main.vue';
 
-    export default {
+    export {
 
         name: 'DialogConfirmation',
 

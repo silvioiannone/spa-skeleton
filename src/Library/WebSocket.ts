@@ -1,16 +1,16 @@
 import Echo                            from 'laravel-echo';
 import IO                              from 'socket.io-client';
-import Log                             from './Services/Logger';
+import { Logger as Log }               from './Services/Logger';
 import Vue                             from 'vue';
-import Config                          from '../Config';
+import { Config }                      from '../Config';
 import Subscriptions                   from '../../../../resources/ts/App/Subscriptions';
-import ApiFactory                      from './Api';
-import AdminChannel                    from './WebSocket/Channels/Admin';
-import AppChannel                      from './WebSocket/Channels/App';
-import UserChannel                     from './WebSocket/Channels/User';
-import AppHandler                      from './Events/AppHandler';
-import ModelHandler                    from './Events/ModelHandler';
-import Token                           from './Api/Token';
+import { ApiFactory }                  from './Api';
+import { Admin as AdminChannel }       from './WebSocket/Channels/Admin';
+import { App as AppChannel }           from './WebSocket/Channels/App';
+import { User as UserChannel }         from './WebSocket/Channels/User';
+import { AppHandler }                  from './Events/AppHandler';
+import { ModelHandler }                from './Events/ModelHandler';
+import { Token }                       from './Api/Token';
 import { Subscription }                from './Interfaces/Subscription';
 import { Channel }                     from './Types/Channel';
 import { Channel as ChannelInterface } from './Interfaces/Channel';
@@ -18,7 +18,7 @@ import { Channel as ChannelInterface } from './Interfaces/Channel';
 /**
  * This class enables real time communication between the SPA and the server.
  */
-export default class WebSocket
+export class WebSocket
 {
     /**
      * The Skeleton's subscriptions.

@@ -1,10 +1,10 @@
 <script lang="ts">
 
     import { Component, Watch, Mixins } from 'vue-property-decorator';
-    import RequestParametersWatcher     from './RequestParametersWatcher.vue';
+    import { RequestParametersWatcher } from './RequestParametersWatcher.vue';
 
     @Component
-    export default class Filterable extends Mixins(RequestParametersWatcher)
+    export class Filterable extends Mixins(RequestParametersWatcher)
     {
         filters = {};
 
@@ -46,5 +46,7 @@
             this.setParameters(this.getFilterParameters());
         }
     }
+
+    export default Filterable;
 
 </script>

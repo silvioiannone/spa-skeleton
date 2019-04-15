@@ -26,15 +26,17 @@
 
     import Vue           from 'vue';
     import { Component } from 'vue-property-decorator';
-    import Error         from "./Main.vue";
+    import { ErrorMain } from './Main.vue';
 
     @Component({
         components: {
-            Error
+            ErrorMain
         }
     })
-    export default class ErrorUnauthorized extends Vue
+    export class ErrorUnauthorized extends Vue
     {
     }
+
+    export default ErrorUnauthorized;
 
 </script>

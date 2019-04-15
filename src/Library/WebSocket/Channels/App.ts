@@ -1,9 +1,9 @@
-import AbstractChannel from '../AbstractChannel';
+import { AbstractChannel } from '../AbstractChannel';
 
 /**
  * App WS channel.
  */
-export default class App extends AbstractChannel
+export class App extends AbstractChannel
 {
     /**
      * Whether the channel is private or not.

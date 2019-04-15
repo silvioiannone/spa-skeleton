@@ -21,14 +21,14 @@
 <script lang="ts">
 
     import { Vue, Component } from 'vue-property-decorator';
-    import Error              from './Main.vue';
+    import { ErrorMain }      from './Main.vue';
 
     @Component({
         components: {
-            Error
+            ErrorMain
         }
     })
-    export default class ErrorTooManyAttempts extends Vue
+    export class ErrorTooManyAttempts extends Vue
     {
         interval: number;
 
@@ -79,5 +79,7 @@
             }, 1000);
         }
     }
+
+    export default ErrorTooManyAttempts;
 
 </script>

@@ -1,9 +1,9 @@
-import AbstractHandler from './AbstractHandler';
+import { AbstractHandler } from './AbstractHandler';
 
 /**
  * Handle events that should make changes to the App state machine module.
  */
-export default class AppHandler extends AbstractHandler
+export class AppHandler extends AbstractHandler
 {
     public 'Models.UserUpdated'(event: any): void
     {

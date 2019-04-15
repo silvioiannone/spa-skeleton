@@ -8,7 +8,7 @@
      * Use this mixin to make a component subscribe to certain events.
      */
     @Component
-    export default class Subscribable extends Vue
+    export class Subscribable extends Vue
     {
         /**
          * Override this in order to define the subscriptions.
@@ -25,5 +25,7 @@
             this.$ws.silence(this.subscriptions);
         }
     }
+
+    export default Subscribable;
 
 </script>

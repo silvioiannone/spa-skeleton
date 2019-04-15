@@ -2,10 +2,10 @@
 
     import { VNode, CreateElement } from 'vue';
     import { Component, Mixins }    from 'vue-property-decorator';
-    import Select                   from '../Mixins/Select.vue';
+    import { Select }               from '../Mixins/Select.vue';
 
     @Component
-    export default class SelectMain extends Mixins(Select)
+    export class SelectMain extends Mixins(Select)
     {
         render(createElement: CreateElement): VNode
         {
@@ -31,5 +31,7 @@
             )
         }
     }
+
+    export default SelectMain;
 
 </script>

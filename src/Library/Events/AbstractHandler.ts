@@ -3,7 +3,7 @@ import Vue from 'vue';
 /**
  * Handles the events that will alter the state.
  */
-export default class AbstractHandler
+export class AbstractHandler
 {
     protected vue: Vue;
 

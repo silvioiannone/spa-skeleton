@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import TextField                          from './TextField.vue';
+    import { TextField }                      from './TextField.vue';
 
     /**
      * This mixin can be used to build autocomplete inputs.
@@ -11,7 +11,7 @@
      * Use `$data._search` as the search string.
      */
     @Component
-    export default class Autocomplete extends Mixins(TextField)
+    export class Autocomplete extends Mixins(TextField)
     {
         /**
          * Model.
@@ -165,5 +165,7 @@
             this.$data._selected = this.value;
         }
     }
+
+    export default Autocomplete;
 
 </script>

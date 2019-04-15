@@ -4,8 +4,8 @@ import _ from 'lodash';
 import AppConfig from '../../../resources/ts/Config';
 
 // API drivers.
-import SuperAgentApiDriver from './Library/Api/Drivers/SuperAgentDriver';
-import AxiosApiDriver      from './Library/Api/Drivers/AxiosDriver';
+import { SuperAgentDriver } from './Library/Api/Drivers/SuperAgentDriver';
+import { AxiosDriver }      from './Library/Api/Drivers/AxiosDriver';
 
 const defaultConfig = {
 
@@ -121,8 +121,8 @@ const defaultConfig = {
          * Available API drivers.
          */
         drivers: {
-            axios:      AxiosApiDriver,
-            superAgent: SuperAgentApiDriver
+            axios:      AxiosDriver,
+            superAgent: SuperAgentDriver
         },
 
         /**
@@ -209,6 +209,6 @@ const defaultConfig = {
     }
 };
 
-let config: any = _.merge(defaultConfig, AppConfig);
+let Config: any = _.merge(defaultConfig, AppConfig);
 
-export default config;
+export { Config };

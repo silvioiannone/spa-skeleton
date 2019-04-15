@@ -14,7 +14,7 @@
     import MixinWrapper from '../Mixins/Wrapper';
     import DialogMain from './Main';
 
-    export default {
+    export {
 
         name: 'DialogCard',
 

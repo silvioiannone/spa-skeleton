@@ -11,13 +11,14 @@
 
 <script lang="ts">
 
-    import Vue                 from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
 
     @Component
-    export default class CardMain extends Vue
+    export class CardMain extends Vue
     {
         @Prop({ type: String, default: '' }) title: string;
     }
+
+    export default CardMain;
 
 </script>

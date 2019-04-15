@@ -1,10 +1,10 @@
-import ApiResource  from './ApiResource';
-import ResponseInterface from '../ResponseInterface';
+import { ApiResource }       from './ApiResource';
+import { ResponseInterface } from '../ResponseInterface';
 
 /**
  * App resource.
  */
-export default class App extends ApiResource
+export class App extends ApiResource
 {
     public constructor()
     {

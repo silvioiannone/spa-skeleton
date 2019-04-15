@@ -38,7 +38,7 @@
             VueAvatar
         }
     })
-    export default class AvatarUser extends Vue
+    export class AvatarUser extends Vue
     {
         /**
          * Avatar's size.
@@ -60,5 +60,7 @@
             return this.to.length ? this.to : '/users/' + this.user.id;
         }
     }
+
+    export default AvatarUser;
 
 </script>

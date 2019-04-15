@@ -1,15 +1,15 @@
-import Log                   from './Logger';
+import { Logger as Log }     from './Logger';
 import Vue                   from 'vue';
 import Vuex, { Store }       from 'vuex';
 import VuexORM               from '@vuex-orm/core';
-import Service               from './Service';
+import { Service }           from './Service';
 import Modules               from '../../../../../resources/ts/App/State';
 import Models                from '../App/State/Models';
 import { Plugin as ApiSync } from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin';
 
 // Skeleton modules
-import App  from '../App/State/Modules/App';
-import View from '../App/State/Modules/View';
+import { App }  from '../App/State/Modules/App';
+import { View } from '../App/State/Modules/View';
 
 const SkeletonModules = {
     App,
@@ -23,7 +23,7 @@ export type StoreType = {
 /**
  * This service provides the application with a state machine.
  */
-export default class StateMachine extends Service
+export class StateMachine extends Service
 {
     /**
      * Service name.

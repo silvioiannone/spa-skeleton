@@ -16,7 +16,7 @@
     import { Component, Prop, Watch } from 'vue-property-decorator';
 
     @Component
-    export default class IFrame extends Vue
+    export class IFrame extends Vue
     {
         /**
          * Frame border attribute.
@@ -43,5 +43,7 @@
             });
         }
     }
+
+    export default IFrame;
 
 </script>

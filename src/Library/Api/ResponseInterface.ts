@@ -1,4 +1,4 @@
-import HttpStatusCodes from './HttpStatusCodes';
+import { HttpStatusCodes } from './HttpStatusCodes';
 
 interface Request
 {
@@ -8,7 +8,7 @@ interface Request
 /**
  * Interface describing how an API response should look like.
  */
-export default interface ResponseInterface
+export interface ResponseInterface
 {
     body: any;
     headers: {

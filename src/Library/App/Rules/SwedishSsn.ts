@@ -1,4 +1,4 @@
-import AbstractRule from '../../Validation/AbstractRule';
+import { AbstractRule } from '../../Validation/AbstractRule';
 
 /**
  * Swedish SSN validation rule.
@@ -9,7 +9,7 @@ import AbstractRule from '../../Validation/AbstractRule';
  *
  *  'swedishSsn'
  */
-export default class SwedishSsn extends AbstractRule
+export class SwedishSsn extends AbstractRule
 {
     /**
      * Get the validation message.

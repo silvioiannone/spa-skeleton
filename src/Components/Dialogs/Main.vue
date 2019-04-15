@@ -1,12 +1,14 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import MixinDialog           from '../Mixins/Dialog.vue';
+    import { Dialog }            from '../Mixins/Dialog.vue';
 
     @Component
-    export default class DialogMain extends Mixins(MixinDialog)
+    export class DialogMain extends Mixins(Dialog)
     {
 
     }
+
+    export default DialogMain;
 
 </script>

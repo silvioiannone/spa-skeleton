@@ -7,15 +7,15 @@
 <script lang="ts">
 
     import { Component, Mixins, Watch } from 'vue-property-decorator';
-    import CardMain                     from './Main.vue';
-    import Wrapper                      from '../Mixins/Wrapper.vue';
+    import { CardMain }                 from './Main.vue';
+    import { Wrapper }                  from '../Mixins/Wrapper.vue';
 
     @Component({
         components: {
             CardMain
         }
     })
-    export default class CardBackgroundJobs extends Mixins(Wrapper)
+    export class CardBackgroundJobs extends Mixins(Wrapper)
     {
         __component = CardMain;
 
@@ -83,5 +83,7 @@
             });
         }
     }
+
+    export default CardBackgroundJobs;
 
 </script>

@@ -1,7 +1,3 @@
-<template>
-
-</template>
-
 <script lang="ts">
 
     declare module 'vue/types/vue' {
@@ -12,18 +8,14 @@
         }
     }
 
-    import Vue               from 'vue';
-    import {
-        Component,
-        Prop,
-        Watch }              from 'vue-property-decorator';
-    import ResponseInterface from '../../Library/Api/ResponseInterface';
+    import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+    import { ResponseInterface }           from '../../Library/Api/ResponseInterface';
 
     /**
      * This mixin can be used in order to create new forms.
      */
     @Component
-    export default class MixinForm extends Vue
+    export class Form extends Vue
     {
         /**
          * Whether or not the cancel button should be displayed.
@@ -186,5 +178,7 @@
             }
         }
     }
+
+    export default Form;
 
 </script>

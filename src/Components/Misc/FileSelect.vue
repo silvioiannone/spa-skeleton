@@ -20,7 +20,7 @@
 
     let timeout = null;
 
-    export default {
+    export {
 
         name: 'FileSelect',
 

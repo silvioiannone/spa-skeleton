@@ -13,7 +13,7 @@
      * This mixin allows the head HTML tag content to be set dynamically.
      */
     @Component
-    export default class Headful extends Vue
+    export class Headful extends Vue
     {
         head: Head = {
             title: null
@@ -54,5 +54,7 @@
             this.refreshHead();
         }
     }
+
+    export default Headful;
 
 </script>

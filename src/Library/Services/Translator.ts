@@ -1,13 +1,13 @@
-import Log     from "./Logger";
-import _       from "lodash";
-import VueI18N from 'vue-i18n';
-import Service from './Service';
-import Config from "../../Config";
+import { Logger as Log } from "./Logger";
+import _                 from "lodash";
+import VueI18N           from 'vue-i18n';
+import { Service }       from './Service';
+import { Config }        from "../../Config";
 
 /**
  * This service provides translations.
  */
-export default class Translator extends Service
+export class Translator extends Service
 {
     /**
      * Service name.

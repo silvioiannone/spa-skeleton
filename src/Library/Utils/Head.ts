@@ -1,7 +1,7 @@
 /**
  * Utility for setting the content of the HTML head tag (such as title, tags and so on...).
  */
-export default class Head
+export class Head
 {
     /**
      * Set the window's title.

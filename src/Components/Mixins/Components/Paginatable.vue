@@ -1,18 +1,18 @@
 <script lang="ts">
 
-    import { Query }                    from '@vuex-orm/core';
-    import { Component, Watch, Mixins } from 'vue-property-decorator';
-    import PaginationInterface          from '../../../Library/Interfaces/Pagination';
-    import ResponseInterface            from '../../../Library/Api/ResponseInterface';
-    import Pagination                   from '../../../Library/Utils/Pagination';
-    import RequestParametersWatcher     from './RequestParametersWatcher.vue';
-    import { ExtendedModel }            from '../../../Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
+    import { Query }                             from '@vuex-orm/core';
+    import { Component, Watch, Mixins }          from 'vue-property-decorator';
+    import { Pagination as PaginationInterface } from '../../../Library/Interfaces/Pagination';
+    import { ResponseInterface }                 from '../../../Library/Api/ResponseInterface';
+    import { Pagination }                        from '../../../Library/Utils/Pagination';
+    import { RequestParametersWatcher }          from './RequestParametersWatcher.vue';
+    import { ExtendedModel }                     from '../../../Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
     /**
      * This mixins handles the pagination and the paginated data displayed by a component.
      */
     @Component
-    export default class Paginatable extends Mixins(RequestParametersWatcher)
+    export class Paginatable extends Mixins(RequestParametersWatcher)
     {
         // We can force the object casting to a `PaginationInterface` since the pagination is
         // initialized in the `created()` Vue lifecycle hook.
@@ -102,5 +102,7 @@
             this.setParameters(newParameters);
         }
     }
+
+    export default Paginatable;
 
 </script>

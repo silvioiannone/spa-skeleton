@@ -1,11 +1,11 @@
-import _                 from 'lodash';
-import Module            from '../../../State/Module';
-import Config            from '../../../../Config';
+import _          from 'lodash';
+import { Module } from '../../../State/Module';
+import { Config } from '../../../../Config';
 
 /**
  * State machine App module.
  */
-export default class APP extends Module
+export class App extends Module
 {
     /**
      * Module name.

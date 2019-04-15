@@ -2,11 +2,11 @@
 
     import { CreateElement, VNode }    from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Combobox                    from '../Mixins/Combobox.vue';
-    import MixinComponent              from '../Mixins/Component.vue';
+    import { Combobox }                from '../Mixins/Combobox.vue';
+    import { MixinComponent }          from '../Mixins/Component.vue';
 
     @Component
-    export default class InputCombobox extends Mixins(Combobox, MixinComponent)
+    export class InputCombobox extends Mixins(Combobox, MixinComponent)
     {
         /**
          * A search function that returns a promise.
@@ -115,5 +115,7 @@
             )
         }
     }
+
+    export default InputCombobox;
 
 </script>

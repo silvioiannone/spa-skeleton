@@ -2,10 +2,10 @@
 
     import { CreateElement, VNode }    from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Autocomplete                from '../Mixins/Autocomplete.vue';
+    import { Autocomplete }            from '../Mixins/Autocomplete.vue';
 
     @Component
-    export default class InputAutocomplete extends Mixins(Autocomplete)
+    export class InputAutocomplete extends Mixins(Autocomplete)
     {
         /**
          * A search function that returns a promise.
@@ -167,5 +167,7 @@
             )
         }
     }
+
+    export default InputAutocomplete;
 
 </script>

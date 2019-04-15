@@ -1,9 +1,9 @@
-import ApiResource from './ApiResource';
+import { ApiResource } from './ApiResource';
 
 /**
  * An API resource that can be created, fetched, updated and deleted.
  */
-export default abstract class CrudResource extends ApiResource
+export abstract class CrudResource extends ApiResource
 {
     /**
      * Create a resource.

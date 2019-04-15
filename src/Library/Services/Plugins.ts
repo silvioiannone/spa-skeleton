@@ -1,21 +1,21 @@
 import _                     from 'lodash';
 import Vue                   from 'vue';
-import Service               from './Service';
-import Logger                from './Logger'
-import Translator            from './Translator';
-import Config                from '../../Config';
+import { Service }           from './Service';
+import { Logger }            from './Logger'
+import { Translator }        from './Translator';
+import { Config }            from '../../Config';
 import { VuetifyUseOptions } from 'vuetify';
 
 // Skeleton plugins
-import Vuetify                     from 'vuetify';
-import VueI18N                     from 'vue-i18n';
-import VueRouter                   from 'vue-router';
-import Api                         from '../App/Plugins/Api';
-import { default as ConfigPlugin } from '../App/Plugins/Config';
-import EventHub                    from '../App/Plugins/EventHub';
-import Head                        from '../App/Plugins/Head';
-import Navigator                   from '../App/Plugins/Navigator';
-import WebSocket                   from '../App/Plugins/WebSocket';
+import Vuetify                    from 'vuetify';
+import VueI18N                    from 'vue-i18n';
+import VueRouter                  from 'vue-router';
+import { Api }                    from '../App/Plugins/Api';
+import { Config as ConfigPlugin } from '../App/Plugins/Config';
+import { EventHub }               from '../App/Plugins/EventHub';
+import { Head }                   from '../App/Plugins/Head';
+import { Navigator }              from '../App/Plugins/Navigator';
+import { WebSocket }              from '../App/Plugins/WebSocket';
 
 /**
  * SPA-Skeleton plugins. The order is important.
@@ -37,7 +37,7 @@ export interface BeforeActions { [key: string]: Function[] }
 /**
  * This service registers various Vue plugins.
  */
-export default class Plugins extends Service
+export class Plugins extends Service
 {
     /**
      * Service name.
