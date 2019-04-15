@@ -124,29 +124,25 @@ export default class SuperAgentDriver extends AbstractApiDriver
     /**
      * Dispatch the request to the server.
      */
-    protected dispatchRequest(request: SuperAgent.SuperAgentRequest): Promise<SuperAgent.Response>
+    protected async dispatchRequest(
+        request: SuperAgent.SuperAgentRequest
+    ): Promise<SuperAgent.Response>
     {
-        let self = this;
-
-        return new Promise((resolve, reject): void =>
+        return new Promise(async (resolve, reject): Promise<void> =>
         {
-            self.interceptRequest(request)
-                .then((resolved): void =>
-                {
-                    let request = resolved.request;
+            let interceptedRequest = await this.interceptRequest(request);
 
-                    request.end((error, response): void =>
-                    {
-                        if (error) {
-                            reject(response);
-                            return;
-                        }
+            interceptedRequest.request.end(async (error, response): Promise<void> =>
+            {
+                if (error) {
+                    reject(response);
+                    return;
+                }
 
-                        self.interceptResponse(response)
-                            .then((): void => resolve(response));
-                    });
-                })
-                .catch((error): void => reject(error));
+                let interceptedResponse = await this.interceptResponse(response);
+
+                resolve(interceptedResponse);
+            });
 
             // Clean the parameters
             this.parameters = {};
@@ -162,47 +158,39 @@ export default class SuperAgentDriver extends AbstractApiDriver
      * @param {Object} request
      * @returns {Promise}
      */
-    public interceptRequest(
+    public async interceptRequest(
         request: SuperAgent.SuperAgentRequest
     ): Promise<{request: SuperAgent.SuperAgentRequest}>
     {
-        return new Promise((resolve, reject): void =>
-        {
-            // Check if the request shouldn't be intercepted (example: it's the authentication
-            // request).
-            if (request.url.includes('/oauth/token')) {
-                request.set('Accept', 'application/json');
-                resolve({request});
-                return;
-            }
+        // Check if the request shouldn't be intercepted (example: it's the authentication
+        // request).
+        if (request.url.includes('/oauth/token')) {
+            request.set('Accept', 'application/json');
+            return { request };
+        }
 
-            request = this.setHeaders(request);
+        request = this.setHeaders(request);
 
-            if(this.skipIgnoredRequests(request)) {
-                // We need to wrap 'currentRequest' otherwise it will be sent to the server and we
-                // haven't finished yet.
-                resolve({request});
-                return;
-            }
+        if(this.skipIgnoredRequests(request)) {
+            // We need to wrap 'currentRequest' otherwise it will be sent to the server and we
+            // haven't finished yet.
+            return { request };
+        }
 
-            // Before making any request, we need to check that the token is not expired.
-            if(this.token.getAccessToken() && this.token.isExpired()) {
-                this.refreshToken()
-                    .then((): void => resolve({request}))
-                    .catch((error): void => reject(error));
+        // Before making any request, we need to check that the token is not expired.
+        if(this.token.getAccessToken() && this.token.isExpired()) {
+            await this.refreshToken();
 
-                request.set('Authorization', 'Bearer ' + this.token.getAccessToken());
-                return;
-            }
+            request.set('Authorization', 'Bearer ' + this.token.getAccessToken());
+        }
 
-            resolve({request});
-        });
+        return { request };
     }
 
     /**
      * Refresh the current API token.
      */
-    public refreshToken(): Promise<any>
+    public refreshToken(): Promise<void>
     {
         return new Promise((resolve, reject): void =>
         {
@@ -224,6 +212,7 @@ export default class SuperAgentDriver extends AbstractApiDriver
                     }
 
                     this.token.save(response.body.access_token, response.body.refresh_tokeh);
+                    resolve();
                 });
         });
     }
