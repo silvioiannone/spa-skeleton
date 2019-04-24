@@ -77,6 +77,17 @@
         @Prop({ type: Boolean, default: false }) outline: boolean;
 
         /**
+         * Changes the selection behavior to return the object directly rather than the value
+         * specified with item-value.
+         */
+        @Prop({ type: Boolean, default: true }) returnObject: boolean;
+
+        /**
+         * Set property of items's value - must be primative. Dot notation is supported.
+         */
+        @Prop({ type: String, default: 'value' }) itemValue: Array<any> | String | Function;
+
+        /**
          * Contains the list of the manually newly created tags.
          */
         addedTags: Array<any> = [];

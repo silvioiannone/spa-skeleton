@@ -1,5 +1,5 @@
 <template>
-    <dialog-main v-model="model" v-bind="getProps()" v-on="getOn()">
+    <dialog-main v-model="model" v-bind="getProps()">
         <slot :bubble-submit="bubbleSubmit" :bubble-cancel="bubbleCancel"></slot>
     </dialog-main>
 </template>
