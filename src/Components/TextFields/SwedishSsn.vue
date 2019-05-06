@@ -1,57 +1,44 @@
-<script>
+<script lang="ts">
 
-    import TextField from '../Mixins/TextField';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import { TextField }               from '../Mixins/TextField.vue';
 
-    export {
+    @Component
+    export class TextFieldSwedishSsn extends Mixins(TextField)
+    {
+        /**
+         * Social security number.
+         */
+        @Prop({ type: String, default: 'Social security number' }) label: string;
 
-        name: 'TextFieldSwedishSsn',
+        /**
+         * Input field name.
+         */
+        @Prop({ type: String, default: 'ssn' }) name: string;
 
-        mixins: [
-            TextField
-        ],
+        /**
+         * Mask.
+         */
+        @Prop({ type: String, default: '######-####' }) mask: string;
 
-        props: {
+        /**
+         * Returns the unmodified masked string.
+         */
+        @Prop({ type: Boolean, default: true }) returnMaskedValue: boolean;
 
-            /**
-             * Social security number.
-             */
-            label: {
-                type: String,
-                default: 'Social security number'
-            },
-
-            /**
-             * Input field name.
-             */
-            name: {
-                type: String,
-                default: 'ssn'
-            },
-
-            /**
-             * Mask.
-             */
-            mask: {
-                type: String,
-                default: '######-####'
-            },
-
-            /**
-             * Returns the unmodified masked string.
-             */
-            returnMaskedValue: {
-                type: Boolean,
-                default: true
-            }
-        },
-
-        computed: {
-
-            _validation()
-            {
+        get _validation(): any
+        {
+            if (typeof this.validation === 'string') {
                 return this.validation.concat('|', 'swedishSsn');
+            } else {
+                return {
+                    ...this.validation,
+                    swedishSsn: true
+                }
             }
         }
     }
+
+    export default TextFieldSwedishSsn;
 
 </script>
