@@ -1,10 +1,10 @@
 <template>
     <v-menu>
-        <tempalte #activator="data">
+        <template #activator="data">
             <v-btn icon v-on="data.on">
                 <v-icon>more_vert</v-icon>
             </v-btn>
-        </tempalte>
+        </template>
         <v-list>
             <v-list-tile v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
                 <v-list-tile-avatar>
@@ -26,72 +26,66 @@
     </v-menu>
 </template>
 
-<script>
+<script lang="ts">
 
-    export {
+    import { Component, Prop, Vue } from 'vue-property-decorator';
 
-        name: 'MenuCrud',
+    interface Resource {
+        id: string;
+    }
 
-        props: {
+    @Component
+    export class MenuCrud extends Vue
+    {
+        /**
+         * Resource.
+         */
+        @Prop({ type: Object }) resource: Resource|undefined;
 
-            /**
-             * Resource.
-             */
-            resource: {
-                type: Object
-            },
+        /**
+         * Resource prefix.
+         */
+        @Prop({ type: String }) prefix: string|undefined;
 
-            /**
-             * Resource prefix.
-             */
-            prefix: {
-                type: String
+        get deleteTileProps(): any
+        {
+            let props: any = {};
+
+            if (this.resource && this.prefix) {
+                props.to = `${this.prefix}/${this.resource.id}/delete`;
             }
-        },
 
-        computed: {
+            return props;
+        }
 
-            deleteTileProps()
-            {
-                let props = {};
+        get updateTileProps(): any
+        {
+            let props: any = {};
 
-                if (this.resource && this.prefix) {
-                    props.to = `${this.prefix}/${this.resource.id}/delete`;
-                }
-
-                return props;
-            },
-
-            updateTileProps()
-            {
-                let props = {};
-
-                if (this.resource && this.prefix) {
-                    props.to = `${this.prefix}/${this.resource.id}/update`;
-                }
-
-                return props;
+            if (this.resource && this.prefix) {
+                props.to = `${this.prefix}/${this.resource.id}/update`;
             }
-        },
 
-        methods: {
+            return props;
+        }
 
-            /**
-             * Handle the `click` event on the delete tile.
-             */
-            handleDeleteTileClick()
-            {
-                this.$emit('click:delete');
-            },
+        /**
+         * Handle the `click` event on the delete tile.
+         */
+        handleDeleteTileClick(): void
+        {
+            this.$emit('click:delete');
+        }
 
-            /**
-             * Handle the `click` event on the update tile.
-             */
-            handleUpdateTileClick()
-            {
-                this.$emit('click:update');
-            }
+        /**
+         * Handle the `click` event on the update tile.
+         */
+        handleUpdateTileClick(): void
+        {
+            this.$emit('click:update');
         }
     }
+
+    export default MenuCrud;
 
 </script>
