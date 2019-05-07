@@ -1,5 +1,5 @@
 <template>
-    <error :back-button="false">
+    <error-main :back-button="false">
         <v-container class="mt-5">
             <v-layout wrap>
                 <v-flex xs12>
@@ -19,7 +19,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-    </error>
+    </error-main>
 </template>
 
 <script lang="ts">

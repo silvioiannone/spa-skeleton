@@ -1,5 +1,5 @@
 <template>
-    <error :back-button="false">
+    <error-main :back-button="false">
         <v-layout>
             <v-flex xs12>
                 <div class="text-xs-center mb-5">
@@ -9,7 +9,7 @@
                 <p class="text-xs-center">Please try again in a few minutes.</p>
             </v-flex>
         </v-layout>
-    </error>
+    </error-main>
 </template>
 
 <script lang="ts">
