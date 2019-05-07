@@ -5,6 +5,7 @@ import { Logger }            from './Logger'
 import { Translator }        from './Translator';
 import { Config }            from '../../Config';
 import { VuetifyUseOptions } from 'vuetify';
+import AppPlugins            from '../../../../../resources/ts/App/Plugins';
 
 // Skeleton plugins
 import Vuetify                    from 'vuetify';
@@ -74,9 +75,9 @@ export class Plugins extends Service
      */
     public boot(): void
     {
-        let availablePlugins = {...SkeletonPlugins};
+        let availablePlugins = {...SkeletonPlugins, ...AppPlugins};
 
-        for (let key in SkeletonPlugins) {
+        for (let key in availablePlugins) {
 
             let settings = {};
 
