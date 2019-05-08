@@ -59,6 +59,10 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import VueDropzone              from 'vue2-dropzone';
     import { Token }                from '../../Library/Api/Token';
+    /**
+     * We assume that main app uses VuexORM model for files
+     */
+    import { File }                 from '../../../../../resources/ts/App/State/Models';
 
     @Component({
         components: {
@@ -152,7 +156,7 @@
          */
         handleSuccess(file: any, response: any)
         {
-            this.$store.commit('files/ADD', response);
+            File.insert(response);
             this.$emit('uploaded', response);
         }
 
