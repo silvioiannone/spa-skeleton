@@ -27,7 +27,7 @@
         /**
          * Display a tooltip that will show the exact time.
          */
-        @Prop({ type: Boolean, required: false }) tooltip: false;
+        @Prop({ type: Boolean, required: false }) tooltip: boolean;
 
         _time: string = '';
 
