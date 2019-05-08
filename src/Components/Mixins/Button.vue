@@ -71,8 +71,8 @@
             return createElement('v-btn', {
                 props: this.getProps(),
                 on: {
-                    on: this.$listeners,
-                    click: (event: any) => this.handleClick(event)
+                    ...this.$listeners,
+                    click: (event: any) => this.handleClick(event),
                 }
             }, this.$slots.default);
         }
