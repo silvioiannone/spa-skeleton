@@ -54,145 +54,128 @@
 
 </template>
 
-<script>
+<script lang="ts">
 
-    import VueDropzone from 'vue2-dropzone';
-    import Token from '../../Library/Api/Token';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import VueDropzone              from 'vue2-dropzone';
+    import { Token }                from '../../Library/Api/Token';
+    /**
+     * We assume that main app uses VuexORM model for files
+     */
+    import { File }                 from '../../../../../resources/ts/App/State/Models';
 
-    export {
-
-        name: 'FileUpload',
-
+    @Component({
         components: {
             VueDropzone
-        },
+        }
+    })
+    export class FileUpload extends Vue
+    {
+        /**
+         * Additional data to send to the server.
+         */
+        @Prop({ type: Object, default: () => ({}) }) data: any;
 
-        props: {
+        /**
+         * Dropzone options object that will be merged with the default one.
+         */
+        @Prop({ type: Object, default: () => ({}) }) options: any;
 
-            /**
-             * Additional data to send to the server.
-             */
-            data: {
-                type: Object,
-                default: () => ({})
-            },
+        errorMessage: string = '';
+        previewTemplate: string|null = null;
+        uploading: boolean = false;
 
-            /**
-             * Dropzone options object that will be merged with the default one.
-             */
-            options: {
-                type: Object,
-                default: () => ({})
-            }
-        },
+        get config(): any
+        {
+            return this.$store.getters.app.config;
+        }
 
-        data()
+        get dropzoneOptions(): any
         {
             return {
-                errorMessage: '',
-                previewTemplate: null,
-                uploading: false
+                autoProcessQueue: false,
+                headers: {
+                    Authorization: 'Bearer ' + Token.getAccessToken()
+                },
+                previewTemplate: this.previewTemplate,
+                thumbnailHeight: null,
+                thumbnailWidth: 640,
+                url: '/api/v1/files',
+                params: this.data,
+                ...this.options,
             }
-        },
+        }
 
-        computed: {
+        /**
+         * Cancel the upload.
+         */
+        cancel(): void
+        {
+            this.$emit('cancel')
+        }
 
-            config() {
-                return this.$store.getters.app.config;
-            },
+        /**
+         * Generate the thumbnail.
+         *
+         * @param file
+         * @param dataUrl
+         * @returns {number}
+         */
+        generateThumbnail(file: any, dataUrl: string)
+        {
+            let j: number, len: number, ref: any, thumbnailElement: any;
 
-            dropzoneOptions() {
-                return {
-                    autoProcessQueue: false,
-                    headers: {
-                        Authorization: 'Bearer ' + (new Token).getAccessToken()
-                    },
-                    previewTemplate: this.previewTemplate,
-                    thumbnailHeight: null,
-                    thumbnailWidth: 640,
-                    url: '/api/v1/files',
-                    params: this.data,
-                    ...this.options,
+            if (file.previewElement) {
+                file.previewElement.classList.remove("dz-file-preview");
+                ref = file.previewElement.querySelectorAll("[data-dz-thumbnail-bg]");
+                for (j = 0, len = ref.length; j < len; j++) {
+                    thumbnailElement = ref[j];
+                    thumbnailElement.alt = file.name;
+                    thumbnailElement.style.backgroundImage = 'url("' + dataUrl + '")';
                 }
+                return setTimeout((() => file.previewElement.classList.add("dz-image-preview")), 1);
             }
-        },
+        }
 
-        methods: {
-
-            /**
-             * Cancel the upload.
-             */
-            cancel()
-            {
-                this.$emit('cancel')
-            },
-
-            /**
-             * Generate the thumbnail.
-             *
-             * @param file
-             * @param dataUrl
-             * @returns {number}
-             */
-            generateThumbnail(file, dataUrl)
-            {
-                let j, len, ref, thumbnailElement;
-
-                if (file.previewElement) {
-                    file.previewElement.classList.remove("dz-file-preview");
-                    ref = file.previewElement.querySelectorAll("[data-dz-thumbnail-bg]");
-                    for (j = 0, len = ref.length; j < len; j++) {
-                        thumbnailElement = ref[j];
-                        thumbnailElement.alt = file.name;
-                        thumbnailElement.style.backgroundImage = 'url("' + dataUrl + '")';
-                    }
-                    return setTimeout(((function(_this) {
-                        return function() {
-                            return file.previewElement.classList.add("dz-image-preview");
-                        };
-                    })(this)), 1);
-                }
-            },
-
-            /**
-             * Handle the error event.
-             */
-            handleError(file, message, xhr)
-            {
-                if (! xhr) {
-                    return;
-                }
-
-                let response = JSON.parse(xhr.response);
-
-                this.errorMessage = response.errors[0].title;
-            },
-
-            /**
-             * Handle the success event.
-             */
-            handleSuccess(file, response)
-            {
-                this.$store.commit('files/ADD', response);
-                this.$emit('uploaded', response);
-            },
-
-            /**
-             * Upload the files.
-             */
-            upload()
-            {
-                this.$refs.dropzone.processQueue();
+        /**
+         * Handle the error event.
+         */
+        handleError(file: any, message: string, xhr: any)
+        {
+            if (! xhr) {
+                return;
             }
-        },
+
+            let response = JSON.parse(xhr.response);
+
+            this.errorMessage = response.errors[0].title;
+        }
+
+        /**
+         * Handle the success event.
+         */
+        handleSuccess(file: any, response: any)
+        {
+            File.insert(response);
+            this.$emit('uploaded', response);
+        }
+
+        /**
+         * Upload the files.
+         */
+        upload(): void
+        {
+            let dropzone: any = this.$refs.dropzone;
+            dropzone.processQueue();
+        }
 
         mounted()
         {
-            this.previewTemplate = this.$el
-                .querySelector('#previewTemplate')
-                .innerHTML;
+            let templateEl: Element|null = this.$el.querySelector('#previewTemplate');
+            this.previewTemplate = templateEl ? templateEl.innerHTML : '';
         }
     }
 
+    export default FileUpload;
 
 </script>
