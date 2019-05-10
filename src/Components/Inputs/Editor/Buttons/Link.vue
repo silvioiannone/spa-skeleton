@@ -7,82 +7,61 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 
-    import MixinEditorCommand from '../Mixins/EditorCommand';
-    import EditorDialogAddLink from "spa-skeleton/src/Components/Inputs/Editor/Dialogs/AddLink";
+    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
+    import { EditorCommand }                  from '../Mixins/EditorCommand.vue';
+    import { EditorDialogAddLink }            from '../Dialogs/AddLink.vue';
 
-    export {
-
-        name: 'EditorButtonLink',
-
+    @Component({
         components: {
             EditorDialogAddLink
-        },
+        }
+    })
+    export class EditorButtonLink extends Mixins(EditorCommand)
+    {
+        /**
+         * Ref to the <editor> component.
+         */
+        @Prop({ type: Object, required: true }) editor: any;
 
-        mixins: [
-            MixinEditorCommand
-        ],
+        dialog: boolean = false;
 
-        props: {
-
-            /**
-             * Ref to the <editor> component.
-             */
-            editor: {
-                type: Object,
-                required: true
-            }
-        },
-
-        data()
+        get textIsSelected(): boolean
         {
-            return {
-                dialog: false
-            }
-        },
+            let selection = this.editor.state.selection;
 
-        computed: {
+            return selection.$anchor.pos !== selection.$head.pos;
+        }
 
-            textIsSelected()
-            {
-                let selection = this.editor.state.selection;
+        /**
+         * Show the add link dialog.
+         */
+        showDialog(): void
+        {
+            this.dialog = true;
+        }
 
-                return selection.$anchor.pos !== selection.$head.pos;
-            }
-        },
+        /**
+         * Set the link URL.
+         *
+         * @param url
+         */
+        setLinkUrl(url: string): void
+        {
+            this.commands.link({href: url});
+            this.editor.focus();
+        }
 
-        methods: {
-
-            /**
-             * Show the add link dialog.
-             */
-            showDialog()
-            {
-                this.dialog = true;
-            },
-
-            /**
-             * Set the link URL.
-             *
-             * @param url
-             */
-            setLinkUrl(url)
-            {
-                this.commands.link({href: url});
-                this.focus();
-            }
-        },
-
-        watch: {
-
-            dialog()
-            {
-                if (!this.dialog) {
-                    this.focus();
-                }
+        @Watch('dialog')
+        onDialogChange(): void
+        {
+            if (!this.dialog) {
+                this.editor.focus();
             }
         }
     }
+
+    export default EditorButtonLink;
 
 </script>
