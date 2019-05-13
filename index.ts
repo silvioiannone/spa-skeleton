@@ -65,6 +65,7 @@ export { CardMain } from './src/Components/Cards/Main.vue';
 export { ChipMain } from './src/Components/Chips/Main.vue';
 export { DataTableMain } from './src/Components/DataTables/Main.vue';
 export { DialogMain } from './src/Components/Dialogs/Main.vue';
+export { DialogCard } from './src/Components/Dialogs/Card.vue';
 export { DialogForm } from './src/Components/Dialogs/Form.vue';
 export { FormMain } from './src/Components/Forms/Main.vue';
 export { IFrame } from './src/Components/Misc/IFrame.vue';

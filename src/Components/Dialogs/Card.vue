@@ -1,7 +1,8 @@
 <template>
-    <dialog-main v-bind="getProps()" v-on="getOn()">
+    <dialog-main v-bind="getProps()">
         <v-card>
             <v-card-title class="headline">{{ this.title }}</v-card-title>
+            <slot name="alert"></slot>
             <v-card-text>
                 <slot></slot>
             </v-card-text>
@@ -23,7 +24,7 @@
     export class DialogCard extends Mixins(Wrapper)
     {
         /**
-         * Dialog title.
+         * Title displayed by the dialog.
          */
         @Prop({ type: String, default: '' }) title: string;
 
