@@ -5,40 +5,31 @@
     </dialog-card>
 </template>
 
-<script>
+<script lang="ts">
 
-    import MixinWrapper from '../../../Mixins/Wrapper';
-    import DialogCard from "spa-skeleton/src/Components/Dialogs/Card";
+    import { Component, Mixins } from 'vue-property-decorator';
+    import { Wrapper }           from '../../../Mixins/Wrapper.vue';
+    import { DialogCard }        from '../../../Dialogs/Card.vue';
 
-    export {
-
-        name: 'EditorDialogAddLink',
-
+    @Component({
         components: {
             DialogCard,
-        },
+        }
+    })
+    export class EditorDialogAddLink extends Mixins(Wrapper)
+    {
+        __component = DialogCard;
 
-        mixins: [
-            MixinWrapper
-        ],
+        url: string = '';
 
-        data()
+        save(): void
         {
-            return {
-                __component: DialogCard,
-                url: ''
-            }
-        },
-
-        methods: {
-
-            save()
-            {
-                this.$emit('update', this.url);
-                this.$emit('input', false);
-                this.url = '';
-            }
+            this.$emit('update', this.url);
+            this.$emit('input', false);
+            this.url = '';
         }
     }
+
+    export default EditorDialogAddLink;
 
 </script>

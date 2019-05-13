@@ -15,17 +15,16 @@
     </v-btn-toggle>
 </template>
 
-<script>
+<script lang="ts">
 
-    import MixinEditorCommand from '../Mixins/EditorCommand';
+    import { Component, Mixins } from 'vue-property-decorator';
+    import { EditorCommand }     from '../Mixins/EditorCommand.vue';
 
-    export {
-
-        name: 'InputEditorButtonsHeadings',
-
-        mixins: [
-            MixinEditorCommand
-        ]
+    @Component
+    export class InputEditorButtonsHeadings extends Mixins(EditorCommand)
+    {
     }
+
+    export default InputEditorButtonsHeadings;
 
 </script>

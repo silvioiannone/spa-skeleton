@@ -11,17 +11,16 @@
     </v-btn-toggle>
 </template>
 
-<script>
+<script lang="ts">
 
-    import MixinEditorCommand from '../Mixins/EditorCommand';
+    import { Component, Mixins } from 'vue-property-decorator';
+    import { EditorCommand }     from '../Mixins/EditorCommand.vue';
 
-    export {
-
-        name: 'InputEditorButtonsLists',
-
-        mixins: [
-            MixinEditorCommand
-        ]
+    @Component
+    export class InputEditorButtonsLists extends Mixins(EditorCommand)
+    {
     }
+
+    export default InputEditorButtonsLists;
 
 </script>

@@ -9,40 +9,27 @@
     </dialog-main>
 </template>
 
-<script>
+<script lang="ts">
 
-    import MixinWrapper from '../Mixins/Wrapper';
-    import DialogMain from './Main';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import { Wrapper }                 from '../Mixins/Wrapper.vue';
+    import { DialogMain }              from './Main.vue';
 
-    export {
-
-        name: 'DialogCard',
-
-        mixins: [
-            MixinWrapper
-        ],
-
+    @Component({
         components: {
             DialogMain
-        },
-
-        props: {
-
-            /**
-             * Dialog title.
-             */
-            title: {
-                tye: String,
-                default: ''
-            }
-        },
-
-        data()
-        {
-            return {
-                __component: DialogMain
-            }
         }
+    })
+    export class DialogCard extends Mixins(Wrapper)
+    {
+        /**
+         * Dialog title.
+         */
+        @Prop({ type: String, default: '' }) title: string;
+
+        __component = DialogMain;
     }
+
+    export default DialogCard;
 
 </script>

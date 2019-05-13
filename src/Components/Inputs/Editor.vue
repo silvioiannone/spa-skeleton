@@ -21,7 +21,9 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
+
+    import { Component, Prop, Vue } from 'vue-property-decorator';
 
     import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
     import {
@@ -39,15 +41,12 @@
         Placeholder,
     } from 'tiptap-extensions';
 
-    import EditorButtonsFormats from './Editor/Buttons/Formats';
-    import EditorButtonsHeadings from './Editor/Buttons/Headings';
-    import EditorButtonsLists from './Editor/Buttons/Lists';
-    import EditorButtonLink from "spa-skeleton/src/Components/Inputs/Editor/Buttons/Link";
+    import EditorButtonsFormats  from './Editor/Buttons/Formats.vue';
+    import EditorButtonsHeadings from './Editor/Buttons/Headings.vue';
+    import EditorButtonsLists    from './Editor/Buttons/Lists.vue';
+    import EditorButtonLink      from './Editor/Buttons/Link.vue';
 
-    export {
-
-        name: 'InputEditor',
-
+    @Component({
         components: {
             EditorContent,
             EditorMenuBar,
@@ -55,70 +54,57 @@
             EditorButtonsFormats,
             EditorButtonsHeadings,
             EditorButtonsLists
-        },
+        }
+    })
+    export class InputEditor extends Vue {
+        /**
+         * Model.
+         */
+        @Prop({default: ''}) value: any;
 
-        props: {
+        editor: any = new Editor({
+            extensions: [
+                new BulletList(),
+                new Heading({maxLevel: 3}),
+                new ListItem(),
+                new OrderedList(),
+                new Bold(),
+                new Code(),
+                new Italic(),
+                new Link(),
+                new Strike(),
+                new Underline(),
+                new History(),
+                new Placeholder(),
+            ],
+            onUpdate: this.updateModel,
+            content: this.value
+        });
 
-            /**
-             * Model.
-             */
-            value: {
-                default: ''
-            }
-        },
+        /**
+         * Stop the propagation of the enter keypress event.
+         *
+         * This is needed in order to avoid accidentally submitting the form containing this
+         * input element.
+         *
+         * @param event
+         */
+        stopEnterPropagation(event: any): void {
+            event.preventDefault();
+        }
 
-        data()
-        {
-            return {
-                editor: new Editor({
-                    extensions: [
-                        new BulletList(),
-                        new Heading({ maxLevel: 3 }),
-                        new ListItem(),
-                        new OrderedList(),
-                        new Bold(),
-                        new Code(),
-                        new Italic(),
-                        new Link(),
-                        new Strike(),
-                        new Underline(),
-                        new History(),
-                        new Placeholder(),
-                    ],
-                    onUpdate: this.updateModel,
-                    content: this.value
-                })
-            }
-        },
+        /**
+         * Emit the update event.
+         */
+        updateModel(content: any): void {
+            this.$emit('input', content.getHTML());
+        }
 
-        methods: {
-
-            /**
-              * Stop the propagation of the enter keypress event.
-              *
-              * This is needed in order to avoid accidentally submitting the form containing this
-              * input element.
-              *
-              * @param event
-              */
-            stopEnterPropagation(event)
-            {
-                event.preventDefault();
-            },
-
-            /**
-              * Emit the update event.
-              */
-            updateModel(content)
-            {
-                this.$emit('input', content.getHTML());
-            }
-        },
-
-        beforeDestroy()
-        {
+        beforeDestroy(): void {
             this.editor.destroy()
-        },
+        }
     }
+
+    export default InputEditor;
 
 </script>
