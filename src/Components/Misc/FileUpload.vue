@@ -11,7 +11,9 @@
         </vue-dropzone>
         <v-alert type="error" :value="errorMessage.length" class="mt-3">{{ errorMessage }}</v-alert>
         <div class="mt-3">
-            <v-btn color="primary" @click="upload" :loadinig="uploading">{{ $t('common.upload') }}</v-btn>
+            <v-btn color="primary" @click="upload" :loadinig="uploading">
+                {{ $t('common.upload') }}
+            </v-btn>
             <v-btn flat @click="cancel">{{ $t('common.cancel') }}</v-btn>
         </div>
 
@@ -57,12 +59,8 @@
 <script lang="ts">
 
     import { Component, Prop, Vue } from 'vue-property-decorator';
-    import VueDropzone              from 'vue2-dropzone';
     import { Token }                from '../../Library/Api/Token';
-    /**
-     * We assume that main app uses VuexORM model for files
-     */
-    import { File }                 from '../../../../../resources/ts/App/State/Models';
+    import VueDropzone              from 'vue2-dropzone';
 
     @Component({
         components: {
@@ -156,7 +154,6 @@
          */
         handleSuccess(file: any, response: any)
         {
-            File.insert(response);
             this.$emit('uploaded', response);
         }
 
