@@ -52,7 +52,7 @@
          */
         @Prop({ type: Function }) onClick: () => Promise<any>;
 
-        _onClick()
+        _onClick(event: any): void
         {
             this.onClick();
         }
@@ -63,7 +63,7 @@
         handleClick(event: any): any
         {
             this.$emit('click', event);
-            this._onClick();
+            this._onClick(event);
         }
 
         render(createElement: Function): VNode

@@ -32,7 +32,7 @@
         /**
          * React to `click` event.
          */
-        _onClick(): void
+        _onClick(event: any): void
         {
             if (this.action) {
                 this.$data._loading = true;
@@ -58,7 +58,8 @@
                 {
                     props: this.getProps(),
                     on: {
-                        click: this.onClick
+                        ...this.$listeners,
+                        click: this._onClick
                     }
                 },
                 this.$slots.default
