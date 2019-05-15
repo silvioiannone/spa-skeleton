@@ -47,6 +47,7 @@ export { Input as Input } from './src/Components/Mixins/Input.vue';
 export { TextField } from './src/Components/Mixins/TextField.vue';
 export { Filterable as ViewFilterable } from './src/Components/Mixins/Views/Filterable.vue';
 export { Searchable as ViewSearchable } from './src/Components/Mixins/Views/Searchable.vue';
+export { Sortable as ViewSortable } from './src/Components/Mixins/Views/Sortable.vue';
 export { ViewPaginated } from './src/Components/Mixins/Views/Paginated.vue';
 export { Subscribable } from './src/Components/Mixins/Subscribable.vue';
 export { DataTablePaginated } from './src/Components/Mixins/DataTables/Paginated.vue';

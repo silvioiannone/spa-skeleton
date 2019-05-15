@@ -46,6 +46,14 @@ export class App extends Module
             },
 
             /**
+             * Set the give state key to the given value.
+             */
+            'app/SET'(state: any, payload: { key: string, value: any}): void
+            {
+                state = _.set(state, payload.key, payload.value);
+            },
+
+            /**
              * Set the error preventing the app from loading.
              */
             'app/SET_ERROR'(state: any, error: any): void
@@ -196,7 +204,11 @@ export class App extends Module
                 /**
                  * Stores the pagination object for views displaying paginated data.
                  */
-                pagination: null
+                pagination: {
+                    sort: '',
+                    descending: false,
+                    filters: []
+                }
             },
 
             /*
