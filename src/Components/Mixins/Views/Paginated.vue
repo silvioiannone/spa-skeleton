@@ -29,18 +29,22 @@
         {
             let query = resource instanceof Query ? resource : resource.query();
 
-            let sortQueryParam = <string>this.$route.query.sort;
+            let sortQueryParamValue = this.$route.query.sort as string;
 
-            if (sortQueryParam) {
+            if (sortQueryParamValue) {
                 // Any query applied before should be ignored otherwise the result of the order will
                 // be influenced by the previously run query.
+
+                // Load the previous relationships.
                 let oldLoad = query.load;
                 query = query.newQuery(query.entity);
                 query.load = oldLoad;
-                query.orderBy(
-                    <string>this.pagination.sortBy,
-                    sortQueryParam[0] === '-' ? 'desc': 'asc'
-                );
+
+                let sortDirection = sortQueryParamValue.charAt(0) === '-' ? 'desc' : 'asc';
+                let sortField = sortDirection === 'desc' ?
+                    sortQueryParamValue.slice(1, sortQueryParamValue.length) : sortQueryParamValue
+
+                query.orderBy(sortField, sortDirection as 'asc' | 'desc');
             }
 
             return query.get();
