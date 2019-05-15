@@ -47,6 +47,8 @@
                 page: '1' // When applying a filter always reset the page number.
             };
 
+            let queryFilters = {};
+
             for (let key in this.filters) {
                 let filterValue = this.filters[key];
                 let queryValue = query[key];
@@ -60,9 +62,28 @@
                 }
 
                 // If the filter is an array then we need to append it.
-                query[key] = queryValue && Array.isArray(filterValue) ?
+                queryFilters[key] = queryValue && Array.isArray(filterValue) ?
                     filterValue.join(',') : filterValue;
             }
+
+            query = {
+                ...query,
+                ...queryFilters
+            };
+
+            // Insert the filters in the store.
+            let storeFilters = [];
+            for (let filter in queryFilters) {
+                storeFilters.push({
+                    filter,
+                    value: queryFilters[filter]
+                });
+            }
+
+            this.$store.commit('app/SET', {
+                key: 'ui.pagination.filters',
+                value: storeFilters
+            });
 
             this.$router.push({ path: this.$route.path, query });
         }
