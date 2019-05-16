@@ -29,8 +29,8 @@
                     },
                     props,
                     on: {
+                        ...this.$listeners,
                         input: (value: any) => this.fire(value),
-                        ...this.$listeners
                     },
                     scopedSlots
                 }
