@@ -78,6 +78,6 @@ interface ActionParameters
  */
 export interface GetParameters
 {
-    parameters: any;
+    parameters?: any;
     insert?: undefined | boolean;
 }

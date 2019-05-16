@@ -16,6 +16,9 @@
     @Component
     export class CardMain extends Vue
     {
+        /**
+         * Card title.
+         */
         @Prop({ type: String, default: '' }) title: string;
     }
 
