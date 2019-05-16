@@ -57,9 +57,9 @@
             return this.notifications.filter((notification: any) => notification.read_at === null)
         }
 
-        get visible()
+        get visible(): boolean
         {
-            return this.$store.getters.app.ui.notificationsDrawerVisible;
+            return this.$store.getters.app.ui.navigationDrawers.notificationsVisible;
         }
 
         set visible(value)
@@ -70,7 +70,7 @@
         /**
          * Mark all the notifications as read.
          */
-        markAllAsRead()
+        markAllAsRead(): void
         {
             this.$api.notifications.markAllAsRead()
                 .then(() =>
