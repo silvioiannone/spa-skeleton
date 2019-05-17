@@ -160,8 +160,6 @@
 
         /**
          * Handle the queue complete event.
-         * Event `vdropzone-queue-complete` is fired when queue has been completely processed/
-         * uploaded. It is good moment to close an upload dialog.
          */
         handleQueueComplete(): void
         {
