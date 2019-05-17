@@ -3,7 +3,8 @@
         <vue-dropzone v-if="previewTemplate" ref="dropzone" id="dropzone" :options="dropzoneOptions"
                       :useCustomSlot=true class="dropzone" :include-styling="false"
                       v-on:vdropzone-thumbnail="generateThumbnail"
-                      v-on:vdropzone-error="handleError" v-on:vdropzone-success="handleSuccess">
+                      v-on:vdropzone-error="handleError" v-on:vdropzone-success="handleSuccess"
+                      v-on:vdropzone-queue-complete="handleQueueComplete">
             <div>
                 <h3>{{ $t('misc.fileUpload.dragAndDropToUploadAFile') }}</h3>
                 <p>{{ $t('misc.fileUpload.orClickTapToSelectOne') }}</p>
@@ -155,6 +156,16 @@
         handleSuccess(file: any, response: any)
         {
             this.$emit('uploaded', response);
+        }
+
+        /**
+         * Handle the queue complete event.
+         * Event `vdropzone-queue-complete` is fired when queue has been completely processed/
+         * uploaded. It is good moment to close an upload dialog.
+         */
+        handleQueueComplete(): void
+        {
+            this.$emit('uploadComplete');
         }
 
         /**
