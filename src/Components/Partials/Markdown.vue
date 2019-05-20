@@ -4,27 +4,22 @@
 
 <script lang="ts">
 
-    import Vue         from 'vue';
-    import VueMarkdown from 'vue-markdown';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
+    import VueMarkdown              from 'vue-markdown';
 
-    export Vue.extend({
-
-        name: 'Markdown',
-
+    @Component({
         components: {
             VueMarkdown
-        },
-
-        props: {
-
-            /**
-             * Markdown to be displayed.
-             */
-            source: {
-                type: String,
-                default: ''
-            }
         }
-    });
+    })
+    export class Markdown extends Vue
+    {
+        /**
+         * Markdown to be displayed.
+         */
+        @Prop({type: String, default: ''}) source: string;
+    }
+
+    export default Markdown;
 
 </script>
