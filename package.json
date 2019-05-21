@@ -1,26 +1,27 @@
 {
-  "_from": "spa-skeleton@0.2.1",
-  "_id": "spa-skeleton@0.2.1",
+  "_from": "spa-skeleton@0.2.5",
+  "_id": "spa-skeleton@0.2.5",
   "_inBundle": false,
-  "_integrity": "sha512-+L9lG2ZemSBt3cEDhEmmqzY6sjXNuW0zAAIJeR6KOOAkKJNgXbz4uZjvAAAMmnix3bsF9Gk2Ja2bUEwqQGXi2Q==",
+  "_integrity": "sha512-aliXL7gtDDjOI3G94kexcFZ7K/bj/tiFPF+ql0bnEODhkISRFG68/ofvdynjZaNQKSHv3Yo4RUAuOcGKuo07iQ==",
   "_location": "/spa-skeleton",
   "_phantomChildren": {},
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "spa-skeleton@0.2.1",
+    "raw": "spa-skeleton@0.2.5",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "0.2.1",
+    "rawSpec": "0.2.5",
     "saveSpec": null,
-    "fetchSpec": "0.2.1"
+    "fetchSpec": "0.2.5"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.2.1.tgz",
-  "_shasum": "674d25161c38b4233acf38376b3e3299a41aafd0",
-  "_spec": "spa-skeleton@0.2.1",
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.2.5.tgz",
+  "_shasum": "d6c5e2b89dff57df6c2c8d08a766b449ccc3b616",
+  "_spec": "spa-skeleton@0.2.5",
   "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
   "author": {
     "name": "Silvio Iannone"
