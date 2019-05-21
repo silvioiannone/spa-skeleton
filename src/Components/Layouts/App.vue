@@ -1,12 +1,24 @@
 <template>
     <v-app :light="theme === 'light'" :dark="theme === 'dark'">
         <template v-if="status === 'ready' || status === 'loading'">
-            <slot name="navigation-drawer"></slot>
-            <slot name="navigation-drawer-right"></slot>
-            <slot name="toolbar"></slot>
+            <slot name="navigation-drawer">
+                <animated-router-view name="navigationDrawer"></animated-router-view>
+            </slot>
+            <slot name="navigation-drawer-right">
+                <router-view name="navigationDrawerRight"></router-view>
+            </slot>
+            <slot name="toolbar">
+                <toolbar-main>
+                    <template #toolbar>
+                        <animated-router-view name="toolbar"></animated-router-view>
+                    </template>
+                </toolbar-main>
+            </slot>
         </template>
         <v-content>
-            <slot v-if="status === 'ready' || status === 'loading'"></slot>
+            <slot>
+                <router-view v-if="status === 'ready' || status === 'loading'"></router-view>
+            </slot>
             <error-unauthorized v-if="status === 'unauthorized'">
                 <slot name="error-unauthorized"></slot>
             </error-unauthorized>

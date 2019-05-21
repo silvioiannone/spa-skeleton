@@ -12,7 +12,9 @@
                 {{ title }}
             </router-link>
         </v-toolbar-title>
-        <slot name="toolbar-text" v-show="showingTitle"></slot>
+        <slot name="toolbar-text" v-show="showingTitle">
+            <breadcrumbs-main :items="breadcrumbs"></breadcrumbs-main>
+        </slot>
         <v-spacer></v-spacer>
         <slot name="toolbar-text-right" v-show="showingTitle"></slot>
         <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
@@ -33,13 +35,14 @@
 
 <script lang="ts">
 
-    import Vue                        from 'vue';
-    import { Component, Prop, Watch } from 'vue-property-decorator';
-    import { Config }                 from '../../Config';
-    import { TextFieldSearch }        from '../TextFields/Search.vue'
+    import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+    import { Config }                      from '../../Config';
+    import { BreadcrumbsMain }             from '../Breadcrumbs/Main.vue';
+    import { TextFieldSearch }             from '../TextFields/Search.vue';
 
     @Component({
         components: {
+            BreadcrumbsMain,
             TextFieldSearch
         }
     })
@@ -84,6 +87,11 @@
         protected showingSearch: boolean = false;
 
         protected searchQuery: string | (string | null)[] = '';
+
+        get breadcrumbs(): Array<any>
+        {
+            return this.$store.getters.app.ui.toolbar.breadcrumbs;
+        }
 
         get toolbarTitleRedirectUrl(): string
         {
