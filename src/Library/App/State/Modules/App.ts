@@ -208,6 +208,17 @@ export class App extends Module
                     sort: '',
                     descending: false,
                     filters: []
+                },
+
+                /**
+                 * Toolbar state.
+                 */
+                toolbar: {
+
+                    /**
+                     * Breadcrumbs displayed by the toolbar.
+                     */
+                    breadcrumbs: []
                 }
             },
 
