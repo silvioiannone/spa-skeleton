@@ -1,11 +1,10 @@
 import _                     from 'lodash';
-import Vue                   from 'vue';
 import Router, {
     RouteConfig,
     Route,
-    RouteRecord,
-    RawLocation }            from 'vue-router';
+    RouteRecord }            from 'vue-router';
 import { Store }             from 'vuex';
+import { VueRouterNext }     from './Types/VueRouterNext';
 import { Logger as Log }     from './Services/Logger';
 import Guards                from '../../../../resources/ts/App/Guards';
 import Routes                from '../../../../resources/ts/App/Routes';
@@ -19,8 +18,6 @@ const SkeletonGuards = {
     Auth,
     UserIsAdmin
 };
-
-type VueRouterNext = (to?: RawLocation | false | ((vm: Vue) => any) | void) => void;
 
 /**
  * Router middleware.

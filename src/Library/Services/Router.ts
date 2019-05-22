@@ -12,7 +12,6 @@ import { StateMachine }              from './StateMachine';
 import { Root as MixinRoot }         from '../../Components/Mixins/Root.vue';
 import { Root as RootViewComponent } from '../../Components/Views/Root.vue';
 
-
 /**
  * This service provides a navigation router.
  */
@@ -34,6 +33,11 @@ export class Router extends Service
     protected translator: Translator;
 
     /**
+     * Current router instance.
+     */
+    protected static instance: VueRouter;
+
+    /**
      * Constructor.
      */
     public constructor()
@@ -42,6 +46,14 @@ export class Router extends Service
 
         this.api = new Api;
         this.translator = new Translator;
+    }
+
+    /**
+     * Get the current router instance.
+     */
+    public static getInstance(): VueRouter
+    {
+        return Router.instance;
     }
 
     /**
@@ -65,7 +77,7 @@ export class Router extends Service
         });
 
         // Create a new router instance
-        let router = new VueRouter({
+        Router.instance = new VueRouter({
             linkActiveClass: Config.app.services.router.linkActiveClass,
             mode : Config.app.services.router.mode,
             routes: [
@@ -96,22 +108,22 @@ export class Router extends Service
                         return;
                     }
 
-                    // The timeout is needed because we need to wait for the view animation
-                    // to finish.
+                    // The timeout is needed because we need to wait for the view animation to
+                    // finish.
                     setTimeout((): void => resolve(), 500);
                 })
             }
         });
 
         // Execute the guard before loading each route
-        guard.init(router, store)
+        guard.init(Router.instance, store)
             .run();
 
         // Router root component
         let app = new Vue({
 
             // Bind the router to the root component
-            router,
+            router: Router.instance,
 
             // Bind the store so that it's available to all children components
             store,
@@ -128,6 +140,6 @@ export class Router extends Service
 
         // Synchronize the router with the store. Allows to save the router state in the state
         // machine store.
-        sync(store, router);
+        sync(store, Router.instance);
     }
 }
