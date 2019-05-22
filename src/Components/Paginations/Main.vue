@@ -1,51 +1,37 @@
 <template>
-    <v-pagination :length="pagination.totalPages" v-model="page" :total-visible="7">
-    </v-pagination>
+    <v-pagination :length="pagination.totalPages" v-model="page" :total-visible="7"></v-pagination>
 </template>
 
-<script>
+<script lang="ts">
 
-    export {
+    import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 
-        name: 'PaginationMain',
+    @Component
+    export class PaginationMain extends Vue
+    {
+        page = 1;
 
-        data()
+        /**
+         * Pagination object.
+         */
+        @Prop({type: Object, required: true}) pagination: any;
+
+        @Watch('pagination', {immediate: true, deep: true})
+        onPaginationChange(): void
         {
-            return {
-                page: 1
-            }
-        },
+            this.page = this.pagination.page;
+        }
 
-        props: {
-
-            /**
-             * Pagination object.
-             */
-            pagination: {
-                type: Object,
-                required: true
-            }
-        },
-
-        watch: {
-
-            pagination: {
-                handler()
-                {
-                    this.page = this.pagination.page;
-                },
-                immediate: true,
-                deep: true
-            },
-
-            page()
-            {
-                this.$emit('update:pagination', {
-                    ...this.pagination,
-                    page: this.page
-                });
-            }
+        @Watch('page')
+        onPageChange(): void
+        {
+            this.$emit('update:pagination', {
+                ...this.pagination,
+                page: this.page
+            });
         }
     }
+
+    export default PaginationMain;
 
 </script>
