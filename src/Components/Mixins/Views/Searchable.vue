@@ -33,6 +33,14 @@
                 });
             }, 500)
         }
+
+        mounted(): void
+        {
+            this.$store.commit('app/SET', {
+                key: 'ui.search',
+                value: this.search
+            });
+        }
     }
 
     export default Searchable;

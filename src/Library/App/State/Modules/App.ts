@@ -1,6 +1,6 @@
-import _          from 'lodash';
-import { Module } from '../../../State/Module';
-import { Config } from '../../../../Config';
+import _                 from 'lodash';
+import { Module }        from '../../../State/Module';
+import { Config }        from '../../../../Config';
 
 /**
  * State machine App module.
@@ -191,6 +191,14 @@ export class App extends Module
              * UI state.
              */
             ui: {
+
+                /**
+                 * The callback that will be used when the user performs a search in the current
+                 * view.
+                 *
+                 * Setting the callback will cause the main toolbar to display a search form.
+                 */
+                search: null,
 
                 /**
                  * The visibility state of the navigation drawers.

@@ -17,7 +17,8 @@
         </template>
         <v-content>
             <slot>
-                <router-view v-if="status === 'ready' || status === 'loading'"></router-view>
+                <animated-router-view v-if="status === 'ready' || status === 'loading'">
+                </animated-router-view>
             </slot>
             <error-unauthorized v-if="status === 'unauthorized'">
                 <slot name="error-unauthorized"></slot>

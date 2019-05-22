@@ -20,7 +20,7 @@
         <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
                            @blur="hideSearchIfEmpty">
         </text-field-search>
-        <v-btn icon @click="showSearch" v-if="search" v-show="!showingSearch">
+        <v-btn icon @click="showSearch" v-if="search || searchCallback" v-show="!showingSearch">
             <v-icon>search</v-icon>
         </v-btn>
         <slot name="toolbar" v-show="!showingSearch"></slot>
@@ -87,6 +87,11 @@
         protected showingSearch: boolean = false;
 
         protected searchQuery: string | (string | null)[] = '';
+
+        get searchCallback(): Function | null
+        {
+            return this.$store.getters.app.ui.search;
+        }
 
         get breadcrumbs(): Array<any>
         {
@@ -184,6 +189,9 @@
         onSearchQueryChanged()
         {
             this.$emit('search:update', this.searchQuery);
+            if (this.searchCallback) {
+                this.searchCallback(this.searchQuery);
+            }
         }
     }
 
