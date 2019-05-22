@@ -41,6 +41,14 @@
                 value: this.search
             });
         }
+
+        beforeDestroy(): void
+        {
+            this.$store.commit('app/SET', {
+                key: 'ui.search',
+                value: null
+            });
+        }
     }
 
     export default Searchable;
