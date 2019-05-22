@@ -35,7 +35,7 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+    import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     import { Config }                      from '../../Config';
     import { BreadcrumbsMain }             from '../Breadcrumbs/Main.vue';
     import { TextFieldSearch }             from '../TextFields/Search.vue';
@@ -177,10 +177,9 @@
 
         mounted(): void
         {
-            let searchQuery = this.$route.query.search;
+            this.searchQuery = this.$route.query.search;
 
-            if (this.search && searchQuery) {
-                this.searchQuery = searchQuery;
+            if (this.searchQuery) {
                 this.showSearch();
             }
         }
