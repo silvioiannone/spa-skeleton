@@ -15,7 +15,7 @@
             }
         }) action: Function;
 
-        _loading: false
+        _loading: boolean = false;
 
         get propLoading(): boolean
         {
