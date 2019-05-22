@@ -48,14 +48,13 @@
 
         get _getEndpoint(): any
         {
-            let apiEndpoint = this.getEndpoint || this.$api.files;
             let parameters = Pagination.makeQueryParamsFromVuetifyPagination(this.pagination);
 
             if (this.searchText.length) {
                 parameters.search = this.searchText;
             }
 
-            return apiEndpoint
+            return this.getEndpoint
                 .setParameters(parameters)
                 .get();
         }
