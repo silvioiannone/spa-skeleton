@@ -1,11 +1,13 @@
-$config := {
-  effects: {
-    frost: false,
-    frostRadius: 20px
-  }
-};
-
 $themeColors := json('../Json/ThemeColors.json', { hash: true });
 
+/**
+ * Typography.
+ */
 $body-font-family := 'Open Sans', Arial, "Helvetica Neue", Helvetica, sans-serif
 $monospaced-font-family := "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace
+
+/**
+ * Effects.
+ */
+$effect-frost := false;
+$effect-frost-radius := 20px;

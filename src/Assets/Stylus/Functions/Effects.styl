@@ -4,4 +4,5 @@
  * Effects related functions.
  */
 applyFrost()
-  backdrop-filter: blur($config.effects.frostRadius);
+  @supports ((backdrop-filter: blur($effect-frost-radius)))
+    backdrop-filter blur($effect-frost-radius)

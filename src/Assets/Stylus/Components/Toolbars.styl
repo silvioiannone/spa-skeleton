@@ -8,7 +8,7 @@
 v-toolbar($theme)
   color: $theme.toolbar.text.primary
 
-  if $config.effects.frost
+  if $effect-frost
     background-color rgba(255, 255, 255, 0.8)
 
 theme(v-toolbar, "v-toolbar")
@@ -41,7 +41,7 @@ theme(v-toolbar, "v-toolbar")
     overflow hidden
     white-space nowrap
 
-if $config.effects.frost
+if $effect-frost
   // Apply the frost effect only the the main app toolbar
   .application--wrap > nav > .v-toolbar__content
     background-color rgba(255, 255, 255, 0)
