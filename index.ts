@@ -20,11 +20,7 @@ export { Pagination } from './src/Library/Utils/Pagination';
  * Models.
  */
 export { ExtendedModel as Model } from './src/Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
-import { Notification as NotificationModel} from './src/Library/App/State/Models/Notification';
-
-export namespace Models {
-    export class Notification extends NotificationModel {}
-}
+export { Notification } from './src/Library/App/State/Models/Notification';
 
 /**
  * Interfaces.

@@ -20,9 +20,12 @@
                 <span>{{ $t('navigationDrawer.close') }}</span>
             </v-tooltip>
         </v-toolbar>
-        <v-list two-line v-if="unreadNotifications.length">
-            <slot :unread-notifications="unreadNotifications"></slot>
-        </v-list>
+        <template v-if="unreadNotifications.length">
+            <v-list two-line >
+                <slot :unread-notifications="unreadNotifications"></slot>
+            </v-list>
+            <slot name="outer" :unread-notifications="unreadNotifications"></slot>
+        </template>
         <v-container class="mt-4" v-else>
             <v-layout wrap>
                 <v-flex class="text-xs-center" xs12>
@@ -41,18 +44,18 @@
 
 <script lang="ts">
 
-    import { ResponseInterface, Models } from 'spa-skeleton';
-    import { Vue, Component }            from 'vue-property-decorator';
+    import { ResponseInterface, Notification } from 'spa-skeleton';
+    import { Vue, Component }                  from 'vue-property-decorator';
 
     @Component
     export class NavigationDrawerNotifications extends Vue
     {
-        get notifications()
+        get notifications(): any[]
         {
-            return Models.Notification.all();
+            return Notification.all();
         }
 
-        get unreadNotifications()
+        get unreadNotifications(): any[]
         {
             return this.notifications.filter((notification: any) => notification.read_at === null)
         }
@@ -82,7 +85,7 @@
                         .find('me')
                         .then((response: ResponseInterface) =>
                         {
-                            this.$store.commit('notifications/STORE', {data: []});
+                            Notification.create({data: []});
                         });
                 });
         }

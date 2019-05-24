@@ -15,8 +15,8 @@ export class Notification extends Model
         return {
             id: this.attr(null),
             type: this.attr(''),
-            notifiable_type: this.attr(''),
             notifiable_id: this.attr(null),
+            notifiable_type: this.attr(''),
             data: this.attr([]),
             read_at: this.attr(null),
             created_at: this.attr(null),

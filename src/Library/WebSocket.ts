@@ -2,7 +2,7 @@ import Echo                            from 'laravel-echo';
 import IO                              from 'socket.io-client';
 import { Logger as Log }               from './Services/Logger';
 import Vue                             from 'vue';
-import { Config }                      from '../Config';
+import { Config }                       from '../Config';
 import Subscriptions                   from '../../../../resources/ts/App/Subscriptions';
 import { ApiFactory }                  from './Api';
 import { Admin as AdminChannel }       from './WebSocket/Channels/Admin';
@@ -14,6 +14,7 @@ import { Token }                       from './Api/Token';
 import { Subscription }                from './Interfaces/Subscription';
 import { Channel }                     from './Types/Channel';
 import { Channel as ChannelInterface } from './Interfaces/Channel';
+import { Notification }                 from './App/State/Models/Notification';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -222,7 +223,7 @@ export class WebSocket
      */
     public handleNotification(notification: any): void
     {
-        this.vue.$store.commit('notifications/ADD', {data: notification});
+        Notification.insertOrUpdate({ data: notification });
 
         Log.debug('Notification received: ' + notification.type + '.');
     }
