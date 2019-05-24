@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 const config = require('spa-skeleton/webpack.config'),
+    fs = require('fs'),
     merge = require('webpack-merge'),
     mix = require('laravel-mix'),
     path = require('path'),
@@ -101,6 +102,11 @@ module.exports = {
 
         this.mix.js('resources/ts/App.ts', './public/js/app.js')
             .extract(modulesToExtract, './public/js/vendor.js');
+
+        // Build the loader if it exists.
+        if (fs.existsSync('resources/ts/Loader.ts')) {
+            this.mix.js('resources/ts/Loader.ts', './public/js/loader.js');
+        }
     },
 
     /**
@@ -135,6 +141,13 @@ module.exports = {
         })
 
         this.mix.styles(sources, 'public/css/all.css');
+
+        if (fs.existsSync('resources/ts/Loader.ts')) {
+            this.mix.stylus(
+                'node_modules/spa-skeleton/src/Assets/Stylus/Loader.styl',
+                'public/css/loader.css'
+            );
+        }
     },
 
     /**

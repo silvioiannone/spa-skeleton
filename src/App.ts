@@ -69,8 +69,9 @@ export class App
 
         let t1 = performance.now();
 
-        Logger.info('Application started and running.');
         Logger.debug('Application booted in ' + Math.round(t1 - t0) + ' ms.');
+
+        this.conclude();
     }
 
     /**
@@ -94,5 +95,15 @@ export class App
     {
         // Clean the session storage.
         window.sessionStorage.clear();
+    }
+
+    /**
+     * Conclude the app's initialization.
+     */
+    protected conclude()
+    {
+        window.dispatchEvent(new Event('appLoaded'));
+
+        Logger.info('Application started and running.');
     }
 }
