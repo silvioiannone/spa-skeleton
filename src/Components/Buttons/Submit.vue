@@ -1,7 +1,7 @@
 <template>
     <v-btn :loading="status === 'loading'" :disabled="disabled || status === 'loading'"
            v-on="this.$listeners" :flat="flat" :color="color" :icon="icon"  @click="_onClick()"
-           :large="large" type="submit">
+           :large="large" type="submit" :aria-label="ariaLabel">
         <slot></slot>
     </v-btn>
 </template>
@@ -19,6 +19,8 @@
          */
         status: 'ready' | 'loading' = 'ready';
 
+        ariaLabel: string = '';
+
         async _onClick(): Promise<any>
         {
             this.status = 'loading';
@@ -28,6 +30,11 @@
             } catch (error) {}
 
             this.status = 'ready';
+        }
+
+        beforeMount()
+        {
+            this.ariaLabel = this.$slots.default[0].text.trim();
         }
     }
 

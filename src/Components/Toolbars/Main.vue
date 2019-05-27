@@ -2,7 +2,7 @@
     <v-toolbar :fixed="fixed" app clipped-left :color="color" clipped-right :tabs="tabs"
                :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
-                             v-if="navigationDrawer">
+                             v-if="navigationDrawer" aria-label="Toggle sidebar">
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
