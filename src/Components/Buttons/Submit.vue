@@ -32,9 +32,27 @@
             this.status = 'ready';
         }
 
+        /**
+         * Add the Aria label to the button.
+         */
+        addAriaLabel(): void
+        {
+            let slots = this.$slots;
+
+            if (! slots) {
+                return;
+            }
+
+            let defaultSlot = slots.default;
+
+            if (defaultSlot && defaultSlot[0] && defaultSlot[0].text) {
+                this.ariaLabel = defaultSlot[0].text.trim();
+            }
+        }
+
         beforeMount()
         {
-            this.ariaLabel = this.$slots.default[0].text.trim();
+            this.addAriaLabel();
         }
     }
 
