@@ -5,6 +5,7 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
+    import { Config }            from '../../Config';
     import { Root as RootMixin } from '../Mixins/Root.vue';
 
     @Component
@@ -13,6 +14,8 @@
         created()
         {
             this.$ws.connect(this);
+
+            document.documentElement.setAttribute('lang', Config.locale);
         }
     }
 
