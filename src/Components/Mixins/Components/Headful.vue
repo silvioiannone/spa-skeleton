@@ -6,7 +6,8 @@
     import '../../../Library/ComponentHooks';
 
     interface Head {
-        title: null | string
+        title?: null | string,
+        description?: null | string
     }
 
     /**
@@ -16,7 +17,8 @@
     export class Headful extends Vue
     {
         head: Head = {
-            title: null
+            title: null,
+            description: null
         }
 
         /**
@@ -25,6 +27,17 @@
         refreshHead(): void
         {
             this.setTitle();
+            this.setDescription();
+        }
+
+        /**
+         * Set the head description.
+         */
+        setDescription(): void
+        {
+            if (this.head.description) {
+                this.$head.description(this.head.description);
+            }
         }
 
         /**
