@@ -16,6 +16,8 @@
     {
         filters = {};
 
+        initialFilters = {};
+
         /**
          * Whether the value is an empty array.
          */
@@ -26,10 +28,11 @@
 
         created()
         {
+            this.initialFilters = { ... this.filters };
+
             // Get the query parameters and if there's a parameter with the same name as the filter
             // then use it to initialize the filters.
-            for (let key in this.$route.query)
-            {
+            for (let key in this.$route.query) {
                 if (this.filters.hasOwnProperty(key)) {
                     let filterValue = (<string>this.$route.query[key]).split(',');
 
@@ -37,6 +40,31 @@
                         filterValue : filterValue[0];
                 }
             }
+
+            this.syncStore();
+        }
+
+        /**
+         * Synch the filter with the store.
+         */
+        syncStore(): void
+        {
+            // Insert the filters that have a value different from the initial one in the store.
+            let storeFilters = [];
+
+            for (let filter in this.filters) {
+                if (this.filters[filter] !== this.initialFilters[filter]) {
+                    storeFilters.push({
+                        filter,
+                        value: this.filters[filter]
+                    });
+                }
+            }
+
+            this.$store.commit('app/SET', {
+                key: 'ui.pagination.filters',
+                value: storeFilters
+            });
         }
 
         @Watch('filters', { deep: true })
@@ -71,19 +99,7 @@
                 ...queryFilters
             };
 
-            // Insert the filters in the store.
-            let storeFilters = [];
-            for (let filter in queryFilters) {
-                storeFilters.push({
-                    filter,
-                    value: queryFilters[filter]
-                });
-            }
-
-            this.$store.commit('app/SET', {
-                key: 'ui.pagination.filters',
-                value: storeFilters
-            });
+            this.syncStore();
 
             this.$router.push({ path: this.$route.path, query });
         }
