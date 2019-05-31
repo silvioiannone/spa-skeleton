@@ -1,4 +1,4 @@
-import { ApiResource }  from './ApiResource';
+import { ApiResource }       from './ApiResource';
 import { ResponseInterface } from '../ResponseInterface';
 
 /**
@@ -6,12 +6,7 @@ import { ResponseInterface } from '../ResponseInterface';
  */
 export class Roles extends ApiResource
 {
-    public constructor()
-    {
-        super();
-
-        this.resourceName = 'roles';
-    }
+    public resourceName: string = 'roles';
 
     /**
      * Get the roles.

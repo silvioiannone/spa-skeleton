@@ -6,12 +6,7 @@ import { ResponseInterface } from '../ResponseInterface';
  */
 export class Notifications extends ApiResource
 {
-    public constructor()
-    {
-        super();
-
-        this.resourceName = 'notifications';
-    }
+    public resourceName: string = 'notifications';
 
     /**
      * Mark the notification as read.

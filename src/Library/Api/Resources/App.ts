@@ -6,12 +6,7 @@ import { ResponseInterface } from '../ResponseInterface';
  */
 export class App extends ApiResource
 {
-    public constructor()
-    {
-        super();
-
-        this.resourceName = 'app';
-    }
+    public resourceName: string = 'app';
 
     /**
      * Get a locale.
