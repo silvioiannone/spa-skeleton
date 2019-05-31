@@ -102,7 +102,7 @@
          */
         _items: Array<any> = [];
 
-        get multiple()
+        get multiple(): boolean
         {
             return Array.isArray(this.value);
         }
@@ -110,7 +110,7 @@
         /**
          * Fire the needed event.
          */
-        fire(selected: any)
+        fire(selected: any): void
         {
             if (selected === null) {
                 this.$emit('input', {});
@@ -118,8 +118,8 @@
             }
 
             if (this.tags) {
-                // Each tag created by Vuetify needs to be transformed and added to the
-                // `addedTags` data property.
+                // Each tag created by Vuetify needs to be transformed and added to the `addedTags`
+                // data property.
                 selected.forEach((item: any) =>
                 {
                     if (typeof item === 'string') {
@@ -130,31 +130,7 @@
                 });
             }
 
-            let selectedCopy = _.clone(selected);
-
-            selectedCopy = this.multiple ?
-                selectedCopy.map((item: any) => this.cleanItem(item)) : this.cleanItem(selectedCopy);
-
-            this.$emit('input', selectedCopy);
-        }
-
-        /**
-         * Clean an item.
-         */
-        cleanItem(item: any): any
-        {
-            if (typeof item === 'string') {
-                if (this.tags) {
-                    return { name: item }
-                }
-                return item;
-            }
-
-            delete item['pivot'];
-            delete item['text'];
-            delete item['value'];
-
-            return item;
+            this.$emit('input', selected);
         }
 
         /**
@@ -170,7 +146,7 @@
          */
         _transformItem(item: any)
         {
-            let localItem = Object.assign({}, item);
+            let localItem = {...item};
 
             return this.transformItem(localItem);
         }

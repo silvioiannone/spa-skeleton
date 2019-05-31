@@ -1,17 +1,12 @@
 <script lang="ts">
 
-    import { VNode, CreateElement }    from 'vue';
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Select }                  from '../Mixins/Select.vue';
+    import { VNode, CreateElement } from 'vue';
+    import { Component, Mixins }    from 'vue-property-decorator';
+    import { Select }               from '../Mixins/Select.vue';
 
     @Component
     export class SelectMain extends Mixins(Select)
     {
-        /**
-         * Set property of items's value - must be primative. Dot notation is supported.
-         */
-        @Prop({ type: String, default: 'identifier' }) itemValue: Array<any> | String | Function;
-
         render(createElement: CreateElement): VNode
         {
             let scopedSlots = this.$vnode.data ? this.$vnode.data.scopedSlots : undefined;
