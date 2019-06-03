@@ -16,7 +16,9 @@
     {
         // We can force the object casting to a `PaginationInterface` since the pagination is
         // initialized in the `created()` Vue lifecycle hook.
-        pagination: PaginationInterface = <PaginationInterface>{};
+        pagination: PaginationInterface = {} as PaginationInterface;
+
+        previousPagination: PaginationInterface = {} as PaginationInterface;
 
         /**
          * Get the paginated resource.
@@ -62,23 +64,20 @@
         created(): void
         {
             this.pagination = Pagination.initialValue();
+            this.previousPagination = Pagination.initialValue();
             this.afterResponse(this.whenResponseIsReceived);
             this.setParameters(
                 Pagination.makeQueryParamsFromVuetifyPagination(this.pagination)
             );
         }
 
-        @Watch('pagination')
-        onPaginationChange(newValue: PaginationInterface, oldValue: PaginationInterface)
+        @Watch('pagination', { deep: true })
+        onPaginationChange()
         {
-            // Not all the pagination properties should be looked at so we just take the ones that
-            // we need.
-            let streamlinedNewValue = this.streamlinePagination(newValue);
-            let streamlinedOldValue = this.streamlinePagination(oldValue);
+            let streamlinedNewValue = this.streamlinePagination(this.pagination);
+            let streamlinedOldValue = this.streamlinePagination(this.previousPagination);
 
-            if (
-                JSON.stringify(streamlinedNewValue) === JSON.stringify(streamlinedOldValue)
-            ) {
+            if (JSON.stringify(streamlinedOldValue) === JSON.stringify(streamlinedNewValue))  {
                 return;
             }
 
@@ -99,6 +98,7 @@
                 return;
             }
 
+            this.previousPagination = { ...this.pagination };
             this.setParameters(newParameters);
         }
     }
