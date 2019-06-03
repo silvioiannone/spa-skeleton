@@ -1,6 +1,5 @@
 <script lang="ts">
 
-    import _                                  from 'lodash';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
     import { Input }                          from './Input.vue';
 
@@ -86,6 +85,11 @@
          * Set property of items's value - must be primative. Dot notation is supported.
          */
         @Prop({ type: String, default: 'value' }) itemValue: Array<any> | String | Function;
+
+        /**
+         * Appends an icon to the component, uses the same syntax as v-icon.
+         */
+        @Prop({ type: String, default: () => '$vuetify.icons.dropdown' }) appendIcon: string;
 
         /**
          * Contains the list of the manually newly created tags.
