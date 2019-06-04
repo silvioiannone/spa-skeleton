@@ -19,10 +19,10 @@
                         </template>
                         <v-list>
                             <v-list-tile to="/settings/account">
-                                <v-list-tile-title>Settings</v-list-tile-title>
+                                <v-list-tile-title>{{ $t('menu.settings') }}</v-list-tile-title>
                             </v-list-tile>
-                            <v-list-tile @click.stop="quit">
-                                <v-list-tile-title>Quit</v-list-tile-title>
+                            <v-list-tile @click.stop="_quit">
+                                <v-list-tile-title>{{ $t('menu.quit') }}</v-list-tile-title>
                             </v-list-tile>
                         </v-list>
                     </v-menu>
@@ -36,43 +36,47 @@
     </navigation-drawer-main>
 </template>
 
-<script>
+<script lang="ts">
 
-    import AvatarUser from "../Avatars/User.vue";
+    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { AvatarUser }           from '../Avatars/User.vue';
+    import { NavigationDrawerMain } from './Main.vue';
 
-    export
-    {
-        name: 'NavigationDrawerHome',
-
+    @Component({
         components: {
-            AvatarUser
-        },
-
-        computed:
-        {
-            user()
+            AvatarUser,
+            NavigationDrawerMain
+        }
+    })
+    export class NavigationDrawerHome extends Vue
+    {
+        @Prop({
+            validator(value: any): boolean
             {
-                return this.$store.getters.app.user;
+                return typeof value === 'function'
             }
-        },
+        }) quit: Function;
 
-        methods: {
+        get user(): any
+        {
+            return this.$store.getters.app.user;
+        }
 
-            /**
-             * Quit from the application.
-             */
-            quit()
-            {
-                let self = this;
+        /**
+         * Quit from the application.
+         */
+        _quit(): void
+        {
+            if (this.quit) {
+                this.quit();
+                return;
+            }
 
-                this.$store.dispatch('user/QUIT')
-                    .then(() =>
-                    {
-                        self.$ws.disconnect();
-                        self.$router.push('/login');
-                    });
-            },
+            this.$ws.disconnect();
+            this.$router.push('/login');
         }
     }
+
+    export default NavigationDrawerHome;
 
 </script>
