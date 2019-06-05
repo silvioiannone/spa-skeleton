@@ -64,6 +64,8 @@ export { DataTableMain } from './src/Components/DataTables/Main.vue';
 export { DialogMain } from './src/Components/Dialogs/Main.vue';
 export { DialogCard } from './src/Components/Dialogs/Card.vue';
 export { DialogForm } from './src/Components/Dialogs/Form.vue';
+export { FileSelect } from './src/Components/Misc/FileSelect.vue';
+export { FileUpload } from './src/Components/Misc/FileUpload.vue';
 export { FormMain } from './src/Components/Forms/Main.vue';
 export { IFrame } from './src/Components/Misc/IFrame.vue';
 export { InputAutocomplete } from './src/Components/Inputs/Autocomplete.vue';

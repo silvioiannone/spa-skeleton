@@ -34,9 +34,13 @@
         @Prop({type: Object, default: null}) getEndpoint: any;
 
         selected: Array<any> = [];
-        searchText = '';
-        loading = false;
+
+        searchText: string = '';
+
+        loading: boolean = false;
+
         files: Array<any> = [];
+
         pagination: PaginationInterface = {
             page: 0,
             rowsPerPage: 0,
