@@ -22,10 +22,10 @@ module.exports = {
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
-                use: [{
+                use: {
                     loader: 'babel-loader',
-                    options: LaravelMix.config.babel()
-                }]
+                    options: LaravelMix.config.babel(path.resolve(__dirname, '.babelrc')),
+                }
             },
             {
                 test: /\.tsx?$/,
