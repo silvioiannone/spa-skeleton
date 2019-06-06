@@ -31,7 +31,7 @@
          *
          * Example: $api.files
          */
-        @Prop({type: Object, default: null}) getEndpoint: any;
+        @Prop({ type: Object, required: true }) getEndpoint: any;
 
         selected: Array<any> = [];
 
