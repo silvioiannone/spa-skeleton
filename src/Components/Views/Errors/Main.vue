@@ -7,7 +7,7 @@
             <v-flex xs12>
                 <div class="text-xs-center">
                     <v-btn color="primary" large @click="goBack()" v-if="backButton">
-                        <v-icon left>arrow_back</v-icon>Go back
+                        <v-icon left>arrow_back</v-icon>{{$t('misc.goBack')}}
                     </v-btn>
                 </div>
             </v-flex>
@@ -19,7 +19,7 @@
             <v-flex xs12>
                 <v-expansion-panel>
                     <v-expansion-panel-content>
-                        <div slot="header">Details</div>
+                        <div slot="header">{{$t('misc.details')}}</div>
                         <v-card>
                             <v-card-title class="headline">
                                 <span v-if="error.status">{{ error.status }}</span>
@@ -27,8 +27,8 @@
                             </v-card-title>
                             <v-card-text>
                                 <h5>
-                                    On line
-                                    <span class="monospaced">{{ error.body.line }}</span> in
+                                    {{$t('misc.onLine')}}
+                                    <span class="monospaced">{{ error.body.line }}</span> {{$t('misc.in')}}
                                     <span class="monospaced">{{ error.body.file }}</span>.
                                 </h5>
                             </v-card-text>

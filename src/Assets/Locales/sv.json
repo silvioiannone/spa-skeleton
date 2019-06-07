@@ -30,11 +30,14 @@
     "quit": "Logga ut"
   },
   "misc": {
+    "details": "Detaljer",
     "fileUpload": {
       "dragAndDropToUploadAFile": "Dra och släpp för att ladda upp en fil!",
       "orClickTapToSelectOne": "...eller klicka/peka för att välja en."
     },
     "goBack": "Tillbaka",
+    "in": "i",
+    "onLine": "På rad",
     "pageNotFound": "Sidan hittades inte."
   },
   "navigationDrawer": {

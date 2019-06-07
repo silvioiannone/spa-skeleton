@@ -30,11 +30,14 @@
     "quit": "Quit"
   },
   "misc": {
+    "details": "Details",
     "fileUpload": {
       "dragAndDropToUploadAFile": "Drag and drop to upload a file!",
       "orClickTapToSelectOne": "...or click/tap to select one."
     },
     "goBack": "Go back",
+    "in": "in",
+    "onLine": "On line",
     "pageNotFound": "Page not found."
   },
   "navigationDrawer": {
