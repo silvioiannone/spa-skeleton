@@ -30,12 +30,18 @@
     "quit": "Quit"
   },
   "misc": {
+    "authenticateInOrderToContinue": "Authenticate in order to continue.",
+    "details": "Details",
     "fileUpload": {
       "dragAndDropToUploadAFile": "Drag and drop to upload a file!",
       "orClickTapToSelectOne": "...or click/tap to select one."
     },
     "goBack": "Go back",
-    "pageNotFound": "Page not found."
+    "in": "in",
+    "onLine": "On line",
+    "pageNotFound": "Page not found.",
+    "unauthorized": "Unauthorized.",
+    "youAreNotAuthorizedToViewThisPage": "You are not authorized to view this page."
   },
   "navigationDrawer": {
     "close": "Close",

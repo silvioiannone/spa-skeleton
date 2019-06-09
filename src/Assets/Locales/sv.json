@@ -30,12 +30,18 @@
     "quit": "Logga ut"
   },
   "misc": {
+    "authenticateInOrderToContinue": "Godkänn för att fortsätta.",
+    "details": "Detaljer",
     "fileUpload": {
       "dragAndDropToUploadAFile": "Dra och släpp för att ladda upp en fil!",
       "orClickTapToSelectOne": "...eller klicka/peka för att välja en."
     },
     "goBack": "Tillbaka",
-    "pageNotFound": "Sidan hittades inte."
+    "in": "i",
+    "onLine": "På rad",
+    "pageNotFound": "Sidan hittades inte.",
+    "unauthorized": "Obehörig.",
+    "youAreNotAuthorizedToViewThisPage": "Du är inte behörig att visa den här sidan."
   },
   "navigationDrawer": {
     "close": "Stäng",
