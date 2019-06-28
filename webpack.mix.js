@@ -41,6 +41,7 @@ module.exports = {
     {
         mix.options({
             hmrOptions: {
+                host: '0.0.0.0',
                 port: 8081
             }
         });
