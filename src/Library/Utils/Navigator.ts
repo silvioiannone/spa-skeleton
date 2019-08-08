@@ -26,8 +26,13 @@ export class Navigator
      */
     public setInstance(vue: Vue): void
     {
-        this.router = vue.$router;
-        this.route = vue.$route;
+        if (vue.$router) {
+            this.router = vue.$router;
+        }
+
+        if (vue.$route) {
+            this.route = vue.$route;
+        }
     }
 
     /**

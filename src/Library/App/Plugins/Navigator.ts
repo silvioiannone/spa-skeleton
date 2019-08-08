@@ -21,7 +21,7 @@ export function Navigator(vue: typeof Vue): void
                 navigator.setInstance(vm);
             });
         },
-        mounted(): void
+        beforeUpdate(): void
         {
             navigator.setInstance(this as any);
         }
