@@ -11,6 +11,7 @@ import AppPlugins            from '../../../../../resources/ts/App/Plugins';
 import Vuetify                    from 'vuetify';
 import VueI18N                    from 'vue-i18n';
 import VueRouter                  from 'vue-router';
+import VueTheMask                 from 'vue-the-mask';
 import { Api }                    from '../App/Plugins/Api';
 import { Config as ConfigPlugin } from '../App/Plugins/Config';
 import { EventHub }               from '../App/Plugins/EventHub';
@@ -25,6 +26,7 @@ const SkeletonPlugins = {
     VueI18N,
     Vuetify,
     VueRouter,
+    VueTheMask,
     Api,
     Config: ConfigPlugin,
     Navigator,
@@ -62,10 +64,10 @@ export class Plugins extends Service
             let translatorInstance = (new Translator).boot().get();
 
             return {
-                lang: {
-                    t: (key: string, ...params: any): string =>
-                        translatorInstance.t(key, params) as string
-                }
+                //lang: {
+                //    t: (key: string, ...params: any): string =>
+                //        translatorInstance.t(key, params) as string
+                //}
             }
         });
     }
@@ -113,5 +115,13 @@ export class Plugins extends Service
         this.beforeActions[plugin].push(callback);
 
         return this;
+    }
+
+    /**
+     * Get the Vuetify plugin instance.
+     */
+    public static getVuetify(): typeof Vuetify
+    {
+        return new Vuetify();
     }
 }

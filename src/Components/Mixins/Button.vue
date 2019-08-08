@@ -36,9 +36,9 @@
         @Prop({ type: Boolean, default: false }) loading: boolean;
 
         /**
-         * Display a flat button.
+         * Makes the background transparent.
          */
-        @Prop({ type: Boolean, default: false }) flat: boolean;
+        @Prop({ type: Boolean, default: false }) text: boolean;
 
         /**
          * Whether or not the button should be disabled.

@@ -1,0 +1,11 @@
+/*
+ * Grid component.
+ */
+.responsive-container
+
+    height: 100%
+
+    // The responsive container has a fab button so we add a bit of bottom padding so other elements
+    // are not covered by the fab button.
+    &.fab
+        padding-bottom: 70px + map_get($grid-gutters, 'lg')

@@ -1,5 +1,5 @@
 <template>
-    <component :is="component" :label="_label" :solo="solo" :box="box" :outline="outline"
+    <component :is="component" :label="_label" :solo="solo" :filled="filled" :outline="outline"
                :name="_name" @input="bubbleInput" @blur="bubbleBlur" :value="value">
     </component>
 </template>

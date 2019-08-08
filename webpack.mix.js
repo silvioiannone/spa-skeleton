@@ -15,16 +15,6 @@ module.exports = {
     additionalModulesToExtract: [],
 
     /**
-     * Additional Sass files that will be compiled.
-     */
-    additionalSass: [
-        {
-            path: 'node_modules/spa-skeleton/src/Assets/Sass/Skeleton.scss',
-            file: 'Skeleton.css'
-        }
-    ],
-
-    /**
      * Laravel mix.
      */
     mix: null,
@@ -117,8 +107,6 @@ module.exports = {
      */
     buildStyles()
     {
-        let self = this;
-
         let sources = [
             'node_modules/vue2-dropzone/dist/vue2Dropzone.css',
             'node_modules/material-design-icons/iconfont/material-icons.css',
@@ -127,15 +115,12 @@ module.exports = {
             'public/css/app.css'
         ];
 
-        this.mix.stylus('resources/stylus/app.styl', 'public/css');
-
-        if (this.additionalSass.length) {
-            this.additionalSass.forEach(function (sassSource)
-            {
-                self.mix.sass(sassSource.path, 'public/css');
-                sources.unshift('public/css/' + sassSource.file);
-            });
-        }
+        this.mix.sass('resources/sass/app.sass', 'public/css', {
+            // These options are required in order to build the SASS imports in Vuetify components.
+            implementation: require('sass'),
+            fiber: require('fibers'),
+            indentedSyntax: true
+        });
 
         this.mix.options({
             processCssUrls: false

@@ -112,9 +112,9 @@
         @Prop({ type: Boolean, default: false }) returnMaskedValue: boolean;
 
         /**
-         * Applies the alternate box input style.
+         * Applies the alternate filled input style.
          */
-         @Prop({ type: Boolean, default: false }) box: boolean;
+         @Prop({ type: Boolean, default: false }) filled: boolean;
 
         /**
          * Applies the alternate outline input style.
@@ -208,6 +208,20 @@
                 value: self._value
             };
 
+            let directives = [
+                {
+                    name: 'validate',
+                    value: self._validation
+                }
+            ];
+
+            if (this.mask.length) {
+                directives.push({
+                    name: 'mask',
+                    value: self.mask
+                });
+            }
+
             return createElement('v-text-field', {
                 attrs: {
                     name: self.name,
@@ -218,12 +232,7 @@
                     class: self._class,
                     'data-vv-as': self.vvAs
                 },
-                directives: [
-                    {
-                        name: 'validate',
-                        value: self._validation
-                    }
-                ],
+                directives,
                 props,
                 on: {
                     input: (value: any): void => self.fireInputEvent(value),

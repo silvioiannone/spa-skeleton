@@ -11,6 +11,7 @@ import Routes                        from '../../../../../resources/ts/App/Route
 import { StateMachine }              from './StateMachine';
 import { Root as MixinRoot }         from '../../Components/Mixins/Root.vue';
 import { Root as RootViewComponent } from '../../Components/Views/Root.vue';
+import { Plugins }                   from './Plugins';
 
 /**
  * This service provides a navigation router.
@@ -131,6 +132,8 @@ export class Router extends Service
             mixins: [MixinRoot],
 
             i18n: this.translator.get(),
+
+            vuetify: Plugins.getVuetify(),
 
             // The root `div` is needed in order for the Vue devtools to work properly.
             template: '<div><animated-router-view></animated-router-view></div>'

@@ -5,15 +5,15 @@
                 <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
                                 item-value="prefix" :filter="filter" :disabled="disabled">
                     <template #item="props">
-                        <v-list-tile-avatar>
+                        <v-list-item-avatar>
                             <span :class="'flag-icon flag-icon-' + props.item.iso"></span>
-                        </v-list-tile-avatar>
-                        <v-list-tile-content>
-                            <v-list-tile-title>
+                        </v-list-item-avatar>
+                        <v-list-item-content>
+                            <v-list-item-title>
                                 {{ props.item.name }}
                                 (<strong>+{{ props.item.prefix }}</strong>)
-                            </v-list-tile-title>
-                        </v-list-tile-content>
+                            </v-list-item-title>
+                        </v-list-item-content>
                     </template>
                     <template #selection="props">
                         <strong>+{{ props.item.prefix }}</strong>
@@ -24,8 +24,7 @@
                 <v-text-field label="Phone" v-model="phoneNumber" name="phone" :required="required"
                               :disabled="! countryPrefix || disabled" :label="label" :hint="hint"
                               :error-messages="errorMessages" :persistent-hint="persistentHint"
-                              :mask="selectedCountryPhonePrefix &&
-                                     selectedCountryPhonePrefix.mask || ''">
+                              v-mask="selectedCountryPhonePrefix.mask">
                 </v-text-field>
             </v-flex>
         </v-layout>
@@ -42,7 +41,8 @@
     interface PrefixDescription {
         name: string,
         iso: string,
-        prefix: string
+        prefix: string,
+        mask?: string
     }
 
     @Component
@@ -69,11 +69,12 @@
 
         countryPrefix: string = '';
 
-        get selectedCountryPhonePrefix()
-        {
-            return this.countryPhonePrefixes
-                .find((item: PrefixDescription) => item.prefix === this.countryPrefix);
-        }
+        selectedCountryPhonePrefix: PrefixDescription = {
+            name: '',
+            iso: '',
+            prefix: '',
+            mask: '## ## ## ###'
+        };
 
         get e164FormattedNumber(): string
         {
@@ -142,6 +143,17 @@
         stopEnterPropagation(event: any)
         {
             event.preventDefault();
+        }
+
+        @Watch('countryPrefix', { immediate: true })
+        onCountryPrefixChange()
+        {
+            let result = this.countryPhonePrefixes
+                .find((item: PrefixDescription) => item.prefix === this.countryPrefix);
+
+            if (result) {
+                this.selectedCountryPhonePrefix = result;
+            }
         }
 
         @Watch('e164FormattedNumber')

@@ -10,13 +10,13 @@
                     </v-alert>
                 </v-flex>
                 <slot></slot>
-                <v-flex xs12 :class="{'text-xs-center': centerActions}" v-if="submit">
+                <v-flex xs12 :class="{'text-center': centerActions}" v-if="submit">
                     <button-submit :on-click="handleSubmit" color="primary"
                                    :disabled="hasErrors">
                         {{ submitText || $t('form.submit') }}
                     </button-submit>
                     <slot name="actions"></slot>
-                    <v-btn v-if="cancellable" flat @click.stop="cancel">
+                    <v-btn v-if="cancellable" text @click.stop="cancel">
                         {{ $t('form.cancel') }}
                     </v-btn>
                 </v-flex>

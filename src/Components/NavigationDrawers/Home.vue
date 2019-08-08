@@ -1,16 +1,16 @@
 <template>
     <navigation-drawer-main>
         <v-list class="pa-0">
-            <v-list-tile avatar>
-                <v-list-tile-avatar>
+            <v-list-item avatar>
+                <v-list-item-avatar>
                     <avatar-user :size="38" :user="user"></avatar-user>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                    <v-list-tile-title>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                    <v-list-item-title>
                         {{ user.first_name }} {{ user.last_name }}
-                    </v-list-tile-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
+                    </v-list-item-title>
+                </v-list-item-content>
+                <v-list-item-action>
                     <v-menu left>
                         <template #activator="data">
                             <v-btn icon v-on="data.on">
@@ -18,16 +18,16 @@
                             </v-btn>
                         </template>
                         <v-list>
-                            <v-list-tile to="/settings/account">
-                                <v-list-tile-title>{{ $t('menu.settings') }}</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click.stop="_quit">
-                                <v-list-tile-title>{{ $t('menu.quit') }}</v-list-tile-title>
-                            </v-list-tile>
+                            <v-list-item to="/settings/account">
+                                <v-list-item-title>{{ $t('menu.settings') }}</v-list-item-title>
+                            </v-list-item>
+                            <v-list-item @click.stop="_quit">
+                                <v-list-item-title>{{ $t('menu.quit') }}</v-list-item-title>
+                            </v-list-item>
                         </v-list>
                     </v-menu>
-                </v-list-tile-action>
-            </v-list-tile>
+                </v-list-item-action>
+            </v-list-item>
         </v-list>
         <v-divider></v-divider>
         <v-list>

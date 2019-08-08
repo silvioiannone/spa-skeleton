@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn icon flat @click="showDialog()" :disabled="! textIsSelected">
+        <v-btn icon text @click="showDialog()" :disabled="! textIsSelected">
             <v-icon>insert_link</v-icon>
         </v-btn>
         <editor-dialog-add-link v-model="dialog" @update="setLinkUrl"></editor-dialog-add-link>

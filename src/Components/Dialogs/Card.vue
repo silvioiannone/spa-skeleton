@@ -2,8 +2,8 @@
     <dialog-main v-bind="getProps()">
         <v-card>
             <v-card-title class="headline">{{ this.title }}</v-card-title>
-            <slot name="alert"></slot>
             <v-card-text>
+                <slot name="alert"></slot>
                 <slot></slot>
             </v-card-text>
         </v-card>

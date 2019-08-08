@@ -1,7 +1,7 @@
 <template>
-    <router-link :to="_to" tag="span" class="clickable">
-        <v-avatar :size="size + 'px'"
-                  v-if="user.settings && user.settings.avatar.small !== 'avatar.png'">
+    <router-link :to="_to" tag="div" class="clickable">
+        <v-avatar v-if="user.settings && user.settings.avatar.small !== 'avatar.png'"
+                  :size="size + 'px'">
             <img :src="'storage/' + user.settings.avatar.small"
                  :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
         </v-avatar>
@@ -12,7 +12,7 @@
 
 <style>
 
-    .vue-avatar--wrapper {
+    /* .vue-avatar--wrapper {
         display: inline-flex;
         vertical-align: middle;
         text-align: center;
@@ -23,7 +23,7 @@
     .chip .vue-avatar--wrapper {
         margin-left: -12px;
         margin-right: 4px;
-    }
+    } */
 
 </style>
 

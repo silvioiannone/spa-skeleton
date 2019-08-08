@@ -22,16 +22,40 @@
         @Prop({ type: Object, default: () => ({}) }) pagination: any
 
         /**
-         * Adds header row select all checkbox. Can either be a String which specifies which color
-         * is applied to the button, or a Boolean (which uses the default color).
+         * Shows the select checkboxes in both the header and rows (if using default rows).
          */
-        @Prop({ type: [Boolean, String], default: false }) selectAll: boolean | string;
+        @Prop({ type: Boolean, default: false }) showSelect: boolean;
 
-        rowsPerPageItems()
+        /**
+         * Used for controlling selected rows
+         */
+        @Prop({ type: Array, default: () => []}) value: Array<any>;
+
+        /**
+         * Get the `itemsPerPageOptions` table footer prop.
+         */
+        get itemsPerPageOptions(): Array<number>
         {
             let paginationSize = Config.app.paginationSize;
 
             return [paginationSize, paginationSize * 2, paginationSize * 4];
+        }
+
+        /**
+         * Update the pagination from the value of the table's options prop.
+         */
+        updatePagination(value: any): void
+        {
+            let pagination = {
+                ...this.pagination,
+                rowsPerPage: value.itemsPerPage,
+                page: value.page,
+            }
+
+            pagination['sortBy'] = value.sortBy.length ? value.sortBy[0] : '';
+            pagination['descending'] = value.sortDesc.length ? value.sortDesc[0] : null;
+
+            this.$emit('update:pagination', pagination)
         }
 
         render(createElement: Function)
@@ -40,14 +64,22 @@
                 props: {
                     headers: this.headers,
                     items: this.items,
-                    pagination: this.pagination,
-                    totalItems: this.pagination.totalItems,
-                    rowsPerPageItems: this.rowsPerPageItems(),
-                    selectAll: this.selectAll
+                    serverItemsLength: this.pagination.totalItems,
+                    itemsPerPage: this.pagination.rowsPerPage,
+                    page: this.pagination.page,
+                    sortBy: this.pagination.sortBy,
+                    sortDesc: this.pagination.descending,
+                    showSelect: this.showSelect,
+                    footerProps: {
+                        itemsPerPageOptions: this.itemsPerPageOptions
+                    },
+                    value: this.value,
                 },
                 on: {
                     'input': (value: any) => this.$emit('input', value),
-                    'update:pagination': (value: any) => this.$emit('update:pagination', value),
+                    'update:options': (value: any) => {
+                        this.updatePagination(value);
+                    },
                 }
             };
 

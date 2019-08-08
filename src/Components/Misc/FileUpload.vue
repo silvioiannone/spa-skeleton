@@ -15,7 +15,7 @@
             <v-btn color="primary" @click="upload" :loadinig="uploading">
                 {{ $t('common.upload') }}
             </v-btn>
-            <v-btn flat @click="cancel">{{ $t('common.cancel') }}</v-btn>
+            <v-btn text @click="cancel">{{ $t('common.cancel') }}</v-btn>
         </div>
 
         <!-- Template preview -->
@@ -45,7 +45,7 @@
                     <div class="d-flex align-center dz-size">
                         <div data-dz-size></div>
                     </div>
-                    <div class="text-xs-right">
+                    <div class="text-right">
                         <v-btn icon data-dz-remove>
                             <v-icon>delete</v-icon>
                         </v-btn>

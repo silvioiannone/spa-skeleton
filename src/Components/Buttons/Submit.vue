@@ -1,7 +1,7 @@
 <template>
     <v-btn :loading="status === 'loading'" :disabled="disabled || status === 'loading'"
-           v-on="this.$listeners" :flat="flat" :color="color" :icon="icon"  @click="_onClick()"
-           :large="large" type="submit" :aria-label="ariaLabel">
+           v-on="this.$listeners" :text="text" :color="color" :icon="icon"  @click="_onClick()"
+           :large="large" type="submit" :aria-label="ariaLabel" :small="small">
         <slot></slot>
     </v-btn>
 </template>

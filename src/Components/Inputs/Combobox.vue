@@ -105,7 +105,7 @@
                     on: {
                         input: this.handleInput,
                         change: this.handleChange,
-                        'update:searchInput': this.handleUpdateSearchInput
+                        'update:search-input': this.handleUpdateSearchInput
                     },
                     nativeOn: {
                         keydown: this.stopEnterPropagation

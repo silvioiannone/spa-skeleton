@@ -6,22 +6,22 @@
             </v-btn>
         </template>
         <v-list>
-            <v-list-tile v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
-                <v-list-tile-avatar>
+            <v-list-item v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
+                <v-list-item-avatar>
                     <v-icon color="red">delete</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ $t('common.delete') }}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
-            <v-list-tile v-bind="updateTileProps" @click.stop="handleUpdateTileClick">
-                <v-list-tile-avatar>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                    <v-list-item-title>{{ $t('common.delete') }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-bind="updateTileProps" @click.stop="handleUpdateTileClick">
+                <v-list-item-avatar>
                     <v-icon>edit</v-icon>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                    <v-list-tile-title>{{ $t('common.update') }}</v-list-tile-title>
-                </v-list-tile-content>
-            </v-list-tile>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                    <v-list-item-title>{{ $t('common.update') }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
         </v-list>
     </v-menu>
 </template>

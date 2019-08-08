@@ -36,6 +36,10 @@
                 classes[attribute] = true;
             });
 
+            if (this.attrs.indexOf('fluid') >= 0) {
+                classes['container--fluid'] = true;
+            }
+
             return classes;
         }
 

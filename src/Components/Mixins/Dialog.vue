@@ -47,6 +47,12 @@
          */
         @Prop({ type: String, default: 'dialog-transition' }) transition: string;
 
+        /**
+         * Will force the components content to render on mounted. This is useful if you have
+         * content that will not be rendered in the DOM that you want crawled for SEO.
+         */
+        @Prop({ type: Boolean, default: false }) eager: boolean;
+
         get _fullscreen()
         {
             // Make the dialog fullscreen on small devices.

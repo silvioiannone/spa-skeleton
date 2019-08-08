@@ -3,7 +3,8 @@
 const path = require('path'),
     Webpack = require('webpack'),
     LaravelMix = require('laravel-mix'),
-    ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+    ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
+    VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 module.exports = {
     profile: true,
@@ -44,6 +45,7 @@ module.exports = {
             tsconfig: path.resolve(__dirname, "tsconfig.json"),
             vue: true
         }),
+        new VuetifyLoaderPlugin(),
         new Webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),

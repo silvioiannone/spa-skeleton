@@ -14,6 +14,7 @@
         created()
         {
             this.$ws.connect(this);
+            this.$ws.subscribe();
 
             document.documentElement.setAttribute('lang', Config.locale);
         }

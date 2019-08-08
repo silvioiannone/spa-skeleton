@@ -1,15 +1,15 @@
 <template>
     <div class="button--submit">
-        <v-btn v-if="confirmed" error @click="abort" color="error" :flat="flat" :large="large">
+        <v-btn v-if="confirmed" error @click="abort" color="error" :text="text" :large="large">
             <div>Abort</div>
             <v-progress-circular class="ml-3" :value="progress" :rotate="270"></v-progress-circular>
         </v-btn>
-        <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color" :flat="flat"
+        <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color" :text="text"
                :large="large" @click.stop="handleConfirmation">
             <slot></slot>
         </v-btn>
         <button-submit v-if="showConfirmation && !confirmed" :on-click="verificationClick"
-                       :flat="flat" color="warning" :large="large">
+                       :text="text" color="warning" :large="large">
             {{ verificationText }}
         </button-submit>
     </div>

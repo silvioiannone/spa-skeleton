@@ -1,5 +1,5 @@
 <template>
-    <v-chip :close="close" :label="label" :outline="outline" :small="small" :color="color"
+    <v-chip :close="close" :label="label" :outlined="outlined" :small="small" :color="color"
             @input="bubbleInput">
         <slot></slot>
     </v-chip>

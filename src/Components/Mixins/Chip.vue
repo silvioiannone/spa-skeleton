@@ -18,7 +18,7 @@
         /**
          * Removes background and applies border and text color.
          */
-        @Prop({ type: Boolean, default: false }) outline: boolean;
+        @Prop({ type: Boolean, default: false }) outlined: boolean;
 
         /**
          * Decreases the chip size.

@@ -3,10 +3,10 @@
         <v-container class="mt-5">
             <v-layout wrap>
                 <v-flex xs12>
-                    <div class="text-xs-center mb-5">
+                    <div class="text-center mb-5">
                         <v-icon x-large class="red--text">error_outline</v-icon>
                     </div>
-                    <h3 class="text-xs-center">{{$t('misc.unauthorized')}}.</h3>
+                    <h3 class="text-center">{{$t('misc.unauthorized')}}.</h3>
                 </v-flex>
                 <v-flex xs12 offset-md3 md6 offset-lg4 lg4 class="mt-5">
                     <v-card>

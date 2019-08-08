@@ -5,7 +5,7 @@
             <slot></slot>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn flat @click="$emit('input', false)">Cancel</v-btn>
+                <v-btn text @click="$emit('input', false)">Cancel</v-btn>
                 <button-submit :on-click="callConfirm" color="error">
                     {{ confirmationText }}
                 </button-submit>

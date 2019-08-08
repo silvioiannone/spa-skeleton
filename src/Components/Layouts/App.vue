@@ -8,11 +8,11 @@
                 <router-view name="navigationDrawerRight"></router-view>
             </slot>
             <slot name="toolbar">
-                <toolbar-main>
+                <app-bar-main app>
                     <template #toolbar>
                         <animated-router-view name="toolbar"></animated-router-view>
                     </template>
-                </toolbar-main>
+                </app-bar-main>
             </slot>
         </template>
         <v-content>

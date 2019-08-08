@@ -28,13 +28,13 @@
         </template>
         <v-container class="mt-4" v-else>
             <v-layout wrap>
-                <v-flex class="text-xs-center" xs12>
+                <v-flex class="text-center" xs12>
                     <v-icon x-large>notifications_none</v-icon>
                 </v-flex>
                 <v-flex xs12>
                     <v-divider class="my-3"></v-divider>
                 </v-flex>
-                <v-flex class="text-xs-center" xs12>
+                <v-flex class="text-center" xs12>
                     <p>{{ $t('navigationDrawer.noNewNotifications') }}</p>
                 </v-flex>
             </v-layout>

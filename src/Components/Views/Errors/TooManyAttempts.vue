@@ -3,11 +3,11 @@
         <v-container class="mt-5">
             <v-layout>
                 <v-flex xs12>
-                    <div class="text-xs-center mb-5">
+                    <div class="text-center mb-5">
                         <v-icon x-large>mdi-clock-alert-outline</v-icon>
                     </div>
-                    <h1 class="text-xs-center">Too many attempts.</h1>
-                    <p class="my-5 text-xs-center">
+                    <h1 class="text-center">Too many attempts.</h1>
+                    <p class="my-5 text-center">
                         Please wait before making another request. Navigation will automatically
                         resume in {{ delta }} seconds.
                     </p>
