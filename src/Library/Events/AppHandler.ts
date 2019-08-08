@@ -5,7 +5,7 @@ import { AbstractHandler } from './AbstractHandler';
  */
 export class AppHandler extends AbstractHandler
 {
-    public 'Models.UserUpdated'(event: any): void
+    public 'Models.User.Updated'(event: any): void
     {
         let authenticatedUser = this.vue.$store.getters.app.user;
 
