@@ -16,7 +16,6 @@
         </slot>
         <v-spacer></v-spacer>
         <slot name="toolbar-text-right" v-show="showingTitle"></slot>
-        {{ searchQuery }}
         <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
                            @blur="hideSearchIfEmpty">
         </text-field-search>
