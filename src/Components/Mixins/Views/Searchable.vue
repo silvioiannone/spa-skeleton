@@ -10,7 +10,7 @@
         /**
          * Perform a server-side search.
          */
-        search(subject: string)
+        search(subject: string | undefined)
         {
             if (this.timeout) {
                 clearTimeout(this.timeout);
@@ -18,12 +18,18 @@
 
             this.timeout = setTimeout(() =>
             {
+                // If the search subject is empty and the route params doesn't have any search
+                // parameter don't perform the navigation.
+                if ((! subject || ! subject.length) && ! this.$route.query.search) {
+                    return;
+                }
+
                 let query = {
                     ...this.$route.query,
                     search: subject
                 };
 
-                if (!subject) {
+                if (! subject) {
                     delete query['search'];
                 }
 
