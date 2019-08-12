@@ -1,0 +1,16 @@
+/*
+ * Card.
+ */
+
+@include theme(v-card) using ($theme)
+
+    .v-image
+
+        .v-card__title
+            @if($effect-frost)
+                color: map_deep_get($theme, 'text', 'secondary') !important
+                background-color: rgba(map_get($theme, 'background'), 0.7) !important
+                @include frost()
+
+.v-card__title
+    padding: 16px !important

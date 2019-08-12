@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar :app="app" clipped-left clipped-right>
+    <v-app-bar :app="app" clipped-left clipped-right elevate-on-scroll>
         <v-app-bar-nav-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
                             v-if="navigationDrawer" aria-label="Toggle sidebar">
         </v-app-bar-nav-icon>

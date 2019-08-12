@@ -1,5 +1,5 @@
 <template>
-    <v-navigation-drawer v-model="visible" class="scroll-y" :right="right" app clipped fixed
+    <v-navigation-drawer v-model="visible" class="scroll-y" :right="right" app clipped
                          :disable-resize-watcher="right" :max-width="maxWidth" :width="width">
         <v-toolbar class="elevation-0" v-if="title || $slots.toolbar">
             <v-toolbar-title>{{ title }}</v-toolbar-title>
@@ -45,6 +45,11 @@
          * Sets the width for the component.
          */
         @Prop({ type: Number, default: undefined }) width: number | string;
+
+        /**
+         * A clipped drawer rests under the application toolbar
+         */
+        @Prop({ type: Boolean, default: false }) clipped: boolean;
 
         get visible(): boolean
         {

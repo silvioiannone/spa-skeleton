@@ -1,0 +1,10 @@
+/*
+ * Sheet.
+ */
+
+@include theme(v-sheet) using ($theme)
+
+    &.v-app-bar
+        @if($effect-frost)
+            background-color: rgba(map_get($theme, 'background'), 0.7) !important
+            @include frost()
