@@ -12,11 +12,6 @@
         @Prop({ type: String, default: 'Search...' }) placeholder: string;
 
         /**
-         * Display the text field with a "solo" style.
-         */
-        @Prop({ type: Boolean, default: true }) solo: boolean;
-
-        /**
          * Append an icon to the text field.
          */
         @Prop({ type: String, default: 'search' }) appendIcon: string;
@@ -30,6 +25,16 @@
          * Value of the name attribute.
          */
         @Prop({ type: String, default: 'search' }) name: string;
+
+        /**
+         * Hides hint, validation errors.
+         */
+        @Prop({ type: Boolean, default: true }) hideDetails: string;
+
+        /**
+         * Display the text field with a "solo" style.
+         */
+        @Prop({ type: Boolean, default: true }) solo: boolean;
     }
 
     export default TextFieldSearch;

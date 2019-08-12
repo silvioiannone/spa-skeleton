@@ -114,12 +114,27 @@
         /**
          * Applies the alternate filled input style.
          */
-         @Prop({ type: Boolean, default: false }) filled: boolean;
+        @Prop({ type: Boolean, default: false }) filled: boolean;
 
         /**
          * Applies the alternate outline input style.
          */
-         @Prop({ type: Boolean, default: false }) outline: boolean;
+        @Prop({ type: Boolean, default: false }) outlined: boolean;
+
+        /**
+         * Hides hint, validation errors
+         */
+        @Prop({ type: Boolean, default: false }) hideDetails: string;
+
+        /**
+         * Removes elevation (shadow) added to element when using the solo or solo-inverted props
+         */
+        @Prop({ type: Boolean, default: false }) flat: boolean;
+
+        /**
+         * Reduces element opacity until focused.
+         */
+        @Prop({ type: Boolean, default: false }) soloInverted: boolean;
 
         protected isFocused: boolean = false;
 
