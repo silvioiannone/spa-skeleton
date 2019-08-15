@@ -73,7 +73,7 @@
         /**
          * Changes the style of the input.
          */
-        @Prop({ type: Boolean, default: false }) outline: boolean;
+        @Prop({ type: Boolean, default: false }) outlined: boolean;
 
         /**
          * Changes the selection behavior to return the object directly rather than the value
@@ -200,5 +200,5 @@
     }
 
     export default Select;
-    
+
 </script>
