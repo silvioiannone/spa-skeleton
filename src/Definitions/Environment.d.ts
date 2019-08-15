@@ -5,6 +5,7 @@
  */
 declare var APP_NAME: string;
 declare var APP_ENV: string;
+declare var APP_URL: string;
 declare var APP_LOG_LEVEL: string;
 declare var MAIL_SUPPORT_ADDRESS: string;
 declare var PAGINATION_DEFAULT_SIZE: string;
