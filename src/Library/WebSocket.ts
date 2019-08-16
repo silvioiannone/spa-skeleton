@@ -35,6 +35,11 @@ export class WebSocket
             channels: [UserChannel]
         },
         {
+            event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\AppUpdated',
+            channels: [AppChannel],
+            handlers: [AppHandler]
+        },
+        {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated',
             channels: [AppChannel],
             handlers: [AppHandler]

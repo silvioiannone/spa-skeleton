@@ -1,0 +1,15 @@
+/*
+ * Footer.
+ */
+
+@include theme(v-footer) using ($theme)
+
+    @if($effect-frost)
+        background-color: rgba(map_get($theme, 'background'), 0.7) !important
+        @include frost()
+
+        .v-banner
+            background-color: transparent
+
+    .v-banner
+        width: 100%

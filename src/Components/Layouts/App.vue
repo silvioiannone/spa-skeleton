@@ -29,6 +29,7 @@
             </error-service-unavailable>
             <error-too-many-attempts v-if="status === 'tooManyAttempts'"></error-too-many-attempts>
         </v-content>
+        <footer-app-update v-if="app.updateAvailable"></footer-app-update>
         <snackbar-global></snackbar-global>
     </v-app>
 </template>
@@ -42,6 +43,7 @@
     import { ErrorServiceUnavailable } from '../Views/Errors/ServiceUnavailable.vue';
     import { ErrorUnauthorized }       from '../Views/Errors/Unauthorized.vue';
     import { ErrorTooManyAttempts }    from '../Views/Errors/TooManyAttempts.vue';
+    import { FooterAppUpdate }         from '../Footers/AppUpdate.vue';
 
     @Component({
         components: {
@@ -50,6 +52,7 @@
             ErrorServiceUnavailable,
             ErrorTooManyAttempts,
             ErrorUnauthorized,
+            FooterAppUpdate,
             SnackbarGlobal
         },
     })

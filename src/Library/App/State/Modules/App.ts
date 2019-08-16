@@ -188,6 +188,11 @@ export class App extends Module
             error: null,
 
             /*
+             * Whether there's an available update.
+             */
+            updateAvailable: false,
+
+            /*
              * UI state.
              */
             ui: {
