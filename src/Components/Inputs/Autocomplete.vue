@@ -111,10 +111,9 @@
                 }
             }
 
-
             let selected = this.multiple ?
                 (this.$data._selected || []) : this.$data._selected;
-            let items = [...this.items, ...this.$data._items];
+            let items = [...this.items, ...this.$data._items, ...this.value];
 
             if (selected && this.multiple) {
                 // Check if selected is array
@@ -156,7 +155,7 @@
                     ],
                     on: {
                         input: (value: any) => this.emitInput(value),
-                        'update:searchInput': this.handleUpdateSearchInput,
+                        'update:search-input': this.handleUpdateSearchInput,
                         'update:error': this.handleUpdateError
                     },
                     nativeOn: {
