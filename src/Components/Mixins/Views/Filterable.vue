@@ -26,24 +26,6 @@
             return Array.isArray(value) && value.length === 0;
         }
 
-        created()
-        {
-            this.initialFilters = { ... this.filters };
-
-            // Get the query parameters and if there's a parameter with the same name as the filter
-            // then use it to initialize the filters.
-            for (let key in this.$route.query) {
-                if (this.filters.hasOwnProperty(key)) {
-                    let filterValue = (<string>this.$route.query[key]).split(',');
-
-                    this.filters[key] = Array.isArray(this.filters[key]) ?
-                        filterValue : filterValue[0];
-                }
-            }
-
-            this.syncStore();
-        }
-
         /**
          * Synch the filter with the store.
          */
@@ -65,6 +47,24 @@
                 key: 'ui.pagination.filters',
                 value: storeFilters
             });
+        }
+
+        created(): void
+        {
+            this.initialFilters = { ... this.filters };
+
+            // Get the query parameters and if there's a parameter with the same name as the filter
+            // then use it to initialize the filters.
+            for (let key in this.$route.query) {
+                if (this.filters.hasOwnProperty(key)) {
+                    let filterValue = (<string>this.$route.query[key]).split(',');
+
+                    this.filters[key] = Array.isArray(this.filters[key]) ?
+                        filterValue : filterValue[0];
+                }
+            }
+
+            this.syncStore();
         }
 
         @Watch('filters', { deep: true })

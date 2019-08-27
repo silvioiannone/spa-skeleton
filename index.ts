@@ -46,7 +46,7 @@ export { Searchable as ViewSearchable } from './src/Components/Mixins/Views/Sear
 export { Sortable as ViewSortable } from './src/Components/Mixins/Views/Sortable.vue';
 export { ViewPaginated } from './src/Components/Mixins/Views/Paginated.vue';
 export { Subscribable } from './src/Components/Mixins/Subscribable.vue';
-export { DataTablePaginated } from './src/Components/Mixins/DataTables/Paginated.vue';
+export { BasePaginatable } from './src/Components/Mixins/Pagination.vue';
 export { Button } from './src/Components/Mixins/Button.vue';
 
 /**

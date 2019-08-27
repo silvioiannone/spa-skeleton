@@ -152,6 +152,7 @@ export class WebSocket
     {
         let channelName = WebSocket.makeChannel(channel).name();
         let channelInUse = false;
+
         this.activeSubscriptions.forEach((subscription): void =>
         {
             if (channelInUse) {
@@ -242,7 +243,7 @@ export class WebSocket
             .find((subscription): boolean => subscription.event === event);
         let handlers = [];
 
-        if (!subscription) {
+        if (! subscription) {
             throw new Error('Event ' + event + ' cannot be handled.');
         }
 

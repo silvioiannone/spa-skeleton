@@ -41,18 +41,11 @@
 
         files: Array<any> = [];
 
-        pagination: PaginationInterface = {
-            page: 0,
-            rowsPerPage: 0,
-            totalItems: 0,
-            totalPages: 0,
-            sortBy: '',
-            descending: null
-        };
+        pagination: PaginationInterface = {} as PaginationInterface;
 
         get _getEndpoint(): any
         {
-            let parameters = Pagination.makeQueryParamsFromVuetifyPagination(this.pagination);
+            let parameters = Pagination.makeQueryParamsFromPagination(this.pagination);
 
             if (this.searchText.length) {
                 parameters.search = this.searchText;

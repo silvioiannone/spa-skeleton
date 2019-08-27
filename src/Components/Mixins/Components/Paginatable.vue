@@ -27,13 +27,22 @@
         {
             let query = resource instanceof Query ? resource : resource.query();
 
-            let sortParm = this.getParameters().sort;
+            let sortParam = this.getParameters().sort;
 
-            if (sortParm) {
-                query.orderBy(
-                    <string>this.pagination.sortBy,
-                    sortParm[0] === '-' ? 'desc': 'asc'
-                )
+            if (sortParam) {
+                // Any query applied before should be ignored otherwise the result of the order will
+                // be influenced by the previously run query.
+
+                // Load the previous relationships.
+                let oldLoad = query.load;
+                query = query.newQuery(query.entity);
+                query.load = oldLoad;
+
+                let sortDirection = sortParam.charAt(0) === '-' ? 'desc' : 'asc';
+                let sortField = sortDirection === 'desc' ?
+                    sortParam.slice(1, sortParam.length) : sortParam;
+
+                query.orderBy(sortField, sortDirection as 'asc' | 'desc');
             }
 
             return query.get();
@@ -44,58 +53,31 @@
          */
         whenResponseIsReceived(response: ResponseInterface): void
         {
-            this.pagination = { ...Pagination.makeFromResponse(response) };
-        }
-
-        /**
-         * Take only the bits in a pagination object that should be used when confronting two
-         * paginations in order to decide whether or not to fetch new paginated data.
-         */
-        streamlinePagination(pagination: PaginationInterface)
-        {
-            return {
-                page: pagination.page,
-                descending: pagination.descending,
-                rowsPerPage: pagination.rowsPerPage,
-                sortBy: pagination.sortBy
-            }
+            this.pagination = Pagination.makeFromResponse(response);
         }
 
         created(): void
         {
-            this.pagination = Pagination.initialValue();
-            this.previousPagination = Pagination.initialValue();
             this.afterResponse(this.whenResponseIsReceived);
             this.setParameters(
-                Pagination.makeQueryParamsFromVuetifyPagination(this.pagination)
+                Pagination.makeQueryParamsFromPagination(this.pagination)
             );
         }
 
         @Watch('pagination', { deep: true })
-        onPaginationChange()
+        onPaginationChange(): void
         {
-            let streamlinedNewValue = this.streamlinePagination(this.pagination);
-            let streamlinedOldValue = this.streamlinePagination(this.previousPagination);
-
-            if (JSON.stringify(streamlinedOldValue) === JSON.stringify(streamlinedNewValue))  {
-                return;
-            }
-
-            let newParameters = Pagination.makeQueryParamsFromVuetifyPagination(
-                <PaginationInterface>streamlinedNewValue
+            let newParameters = Pagination.makeQueryParamsFromPagination(
+                this.pagination as PaginationInterface
             );
 
             // If the `sortBy` or the `descending` props has changed then we need to reset the
             // pagination.
             if (
-                (
-                    streamlinedNewValue.sortBy !== streamlinedOldValue.sortBy ||
-                    streamlinedNewValue.descending !== streamlinedOldValue.descending
-                ) && streamlinedNewValue.page !== 1
+                this.pagination.sort !== this.previousPagination.sort &&
+                this.pagination.page !== 1
             ) {
                 newParameters['page[number]'] = 1;
-
-                return;
             }
 
             this.previousPagination = { ...this.pagination };

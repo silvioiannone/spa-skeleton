@@ -1,12 +1,9 @@
 <script lang="ts">
 
-    import { Query }                        from '@vuex-orm/core';
-    import Vue                              from 'vue';
-    import { Component, Watch }             from 'vue-property-decorator';
-    import { Config }                       from '../../../../src/Config';
-    import { Pagination }                   from 'spa-skeleton/src/Library/Interfaces/Pagination';
-    import { Pagination as PaginationUtil } from '../../../Library/Utils/Pagination';
-    import { Model }                        from 'spa-skeleton';
+    import { Vue, Component } from 'vue-property-decorator';
+    import { Pagination }     from 'spa-skeleton/src/Library/Interfaces/Pagination';
+    import { Config, Model }  from 'spa-skeleton';
+    import { Query }          from '@vuex-orm/core';
 
     /*
      * This mixin can be used by all the views that need to display paginated data. E.g.: a view
@@ -15,11 +12,43 @@
     @Component
     export class ViewPaginated extends Vue
     {
-        pagination: Pagination = PaginationUtil.initialValue();
-
-        get meta(): any
+        get pagination(): any
         {
             return this.$store.getters.app.ui.pagination;
+        }
+
+        set pagination(value)
+        {
+            let pagination = { ...this.pagination, ...value };
+
+            this.$store.commit('app/SET', {
+                key: 'ui.pagination',
+                value: pagination
+            });
+
+            setTimeout(() => this.updateRoute(pagination));
+        }
+
+        /**
+         * Update the route based on the pagination.
+         */
+        updateRoute(pagination: Pagination): void
+        {
+            let query = { ...this.$route.query };
+
+            if (pagination.page && pagination.page !== 1) {
+                query['page'] = pagination.page.toString();
+            }
+
+            if (pagination.per_page && pagination.per_page !== Config.app.paginationSize) {
+                query['size'] = pagination.per_page.toString();
+            }
+
+            if (pagination.sort && pagination.sort.length) {
+                query['sort'] = pagination.sort;
+            }
+
+            this.$router.push({ path: this.$route.path, query });
         }
 
         /**
@@ -29,9 +58,9 @@
         {
             let query = resource instanceof Query ? resource : resource.query();
 
-            let sortQueryParamValue = this.$route.query.sort as string;
+            let sortParam = this.$route.query.sort as string;
 
-            if (sortQueryParamValue) {
+            if (sortParam) {
                 // Any query applied before should be ignored otherwise the result of the order will
                 // be influenced by the previously run query.
 
@@ -40,9 +69,9 @@
                 query = query.newQuery(query.entity);
                 query.load = oldLoad;
 
-                let sortDirection = sortQueryParamValue.charAt(0) === '-' ? 'desc' : 'asc';
+                let sortDirection = sortParam.charAt(0) === '-' ? 'desc' : 'asc';
                 let sortField = sortDirection === 'desc' ?
-                    sortQueryParamValue.slice(1, sortQueryParamValue.length) : sortQueryParamValue
+                    sortParam.slice(1, sortParam.length) : sortParam;
 
                 query.orderBy(sortField, sortDirection as 'asc' | 'desc');
             }
@@ -51,69 +80,32 @@
         }
 
         /**
-         * Initialize the pagination.
+         * Initialize the pagination in the state machine.
          */
-        initPagination()
+        initPagination(): void
         {
-            this.pagination.page = this.meta.current_page || '1';
-            this.pagination.rowsPerPage = this.meta.per_page || Config.app.paginationSize;
-            this.pagination.totalItems = this.meta.total;
-            this.pagination.totalPages = this.meta.last_page;
+            // Read the query parameters and apply them to the pagination in the state machine.
+            let queryParameters = this.$route.query;
+            let pagination = {};
 
-            let sortQueryParam = this.$route.query.sort;
-
-            if (sortQueryParam) {
-                if (sortQueryParam[0] === '-') {
-                    this.pagination.sortBy = sortQueryParam.slice(1, sortQueryParam.length);
-                    this.pagination.descending = true;
-                } else {
-                    this.pagination.sortBy = sortQueryParam;
-                    this.pagination.descending = false;
-                }
-            } else {
-                this.pagination.sortBy = '';
-                this.pagination.descending = null;
+            if (parseInt(queryParameters.page as string)) {
+                pagination['page'] = parseInt(queryParameters.page as string);
             }
+
+            if (queryParameters.sort) {
+                pagination['sort'] = queryParameters.sort;
+            }
+
+            if (parseInt(queryParameters.size as string)) {
+                pagination['per_page'] = parseInt(queryParameters.size as string)
+            }
+
+            this.pagination = pagination;
         }
 
-        @Watch('meta', { deep: true, immediate: true})
-        onMetaChange()
+        created(): void
         {
             this.initPagination();
-        }
-
-        /**
-         * Whenever the pagination changes we need to redirect the router to the right view.
-         */
-        @Watch('pagination', { deep: true })
-        onPaginationChange(newPagination: Pagination, oldPagination: Pagination)
-        {
-            // Do not redirect the user if the pagination parameters are the same.
-            if (JSON.stringify(newPagination) === JSON.stringify(oldPagination)) {
-                return;
-            }
-
-            let query = {
-                ...this.$route.query,
-                page: this.pagination.page.toString()
-            };
-
-            if (newPagination.rowsPerPage !== oldPagination.rowsPerPage ||
-                this.pagination.rowsPerPage !== Config.app.paginationSize) {
-                query['size'] = this.pagination.rowsPerPage.toString();
-            }
-
-            if (this.pagination.descending !== null) {
-                query['sort'] = this.pagination.sortBy;
-                
-                if(this.pagination.descending) {
-                    query['sort'] = '-' + query['sort'];
-                }
-            } else {
-                delete query['sort'];
-            }
-
-            this.$router.push({ path: this.$route.path, query });
         }
     }
 

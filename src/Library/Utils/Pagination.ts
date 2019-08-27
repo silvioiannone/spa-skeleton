@@ -3,30 +3,10 @@ import URIjs                                 from 'urijs';
 import { ResponseInterface }                 from '../Api/ResponseInterface';
 import { Pagination as PaginationInterface } from '../Interfaces/Pagination';
 
-type PartialPagination = {
-    [P in keyof PaginationInterface]?: PaginationInterface[P]
-}
-
 /**
  * Provides pagination utilities.
  */
 let Pagination = {
-
-    /**
-     * Get the initial value for the pagination.
-     */
-    initialValue(override: PartialPagination = {}): PaginationInterface
-    {
-        return {
-            page: 1,
-            rowsPerPage: Config.app.paginationSize,
-            totalItems: 0,
-            totalPages: 1,
-            sortBy: '' as string | string[],
-            descending: false,
-            ...override
-        }
-    },
 
     /**
      * Create a pagination object from a server response.
@@ -35,22 +15,9 @@ let Pagination = {
     {
         let meta = response.body.meta;
         let uri = URIjs(response.request.url);
-
         let pagination = this.makeFromMetaObject(meta);
 
-        let sortValue = uri.search(true).sort;
-        if (sortValue) {
-            if (sortValue[0] === '-') {
-                pagination.sortBy = sortValue.slice(1, sortValue.length);
-                pagination.descending = true;
-            } else {
-                pagination.sortBy = sortValue;
-                pagination.descending = false;
-            }
-        } else {
-            pagination.sortBy = '';
-            pagination.descending = null;
-        }
+        pagination.sort = uri.search(true).sort;
 
         return pagination;
     },
@@ -62,32 +29,23 @@ let Pagination = {
     {
         return {
             page: meta.current_page,
-            rowsPerPage: meta.per_page,
-            totalItems: meta.total,
-            totalPages: meta.last_page,
-            sortBy: [],
-            descending: false
+            per_page: meta.per_page,
+            total: meta.total,
+            last_page: meta.last_page,
+            sort: ''
         }
     },
 
     /**
      * Create an object containing query parameters starting from the Vuetify pagination object.
      */
-    makeQueryParamsFromVuetifyPagination(pagination: PaginationInterface): any
+    makeQueryParamsFromPagination(pagination: PaginationInterface): any
     {
-        let parameters = {
-            'page[size]': pagination.rowsPerPage || Config.app.paginationSize,
+        return {
+            'page[size]': pagination.per_page || Config.app.paginationSize,
             'page[number]': pagination.page || 1,
-            'sort': ''
+            sort: pagination.sort
         };
-
-        if(pagination.sortBy && pagination.descending !== null) {
-            parameters.sort = (
-                pagination.descending ? '-' + pagination.sortBy : pagination.sortBy
-            ) as string;
-        }
-
-        return parameters;
     }
 }
 

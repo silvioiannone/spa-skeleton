@@ -1,9 +1,8 @@
 export interface Pagination
 {
     page: number;
-    rowsPerPage: number;
-    totalItems: number;
-    totalPages: number;
-    sortBy: string | (string | null)[];
-    descending: boolean | null;
+    per_page: number;
+    total: number;
+    last_page: number;
+    sort: string | (string | null)[];
 }
