@@ -31,6 +31,11 @@
         @Prop({ type: Boolean, default: false }) large: boolean;
 
         /**
+         * Makes the component extra large.
+         */
+         @Prop({ type: Boolean, default: false }) xLarge: boolean;
+
+        /**
          * Display the button in a loading state.
          */
         @Prop({ type: Boolean, default: false }) loading: boolean;

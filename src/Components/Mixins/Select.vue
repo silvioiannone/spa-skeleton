@@ -82,6 +82,11 @@
         @Prop({ type: Boolean, default: true }) returnObject: boolean;
 
         /**
+         * Hides hint, validation errors.
+         */
+         @Prop({ type: Boolean, default: false }) hideDetails: boolean;
+
+        /**
          * Set property of items's value - must be primative. Dot notation is supported.
          */
         @Prop({ type: String, default: 'value' }) itemValue: Array<any> | String | Function;
