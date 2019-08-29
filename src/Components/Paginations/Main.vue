@@ -1,5 +1,5 @@
 <template>
-    <v-pagination :length="pagination.totalPages" v-model="page" :total-visible="7"></v-pagination>
+    <v-pagination :length="pagination.last_page" v-model="page" :total-visible="7"></v-pagination>
 </template>
 
 <script lang="ts">
