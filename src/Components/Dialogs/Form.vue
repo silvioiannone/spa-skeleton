@@ -6,10 +6,10 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Watch } from 'vue-property-decorator';
-    import { Wrapper }                  from '../Mixins/Wrapper.vue';
-    import { DialogMain }               from './Main.vue';
-    import { Dialog }                   from '../Mixins/Dialog.vue';
+    import { Component, Mixins, Watch, Prop } from 'vue-property-decorator';
+    import { Wrapper }                        from '../Mixins/Wrapper.vue';
+    import { DialogMain }                     from './Main.vue';
+    import { Dialog }                         from '../Mixins/Dialog.vue';
 
     /**
      * This is a dialog that can hold a form in it.
@@ -22,6 +22,12 @@
     export class DialogForm extends Mixins(Wrapper, Dialog)
     {
         __component = DialogMain;
+
+        /**
+         * The dialog will be persistent and that will prevent it from closing when clicking on
+         * the backdrop.
+         */
+        @Prop({ type: Boolean, default: true }) persistent: boolean;
 
         /**
          * Focus the first input of the dialog.
