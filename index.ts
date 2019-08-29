@@ -15,6 +15,7 @@ export { ViewAction } from './src/Library/Types/ViewAction';
  * Utils.
  */
 export { Pagination } from './src/Library/Utils/Pagination';
+export { Time } from './src/Library/Utils/Time';
 
 /*
  * Models.
@@ -78,6 +79,7 @@ export { NavigationDrawerMain } from './src/Components/NavigationDrawers/Main.vu
 export { NavigationDrawerNotifications } from './src/Components/NavigationDrawers/Notifications.vue';
 export { ResponsiveContainer } from './src/Components/Misc/Grid/ResponsiveContainer.vue';
 export { SelectMain } from './src/Components/Select/Main.vue';
+export { TextFieldDateTime } from './src/Components/TextFields/DateTime.vue';
 export { TextFieldSearch } from './src/Components/TextFields/Search.vue';
 export { ToolbarMain } from './src/Components/Toolbars/Main.vue';
 export { ErrorNotFound } from './src/Components/Views/Errors/NotFound.vue';
