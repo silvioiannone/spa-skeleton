@@ -36,7 +36,10 @@
         /**
          * Value.
          */
-        @Prop({ type: String, required: true }) value: string;
+        @Prop({
+            required: true,
+            validator: (val) => val === null || typeof val === 'string'
+        }) value: string;
 
         partialHour: number;
 
@@ -126,6 +129,7 @@
             setTimeout(() => {
                 (this.$refs.timePicker as any).selecting = 1;
             });
+
             this.stepperStep = '1';
             this.remindDateMenu = false;
         }
