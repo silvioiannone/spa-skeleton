@@ -38,6 +38,8 @@
 
             if (pagination.page && pagination.page !== 1) {
                 query['page'] = pagination.page.toString();
+            } else {
+                delete query['page']
             }
 
             if (pagination.per_page && pagination.per_page !== Config.app.paginationSize) {
