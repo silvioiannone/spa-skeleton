@@ -113,7 +113,9 @@
 
             let selected = this.multiple ?
                 (this.$data._selected || []) : this.$data._selected;
-            let items = [...this.items, ...this.$data._items, ...this.value];
+            let items = [...this.items, ...this.$data._items];
+
+            items = this.multiple ? [...items, ...this.value] : [...items, this.value];
 
             if (selected && this.multiple) {
                 // Check if selected is array
