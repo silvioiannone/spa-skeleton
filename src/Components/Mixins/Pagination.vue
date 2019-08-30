@@ -17,7 +17,8 @@
         {
             let pagination = {
                 per_page: value.itemsPerPage,
-                page: value.page
+                page: value.page,
+                sort: ''
             }
 
             let sortBy = ([...value.sortBy]);
