@@ -41,9 +41,7 @@ export class Delete extends Action
         params: DeleteParameters
     ): void
     {
-        params.model.delete({
-            where: response.body.data.id
-        });
+        params.model.delete(response.body.data.id);
     }
 }
 
