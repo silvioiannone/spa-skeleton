@@ -2,6 +2,7 @@ import { ExtendedModel }     from '../../../Support/ExtendedModel';
 import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
 import { Action }            from './Action';
 import { Store }             from 'vuex';
+import _                     from 'lodash';
 
 /**
  * Get ($get) action.
@@ -49,11 +50,21 @@ export class Get extends Action
         params: ActionParameters
     ): void
     {
-        if (params.options && params.options.insert) {
-            params.model.insert(response.body);
-        } else {
-            params.model.create(response.body);
+        let method = params.options && params.options.insert ? 'insert' : 'create';
+
+        let payload = {
+            data: response.body.data
+        };
+
+        if (_.get(params, 'options.vuex.insert')) {
+            payload['insert'] = _.get(params, 'options.vuex.insert');
         }
+
+        if (_.get(params, 'options.vuex.create')) {
+            payload['create'] = _.get(params, 'options.vuex.create');
+        }
+
+        params.model[method](payload);
 
         store.commit('app/INSERT', {
             ui: {
@@ -68,8 +79,13 @@ export class Get extends Action
  */
 interface ActionParameters
 {
+    // ID of the resource.
     id: string;
+
+    // Model of the resource.
     model: typeof ExtendedModel;
+
+    // Options.
     options: GetParameters;
 }
 
@@ -78,6 +94,20 @@ interface ActionParameters
  */
 export interface GetParameters
 {
+    // Query parameters that will be sent with the request.
     parameters?: any;
+
+    // Instead of creating will insert new records along the existing ones.
     insert?: undefined | boolean;
+
+    // VuexORM specific settings.
+    vuex?: {
+        // Same as the create option for relations:
+        // https://vuex-orm.github.io/vuex-orm/guide/data/inserting-and-updating.html#insert-method-for-relationships
+        create?: string[];
+
+        // Same as the insert option for relations:
+        // https://vuex-orm.github.io/vuex-orm/guide/data/inserting-and-updating.html#insert-method-for-relationships
+        insert?: string[];
+    };
 }

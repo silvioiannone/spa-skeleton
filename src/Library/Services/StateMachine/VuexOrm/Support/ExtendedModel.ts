@@ -42,7 +42,7 @@ export class ExtendedModel extends Model
     }
 
     /**
-     * Get the model(s) from the server and stores it in the state machine.
+     * Get the model(s) from the server and store it in the state machine.
      */
     public static async $get(
         id: string | number = '',
