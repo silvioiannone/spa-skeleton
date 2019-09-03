@@ -12,6 +12,7 @@ export function Navigator(vue: typeof Vue): void
         beforeRouteUpdate: (to: Route, from: Route, next: Function): void =>
         {
             navigator.setRoute(to);
+            navigator.setFromRoute(from);
             next();
         },
         beforeRouteEnter: (to: Route, from: Route, next: Function): void =>
@@ -19,6 +20,7 @@ export function Navigator(vue: typeof Vue): void
             next((vm: Vue): void =>
             {
                 navigator.setInstance(vm);
+                navigator.setFromRoute(from);
             });
         },
         beforeUpdate(): void

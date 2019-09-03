@@ -38,8 +38,6 @@
 
             if (pagination.page && pagination.page !== 1) {
                 query['page'] = pagination.page.toString();
-            } else {
-                delete query['page'];
             }
 
             if (pagination.per_page && pagination.per_page !== Config.app.paginationSize) {
@@ -48,11 +46,9 @@
 
             if (pagination.sort && pagination.sort.length) {
                 query['sort'] = pagination.sort;
-            } else {
-                delete query['sort'];
             }
 
-            this.$router.push({ path: this.$route.path, query });
+            this.$navigator.push({ path: this.$route.path, query });
         }
 
         /**

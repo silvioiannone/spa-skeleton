@@ -1,8 +1,9 @@
-import Vue               from 'vue';
-import Router, { Route } from 'vue-router'
-import { String }        from './String';
-import { StateMachine }  from '../Services/StateMachine';
-import { Guard }         from '../Guard';
+import Vue                            from 'vue';
+import Router, { Route, RawLocation } from 'vue-router'
+import _                              from 'lodash';
+import { String }                     from './String';
+import { StateMachine }               from '../Services/StateMachine';
+import { Guard }                      from '../Guard';
 
 /**
  * Providers navigations and routing utilities.
@@ -15,9 +16,14 @@ export class Navigator
     protected router: Router;
 
     /**
-     * Vue router's route.
+     * Current route.
      */
     protected route: Route;
+
+    /**
+     * Previous route.
+     */
+    protected fromRoute: Route;
 
     /**
      * Set the vue instance.
@@ -41,6 +47,14 @@ export class Navigator
     public setRoute(route: Route): void
     {
         this.route = route;
+    }
+
+    /**
+     * Set the previous route.
+     */
+    public setFromRoute(route: Route): void
+    {
+        this.fromRoute = route;
     }
 
     /**
@@ -75,5 +89,26 @@ export class Navigator
         // In order to refresh the current route we just need to execute the view actions.
         (new Guard).init(this.router, StateMachine.getStore())
             .refresh(this.route);
+    }
+
+    /**
+     * Navigate to a new route.
+     *
+     * @param location
+     */
+    public push(location: RawLocation): Promise<Route|void>
+    {
+        if (typeof location === 'string') {
+            return this.router.push(location);
+        }
+
+        let route = this.fromRoute ? this.fromRoute : this.route;
+
+        // Navigate to the new route only if the route's query has changed.
+        if (! _.isEqual(location.query, route.query)) {
+            return this.router.push(location);
+        }
+
+        return new Promise((): void => {});
     }
 }

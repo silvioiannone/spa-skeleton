@@ -70,10 +70,12 @@
         @Watch('filters', { deep: true })
         onFiltersChange()
         {
-            let query = {
-                ...this.$route.query,
-                page: '1' // When applying a filter always reset the page number.
-            };
+            let query = { ...this.$route.query };
+
+            // When applying a filter always reset the page number.
+            if (query.page !== '1') {
+                query.page = '1'
+            }
 
             let queryFilters = {};
 
@@ -100,8 +102,7 @@
             };
 
             this.syncStore();
-
-            this.$router.push({ path: this.$route.path, query });
+            this.$navigator.push({ query });
         }
     }
 

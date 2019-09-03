@@ -73,7 +73,7 @@
             }
 
             this.$ws.disconnect();
-            this.$router.push('/login');
+            this.$navigator.push('/login');
         }
     }
 

@@ -33,10 +33,7 @@
                     delete query['search'];
                 }
 
-                this.$router.push({
-                    path: this.$route.path,
-                    query
-                });
+                this.$navigator.push({ path: this.$route.path, query });
             }, 500)
         }
 
