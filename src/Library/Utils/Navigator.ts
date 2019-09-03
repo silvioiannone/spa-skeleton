@@ -96,19 +96,20 @@ export class Navigator
      *
      * @param location
      */
-    public push(location: RawLocation): Promise<Route|void>
+    public async push(location: RawLocation): Promise<Route|void>
     {
-        if (typeof location === 'string') {
-            return this.router.push(location);
+        let result = null;
+
+        try {
+            result = await this.router.push(location);
+        } catch (e) {
+            if (e.name === 'NavigationDuplicated') {
+                return new Promise((): void => {});
+            }
+
+            throw e;
         }
 
-        let route = this.fromRoute ? this.fromRoute : this.route;
-
-        // Navigate to the new route only if the route's query has changed.
-        if (! _.isEqual(location.query, route.query)) {
-            return this.router.push(location);
-        }
-
-        return new Promise((): void => {});
+        return result;
     }
 }

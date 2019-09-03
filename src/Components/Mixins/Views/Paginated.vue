@@ -36,7 +36,7 @@
         {
             let query = { ...this.$route.query };
 
-            if (pagination.page && pagination.page !== 1) {
+            if (pagination.page) {
                 query['page'] = pagination.page.toString();
             }
 
@@ -46,6 +46,8 @@
 
             if (pagination.sort && pagination.sort.length) {
                 query['sort'] = pagination.sort;
+            } else {
+                delete query['sort'];
             }
 
             this.$navigator.push({ path: this.$route.path, query });
