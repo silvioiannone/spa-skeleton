@@ -93,8 +93,6 @@ export class Navigator
 
     /**
      * Navigate to a new route.
-     *
-     * @param location
      */
     public async push(location: RawLocation): Promise<Route|void>
     {

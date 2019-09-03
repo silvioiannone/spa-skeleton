@@ -36,7 +36,7 @@
         {
             let query = { ...this.$route.query };
 
-            if (pagination.page) {
+            if (pagination.page && pagination.page !== 1) {
                 query['page'] = pagination.page.toString();
             }
 
