@@ -108,9 +108,11 @@ export class View extends Module
     protected getQueryParameters(payload: any, defaultParameters: any = {}): any
     {
         let pageSizeParameter = Config.app.paginationSize;
+
         if (defaultParameters['page[size]']) {
             pageSizeParameter = defaultParameters['page[size]'];
         }
+
         if (payload.route.query.size) {
             pageSizeParameter = payload.route.query.size;
         }
@@ -131,5 +133,37 @@ export class View extends Module
         }
 
         return parameters;
+    }
+
+    /**
+     * Check if the given route is matching the one in the payload.
+     */
+    protected isMatchingRoute(payload: any, route: string): boolean
+    {
+        return !! payload.route.matched.find(
+            (payloadRoute: any): boolean => payloadRoute.path === route
+        );
+    }
+
+    /**
+     * Check if the given routes is matching the one in the payload.
+     */
+    protected isMatchingRoutes(payload: any, routes: string[]): boolean
+    {
+        routes.forEach((route: string) => {
+            if (! this.isMatchingRoute(payload, route)) {
+                return false;
+            }
+        })
+
+        return true;
+    }
+
+    /**
+     * Check if the given route matches exactly the one in the payload.
+     */
+    protected routeIs(payload: any, route: string): boolean
+    {
+        return payload.route.matched[payload.route.matched.length - 1].path === route;
     }
 }
