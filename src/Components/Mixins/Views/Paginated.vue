@@ -12,6 +12,8 @@
     @Component
     export class ViewPaginated extends Vue
     {
+        initialized: boolean = false;
+
         get pagination(): any
         {
             return this.$store.getters.app.ui.pagination;
@@ -19,14 +21,20 @@
 
         set pagination(value)
         {
-            let pagination = { ...this.pagination, ...value };
+            let pagination = {
+                ...this.$store.getters.app.ui.pagination,
+                ...value
+            };
 
-            this.$store.commit('app/SET', {
-                key: 'ui.pagination',
-                value: pagination
+            this.$store.commit('app/INSERT', {
+                ui: {
+                    pagination
+                }
             });
 
-            setTimeout(() => this.updateRoute(pagination));
+            if (this.initialized) {
+                setTimeout(() => this.updateRoute(pagination));
+            }
         }
 
         /**
@@ -36,7 +44,7 @@
         {
             let query = { ...this.$route.query };
 
-            if (pagination.page && pagination.page !== 1) {
+            if (pagination.page) {
                 query['page'] = pagination.page.toString();
             }
 
@@ -88,21 +96,29 @@
         {
             // Read the query parameters and apply them to the pagination in the state machine.
             let queryParameters = this.$route.query;
-            let pagination = {};
+            let pagination = {
+                descending: false,
+                filters: [],
+                page: 1,
+                per_page: Config.app.paginationSize,
+                sort: ''
+            };
 
             if (parseInt(queryParameters.page as string)) {
-                pagination['page'] = parseInt(queryParameters.page as string);
+                pagination.page = parseInt(queryParameters.page as string);
             }
 
             if (queryParameters.sort) {
-                pagination['sort'] = queryParameters.sort;
+                pagination.sort = queryParameters.sort as string;
             }
 
             if (parseInt(queryParameters.size as string)) {
-                pagination['per_page'] = parseInt(queryParameters.size as string)
+                pagination.per_page = parseInt(queryParameters.size as string);
             }
 
             this.pagination = pagination;
+
+            setTimeout(() => this.initialized = true);
         }
 
         created(): void
