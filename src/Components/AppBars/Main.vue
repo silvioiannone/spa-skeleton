@@ -29,6 +29,9 @@
         <template #extension v-if="extended">
             <slot name="tabs"></slot>
         </template>
+        <v-progress-linear absolute bottom :active="status === 'loading'"
+                           :indeterminate="status === 'loading'">
+        </v-progress-linear>
     </v-app-bar>
 </template>
 
@@ -84,6 +87,11 @@
         protected showingSearch: boolean = false;
 
         protected searchQuery: string | (string | null)[] = '';
+
+        get status(): any
+        {
+            return this.$store.getters.app.status;
+        }
 
         get breadcrumbs(): Array<any>
         {
