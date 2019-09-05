@@ -40,7 +40,7 @@
         /**
          * Update the route based on the pagination.
          */
-        updateRoute(pagination: Pagination): void
+        async updateRoute(pagination: Pagination): Promise<void>
         {
             let query = { ...this.$route.query };
 
@@ -58,7 +58,9 @@
                 delete query['sort'];
             }
 
-            this.$navigator.push({ path: this.$route.path, query });
+            await this.$navigator.push({ path: this.$route.path, query });
+
+            window.scrollTo(0, 0);
         }
 
         /**
