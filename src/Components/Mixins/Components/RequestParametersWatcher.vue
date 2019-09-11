@@ -100,7 +100,9 @@
             // mixin causing it to be called multiple times.
             // Since this will only be called once then we don't even need to compare the new
             // parameters with the old ones in order to determine if something changed.
-            this.$watch('parameters', async () => this.requestData());
+            this.$watch('parameters', async () => {
+                this.requestData();
+            });
         }
     }
 

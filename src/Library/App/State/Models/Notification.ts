@@ -1,4 +1,5 @@
-import { Model } from '@vuex-orm/core';
+import { ExtendedModel as Model }
+    from '../../../Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
 /**
  * Notification model.
