@@ -1,20 +1,12 @@
 <template>
-    <error-main :back-button="false">
-        <v-container class="mt-5">
-            <v-layout>
-                <v-flex xs12>
-                    <div class="text-center mb-5">
-                        <v-icon x-large>mdi-clock-alert-outline</v-icon>
-                    </div>
-                    <h1 class="text-center">Too many attempts.</h1>
-                    <p class="my-5 text-center">
-                        Please wait before making another request. Navigation will automatically
-                        resume in {{ delta }} seconds.
-                    </p>
-                    <v-progress-linear v-model="progress"></v-progress-linear>
-                </v-flex>
-            </v-layout>
-        </v-container>
+    <error-main :back-button="false" icon="mdi-clock-alert-outline" title="Too many attempts">
+        <v-flex xs12>
+            <p class="my-5 text-center">
+                Please wait before making another request. Navigation will automatically
+                resume in {{ delta }} seconds.
+            </p>
+            <v-progress-linear v-model="progress"></v-progress-linear>
+        </v-flex>
     </error-main>
 </template>
 

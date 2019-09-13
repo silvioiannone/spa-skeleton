@@ -1,18 +1,31 @@
 <template>
-    <v-container>
-        <v-layout>
-            <slot></slot>
-        </v-layout>
-        <v-layout>
+    <v-container fill-height>
+        <v-layout align-center justify-center wrap>
+            <v-flex xs12>
+                <v-container class="mt-5">
+                    <v-layout wrap>
+                        <v-flex xs12>
+                            <div class="text-center mb-5">
+                                <v-icon x-large>{{ icon }}</v-icon>
+                            </div>
+                            <h1 class="text-center display-2">{{ title }}</h1>
+                        </v-flex>
+                        <v-flex xs12 class="my-5" v-if="$slots.default">
+                            <v-divider></v-divider>
+                        </v-flex>
+                        <slot></slot>
+                    </v-layout>
+                </v-container>
+            </v-flex>
             <v-flex xs12>
                 <div class="text-center">
-                    <v-btn color="primary" large @click="goBack()" v-if="backButton">
+                    <v-btn color="primary" large outlined @click="goBack()" v-if="backButton">
                         <v-icon left>arrow_back</v-icon>{{$t('misc.goBack')}}
                     </v-btn>
                 </div>
             </v-flex>
         </v-layout>
-        <v-layout wrap v-if="app.config.env !== 'production' && error">
+        <v-layout wrap v-if="app.config.env !== 'production' && error && error.body.message">
             <v-flex xs12 class="my-5">
                 <v-divider></v-divider>
             </v-flex>
@@ -27,8 +40,9 @@
                             </v-card-title>
                             <v-card-text>
                                 <h5>
-                                    {{$t('misc.onLine')}}
-                                    <span class="monospaced">{{ error.body.line }}</span> {{$t('misc.in')}}
+                                    {{ $t('misc.onLine') }}
+                                    <span class="monospaced">{{ error.body.line }}</span>
+                                    {{ $t('misc.in') }}
                                     <span class="monospaced">{{ error.body.file }}</span>.
                                 </h5>
                             </v-card-text>
@@ -47,8 +61,7 @@
 
 <script lang="ts">
 
-    import Vue           from 'vue';
-    import { Component } from 'vue-property-decorator';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
     import { LayoutApp } from 'spa-skeleton/src/Components/Layouts/App.vue';
 
     @Component({
@@ -68,6 +81,21 @@
     })
     export class ErrorMain extends Vue
     {
+        /**
+         * Whether or not to display the back button.
+         */
+        @Prop({ type: Boolean, default: true }) backButton: boolean;
+
+        /**
+         * The error's title.
+         */
+        @Prop({ type: String, default: '' }) title: string;
+
+        /**
+         * The error's icon.
+         */
+        @Prop({ type: String, default: 'error_outline' }) icon: string;
+
         get app()
         {
             return this.$store.getters.app;
