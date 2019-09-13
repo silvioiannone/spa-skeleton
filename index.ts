@@ -14,6 +14,7 @@ export { ViewAction } from './src/Library/Types/ViewAction';
 /*
  * Utils.
  */
+export { Cookie } from './src/Library/Utils/Cookie';
 export { Pagination } from './src/Library/Utils/Pagination';
 export { Time } from './src/Library/Utils/Time';
 

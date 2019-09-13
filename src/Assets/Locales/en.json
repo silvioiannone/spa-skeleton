@@ -39,8 +39,8 @@
     "goBack": "Go back",
     "in": "in",
     "onLine": "On line",
-    "pageNotFound": "Page not found.",
-    "unauthorized": "Unauthorized.",
+    "pageNotFound": "Page not found",
+    "unauthorized": "Unauthorized",
     "youAreNotAuthorizedToViewThisPage": "You are not authorized to view this page."
   },
   "navigationDrawer": {
