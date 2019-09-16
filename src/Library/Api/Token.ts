@@ -1,4 +1,5 @@
 import { Config } from '../../Config';
+import { Cookie } from '../Utils/Cookie';
 import JwtDecode  from 'jwt-decode';
 
 /**
@@ -57,8 +58,8 @@ export class Token
      */
     public static remove(): void
     {
-        document.cookie = Token.accessTokenName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = Token.refreshTokenName +'=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        Cookie.delete(Token.accessTokenName);
+        Cookie.delete(Token.refreshTokenName);
     }
 
     /**
