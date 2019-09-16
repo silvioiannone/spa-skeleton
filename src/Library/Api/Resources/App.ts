@@ -1,6 +1,5 @@
 import { ApiResource }       from './ApiResource';
 import { ResponseInterface } from '../ResponseInterface';
-import { Token }             from 'spa-skeleton/src/Library/Api/Token';
 
 /**
  * App resource.
@@ -22,8 +21,6 @@ export class App extends ApiResource
      */
     public getSettings(): Promise<ResponseInterface>
     {
-        // Delete the old token in order to avoid issues since the authentication endpoint doesn't
-        // expect it.
         return this._get('settings');
     }
 
