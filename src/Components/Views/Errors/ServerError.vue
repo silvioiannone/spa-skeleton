@@ -1,5 +1,5 @@
 <template>
-    <error-main :back-button="false" :title="Whoops">
+    <error-main :back-button="false" title="Whoops">
         <v-flex xs12 offset-md3 md6 offset-lg4 lg4 class="mt-5">
             <p>Something went wrong while loading this page.</p>
             <p>
