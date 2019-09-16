@@ -31,4 +31,12 @@ export class App extends ApiResource
     {
         return this._patch('settings', settings);
     }
+
+    /**
+     * Decode an hashed ID.
+     */
+    public decodeHashid(hashid: string, resource: string): Promise<ResponseInterface>
+    {
+        return this._get(`hashids/decode?hashid=${hashid}&resource=${resource}`);
+    }
 }
