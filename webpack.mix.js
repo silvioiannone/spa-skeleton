@@ -129,8 +129,8 @@ module.exports = {
         this.mix.styles(sources, 'public/css/all.css');
 
         if (fs.existsSync('resources/ts/Loader.ts')) {
-            this.mix.stylus(
-                'node_modules/spa-skeleton/src/Assets/Stylus/Loader.styl',
+            this.mix.sass(
+                'node_modules/spa-skeleton/src/Assets/Sass/Components/Loader.sass',
                 'public/css/loader.css'
             );
         }
