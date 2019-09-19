@@ -1,4 +1,6 @@
 import { AbstractHandler } from './AbstractHandler';
+import { Notification }    from '../App/State/Models/Notification';
+import Notifications       from '../App/Notifications';
 
 /**
  * Handle events that should make changes to the App state machine module.
@@ -33,6 +35,30 @@ export class AppHandler extends AbstractHandler
         this.vue.$store.commit('app/SET', {
             key: 'updateAvailable',
             value: true
-        })
+        });
+    }
+
+    /**
+     * Handle the `.Bloom\Cluster\Kernel\App\Events\NotificationSent` event.
+     */
+    public '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent'(event: any): void
+    {
+        let notification = event.response;
+
+        Notification.insertOrUpdate({ data: notification });
+
+        let user = this.vue.$store.getters.app.user;
+
+        if (! user.settings.notifications.desktopNotifications) {
+            return;
+        }
+
+        let desktopNotification = new Notifications[notification.type](this.vue,  notification);
+
+        if (! desktopNotification) {
+            return;
+        }
+
+        desktopNotification.show();
     }
 }

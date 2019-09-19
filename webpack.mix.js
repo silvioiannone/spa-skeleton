@@ -88,7 +88,8 @@ module.exports = {
             'loglevel',
             'moment',
             'lodash',
-            'vue-markdown'
+            'vue-markdown',
+            'push.js'
         ].concat(this.additionalModulesToExtract);
 
         this.mix.js('resources/ts/App.ts', './public/js/app.js')

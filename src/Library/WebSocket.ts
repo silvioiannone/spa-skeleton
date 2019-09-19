@@ -14,7 +14,6 @@ import { Token }                       from './Api/Token';
 import { Subscription }                from './Interfaces/Subscription';
 import { Channel }                     from './Types/Channel';
 import { Channel as ChannelInterface } from './Interfaces/Channel';
-import { Notification }                 from './App/State/Models/Notification';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -32,7 +31,8 @@ export class WebSocket
         },
         {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
-            channels: [UserChannel]
+            channels: [UserChannel],
+            handlers: [AppHandler]
         },
         {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\AppUpdated',
@@ -196,10 +196,10 @@ export class WebSocket
         _channel.listen(event, (payload: any): void =>
         {
             if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
-                self.handleNotification(payload.response);
-            } else {
-                self.broadcast(event, payload);
+                Log.debug('Notification received: ' + payload.response.type + '.');
             }
+
+            self.broadcast(event, payload);
         });
     }
 
@@ -222,16 +222,6 @@ export class WebSocket
         this.handleEvent(event, payload);
 
         Log.debug('Broadcasted event ' + event + '.');
-    }
-
-    /**
-     * Handle a notification.
-     */
-    public handleNotification(notification: any): void
-    {
-        Notification.insertOrUpdate({ data: notification });
-
-        Log.debug('Notification received: ' + notification.type + '.');
     }
 
     /**

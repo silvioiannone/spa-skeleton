@@ -33,6 +33,7 @@ export { Subscription }     from './src/Library/Interfaces/Subscription';
 
 export { AbstractChannel as Channel } from './src/Library/WebSocket/AbstractChannel';
 export { AbstractHandler as EventHandler } from './src/Library/Events/AbstractHandler';
+export { PushNotification } from 'spa-skeleton/src/Library/Notifications/PushNotification';
 
 /**
  * Mixins
