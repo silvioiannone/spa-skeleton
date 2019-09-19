@@ -17,7 +17,7 @@ export abstract class PushNotification
      */
     private defaultOptions: PushNotificationParams = {
         icon: '/storage/favicons/apple-touch-icon.png'
-    }
+    };
 
     /**
      * Push notification options.
