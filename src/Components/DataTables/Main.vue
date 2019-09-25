@@ -1,5 +1,12 @@
 <script lang="ts">
 
+    import '../../../../vuetify/src/components/VDataTable/VDataTable.sass'
+    import '../../../../vuetify/src/components/VDataTable/VDataTableHeader.sass'
+    import '../../../../vuetify/src/components/VDataTable/VEditDialog.sass'
+    import '../../../../vuetify/src/components/VDataTable/VSimpleTable.sass'
+    import '../../../../vuetify/src/components/VDataTable/VVirtualTable.sass'
+    import '../../../../vuetify/src/components/VDataIterator/VDataFooter.sass'
+
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { Config }                  from '../../Config';
     import { BasePaginatable }         from '../Mixins/Pagination.vue';
