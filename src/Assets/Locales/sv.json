@@ -1,69 +1,73 @@
 {
-  "common": {
-    "cancel": "Avbryt",
-    "delete": "Radera",
-    "done": "Klar",
-    "email": "E-post",
-    "logIn": "Logga in",
-    "no": "Nej",
-    "reset": "Återställa",
-    "search": "Sök",
-    "showAll": "Visa alla",
-    "showMore": "Visa fler",
-    "upload": "Ladda up"
-  },
-  "form": {
-    "cancel": "@:common.cancel",
-    "changePassword": "Byt lösenord",
-    "email": "@:common.email",
-    "logIn": "@:common.logIn",
-    "newPassword": "Nytt lösenord",
-    "password": "Lösenord",
-    "repeatPassword": "Repetera lösenord",
-    "submit": "Skicka",
-    "passwordAskReset": {
-      "message": "Ange den e-postadress som användes för att skapa ditt konto. Vi skickar ett mail med en återställd länk där du kan ange ett nytt lösenord."
+    "common": {
+        "cancel": "Avbryt",
+        "create": "Skapa",
+        "delete": "Radera",
+        "done": "Klar",
+        "email": "E-post",
+        "logIn": "Logga in",
+        "no": "Nej",
+        "reset": "Återställa",
+        "search": "Sök",
+        "showAll": "Visa alla",
+        "showMore": "Visa fler",
+        "upload": "Ladda up"
+    },
+    "form": {
+        "cancel": "@:common.cancel",
+        "changePassword": "Byt lösenord",
+        "email": "@:common.email",
+        "logIn": "@:common.logIn",
+        "newPassword": "Nytt lösenord",
+        "password": "Lösenord",
+        "repeatPassword": "Repetera lösenord",
+        "submit": "Skicka",
+        "passwordAskReset": {
+            "message": "Ange den e-postadress som användes för att skapa ditt konto. Vi skickar ett mail med en återställd länk där du kan ange ett nytt lösenord."
+        }
+    },
+    "menu": {
+        "settings": "Inställningar",
+        "quit": "Logga ut"
+    },
+    "misc": {
+        "authenticateInOrderToContinue": "Godkänn för att fortsätta.",
+        "details": "Detaljer",
+        "fileUpload": {
+            "dragAndDropToUploadAFile": "Dra och släpp för att ladda upp en fil!",
+            "orClickTapToSelectOne": "...eller klicka/peka för att välja en."
+        },
+        "goBack": "Tillbaka",
+        "in": "i",
+        "onLine": "På rad",
+        "pageNotFound": "Sidan hittades inte.",
+        "unauthorized": "Obehörig.",
+        "youAreNotAuthorizedToViewThisPage": "Du är inte behörig att visa den här sidan."
+    },
+    "navigationDrawer": {
+        "close": "Stäng",
+        "markAllAsRead": "Markera alla som lästa",
+        "noNewNotifications": "Inga nya notifiering.",
+        "notifications": "Notifiering"
+    },
+    "toolbar": {
+        "logIn": "@:common.logIn"
+    },
+    "validations": {
+        "min_value": "Fältet {_field_} måste vara { min } eller mer"
+    },
+    "$vuetify": {
+        "dataIterator": {
+            "nextPage": "Nästa sida",
+            "noResultsText": "Inga matchande poster hittades",
+            "pageText": "{0}-{1} av {2}",
+            "prevPage": "Föregående sida",
+            "rowsPerPageAll": "Alla",
+            "rowsPerPageText": "Element per sida:"
+        },
+        "dataTable": {
+            "rowsPerPageText": "Rader per sida:"
+        },
+        "noDataText": "Ingen tillgänglig data"
     }
-  },
-  "menu": {
-    "settings": "Inställningar",
-    "quit": "Logga ut"
-  },
-  "misc": {
-    "authenticateInOrderToContinue": "Godkänn för att fortsätta.",
-    "details": "Detaljer",
-    "fileUpload": {
-      "dragAndDropToUploadAFile": "Dra och släpp för att ladda upp en fil!",
-      "orClickTapToSelectOne": "...eller klicka/peka för att välja en."
-    },
-    "goBack": "Tillbaka",
-    "in": "i",
-    "onLine": "På rad",
-    "pageNotFound": "Sidan hittades inte.",
-    "unauthorized": "Obehörig.",
-    "youAreNotAuthorizedToViewThisPage": "Du är inte behörig att visa den här sidan."
-  },
-  "navigationDrawer": {
-    "close": "Stäng",
-    "markAllAsRead": "Markera alla som lästa",
-    "noNewNotifications": "Inga nya notifiering.",
-    "notifications": "Notifiering"
-  },
-  "toolbar": {
-    "logIn": "@:common.logIn"
-  },
-  "$vuetify": {
-    "dataIterator": {
-      "nextPage": "Nästa sida",
-      "noResultsText": "Inga matchande poster hittades",
-      "pageText": "{0}-{1} av {2}",
-      "prevPage": "Föregående sida",
-      "rowsPerPageAll": "Alla",
-      "rowsPerPageText": "Element per sida:"
-    },
-    "dataTable": {
-      "rowsPerPageText": "Rader per sida:"
-    },
-    "noDataText": "Ingen tillgänglig data"
-  }
 }

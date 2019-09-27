@@ -1,75 +1,72 @@
 {
-  "common": {
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "done": "Done",
-    "email": "E-mail",
-    "logIn": "Log in",
-    "no": "No",
-    "reset": "Reset",
-    "search": "Search",
-    "showAll": "Show all",
-    "showMore": "Show more",
-    "upload": "Upload"
-  },
-  "form": {
-    "cancel": "@:common.cancel",
-    "changePassword": "Change password",
-    "email": "@:common.email",
-    "logIn": "@:common.logIn",
-    "newPassword": "New password",
-    "password": "Lösenord",
-    "repeatPassword": "Repeat password",
-    "submit": "Submit",
-    "passwordAskReset": {
-      "message": "Please enter the email address that was used to create your account. We'll send an email with a reset link where you can set a new password."
+    "common": {
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "done": "Done",
+        "email": "E-mail",
+        "logIn": "Log in",
+        "no": "No",
+        "reset": "Reset",
+        "search": "Search",
+        "showAll": "Show all",
+        "showMore": "Show more",
+        "upload": "Upload"
+    },
+    "form": {
+        "cancel": "@:common.cancel",
+        "changePassword": "Change password",
+        "email": "@:common.email",
+        "logIn": "@:common.logIn",
+        "newPassword": "New password",
+        "password": "Lösenord",
+        "repeatPassword": "Repeat password",
+        "submit": "Submit",
+        "passwordAskReset": {
+            "message": "Please enter the email address that was used to create your account. We'll send an email with a reset link where you can set a new password."
+        }
+    },
+    "menu": {
+        "settings": "Settings",
+        "quit": "Quit"
+    },
+    "misc": {
+        "authenticateInOrderToContinue": "Authenticate in order to continue.",
+        "details": "Details",
+        "fileUpload": {
+            "dragAndDropToUploadAFile": "Drag and drop to upload a file!",
+            "orClickTapToSelectOne": "...or click/tap to select one."
+        },
+        "goBack": "Go back",
+        "in": "in",
+        "onLine": "On line",
+        "pageNotFound": "Page not found",
+        "unauthorized": "Unauthorized",
+        "youAreNotAuthorizedToViewThisPage": "You are not authorized to view this page."
+    },
+    "navigationDrawer": {
+        "close": "Close",
+        "markAllAsRead": "Mark all as read",
+        "noNewNotifications": "No new notifications at this time.",
+        "notifications": "Notifications"
+    },
+    "toolbar": {
+        "logIn": "@:common.logIn"
+    },
+    "$vuetify": {
+        "dataIterator": {
+            "nextPage": "Next page",
+            "noResultsText": "@:common.no matching records found",
+            "pageText": "{0}-{1} of {2}",
+            "prevPage": "Previous page",
+            "rowsPerPageAll": "All",
+            "rowsPerPageText": "Items per page:"
+        },
+        "dataTable": {
+            "rowsPerPageText": "Rows per page:"
+        },
+        "noDataText": "@:common.no data available"
+    },
+    "validations": {
+        "min_value": "Loaded english"
     }
-  },
-  "menu": {
-    "settings": "Settings",
-    "quit": "Quit"
-  },
-  "misc": {
-    "authenticateInOrderToContinue": "Authenticate in order to continue.",
-    "details": "Details",
-    "fileUpload": {
-      "dragAndDropToUploadAFile": "Drag and drop to upload a file!",
-      "orClickTapToSelectOne": "...or click/tap to select one."
-    },
-    "goBack": "Go back",
-    "in": "in",
-    "onLine": "On line",
-    "pageNotFound": "Page not found",
-    "unauthorized": "Unauthorized",
-    "youAreNotAuthorizedToViewThisPage": "You are not authorized to view this page."
-  },
-  "navigationDrawer": {
-    "close": "Close",
-    "markAllAsRead": "Mark all as read",
-    "noNewNotifications": "No new notifications at this time.",
-    "notifications": "Notifications"
-  },
-  "toolbar": {
-    "logIn": "@:common.logIn"
-  },
-  "$vuetify": {
-    "dataIterator": {
-      "nextPage": "Next page",
-      "noResultsText": "@:common.no matching records found",
-      "pageText": "{0}-{1} of {2}",
-      "prevPage": "Previous page",
-      "rowsPerPageAll": "All",
-      "rowsPerPageText": "Items per page:"
-    },
-    "dataTable": {
-      "rowsPerPageText": "Rows per page:"
-    },
-    "noDataText": "@:common.no data available"
-  },
-  "validations": {
-    "messages": {
-      "required": "The field is required.",
-      "email": "Invalid e-mail address."
-    }
-  }
 }
