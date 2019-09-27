@@ -32,21 +32,19 @@
         /**
          * Focus the first input of the dialog.
          */
-        focus()
+        focus(): void
         {
-            this.$nextTick(() =>
-            {
+            setTimeout(() => {
                 let firstFormInput =
-                    <HTMLElement>document.querySelector('.v-dialog--active form input, .v-dialog--active form textarea');
+                    <HTMLElement>document.querySelector(
+                        '.v-dialog--active form input, .v-dialog--active form textarea'
+                    );
 
                 if (!firstFormInput) {
                     return;
                 }
 
-                this.$nextTick(() =>
-                {
-                    firstFormInput.focus();
-                });
+                setTimeout(() => firstFormInput.focus());
             });
         }
 

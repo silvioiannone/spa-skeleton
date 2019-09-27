@@ -1,9 +1,11 @@
-import VeeValidate       from 'vee-validate';
-import Vue               from 'vue';
-import { Logger as Log } from './Logger';
-import { Service }       from './Service';
-import { Translator }    from './Translator';
-import AppRules          from '../../../../../resources/ts/App/Rules';
+import { Config }                                from '../../Config';
+import { ValidationProvider, ValidationObserver, extend, configure } from 'vee-validate';
+import * as VeeValidateRules                     from 'vee-validate/dist/rules';
+import Vue                                       from 'vue';
+import { Logger as Log }                         from './Logger';
+import { Service }                               from './Service';
+import { Translator }                            from './Translator';
+import AppRules                                  from '../../../../../resources/ts/App/Rules';
 
 // Skeleton rules.
 import { Count }      from '../App/Rules/Count';
@@ -29,12 +31,21 @@ export class Validator extends Service
      */
     public boot(): void
     {
+
+        let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
         let translator = (new Translator).get();
 
-        Vue.use(VeeValidate, {
-            i18nRootKey: 'validations',
-            i18n: translator,
+        configure({
+            defaultMessage: (_, values: any): any =>
+                translator.t(`validations.${values._rule_}`, values)
         });
+
+        for (let key in VeeValidateRules) {
+            extend(key, {
+                ...VeeValidateRules[key],
+                message: messages.messages[key]
+            });
+        }
 
         let availableRules = { ...skeletonRules, ...AppRules };
 
@@ -44,7 +55,10 @@ export class Validator extends Service
 
             Log.debug(`Registered rule '${ruleName}'.`);
 
-            VeeValidate.Validator.extend(ruleName, rule.get())
+            extend(ruleName, rule.get());
         }
+
+        Vue.component('validation-provider', ValidationProvider);
+        Vue.component('validation-observer', ValidationObserver);
     }
 }

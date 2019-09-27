@@ -1,7 +1,7 @@
 import VueI18N from 'vue-i18n';
 
 interface Rule {
-    getMessage: (field: string, params: any[], data: any) => string;
+    message: (field: string, params: any[], data: any) => string;
     validate: (value: string, params: any[]) => boolean;
 }
 
@@ -29,7 +29,7 @@ export abstract class AbstractRule
     public get(): Rule
     {
         return {
-            getMessage: this.getMessage,
+            message: this.getMessage,
             validate: this.validate
         }
     }

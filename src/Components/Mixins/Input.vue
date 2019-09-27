@@ -51,7 +51,7 @@
 
         get _errorMessages()
         {
-            return [...this.errorMessages, ...this.errors.collect(this.name)];
+            return [...this.errorMessages/*, ...this.errors.collect(this.name)*/];
         }
     }
 

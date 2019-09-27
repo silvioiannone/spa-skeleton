@@ -42,6 +42,7 @@ export class Translator extends Service
 
         messages[locale] = _.merge(skeletonLocale, appLocale);
 
+        Log.debug(`Locale set to "${locale}".`);
         Log.debug('Language loaded.');
 
         Translator.instance = new VueI18N({

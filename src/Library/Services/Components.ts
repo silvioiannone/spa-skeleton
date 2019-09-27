@@ -9,31 +9,25 @@ import AppComponents from '../../../../../resources/ts/App/Components';
 // Skeleton components
 import { AnimatedRouterView }  from '../../Components/Misc/AnimatedRouterView.vue';
 import { AppBarMain }          from '../../Components/AppBars/Main.vue';
-// import ButtonConfirm        from '../../Components/Buttons/Confirm.vue';
 import { ButtonMain }          from '../../Components/Buttons/Main.vue';
 import { ButtonSubmit }        from '../../Components/Buttons/Submit.vue';
 import { FormMain }            from '../../Components/Forms/Main.vue';
-// import NavigationDrawerMain from '../../Components/NavigationDrawers/Main.vue';
+import { TextareaMain }        from '../../Components/Textareas/Main.vue';
+import { TextFieldMain }       from '../../Components/TextFields/Main.vue';
 import { TimeFromNow }         from '../../Components/Partials/TimeFromNow.vue';
-// import PartialFooter        from '../../Components/Partials/Footer.vue';
-// import PartialMarkdown      from '../../Components/Partials/Markdown.vue';
 import { ResponsiveContainer } from '../../Components/Misc/Grid/ResponsiveContainer.vue';
 import { ToolbarMain }         from '../../Components/Toolbars/Main.vue';
-// import ToolbarHome          from '../../Components/Toolbars/Home.vue';
 
 const SkeletonComponents = {
     AnimatedRouterView,
     AppBarMain,
-    //'button-confirm': ButtonConfirm,
     ButtonMain,
     ButtonSubmit,
     FormMain,
-    //'navigation-drawer-main': NavigationDrawerMain,
-    //'partial-footer': PartialFooter,
-    //'partial-markdown': PartialMarkdown,
     ResponsiveContainer,
+    TextareaMain,
+    TextFieldMain,
     ToolbarMain,
-    //'toolbar-home': ToolbarHome,
     TimeFromNow
 };
 

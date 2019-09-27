@@ -195,6 +195,34 @@ const defaultConfig = {
     ui: {
 
         /**
+         * Components settings.
+         */
+        components: {
+
+            /**
+             * Text field component settings.
+             */
+            textField: {
+
+                /**
+                 * The default style that the component should use.
+                 */
+                defaultStyle: null,
+            },
+
+            /**
+             * Textarea component settings.
+             */
+            textarea: {
+
+                /**
+                 * The default style that the component shoud use.
+                 */
+                defaultStyle: null
+            }
+        },
+
+        /**
          * UI colors.
          */
         colors: {

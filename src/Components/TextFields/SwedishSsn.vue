@@ -1,10 +1,11 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { TextField }               from '../Mixins/TextField.vue';
+    import { TextFieldMain }           from './Main.vue';
+    import { Wrapper }                 from '../Mixins/Wrapper.vue';
 
     @Component
-    export class TextFieldSwedishSsn extends Mixins(TextField)
+    export class TextFieldSwedishSsn extends Mixins(Wrapper, TextFieldMain)
     {
         /**
          * Social security number.
@@ -26,13 +27,15 @@
          */
         @Prop({ type: Boolean, default: true }) returnMaskedValue: boolean;
 
+        __component = TextFieldMain;
+
         get _validation(): any
         {
-            if (typeof this.validation === 'string') {
-                return this.validation.concat('|', 'swedishSsn');
+            if (typeof this.rules === 'string') {
+                return this.rules.concat('|', 'swedishSsn');
             } else {
                 return {
-                    ...this.validation,
+                    ...this.rules,
                     swedishSsn: true
                 }
             }

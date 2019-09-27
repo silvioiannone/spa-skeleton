@@ -145,16 +145,9 @@
                 {
                     ref: 'autocomplete',
                     attrs: {
-                        name: this.name,
-                        'data-vv-as': this.vvAs
+                        name: this.name
                     },
                     props,
-                    directives: [
-                        {
-                            name: 'validate',
-                            value: this.validation
-                        }
-                    ],
                     on: {
                         input: (value: any) => this.emitInput(value),
                         'update:search-input': this.handleUpdateSearchInput,

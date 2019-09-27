@@ -2,11 +2,11 @@
     <iframe :frameborder="frameBorder"></iframe>
 </template>
 
-<style lang="stylus">
+<style lang="sass">
 
     iframe
-        width 100%
-        height 100%
+        width: 100%
+        height: 100%
 
 </style>
 

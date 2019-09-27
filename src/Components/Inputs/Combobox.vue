@@ -92,16 +92,9 @@
                 {
                     ref: 'combobox',
                     attrs: {
-                        name: this.name,
-                        'data-vv-as': this.vvAs
+                        name: this.name
                     },
                     props: this.getProps(),
-                    directives: [
-                        {
-                            name: 'validate',
-                            value: this.validation
-                        }
-                    ],
                     on: {
                         input: this.handleInput,
                         change: this.handleChange,
