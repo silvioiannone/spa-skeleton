@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card v-bind="$props" v-on="$listeners">
         <v-card-title class="headline" v-if="title.length">
             {{ title }}
             <v-spacer></v-spacer>
@@ -16,6 +16,11 @@
     @Component
     export class CardMain extends Vue
     {
+        /**
+         * Removes card elevation shadow and adds a thin border.
+         */
+        @Prop({ type: Boolean, default: false }) outlined: boolean;
+
         /**
          * Card title.
          */
