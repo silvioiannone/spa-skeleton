@@ -56,6 +56,7 @@ export { Button } from './src/Components/Mixins/Button.vue';
 /**
  * Components
  */
+export { AutocompleteCountry } from './src/Components/Autocompletes/Country.vue';
 export { AvatarUser } from './src/Components/Avatars/User.vue';
 export { ButtonSubmit } from './src/Components/Buttons/Submit.vue';
 export { ButtonConfirm } from './src/Components/Buttons/Confirm.vue';
