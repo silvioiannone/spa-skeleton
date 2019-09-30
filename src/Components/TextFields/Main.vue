@@ -1,14 +1,6 @@
-<template>
-    <validation-provider #default="{ errors }" :rules="rules" :name="_validationName" :vid="name"
-                         ref="validationProvider" slim>
-        <v-text-field v-bind="textFieldProps" v-on="$listeners" :error-messages="errors"
-                      :outlined="_outlined || outlined" :value="value" @blur="handleBlur">
-        </v-text-field>
-    </validation-provider>
-</template>
-
 <script lang="ts">
 
+    import { VNode } from 'vue';
     import { Config } from '../../Config';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { TextField } from '../Mixins/TextField.vue';
@@ -35,6 +27,45 @@
             delete props['rules'];
 
             return props;
+        }
+
+        /**
+         * Render the component.
+         */
+        render(createElement: Function): VNode
+        {
+            let vTextFieldDirectives: { name: string, value: string }[] = [];
+
+            if (this.mask.length) {
+                vTextFieldDirectives.push({
+                    name: 'mask',
+                    value: this.mask
+                })
+            }
+
+            return createElement('validation-provider', {
+                props: {
+                    rules: this.rules,
+                    name: this._validationName,
+                    vid: this.name,
+                },
+                scopedSlots: {
+                    default: (props: { errors: any }): VNode => createElement('v-text-field', {
+                        props: {
+                            ...this.textFieldProps,
+                            errorMessages: props.errors,
+                            outlined: this._outlined || this.outlined,
+                            value: this.value
+                        },
+                        directives: vTextFieldDirectives,
+                        on: {
+                            ...this.$listeners,
+                            blur: this.handleBlur
+                        }
+                    })
+                },
+                ref: 'validationProvider'
+            }, [])
         }
     }
 
