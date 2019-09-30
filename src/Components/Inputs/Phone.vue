@@ -1,38 +1,37 @@
 <template>
-    <v-input>
-        <v-layout>
-            <v-flex xs3 @keydown.enter="stopEnterPropagation">
-                <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
-                                item-value="prefix" :filter="filter" :disabled="disabled">
-                    <template #item="props">
-                        <v-list-item-avatar>
-                            <span :class="'flag-icon flag-icon-' + props.item.iso"></span>
-                        </v-list-item-avatar>
-                        <v-list-item-content>
-                            <v-list-item-title>
-                                {{ props.item.name }}
-                                (<strong>+{{ props.item.prefix }}</strong>)
-                            </v-list-item-title>
-                        </v-list-item-content>
-                    </template>
-                    <template #selection="props">
-                        <strong>+{{ props.item.prefix }}</strong>
-                    </template>
-                </v-autocomplete>
-            </v-flex>
-            <v-flex xs9>
-                <v-text-field label="Phone" v-model="phoneNumber" name="phone" :required="required"
-                              :disabled="! countryPrefix || disabled" :label="label" :hint="hint"
-                              :error-messages="errorMessages" :persistent-hint="persistentHint"
-                              v-mask="selectedCountryPhonePrefix.mask">
-                </v-text-field>
-            </v-flex>
-        </v-layout>
-    </v-input>
+    <v-layout>
+        <v-flex xs3 @keydown.enter="stopEnterPropagation">
+            <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
+                            :outlined="_outlined" item-value="prefix" :filter="filter"
+                            :disabled="disabled">
+                <template #item="props">
+                    <v-list-item-avatar>
+                        <span :class="'flag-icon flag-icon-' + props.item.iso"></span>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                        <v-list-item-title>
+                            {{ props.item.name }}
+                            (<strong>+{{ props.item.prefix }}</strong>)
+                        </v-list-item-title>
+                    </v-list-item-content>
+                </template>
+                <template #selection="props">
+                    <strong>+{{ props.item.prefix }}</strong>
+                </template>
+            </v-autocomplete>
+        </v-flex>
+        <v-flex xs9>
+            <text-field-main label="Phone" v-model="phoneNumber" name="phone" :hint="hint"
+                             :disabled="! countryPrefix || disabled" :label="label"
+                             :mask="selectedCountryPhonePrefix.mask">
+            </text-field-main>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script lang="ts">
 
+    import { Config }                          from '../../Config';
     import { Component, Mixins, Prop, Watch }  from 'vue-property-decorator';
     import { parseNumber }                     from 'libphonenumber-js';
     import CountryPhonePrefixes                from '../../Assets/Json/CountryPhonePrefixes.json';
@@ -58,11 +57,6 @@
          */
         @Prop({ type: String, default: 'Phone' }) label: string;
 
-        /**
-         * Make the phone input required.
-         */
-        @Prop({ type: Boolean, default: false }) required: boolean;
-
         countryPhonePrefixes: Array<PrefixDescription> = CountryPhonePrefixes || [];
 
         phoneNumber: string = '';
@@ -75,6 +69,11 @@
             prefix: '',
             mask: '## ## ## ###'
         };
+
+        get _outlined(): boolean
+        {
+            return Config.ui.components.textField.defaultStyle === 'outlined';
+        }
 
         get e164FormattedNumber(): string
         {
@@ -107,7 +106,8 @@
             // First try to parse the phone number and init the component data accordingly.
             let parsedNumber = parseNumber(this.value, { extended: true });
 
-            if (! parsedNumber.countryCallingCode && ! this.countryPrefix.length) {
+            if (! parsedNumber.countryCallingCode &&
+                ! (this.countryPrefix && this.countryPrefix.length)) {
                 // If the parsed number doesn't have any country calling code but the value is still
                 // set then assume that the value only contains the country calling code and assign
                 // it to the country prefix.
