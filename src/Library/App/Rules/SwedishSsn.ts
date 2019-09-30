@@ -1,4 +1,5 @@
 import { AbstractRule } from '../../Validation/AbstractRule';
+import { Translator } from '../../Services/Translator';
 
 /**
  * Swedish SSN validation rule.
@@ -14,9 +15,17 @@ export class SwedishSsn extends AbstractRule
     /**
      * Get the validation message.
      */
-    public getMessage(): string
+    public getMessage(field: string, params: any[], data: any): string
     {
-        return `Invalid SSN.`;
+        let translator = (new Translator).get();
+
+        let translationKey = 'validations.swedishSsn';
+
+        if (params[0] === 'org') {
+            translationKey += ':org';
+        }
+        
+        return translator.t(translationKey) as string;
     }
 
     /**

@@ -67,6 +67,8 @@
         "noDataText": "@:common.no data available"
     },
     "validations": {
-        "min_value": "Loaded english"
+        "min_value": "Loaded english",
+        "swedishSsn": "Invalid SSN",
+        "swedishSsn:org": "Invalid organisation number"
     }
 }

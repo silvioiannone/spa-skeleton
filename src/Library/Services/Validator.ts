@@ -31,7 +31,6 @@ export class Validator extends Service
      */
     public boot(): void
     {
-
         let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
         let translator = (new Translator).get();
 
