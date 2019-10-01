@@ -1,23 +1,30 @@
 <script lang="ts">
 
+    import { Config }                  from '../../Config';
     import { CreateElement, VNode }    from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { Autocomplete }            from '../Mixins/Autocomplete.vue';
+    import { Validatable }             from '../Mixins/Components/Validatable.vue';
 
     @Component
-    export class InputAutocomplete extends Mixins(Autocomplete)
+    export class InputAutocomplete extends Mixins(Autocomplete, Validatable)
     {
         /**
          * A search function that returns a promise.
          *
          * The promise should resolve with the items displayed by the dropdown.
          */
-        @Prop({ type: Function, required: true }) search: (query: string) => Promise<any>
+        @Prop({ type: Function, required: true }) search: (query: string) => Promise<any>;
 
         /**
          * Set property of items's value.
          */
         @Prop({ type: String, default: 'id'}) itemValue: string;
+
+        get _outlined(): boolean
+        {
+            return Config.ui.components.textField.defaultStyle === 'outlined';
+        }
 
         /**
          * Perform the search serverside.
@@ -27,40 +34,15 @@
             this.$data._loading = true;
 
             this.search(this.searchQuery)
-                .then((result: Array<any>) =>
-                {
+                .then((result: Array<any>) => {
                     if (! Array.isArray(result)) {
                         throw 'The return value of the `search` function must be an Array.';
                     }
 
                     this.$data._items = result;
-
-                    let autocomplete = <any>this.$refs.autocomplete;
-
-                    // Add the selected items to the cached items so that they don't disappear.
-                    result.forEach((item: any) =>
-                    {
-                        let found = autocomplete.cachedItems
-                            .find((cached: any) => cached.id === item.id);
-
-                        if (! found) {
-                            autocomplete.cachedItems.push(item);
-                        }
-                    });
-
                     this.$data._loading = false;
                 })
                 .catch(() => this.$data._loading = false );
-        }
-
-        /**
-         * We need to define a custom filter function because of an issue with Vuetify when not
-         * using the item-text and item-value props. This way the dropdown menu will always be
-         * displayed and the filtering performed server-side.
-         */
-        _filter(item: any, queryText: string, itemText: string): any
-        {
-            return this.$data._items.find((current: any) => item.id === current.id);
         }
 
         /**
@@ -122,43 +104,59 @@
                 items = items.concat(selected);
             }
 
-            let props = {
+            items = items.filter((item: any) => !! item);
+
+            let autocompleteProps = {
                 ...this.$props,
                 value: selected,
-                items: items,
+                items,
                 loading: this.$data._loading,
                 returnObject: true,
-                errorMessages: this._errorMessages
+                outlined: this._outlined
             };
 
-            // Override the filter functionality only if we want to perform a server search.
+            // The rules are only passed to the `validation-provider` component.
+            delete autocompleteProps['rules'];
+
             if (this.local) {
                 if (this.filter) {
-                    props['filter'] = this.filter;
+                    autocompleteProps['filter'] = this.filter;
                 }
             } else {
-                props['filter'] = this._filter;
+                autocompleteProps['noFilter'] = true;
             }
 
-            return createElement(
-                'v-autocomplete',
-                {
-                    ref: 'autocomplete',
-                    attrs: {
-                        name: this.name
-                    },
-                    props,
-                    on: {
-                        input: (value: any) => this.emitInput(value),
-                        'update:search-input': this.handleUpdateSearchInput,
-                        'update:error': this.handleUpdateError
-                    },
-                    nativeOn: {
-                        keydown: this.stopEnterPropagation
-                    },
-                    scopedSlots
+            return createElement('validation-provider', {
+                props: {
+                    rules: this.rules,
+                    name: this._validationName,
+                    vid: this.name
+                },
+                scopedSlots: {
+                    default: (props: { errors: any }): VNode => createElement(
+                        'v-autocomplete',
+                        {
+                            ref: 'autocomplete',
+                            attrs: {
+                                name: this.name
+                            },
+                            props: {
+                                ...autocompleteProps,
+                                errorMessages: props.errors
+                            },
+                            on: {
+                                input: (value: any) => this.emitInput(value),
+                                'update:search-input': this.handleUpdateSearchInput,
+                                'update:error': this.handleUpdateError
+                            },
+                            nativeOn: {
+                                keydown: this.stopEnterPropagation
+                            },
+                            scopedSlots
+                        }
+                    )
                 }
-            )
+            });
         }
     }
 

@@ -48,11 +48,6 @@
          * trigger validation.
          */
         @Prop({ type: Array, default: () => []}) errorMessages: Array<any>
-
-        get _errorMessages()
-        {
-            return [...this.errorMessages/*, ...this.errors.collect(this.name)*/];
-        }
     }
 
     export default Input;

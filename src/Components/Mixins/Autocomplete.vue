@@ -22,7 +22,7 @@
          * Can be an array of objects or array of strings. When using objects, will look for a
          * text and value field. This can be changed using the item-text and item-value props.
          */
-        @Prop({ type: Array, default: () => [] }) items: Array<any>
+        @Prop({ type: Array, default: () => [] }) items: Array<any>;
 
         /**
          * Set property of items's text value
