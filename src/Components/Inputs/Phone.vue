@@ -23,7 +23,7 @@
         <v-flex xs9>
             <text-field-main label="Phone" v-model="phoneNumber" name="phone" :hint="hint"
                              :disabled="! countryPrefix || disabled" :label="label"
-                             :mask="selectedCountryPhonePrefix.mask">
+                             :mask="selectedCountryPhonePrefix.mask" :rules="rules">
             </text-field-main>
         </v-flex>
     </v-layout>
@@ -31,11 +31,12 @@
 
 <script lang="ts">
 
-    import { Config }                          from '../../Config';
-    import { Component, Mixins, Prop, Watch }  from 'vue-property-decorator';
-    import { parseNumber }                     from 'libphonenumber-js';
-    import CountryPhonePrefixes                from '../../Assets/Json/CountryPhonePrefixes.json';
-    import { Input }                           from '../Mixins/Input.vue';
+    import { Config }                   from '../../Config';
+    import { Component, Mixins, Watch } from 'vue-property-decorator';
+    import { parseNumber }              from 'libphonenumber-js';
+    import CountryPhonePrefixes         from '../../Assets/Json/CountryPhonePrefixes.json';
+    import { Input }                    from '../Mixins/Input.vue';
+    import { Validatable }              from '../Mixins/Components/Validatable.vue';
 
     interface PrefixDescription {
         name: string,
@@ -45,18 +46,8 @@
     }
 
     @Component
-    export class InputPhone extends Mixins(Input)
+    export class InputPhone extends Mixins(Input, Validatable)
     {
-        /**
-         * Name of the input element.
-         */
-        @Prop({ type: String, default: 'phone' }) name: string;
-
-        /**
-         * Label of the input element.
-         */
-        @Prop({ type: String, default: 'Phone' }) label: string;
-
         countryPhonePrefixes: Array<PrefixDescription> = CountryPhonePrefixes || [];
 
         phoneNumber: string = '';
