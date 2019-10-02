@@ -77,8 +77,6 @@
          */
         @Prop({ type: Boolean, default: false }) local: boolean;
 
-        _selected = null;
-
         _items: Array<any> = [];
 
         _loading: boolean = false;
@@ -115,6 +113,25 @@
         }
 
         /**
+         * Remove an item from the selection.
+         */
+        remove(item: any): void
+        {
+            let selected = this.value;
+            let match = selected.find(
+                (current: any) => current[this.itemValue] === item[this.itemValue]
+            );
+
+            if (! match) {
+                return;
+            }
+
+            let index = selected.indexOf(match);
+            selected.splice(index, 1);
+            this.$emit('input', selected);
+        }
+
+        /**
          * Stop the propagation of the enter keypress event.
          *
          * This is needed in order to avoid accidentally submitting the form containing this input
@@ -127,42 +144,10 @@
             }
         }
 
-        /**
-         * Remove an item from the selection.
-         */
-        remove(item: any): void
-        {
-            let selected = this.$data._selected;
-            let match = selected.find((current: any) => current.id === item.id);
-
-            if (! match) {
-                return;
-            }
-
-            let index = selected.indexOf(match);
-            selected.splice(index, 1);
-            this.$emit('input', selected);
-        }
-
-        /**
-         * Emit the input event.
-         */
-        emitInput(value: any): void
-        {
-            this.$data._selected = value;
-            this.$emit('input', value);
-        }
-
         @Watch('searchQuery', { immediate: true })
         onSearchQueryChange()
         {
             this.handleSearch();
-        }
-
-        @Watch('value', { immediate: true })
-        onValueChange()
-        {
-            this.$data._selected = this.value;
         }
     }
 

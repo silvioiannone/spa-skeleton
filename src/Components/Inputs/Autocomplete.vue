@@ -46,21 +46,31 @@
         }
 
         /**
-         * Handle the 'update:searchInput' event.
+         * Handle the `change` event fired by the `v-autocomplete` component.
+         */
+        handleChangeEvent(value: any): void
+        {
+            this.searchQuery = '';
+        }
+
+        /**
+         * Handle the `input` event fired by the `v-autocomplete` component.
+         */
+        handleInputEvent(value: any): void
+        {
+            this.$emit('input', value);
+        }
+
+        /**
+         * Handle the `update:searchInput` event fired by the `v-autocomplete` component.
          */
         handleUpdateSearchInput(value: any): void
         {
             this.searchQuery = value;
-
-            // If the value is empty we need to remove the selected value.
-            if (this.searchQuery === '')  {
-                this.$data._selected = null;
-                this.emitInput(null);
-            }
         }
 
         /**
-         * Handle the `update:error` event.
+         * Handle the `update:error` event fired by the `v-autocomplete` component.
          */
         handleUpdateError(value: any): void
         {
@@ -93,25 +103,16 @@
                 }
             }
 
-            let selected = this.multiple ?
-                (this.$data._selected || []) : this.$data._selected;
-            let items = [...this.items, ...this.$data._items];
-
-            items = this.multiple ? [...items, ...this.value] : [...items, this.value];
-
-            if (selected && this.multiple) {
-                // Check if selected is array
-                items = items.concat(selected);
-            }
-
-            items = items.filter((item: any) => !! item);
+            let items = [...this.items, ...this.$data._items]
+                .filter((item: any) => !! item);
 
             let autocompleteProps = {
                 ...this.$props,
-                value: selected,
+                value: this.value,
                 items,
                 loading: this.$data._loading,
                 returnObject: true,
+                searchInput: this.searchQuery,
                 outlined: this._outlined
             };
 
@@ -123,7 +124,24 @@
                     autocompleteProps['filter'] = this.filter;
                 }
             } else {
-                autocompleteProps['noFilter'] = true;
+                if (this.multiple) {
+                    // If we're making a remote search (fetch the items from the server) we need to
+                    // cache the items (using the `cache-items` prop) because otherwise, after
+                    // performing a search, the items will be a subset of the original items causing
+                    // the already selected items to disappear since those are probably not in the
+                    // search result.
+                    autocompleteProps['cacheItems'] = true;
+
+                    // This unfortunately cause another issue. The cached items, even if not
+                    // present in the search result, are displayed by the dropdown. This requires
+                    // for a custom filter function to be applied. This function will only display
+                    // the cached items that are also present in the search result (`items`).
+                    autocompleteProps['filter'] =
+                        (currentItem: any, queryText: string, itemText: string): boolean =>
+                            !! items.find((item: any): boolean =>
+                                item[this.itemValue] === currentItem[this.itemValue]
+                        );
+                }
             }
 
             return createElement('validation-provider', {
@@ -145,7 +163,9 @@
                                 errorMessages: props.errors
                             },
                             on: {
-                                input: (value: any) => this.emitInput(value),
+                                ...this.$listeners,
+                                'input': this.handleInputEvent,
+                                'change': this.handleChangeEvent,
                                 'update:search-input': this.handleUpdateSearchInput,
                                 'update:error': this.handleUpdateError
                             },
