@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { ExtendedModel }     from '../../../Support/ExtendedModel';
 import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
 import { Action }            from './Action';
@@ -40,19 +41,46 @@ export class Update extends Action
         store: Store<any>,
         params: UpdateParameters): void
     {
-        params.model.update({
+        let payload = {
             where: response.body.data.id,
             data: response.body.data
-        });
+        };
+
+        if (_.get(params, 'options.vuex.insert')) {
+            payload['insert'] = _.get(params, 'options.vuex.insert');
+        }
+
+        if (_.get(params, 'options.vuex.create')) {
+            payload['create'] = _.get(params, 'options.vuex.create');
+        }
+
+        params.model.insertOrUpdate(payload);
     }
 }
 
 /**
  * Update action parameters.
  */
-export interface UpdateParameters
+interface UpdateParameters
 {
+    // Datat that will be sent with the request.
     data: any;
-    options: any;
+
+    options?: UpdateParameterOptions;
+
     model: typeof ExtendedModel;
+}
+
+export interface UpdateParameterOptions
+{
+    // VuexORM specific settings.
+    vuex?: {
+        // Same as the create option for relations:
+        // https://vuex-orm.github.io/vuex-orm/guide/data/inserting-and-updating.html#insert-method-for-relationships
+        create?: string[];
+
+        // Same as the insert option for relations:
+        // https://vuex-orm.github.io/vuex-orm/guide/data/inserting-and-updating.html#insert-method-for-relationships
+        insert?: string[];
+    };
 }

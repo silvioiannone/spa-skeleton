@@ -1,10 +1,10 @@
-import { Model }                 from '@vuex-orm/core';
-import { ResponseInterface }     from '../../../../Api/ResponseInterface';
-import { CreateParameters }      from '../Plugins/ApiSync/Actions/Create';
-import { GetParameters }         from '../Plugins/ApiSync/Actions/Get';
-import { UpdateParameters }      from '../Plugins/ApiSync/Actions/Update';
-import { DeleteParameters }      from '../Plugins/ApiSync/Actions/Delete';
-import { ApiClient, ApiFactory } from '../../../../Api';
+import { Model }                  from '@vuex-orm/core';
+import { ResponseInterface }      from '../../../../Api/ResponseInterface';
+import { CreateParameters }       from '../Plugins/ApiSync/Actions/Create';
+import { GetParameters }          from '../Plugins/ApiSync/Actions/Get';
+import { UpdateParameterOptions } from '../Plugins/ApiSync/Actions/Update';
+import { DeleteParameters }       from '../Plugins/ApiSync/Actions/Delete';
+import { ApiClient, ApiFactory }  from '../../../../Api';
 
 /**
  * This class provides support for the ApiSync plugin.
@@ -61,7 +61,7 @@ export class ExtendedModel extends Model
      */
     public static async $update(
         data: any = '',
-        options: UpdateParameters | null = null
+        options: UpdateParameterOptions | null = null
     ): Promise<ResponseInterface>
     {
         return this.dispatch('$update', {
