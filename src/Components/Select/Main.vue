@@ -3,6 +3,7 @@
     import { VNode, CreateElement } from 'vue';
     import { Component, Mixins }    from 'vue-property-decorator';
     import { Select }               from '../Mixins/Select.vue';
+    import { Validatable }          from '../Mixins/Components/Validatable.vue';
 
     @Component
     export class SelectMain extends Mixins(Select)
@@ -13,7 +14,8 @@
 
             let props = {
                 ...this.$props,
-                multiple: this.multiple
+                multiple: this.multiple,
+                outlined: this._outlined
             }
 
             return createElement(
