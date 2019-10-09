@@ -1,9 +1,9 @@
 <template>
-    <v-menu ref="remindDateMenu" v-model="remindDateMenu" offset-y full-width
-            :close-on-content-click="false" max-width="290px" minx-width="290px">
+    <v-menu ref="remindDateMenu" v-model="remindDateMenu" offset-y max-width="290px"
+            :close-on-content-click="false" minx-width="290px">
         <template #activator="{ on }">
-            <v-text-field :value="textFieldRemindDateTime" label="Remind date" v-on="on"
-                          :name="name" :error-messages="errorMessages">
+            <v-text-field :value="textFieldRemindDateTime" :label="label" v-on="on" :name="name"
+                          :error-messages="errorMessages" :outlined="_outlined">
             </v-text-field>
         </template>
         <v-stepper v-model="stepperStep">
@@ -38,7 +38,9 @@
          */
         @Prop({
             required: true,
-            validator: (val) => val === null || typeof val === 'string'
+            validator: (val) => {
+                return val === null || typeof val === 'string'
+            }
         }) value: string;
 
         partialHour: number;
