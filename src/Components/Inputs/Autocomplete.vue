@@ -141,6 +141,8 @@
                             !! items.find((item: any): boolean =>
                                 item[this.itemValue] === currentItem[this.itemValue]
                         );
+                } else {
+                    autocompleteProps['noFilter'] = true;
                 }
             }
 
