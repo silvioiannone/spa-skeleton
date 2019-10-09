@@ -77,6 +77,11 @@
          */
         @Prop({ type: Boolean, default: false }) local: boolean;
 
+        /**
+         * Will not automatically query the server when mounted.
+         */
+        @Prop({ type: Boolean, default: false }) lazy: string;
+
         _items: Array<any> = [];
 
         _loading: boolean = false;
@@ -147,6 +152,10 @@
         @Watch('searchQuery', { immediate: true })
         onSearchQueryChange()
         {
+            if (this.lazy) {
+                return;
+            }
+
             this.handleSearch();
         }
     }
