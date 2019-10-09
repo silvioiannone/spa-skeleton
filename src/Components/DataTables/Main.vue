@@ -30,9 +30,19 @@
         @Prop({ type: Boolean, default: false }) showSelect: boolean;
 
         /**
-         * Used for controlling selected rows
+         * Used for controlling selected rows.
          */
         @Prop({ type: Array, default: () => []}) value: Array<any>;
+
+        /**
+         * Disables pagination completely.
+         */
+        @Prop({ type: Boolean, default: false }) disablePagination: boolean;
+
+        /**
+         * Hides default footer.
+         */
+        @Prop({ type: Boolean, default: false }) hideDefaultFooter: boolean;
 
         /**
          * Get the `itemsPerPageOptions` table footer prop.
@@ -48,20 +58,16 @@
         {
             let component = {
                 props: {
-                    headers: this.headers,
-                    items: this.items,
-                    showSelect: this.showSelect,
+                    ...this.$props,
                     footerProps: {
                         itemsPerPageOptions: this.itemsPerPageOptions
                     },
-                    value: this.value,
                     ...this.getVuePagination(this.pagination)
                 },
                 on: {
-                    'input': (value: any) => this.$emit('input', value),
-                    'update:options': (value: any) => {
-                        this.updatePagination(value);
-                    },
+                    ...this.$listeners,
+                    'input': (value: any): this => this.$emit('input', value),
+                    'update:options': (value: any): void => this.updatePagination(value)
                 }
             };
 
