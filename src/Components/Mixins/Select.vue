@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import { Config }                         from '../../Config';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
     import { Input }                          from './Input.vue';
 
@@ -71,9 +72,9 @@
         @Prop({ type: Boolean, default: false }) solo: boolean;
 
         /**
-         * Changes the style of the input.
+         * Applies the alternate outline input style.
          */
-        @Prop({ type: Boolean, default: false }) outlined: boolean;
+        @Prop({ type: Boolean, default: undefined }) outlined: boolean;
 
         /**
          * Changes the selection behavior to return the object directly rather than the value
@@ -84,7 +85,7 @@
         /**
          * Hides hint, validation errors.
          */
-         @Prop({ type: Boolean, default: false }) hideDetails: boolean;
+        @Prop({ type: Boolean, default: false }) hideDetails: boolean;
 
         /**
          * Set property of items's value - must be primative. Dot notation is supported.
@@ -114,6 +115,15 @@
         get multiple(): boolean
         {
             return Array.isArray(this.value);
+        }
+
+        get _outlined(): boolean
+        {
+            if (this.outlined === undefined) {
+                return Config.ui.components.textField.defaultStyle === 'outlined';
+            }
+
+            return this.outlined;
         }
 
         /**

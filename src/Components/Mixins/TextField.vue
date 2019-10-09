@@ -2,6 +2,7 @@
 
     import { VNode }                   from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import { Config }                  from '../../Config';
     import { Input }                   from './Input.vue';
 
     /**
@@ -97,7 +98,7 @@
         /**
          * Applies the alternate outline input style.
          */
-        @Prop({ type: Boolean, default: false }) outlined: boolean;
+        @Prop({ type: Boolean, default: undefined }) outlined: boolean;
 
         /**
          * Hides hint, validation errors
@@ -113,6 +114,20 @@
          * Reduces element opacity until focused.
          */
         @Prop({ type: Boolean, default: false }) soloInverted: boolean;
+
+        /**
+         * Reduces the input height.
+         */
+        @Prop({ type: Boolean, default: false }) dense: boolean;
+
+        get _outlined(): boolean
+        {
+            if (this.outlined === undefined) {
+                return Config.ui.components.textField.defaultStyle === 'outlined';
+            }
+
+            return this.outlined;
+        }
 
         mounted(): void
         {
