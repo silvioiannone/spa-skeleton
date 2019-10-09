@@ -9,16 +9,6 @@
     @Component
     export class TextFieldMain extends Mixins(TextField, Validatable)
     {
-        /**
-         * Validation rules.
-         */
-        @Prop({ type: String, default: '' }) rules: any;
-
-        get _outlined(): boolean
-        {
-            return Config.ui.components.textField.defaultStyle === 'outlined';
-        }
-
         get textFieldProps(): any
         {
             let props = { ...this.$props };

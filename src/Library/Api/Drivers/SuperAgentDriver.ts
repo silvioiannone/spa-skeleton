@@ -49,10 +49,6 @@ export class SuperAgentDriver extends AbstractApiDriver
 
     /**
      * Send a GET HTTP download request to the API.
-     *
-     * @param {string} action
-     * @return {Promise}
-     * @protected
      */
     protected _download(action: string): Promise<any>
     {
