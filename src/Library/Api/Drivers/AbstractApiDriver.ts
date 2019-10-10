@@ -1,3 +1,4 @@
+import QS                    from 'qs';
 import { Token }             from '../Token';
 import { ResponseInterface } from '../ResponseInterface';
 import { Config }            from '../../../Config';
@@ -78,7 +79,7 @@ export abstract class AbstractApiDriver
      */
     protected async send(
         method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
-        action: string, 
+        action: string,
         data?: any
     ): Promise<ResponseInterface>
     {
@@ -175,12 +176,7 @@ export abstract class AbstractApiDriver
      */
     public getURIEncodedParameters(): string
     {
-        let self = this;
-
-        return Object.keys(self.parameters)
-            .map((k): string =>
-                encodeURIComponent(k) + '=' + encodeURIComponent(self.parameters[k])
-            ).join('&');
+        return QS.stringify(this.parameters);
     }
 
     /**
