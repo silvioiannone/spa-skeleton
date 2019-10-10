@@ -119,8 +119,10 @@ module.exports = {
         this.mix.sass('resources/sass/app.sass', 'public/css', {
             // These options are required in order to build the SASS imports in Vuetify components.
             implementation: require('sass'),
-            fiber: require('fibers'),
-            indentedSyntax: true
+            sassOptions: {
+                fiber: require('fibers'),
+                indentedSyntax: true
+            }
         });
 
         this.mix.options({
