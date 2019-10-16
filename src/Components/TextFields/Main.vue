@@ -11,7 +11,11 @@
     {
         get textFieldProps(): any
         {
-            let props = { ...this.$props };
+            let props = {
+                ...this.$props,
+                outlined: this._outlined || this.outlined,
+                value: this.value
+            };
 
             // The rules will only be passed to the `validation-provider` component.
             delete props['rules'];
@@ -43,9 +47,7 @@
                     default: (props: { errors: any }): VNode => createElement('v-text-field', {
                         props: {
                             ...this.textFieldProps,
-                            errorMessages: props.errors,
-                            outlined: this._outlined || this.outlined,
-                            value: this.value
+                            errorMessages: props.errors
                         },
                         directives: vTextFieldDirectives,
                         on: {

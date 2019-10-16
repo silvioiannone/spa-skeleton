@@ -6,32 +6,50 @@
     import { Validatable }          from '../Mixins/Components/Validatable.vue';
 
     @Component
-    export class SelectMain extends Mixins(Select)
+    export class SelectMain extends Mixins(Select, Validatable)
     {
-        render(createElement: CreateElement): VNode
+        get selectProps(): any
         {
-            let scopedSlots = this.$vnode.data ? this.$vnode.data.scopedSlots : undefined;
-
             let props = {
                 ...this.$props,
                 multiple: this.multiple,
                 outlined: this._outlined
-            }
+            };
 
-            return createElement(
-                'v-select',
-                {
-                    attrs: {
-                        name: this.name
-                    },
-                    props,
-                    on: {
-                        ...this.$listeners,
-                        input: (value: any) => this.fire(value),
-                    },
-                    scopedSlots
-                }
-            )
+            // The rules will only be passed to the `validation-provider` component.
+            delete props['rules'];
+
+            return props;
+        }
+
+        render(createElement: CreateElement): VNode
+        {
+            let scopedSlots = this.$vnode.data ? this.$vnode.data.scopedSlots : undefined;
+
+            return createElement('validation-provider', {
+                props: {
+                    rules: this.rules,
+                    name: this._validationName,
+                    vid: this.name
+                },
+                scopedSlots: {
+                    default: (props: { errors: any }): VNode => createElement('v-select', {
+                        attrs: {
+                            name: this.name
+                        },
+                        props: {
+                            ...this.selectProps,
+                            errorMessages: props.errors
+                        },
+                        on: {
+                            ...this.$listeners,
+                            input: (value: any) => this.fire(value),
+                        },
+                        scopedSlots
+                    })
+                },
+                ref: 'validationProvider'
+            }, []);
         }
     }
 
