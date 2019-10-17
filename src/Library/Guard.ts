@@ -143,7 +143,7 @@ export class Guard
         } catch (error) {
             this.store.commit('app/SET_STATUS', 'unauthorized');
             this.ready = false;
-            next(error);
+            next();
             return;
         }
 
