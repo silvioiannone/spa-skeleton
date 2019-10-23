@@ -29,6 +29,14 @@
             this.$i18n.setLocaleMessage(this.userLanguage, response.body);
             this.$i18n.locale = this.userLanguage;
         }
+
+        created(): void
+        {
+            this.$ws.connect(this);
+            this.$ws.subscribe();
+
+            document.documentElement.setAttribute('lang', Config.locale);
+        }
     }
 
     export default Root;

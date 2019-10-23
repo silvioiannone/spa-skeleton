@@ -81,16 +81,7 @@ export class Router extends Service
         Router.instance = new VueRouter({
             linkActiveClass: Config.app.services.router.linkActiveClass,
             mode : Config.app.services.router.mode,
-            routes: [
-                {
-                    path: '',
-                    component: RootViewComponent,
-                    meta: {
-                        actions: ['view/ROOT']
-                    },
-                    children: Routes
-                }
-            ],
+            routes: Routes,
             async scrollBehavior(to: Route, from: Route, savedPosition: any): Promise<any>
             {
                 return new Promise(async (resolve, reject): Promise<any> =>
@@ -131,6 +122,7 @@ export class Router extends Service
 
             mixins: [MixinRoot],
 
+            // TODO: check if this is still needed.
             i18n: this.translator.get(),
 
             vuetify: Plugins.getVuetify(),
