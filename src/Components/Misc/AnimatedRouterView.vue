@@ -28,7 +28,7 @@
         /**
          * The transition that should be applied. Only supports 'slide-x' and 'fade' at the moment.
          */
-        @Prop({ type: String, default: 'slide-x' }) transition: string;
+        @Prop({ type: String, default: 'fade' }) transition: string;
     }
 
     export default AnimatedRouterView;
