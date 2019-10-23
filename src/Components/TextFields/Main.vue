@@ -1,8 +1,7 @@
 <script lang="ts">
 
     import { VNode } from 'vue';
-    import { Config } from '../../Config';
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import { Component, Mixins } from 'vue-property-decorator';
     import { TextField } from '../Mixins/TextField.vue';
     import { Validatable } from '../Mixins/Components/Validatable.vue';
 

@@ -4,7 +4,7 @@ import { Service }      from './Service';
 import { StateMachine } from './StateMachine';
 import AppFilters       from '../../../../../resources/ts/App/Filters';
 
-// Skeleton  { filters
+// Skeleton filters
 import { Capitalize }         from '../App/Filters/Capitalize';
 import { Currency }           from '../App/Filters/Currency';
 import { Date }               from '../App/Filters/Date';
@@ -14,6 +14,7 @@ import { OrganizationNumber } from '../App/Filters/OrganizationNumber';
 import { Phone }              from '../App/Filters/Phone';
 import { Plural }             from '../App/Filters/Plural';
 import { ReadableDate }       from '../App/Filters/ReadableDate';
+import { ZipCode }            from '../App/Filters/ZipCode';
 
 const SkeletonFilters = {
     capitalize: Capitalize,
@@ -24,7 +25,8 @@ const SkeletonFilters = {
     organizationNumber: OrganizationNumber,
     phone: Phone,
     plural: Plural,
-    readableDate: ReadableDate
+    readableDate: ReadableDate,
+    zipCode: ZipCode
 };
 
 /**

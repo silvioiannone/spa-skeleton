@@ -85,6 +85,7 @@ export { PaginationMain } from './src/Components/Paginations/Main.vue';
 export { ResponsiveContainer } from './src/Components/Misc/Grid/ResponsiveContainer.vue';
 export { SelectMain } from './src/Components/Select/Main.vue';
 export { TextFieldDateTime } from './src/Components/TextFields/DateTime.vue';
+export { TextFieldMain } from './src/Components/TextFields/Main.vue';
 export { TextFieldSearch } from './src/Components/TextFields/Search.vue';
 export { ToolbarMain } from './src/Components/Toolbars/Main.vue';
 export { ErrorNotFound } from './src/Components/Views/Errors/NotFound.vue';
