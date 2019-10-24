@@ -48,6 +48,10 @@
                             ...this.textFieldProps,
                             errorMessages: props.errors
                         },
+                        attrs: {
+                            min: this.min,
+                            max: this.max
+                        },
                         directives: vTextFieldDirectives,
                         on: {
                             ...this.$listeners,

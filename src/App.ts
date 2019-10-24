@@ -100,7 +100,7 @@ export class App
     /**
      * Conclude the app's initialization.
      */
-    protected conclude()
+    protected conclude(): void
     {
         window.dispatchEvent(new Event('appLoaded'));
 
