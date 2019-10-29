@@ -1,6 +1,6 @@
 <template>
     <validation-observer slim #default="{ invalid }" ref="validationObserver">
-        <v-form @submit.prevent>
+        <v-form @submit.prevent ref="vuetifyForm">
             <v-container fluid grid-list-lg class="pa-0">
                 <v-layout row wrap>
                     <v-flex xs12>

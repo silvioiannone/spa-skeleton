@@ -40,7 +40,7 @@
                         '.v-dialog--active form input, .v-dialog--active form textarea'
                     );
 
-                if (!firstFormInput) {
+                if (! firstFormInput) {
                     return;
                 }
 

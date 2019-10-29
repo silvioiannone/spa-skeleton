@@ -31,6 +31,20 @@
          */
         @Prop({ type: String, default: 'Submit' }) submitText: String;
 
+        /**
+         * Allow batch submission of the form.
+         *
+         * Once the form is submitted it will be made ready for a new submission.
+         */
+        @Prop({ type: Boolean, default: false }) batch: boolean;
+
+        /**
+         * Form model value.
+         */
+        @Prop() value: any;
+
+        initialModel: any = {};
+
         serverError: { message: string } | null = null;
 
         fieldServerErrors: any[] = [];
@@ -97,21 +111,42 @@
         }
 
         /**
+         * Focus the form.
+         */
+        focus(): void
+        {
+            let firstFormInput = <HTMLElement>this.$el
+                .querySelector('form input, form textarea');
+
+            if (! firstFormInput) {
+                return;
+            }
+
+            firstFormInput.focus();
+        }
+
+        /**
          * Reset the form to its original state.
          */
         resetForm(): void
         {
             this.serverError = null;
 
-            if (this.$parent) {
-                let parent = (this.$parent as any);
-                parent.model = { ...parent.model, ...parent.value };
+            if (this.batch) {
+                (this.$refs.vuetifyForm as any).reset();
+                requestAnimationFrame(() => {
+                    (this.$refs.validationObserver as any).reset();
+                    this.focus();
+                });
             }
         }
 
-        created(): void
+        mounted(): void
         {
-            this.resetForm();
+            if (this.value) {
+                let parent = (this.$parent as any)
+                parent.model = { ...parent.model, ...this.value };
+            }
         }
     }
 
