@@ -8,6 +8,24 @@
     @Component
     export class TextFieldMain extends Mixins(TextField, Validatable)
     {
+        /**
+         * Handle the `input` event fired by the `v-text-field` component.
+         */
+        handleInput(eventValue: string): void
+        {
+            let value = this.type === 'number' ? parseFloat(eventValue) : eventValue;
+
+            this.$emit('input', value);
+        }
+
+        get listeners(): any
+        {
+            return {
+                ...this.$listeners,
+                input: this.handleInput
+            };
+        }
+
         get textFieldProps(): any
         {
             let props = {
@@ -54,7 +72,7 @@
                         },
                         directives: vTextFieldDirectives,
                         on: {
-                            ...this.$listeners,
+                            ...this.listeners,
                             blur: this.handleBlur
                         }
                     })
