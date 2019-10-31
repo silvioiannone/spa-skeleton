@@ -5,6 +5,7 @@
             <v-spacer></v-spacer>
             <slot name="title-actions"></slot>
         </v-card-title>
+        <v-card-subtitle v-if="subtitle.length">{{ subtitle }}</v-card-subtitle>
         <slot></slot>
     </v-card>
 </template>
@@ -33,6 +34,11 @@
          * Card title.
          */
         @Prop({ type: String, default: '' }) title: string;
+
+        /**
+         * Card subtitle.
+         */
+        @Prop({ type: String, default: '' }) subtitle: string;
     }
 
     export default CardMain;
