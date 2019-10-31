@@ -13,7 +13,13 @@
          */
         handleInput(eventValue: string): void
         {
-            let value = this.type === 'number' ? parseFloat(eventValue) : eventValue;
+            let value: string | number = eventValue;
+
+            if (this.type === 'number') {
+                let parsedValue = parseFloat(eventValue);
+
+                value = isNaN(parsedValue) ? '': parsedValue;
+            }
 
             this.$emit('input', value);
         }
