@@ -1,4 +1,4 @@
-import { Components } from '@vuex-orm/core/lib/plugins/use';
+import { PluginComponents } from '@vuex-orm/core';
 
 // Actions
 import { Create } from './Actions/Create';
@@ -18,7 +18,7 @@ export class Plugin
     /**
      * Install the plugin.
      */
-    public static install(components: Components): void
+    public static install(components: PluginComponents): void
     {
         Plugin.setupActions(components);
     }
@@ -26,7 +26,7 @@ export class Plugin
     /**
      * Setup the Vuex actions that will be executed.
      */
-    protected static setupActions(components: Components): void
+    protected static setupActions(components: PluginComponents): void
     {
         Get.boot();
         Create.boot();
