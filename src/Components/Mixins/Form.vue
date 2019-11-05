@@ -24,7 +24,7 @@
          *
          * It needs to be a function returning a promise.
          */
-        @Prop({ type: Function, required: true }) submit: Function;
+        @Prop({ type: Function }) submit: Function;
 
         /**
          * Text for the submit button.
