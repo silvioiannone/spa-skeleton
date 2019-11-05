@@ -110,4 +110,12 @@ export class Navigator
 
         return result;
     }
+
+    /**
+     * Navigate back.
+     */
+    public back(): void
+    {
+        history.back();
+    }
 }
