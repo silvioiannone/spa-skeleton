@@ -101,7 +101,7 @@
         handleSearch(): void
         {
             // Don't perform the search if we already retrieved the items from the server.
-            if (this.local && this.$data._items.length) {
+            if ((this.local && this.$data._items.length) || this.disabled) {
                 return;
             }
 
@@ -153,6 +153,16 @@
         onSearchQueryChange()
         {
             if (this.lazy) {
+                return;
+            }
+
+            this.handleSearch();
+        }
+
+        @Watch('disabled', { immediate: true })
+        onDisabledChange()
+        {
+            if (this.disabled) {
                 return;
             }
 
