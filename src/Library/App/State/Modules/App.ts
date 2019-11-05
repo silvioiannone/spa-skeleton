@@ -1,6 +1,8 @@
-import _                 from 'lodash';
-import { Module }        from '../../../State/Module';
-import { Config }        from '../../../../Config';
+import _                     from 'lodash';
+import { Store }             from 'vuex';
+import { Config }            from '../../../../Config';
+import { ResponseInterface } from '../../../Api/ResponseInterface';
+import { Module }            from '../../../State/Module';
 
 /**
  * State machine App module.
@@ -17,7 +19,23 @@ export class App extends Module
      */
     protected actions(): any
     {
-        return {};
+        return {
+
+            /**
+             * Update the settings.
+             */
+            'app/SETTINGS_UPDATE':
+                async (store: Store<any>, payload: any): Promise<ResponseInterface> => {
+                    let response = await this.api.app.saveSettings(payload);
+
+                    store.commit('app/SET', {
+                        key: 'settings',
+                        value: response.body.data
+                    });
+
+                    return response;
+                }
+        };
     }
 
     /**
