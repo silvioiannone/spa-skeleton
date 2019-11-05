@@ -160,7 +160,9 @@ export class SuperAgentDriver extends AbstractApiDriver
     {
         // Check if the request shouldn't be intercepted (example: it's the authentication
         // request).
-        if (request.url.includes('/oauth/token') || request.url.includes('/app/settings')) {
+        if (request.url.includes('/oauth/token') ||
+            (request.url.includes('/app/settings') && request.method === 'GET')
+        ) {
             request.set('Accept', 'application/json');
             return { request };
         }
