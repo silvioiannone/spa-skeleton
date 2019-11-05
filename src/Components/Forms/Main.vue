@@ -11,8 +11,9 @@
                         </v-alert>
                     </v-flex>
                     <slot></slot>
-                    <v-flex xs12 :class="{'text-center': centerActions}" v-if="submit">
-                        <button-submit :on-click="handleSubmit" color="primary" :disabled="invalid">
+                    <v-flex xs12 :class="{'text-center': centerActions}">
+                        <button-submit :on-click="handleSubmit" color="primary" :disabled="invalid"
+                                       v-if="submit">
                             {{ submitText || $t('form.submit') }}
                         </button-submit>
                         <slot name="actions"></slot>
