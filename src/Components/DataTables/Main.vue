@@ -25,6 +25,11 @@
         @Prop({ type: Array, default: () => [] }) items: Array<any>
 
         /**
+         * If true and no items are provided, then a loading text will be shown.
+         */
+        @Prop({ type: Boolean, default: false }) loading: boolean;
+
+        /**
          * Shows the select checkboxes in both the header and rows (if using default rows).
          */
         @Prop({ type: Boolean, default: false }) showSelect: boolean;
