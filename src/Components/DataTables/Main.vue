@@ -15,14 +15,29 @@
     export class DataTableMain extends Mixins(BasePaginatable)
     {
         /**
+         * Disables pagination completely.
+         */
+        @Prop({ type: Boolean, default: false }) disablePagination: boolean;
+
+        /**
+         * Array of expanded items. Can be used with `.sync` modifier.
+         */
+        @Prop({ type: Array, default: () => [] }) expanded: any[];
+
+        /**
          * Table headers.
          */
-        @Prop({ type: Array, default: () => [] }) headers: Array<any>
+        @Prop({ type: Array, default: () => [] }) headers: any[];
+
+        /**
+         * Hides default footer.
+         */
+        @Prop({ type: Boolean, default: false }) hideDefaultFooter: boolean;
 
         /**
          * Items displayed by the table.
          */
-        @Prop({ type: Array, default: () => [] }) items: Array<any>
+        @Prop({ type: Array, default: () => [] }) items: any[];
 
         /**
          * If true and no items are provided, then a loading text will be shown.
@@ -35,19 +50,14 @@
         @Prop({ type: Boolean, default: false }) showSelect: boolean;
 
         /**
+         * Shows the expand toggle in default rows.
+         */
+        @Prop({ type: Boolean, default: false }) showExpand: boolean;
+
+        /**
          * Used for controlling selected rows.
          */
-        @Prop({ type: Array, default: () => []}) value: Array<any>;
-
-        /**
-         * Disables pagination completely.
-         */
-        @Prop({ type: Boolean, default: false }) disablePagination: boolean;
-
-        /**
-         * Hides default footer.
-         */
-        @Prop({ type: Boolean, default: false }) hideDefaultFooter: boolean;
+        @Prop({ type: Array, default: () => []}) value: any[];
 
         /**
          * Get the `itemsPerPageOptions` table footer prop.
