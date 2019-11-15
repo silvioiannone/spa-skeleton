@@ -111,7 +111,6 @@
                 value: this.value,
                 items,
                 loading: this.$data._loading,
-                returnObject: true,
                 searchInput: this.searchQuery,
                 outlined: this._outlined
             };
