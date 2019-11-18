@@ -55,7 +55,7 @@
          * Changes the selection behavior to return the object directly rather than the value
          * specified with item-value.
          */
-        @Prop({ type: Boolean, default: false }) returnObject: boolean;
+        @Prop({ type: Boolean, default: true }) returnObject: boolean;
 
         /**
          * Changes display of selections to chips
