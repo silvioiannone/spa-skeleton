@@ -1,5 +1,5 @@
 <template>
-    <vue-draggable v-model="model" @change="moveItem" v-bind="options" :handle="handle"
+    <vue-draggable :value="model" @change="moveItem" v-bind="options" :handle="handle"
                    :class="{handle: ! handle.length}">
         <slot></slot>
     </vue-draggable>
@@ -88,7 +88,7 @@
                             && (this.getPosition(currentItem) <= this.getPosition(item))
                             && (currentItem.id !== item.id);
                     })
-                    .forEach((currentItem: any) => {
+                    .forEach((currentItem: any): void => {
                         this.setPosition(currentItem, this.getPosition(currentItem) - 1);
                     });
             } else {
@@ -99,10 +99,12 @@
                             && (this.getPosition(currentItem) < oldPosition)
                             && (currentItem.id !== item.id);
                     })
-                    .forEach((currentItem: any) => {
+                    .forEach((currentItem: any): void => {
                         this.setPosition(currentItem, this.getPosition(currentItem) + 1);
                     });
             }
+
+            this.$emit('input', this.model);
         }
 
         /**
