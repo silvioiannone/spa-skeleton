@@ -41,6 +41,12 @@
          */
         @Prop({ type: Boolean, default: true }) local: boolean;
 
+        /**
+         * Changes the selection behavior to return the object directly rather than the value
+         * specified with item-value.
+         */
+        @Prop({ type: Boolean, default: false }) returnObject: boolean;
+
         get _outlined(): boolean
         {
             return Config.ui.components.textField.defaultStyle === 'outlined';
