@@ -90,8 +90,7 @@ export class Plugins extends Service
             }
 
             if (this.beforeActions[key]) {
-                this.beforeActions[key].forEach((action: Function): void =>
-                {
+                this.beforeActions[key].forEach((action: Function): void => {
                     let actionSettings = action();
                     settings = _.merge(settings, actionSettings)
                 });
@@ -99,7 +98,7 @@ export class Plugins extends Service
 
             Vue.use(availablePlugins[key], settings);
 
-            Logger.debug('Plugin "' + key + '" registered.');
+            Logger.debug(`Plugin "${key}" registered.'`);
         }
     }
 

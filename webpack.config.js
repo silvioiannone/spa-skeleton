@@ -1,10 +1,10 @@
 /* eslint-disable */
 
-const path = require('path'),
-    Webpack = require('webpack'),
-    LaravelMix = require('laravel-mix'),
-    ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin'),
-    VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+const path = require('path');
+const Webpack = require('webpack');
+const LaravelMix = require('laravel-mix');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 module.exports = {
     profile: true,
@@ -45,7 +45,6 @@ module.exports = {
             tsconfig: path.resolve(__dirname, "tsconfig.json"),
             vue: true
         }),
-        new VuetifyLoaderPlugin(),
         new Webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),
@@ -61,7 +60,8 @@ module.exports = {
             WEBSOCKET_SERVER_KEY: JSON.stringify(process.env.WEBSOCKET_SERVER_KEY),
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
-        })
+        }),
+        new VuetifyLoaderPlugin()
     ],
     devServer: {
         disableHostCheck: true
