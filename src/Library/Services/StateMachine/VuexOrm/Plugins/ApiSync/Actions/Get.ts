@@ -55,7 +55,7 @@ export class Get extends Action
         let payload = {
             // Vuex-orm makes changes to the data object so in order to prevent those changes to end
             // up in the response object we make a copy of the data.
-            data: { ...response.body.data }
+            data: _.cloneDeep(response.body.data)
         };
 
         if (_.get(params, 'options.vuex.insert')) {
