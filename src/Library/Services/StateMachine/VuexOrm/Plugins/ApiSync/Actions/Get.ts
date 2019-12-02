@@ -53,7 +53,9 @@ export class Get extends Action
         let method = params.options && params.options.insert ? 'insert' : 'create';
 
         let payload = {
-            data: response.body.data
+            // Vuex-orm makes changes to the data object so in order to prevent those changes to end
+            // up in the response object we make a copy of the data.
+            data: { ...response.body.data }
         };
 
         if (_.get(params, 'options.vuex.insert')) {
