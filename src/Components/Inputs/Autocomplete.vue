@@ -104,7 +104,14 @@
             }
 
             let items = [...this.items, ...this.$data._items]
-                .filter((item: any) => !! item);
+                // We only pick the truty items with the `itemValue` key set.
+                .filter((item: any) => !! item && item[this.itemValue]);
+
+            if (this.multiple) {
+                items.concat(this.value);
+            } else {
+                items.push(this.value);
+            }
 
             let autocompleteProps = {
                 ...this.$props,
@@ -123,26 +130,22 @@
                     autocompleteProps['filter'] = this.filter;
                 }
             } else {
-                if (this.multiple) {
-                    // If we're making a remote search (fetch the items from the server) we need to
-                    // cache the items (using the `cache-items` prop) because otherwise, after
-                    // performing a search, the items will be a subset of the original items causing
-                    // the already selected items to disappear since those are probably not in the
-                    // search result.
-                    autocompleteProps['cacheItems'] = true;
+                // If we're making a remote search (fetch the items from the server) we need to
+                // cache the items (using the `cache-items` prop) because otherwise, after
+                // performing the search, the items will be a subset of the original items causing
+                // the already selected items to disappear since those are probably not in the
+                // search result.
+                autocompleteProps['cacheItems'] = true;
 
-                    // This unfortunately cause another issue. The cached items, even if not
-                    // present in the search result, are displayed by the dropdown. This requires
-                    // for a custom filter function to be applied. This function will only display
-                    // the cached items that are also present in the search result (`items`).
-                    autocompleteProps['filter'] =
-                        (currentItem: any, queryText: string, itemText: string): boolean =>
-                            !! items.find((item: any): boolean =>
-                                item[this.itemValue] === currentItem[this.itemValue]
+                // This unfortunately cause another issue. The cached items, even if not
+                // present in the search result, are displayed by the dropdown. This requires
+                // for a custom filter function to be applied. This function will only display
+                // the cached items that are also present in the search result (`items`).
+                autocompleteProps['filter'] =
+                    (currentItem: any, queryText: string, itemText: string): boolean =>
+                        !! items.find((item: any): boolean =>
+                            item[this.itemValue] === currentItem[this.itemValue]
                         );
-                } else {
-                    autocompleteProps['noFilter'] = true;
-                }
             }
 
             return createElement('validation-provider', {
