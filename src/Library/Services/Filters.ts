@@ -14,6 +14,7 @@ import { OrganizationNumber } from '../App/Filters/OrganizationNumber';
 import { Phone }              from '../App/Filters/Phone';
 import { Plural }             from '../App/Filters/Plural';
 import { ReadableDate }       from '../App/Filters/ReadableDate';
+import { Truncate }           from '../App/Filters/Truncate';
 import { ZipCode }            from '../App/Filters/ZipCode';
 
 const SkeletonFilters = {
@@ -26,6 +27,7 @@ const SkeletonFilters = {
     phone: Phone,
     plural: Plural,
     readableDate: ReadableDate,
+    truncate: Truncate,
     zipCode: ZipCode
 };
 
