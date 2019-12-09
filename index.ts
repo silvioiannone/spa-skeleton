@@ -80,6 +80,7 @@ export { InputCombobox } from './src/Components/Inputs/Combobox.vue';
 export { InputDynamic} from './src/Components/Inputs/Dynamic.vue';
 export { InputPhone } from './src/Components/Inputs/Phone.vue';
 export { LayoutApp } from './src/Components/Layouts/App.vue';
+export { ListItemBack } from './src/Components/Lists/Items/Back.vue';
 export { NavigationDrawerMain } from './src/Components/NavigationDrawers/Main.vue';
 export { NavigationDrawerNotifications } from './src/Components/NavigationDrawers/Notifications.vue';
 export { PaginationMain } from './src/Components/Paginations/Main.vue';
