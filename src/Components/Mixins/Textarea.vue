@@ -21,6 +21,11 @@
          * Prepend an icon to the text field.
          */
         @Prop({ type: String, default: '' }) prependIcon: string;
+
+        /**
+         * Default row count.
+         */
+        @Prop({ type: Number, default: 5 }) rows: number;
     }
 
     export default Textarea;
