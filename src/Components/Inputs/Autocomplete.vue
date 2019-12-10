@@ -103,15 +103,16 @@
                 }
             }
 
-            let items = [...this.items, ...this.$data._items]
-                // We only pick the truty items with the `itemValue` key set.
-                .filter((item: any) => !! item && item[this.itemValue]);
+            let items = [...this.items, ...this.$data._items];
 
             if (this.multiple) {
                 items.concat(this.value);
             } else {
                 items.push(this.value);
             }
+
+            // We only pick the truty items with the `itemValue` key set.
+            items = items.filter((item: any) => !! item && item[this.itemValue]);
 
             let autocompleteProps = {
                 ...this.$props,
