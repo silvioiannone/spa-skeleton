@@ -1,17 +1,14 @@
 <template>
-    <component :is="component" :label="_label" :solo="solo" :filled="filled" :outlined="outlined"
-               :name="_name" @input="bubbleInput" @blur="bubbleBlur" :value="value">
-    </component>
+    <component :is="component" v-bind="props" v-on="listeners"/>
 </template>
 
 <script lang="ts">
 
-    import { Component, Prop, Mixins } from 'vue-property-decorator';
-    import { InputDescription }        from '../../Library/Interfaces/InputDescription';
-    import { TextField }               from 'spa-skeleton';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
+    import { InputDescription } from '../../Library/Interfaces/InputDescription';
 
     @Component
-    export class InputDynamic extends Mixins(TextField)
+    export class InputDynamic extends Vue
     {
         /**
          * Input description.
@@ -22,42 +19,26 @@
         {
             switch (this.description.type) {
                 case 'input':
-                    return 'v-text-field';
+                    return 'text-field-main';
                 case 'textarea':
-                    return 'v-textarea';
+                    return 'textarea-main';
             }
         }
 
-        get _name()
+        get props()
         {
-            return this.description.name;
-        }
-
-        get _label()
-        {
-            if (this.description.label) {
-                return this.description.label;
+            return {
+                ...this.description
             }
-
-            let name = this.description.name;
-
-            return name.charAt(0).toUpperCase() + name.slice(1, name.length);
         }
 
-        /**
-         * Bubble up the `input` event.
-         */
-        bubbleInput(value: any): void
+        get listeners()
         {
-            this.$emit('input', value);
-        }
-
-        /**
-         * Bubble up the `blur` event.
-         */
-        bubbleBlur(value: any): void
-        {
-            this.$emit('blur', value);
+            return {
+                ...this.$listeners,
+                input: (value: any) => this.$emit('input', value),
+                blur: (value: any) => this.$emit('input', value),
+            }
         }
     }
 
