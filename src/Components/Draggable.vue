@@ -1,5 +1,5 @@
 <template>
-    <vue-draggable :value="model" @change="moveItem" v-bind="options" :handle="handle"
+    <vue-draggable v-model="model" @change="moveItem" v-bind="options" :handle="handle"
                    :class="{handle: ! handle.length}">
         <slot></slot>
     </vue-draggable>
