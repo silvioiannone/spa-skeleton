@@ -34,6 +34,11 @@
         @Prop({ type: Boolean, default: false }) outlined: boolean;
 
         /**
+         * Removes the card's elevation.
+         */
+        @Prop({ type: Boolean, default: false }) flat: boolean;
+
+        /**
          * Card title.
          */
         @Prop({ type: String, default: '' }) title: string;
