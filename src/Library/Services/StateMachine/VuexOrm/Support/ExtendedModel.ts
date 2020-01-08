@@ -1,4 +1,4 @@
-import { Model }                  from '@vuex-orm/core';
+import { Fields, Model }          from '@vuex-orm/core';
 import { ResponseInterface }      from '../../../../Api/ResponseInterface';
 import { CreateParameters }       from '../Plugins/ApiSync/Actions/Create';
 import { GetParameters }          from '../Plugins/ApiSync/Actions/Get';
