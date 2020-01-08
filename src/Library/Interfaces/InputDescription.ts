@@ -3,7 +3,8 @@
  */
 export interface InputDescription
 {
-    type: 'input' | 'textarea';
+    kind: 'input' | 'textarea';
     name: string;
     label: string;
+    type: string;
 }

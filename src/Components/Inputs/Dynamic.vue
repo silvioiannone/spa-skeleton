@@ -17,7 +17,7 @@
 
         get component()
         {
-            switch (this.description.type) {
+            switch (this.description.kind) {
                 case 'input':
                     return 'text-field-main';
                 case 'textarea':
