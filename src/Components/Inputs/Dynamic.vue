@@ -15,6 +15,11 @@
          */
         @Prop({ type: Object, required: true }) description: InputDescription;
 
+        /**
+         * Value.
+         */
+        @Prop({}) value: any;
+
         get component()
         {
             switch (this.description.kind) {
@@ -28,6 +33,7 @@
         get props()
         {
             return {
+                ...this.$props,
                 ...this.description
             }
         }
