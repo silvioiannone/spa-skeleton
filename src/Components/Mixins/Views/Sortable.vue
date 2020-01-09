@@ -5,16 +5,22 @@
     @Component
     export class Sortable extends Vue
     {
-        sort: string = '';
+        sort: string|null = null;
 
         descending: boolean = false;
 
+        /**
+         * Toggle the descending sorting direction.
+         */
         toggleDescending(): void
         {
             this.descending = ! this.descending;
         }
 
-        updateRoute()
+        /**
+         * Update the route.
+         */
+        updateRoute(): void
         {
             let query = {
                 ...this.$route.query,

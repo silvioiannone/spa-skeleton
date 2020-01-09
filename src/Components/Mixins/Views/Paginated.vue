@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import _                  from 'lodash';
     import { Vue, Component } from 'vue-property-decorator';
     import { Pagination }     from 'spa-skeleton/src/Library/Interfaces/Pagination';
     import { Config, Model }  from 'spa-skeleton';
@@ -21,19 +22,35 @@
 
         set pagination(value)
         {
-            let pagination = {
+            let newPagination = {
                 ...this.$store.getters.app.ui.pagination,
                 ...value
             };
+            let oldPagination = this.$store.getters.app.ui.pagination;
+
+            // Vuetify can set the sort to an empty string. We set it back to null if that's the
+            // case so that the next comparison executes properly.
+            if (newPagination.sort === '') {
+                newPagination.sort = null;
+            }
+
+            // We need to compare the old and the new pagination with lodash because, even if the
+            // value of each key in the pagination object is equivalent, there could be differences
+            // (such as a key with an observer in the new pagination but no observer in the old
+            // one) that have caused this function to trigger. We want to update the route only if
+            // the pagination has actually changed.
+            if (_.isEqual(oldPagination, newPagination)) {
+                return;
+            }
 
             this.$store.commit('app/INSERT', {
                 ui: {
-                    pagination
+                    newPagination
                 }
             });
 
             if (this.initialized) {
-                setTimeout(() => this.updateRoute(pagination));
+                setTimeout(() => this.updateRoute(newPagination));
             }
         }
 
