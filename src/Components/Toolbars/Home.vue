@@ -13,10 +13,8 @@
         <template #toolbar-items>
             <slot name="toolbar-items"></slot>
             <v-btn icon @click="toggleNotificationsDrawer">
-                <v-badge color="red">
-                    <span #badge v-if="unreadNotificationsCount">
-                        {{ unreadNotificationsCount }}
-                    </span>
+                <v-badge color="red" :content="unreadNotificationsCount"
+                         :value="unreadNotificationsCount">
                     <v-icon>notifications</v-icon>
                 </v-badge>
             </v-btn>
