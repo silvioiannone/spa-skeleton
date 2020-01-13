@@ -34,6 +34,16 @@
         @Prop({ type: Boolean, default: false }) outlined: boolean;
 
         /**
+         * Removes the card's elevation.
+         */
+        @Prop({ type: Boolean, default: false }) flat: boolean;
+
+        /**
+         * Removes the component's border-radius.
+         */
+        @Prop({ type: Boolean, default: false }) tile: boolean;
+
+        /**
          * Card title.
          */
         @Prop({ type: String, default: '' }) title: string;
