@@ -35,8 +35,10 @@
 
                 // Load the previous relationships.
                 let oldLoad = query.load;
+                let oldWheres = query.wheres;
                 query = query.newQuery(query.entity);
                 query.load = oldLoad;
+                query.wheres = oldWheres;
 
                 let sortDirection = sortParam.charAt(0) === '-' ? 'desc' : 'asc';
                 let sortField = sortDirection === 'desc' ?
