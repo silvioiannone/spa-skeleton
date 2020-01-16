@@ -43,7 +43,7 @@
             return {
                 ...this.$listeners,
                 input: (value: any) => this.$emit('input', value),
-                blur: (value: any) => this.$emit('input', value),
+                blur: (value: any) => this.$emit('blur', value),
             }
         }
     }

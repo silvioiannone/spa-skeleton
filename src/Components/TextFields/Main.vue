@@ -78,8 +78,7 @@
                         },
                         directives: vTextFieldDirectives,
                         on: {
-                            ...this.listeners,
-                            blur: this.handleBlur
+                            ...this.listeners
                         }
                     })
                 },
