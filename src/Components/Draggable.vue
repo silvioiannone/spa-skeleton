@@ -103,8 +103,6 @@
                         this.setPosition(currentItem, this.getPosition(currentItem) + 1);
                     });
             }
-
-            this.$emit('input', this.model);
         }
 
         /**
