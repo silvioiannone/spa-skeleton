@@ -1,21 +1,21 @@
 <template>
-    <div>
+    <div class="input__editor">
         <editor-menu-bar :editor="editor" #default="{ commands, isActive }">
-            <v-toolbar dense class="menubar">
+            <v-toolbar dense class="menubar elevation-0">
                 <editor-buttons-formats :commands="commands" :isActive="isActive">
                 </editor-buttons-formats>
-                <v-divider class="mr-2" vertical></v-divider>
+                <v-divider class="mr-2" vertical/>
                 <editor-buttons-headings :commands="commands" :isActive="isActive">
                 </editor-buttons-headings>
-                <v-divider class="mr-2" vertical></v-divider>
+                <v-divider class="mr-2" vertical/>
                 <editor-buttons-lists :commands="commands" :isActive="isActive">
                 </editor-buttons-lists>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <editor-button-link :commands="commands" :isActive="isActive" :editor="editor">
                 </editor-button-link>
             </v-toolbar>
         </editor-menu-bar>
-        <editor-content class="mt-3 editor__content" :editor="editor" @update="updateModel"
+        <editor-content class="mt-3 input__editor-content" :editor="editor" @update="updateModel"
                         @keydown.enter="stopEnterPropagation">
         </editor-content>
     </div>
@@ -78,6 +78,7 @@
                 new Placeholder(),
             ],
             onUpdate: this.updateModel,
+            onBlur: this.onBlur,
             content: this.value
         });
 
@@ -98,6 +99,14 @@
          */
         updateModel(content: any): void {
             this.$emit('input', content.getHTML());
+        }
+
+        /**
+         * Handle the `blur` event.
+         */
+        onBlur(event: any): void
+        {
+            this.$emit('blur');
         }
 
         beforeDestroy(): void {

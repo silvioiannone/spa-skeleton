@@ -78,6 +78,7 @@ export { IFrame } from './src/Components/Misc/IFrame.vue';
 export { InputAutocomplete } from './src/Components/Inputs/Autocomplete.vue';
 export { InputCombobox } from './src/Components/Inputs/Combobox.vue';
 export { InputDynamic} from './src/Components/Inputs/Dynamic.vue';
+export { InputEditor } from './src/Components/Inputs/Editor.vue';
 export { InputPhone } from './src/Components/Inputs/Phone.vue';
 export { LayoutApp } from './src/Components/Layouts/App.vue';
 export { ListItemBack } from './src/Components/Lists/Items/Back.vue';
