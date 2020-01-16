@@ -24,7 +24,6 @@
 <script lang="ts">
 
     import { Component, Prop, Vue } from 'vue-property-decorator';
-
     import { Editor, EditorContent, EditorMenuBar } from 'tiptap';
     import {
         BulletList,
@@ -40,7 +39,6 @@
         History,
         Placeholder,
     } from 'tiptap-extensions';
-
     import EditorButtonsFormats  from './Editor/Buttons/Formats.vue';
     import EditorButtonsHeadings from './Editor/Buttons/Headings.vue';
     import EditorButtonsLists    from './Editor/Buttons/Lists.vue';
@@ -56,7 +54,8 @@
             EditorButtonsLists
         }
     })
-    export class InputEditor extends Vue {
+    export class InputEditor extends Vue
+    {
         /**
          * Model.
          */
@@ -90,7 +89,8 @@
          *
          * @param event
          */
-        stopEnterPropagation(event: any): void {
+        stopEnterPropagation(event: any): void
+        {
             event.preventDefault();
         }
 
@@ -109,7 +109,8 @@
             this.$emit('blur');
         }
 
-        beforeDestroy(): void {
+        beforeDestroy(): void
+        {
             this.editor.destroy()
         }
     }

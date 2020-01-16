@@ -1,6 +1,6 @@
 <template>
     <vue-draggable v-model="model" @change="moveItem" v-bind="options" :handle="handle"
-                   :class="{handle: ! handle.length}">
+                   :class="[_class]">
         <slot></slot>
     </vue-draggable>
 </template>
@@ -44,6 +44,11 @@
                 scrollSensitivity: 120
             }
         }) options: any;
+
+        get _class(): string
+        {
+            return this.$attrs.class || 'draggable';
+        }
 
         get model(): Array<any>
         {
