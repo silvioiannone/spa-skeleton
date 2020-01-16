@@ -1,11 +1,11 @@
-import { Logger as Log }     from './Logger';
-import Vue                   from 'vue';
-import Vuex, { Store }       from 'vuex';
-import VuexORM               from '@vuex-orm/core';
-import { Service }           from './Service';
-import Modules               from '../../../../../resources/ts/App/State';
-import Models                from '../App/State/Models';
-import { Plugin as ApiSync } from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin';
+import { Logger as Log }            from './Logger';
+import Vue                          from 'vue';
+import Vuex, { Store as VuexStore } from 'vuex';
+import VuexORM                      from '@vuex-orm/core';
+import { Service }                  from './Service';
+import Modules                      from '../../../../../resources/ts/App/State';
+import Models                       from '../App/State/Models';
+import { Plugin as ApiSync }        from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin';
 
 // Skeleton modules
 import { App }  from '../App/State/Modules/App';
@@ -20,6 +20,8 @@ export type StoreType = {
     [P in keyof (typeof SkeletonModules & typeof Modules)]: (typeof SkeletonModules & typeof Modules)[P];
 };
 
+export type Store = VuexStore<StoreType>;
+
 /**
  * This service provides the application with a state machine.
  */
@@ -33,7 +35,7 @@ export class StateMachine extends Service
     /**
      * State machine store.
      */
-    protected static store: Store<StoreType>;
+    protected static store: Store;
 
     /**
      * Boot the state machine.
@@ -48,7 +50,7 @@ export class StateMachine extends Service
     /**
      * Get the store.
      */
-    public static getStore(): Store<StoreType>
+    public static getStore(): Store
     {
         return StateMachine.store;
     }

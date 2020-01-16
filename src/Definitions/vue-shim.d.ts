@@ -8,6 +8,7 @@ import { ApiClient }           from '../Library/Api';
 import WebSocket               from '../Library/WebSocket';
 import Navigator               from '../Library/Utils/Navigator';
 import Head                    from '../Library/Utils/Head';
+import { Toolbar }             from '../Library/Utils/Ui/Toolbar';
 import Config                  from '../Config';
 
 declare module 'vue/types/vue'
@@ -30,6 +31,9 @@ declare module 'vue/types/vue'
         $store: Store<any>;
         $vuetify: VuetifyObject;
         $validator: Validator;
+        $ui: {
+            toolbar: typeof Toolbar
+        };
         $ws: WebSocket;
         errors: ErrorBag;
     }
