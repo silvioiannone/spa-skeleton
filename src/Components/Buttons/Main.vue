@@ -32,20 +32,16 @@
         /**
          * React to `click` event.
          */
-        _onClick(event: any): void
+        async _onClick(event: any): Promise<void>
         {
             if (this.action) {
                 this.$data._loading = true;
 
-                this.action()
-                    .then(() =>
-                    {
-                        this.$data._loading = false;
-                    })
-                    .catch(() =>
-                    {
-                        this.$data._loading = false;
-                    });
+                try {
+                    await this.action();
+                } finally {
+                    this.$data._loading = false;
+                }
             }
 
             this.$emit('click', event);
