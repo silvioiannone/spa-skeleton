@@ -2,13 +2,13 @@
     <v-card v-bind="$props" v-on="$listeners">
         <v-card-title class="headline" v-if="title.length">
             {{ title }}
-            <v-spacer></v-spacer>
-            <slot name="title-actions"></slot>
+            <v-spacer/>
+            <slot name="title-actions"/>
         </v-card-title>
         <v-card-subtitle v-if="subtitle.length">{{ subtitle }}</v-card-subtitle>
-        <slot></slot>
+        <slot/>
         <v-card-actions v-if="$slots.actions">
-            <slot name="actions"></slot>
+            <slot name="actions"/>
         </v-card-actions>
     </v-card>
 </template>

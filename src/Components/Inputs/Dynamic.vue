@@ -1,13 +1,18 @@
 <template>
-    <component :is="component" v-bind="props" v-on="listeners"/>
+    <component :is="component" v-bind="description"/>
 </template>
 
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
     import { InputDescription } from '../../Library/Interfaces/InputDescription';
+    import { InputFile } from './File.vue';
 
-    @Component
+    @Component({
+        components: {
+            InputFile
+        }
+    })
     export class InputDynamic extends Vue
     {
         /**
@@ -20,9 +25,11 @@
          */
         @Prop({}) value: any;
 
-        get component()
+        get component(): string
         {
             switch (this.description.kind) {
+                case 'file':
+                    return 'v-file-input';
                 case 'input':
                     return 'text-field-main';
                 case 'textarea':

@@ -3,8 +3,9 @@
  */
 export interface InputDescription
 {
-    kind: 'input' | 'textarea';
+    kind: 'input' | 'textarea' | 'file';
     name: string;
     label: string;
+    placeholder: string;
     type: string;
 }
