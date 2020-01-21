@@ -26,12 +26,14 @@
                 ...this.$store.getters.app.ui.pagination,
                 ...value
             };
+
             let oldPagination = this.$store.getters.app.ui.pagination;
 
             // Vuetify can set the sort to an empty string. We set it back to null if that's the
             // case so that the next comparison executes properly.
-            if (newPagination.sort === '') {
+            if (newPagination.sort === '' || oldPagination.sort === '') {
                 newPagination.sort = null;
+                oldPagination.sort = null;
             }
 
             // We need to compare the old and the new pagination with lodash because, even if the
@@ -40,11 +42,6 @@
             // one) that have caused this function to trigger. We want to update the route only if
             // the pagination has actually changed.
             if (_.isEqual(oldPagination, newPagination)) {
-                return;
-            }
-
-            // For the same reason as the previous check we also need to check the filters.
-            if (_.isEqual(oldPagination.filters, newPagination.filters)) {
                 return;
             }
 
