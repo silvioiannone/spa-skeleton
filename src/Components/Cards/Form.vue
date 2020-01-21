@@ -1,17 +1,17 @@
 <template>
     <card-main v-on="getOn()" v-bind="getProps()">
         <template #title-actions>
-            <slot name="title-actions"></slot>
+            <slot name="title-actions"/>
             <v-btn v-if="closable" icon @click="$emit('cancel')">
                 <v-icon>mdi-close</v-icon>
             </v-btn>
         </template>
         <template #default>
             <v-card-text>
-                <slot :bubble-cancel="bubbleCancel" :bubble-submit="bubbleSubmit"></slot>
+                <slot :bubble-cancel="bubbleCancel" :bubble-submit="bubbleSubmit"/>
             </v-card-text>
             <v-card-actions v-if="$slots.actions">
-                <slot name="actions"></slot>
+                <slot name="actions"/>
             </v-card-actions>
         </template>
     </card-main>

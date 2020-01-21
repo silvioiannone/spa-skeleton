@@ -6,29 +6,29 @@
         </v-toolbar-side-icon>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
-                <slot name="title"></slot>
+                <slot name="title"/>
             </router-link>
             <router-link :to="toolbarTitleRedirectUrl" v-if="title && title.length">
                 {{ title }}
             </router-link>
         </v-toolbar-title>
         <slot name="toolbar-text" v-show="showingTitle">
-            <breadcrumbs-main :items="breadcrumbs"></breadcrumbs-main>
+            <breadcrumbs-main :items="breadcrumbs"/>
         </slot>
-        <v-spacer></v-spacer>
-        <slot name="toolbar-text-right" v-show="showingTitle"></slot>
+        <v-spacer/>
+        <slot name="toolbar-text-right" v-show="showingTitle"/>
         <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
                            @blur="hideSearchIfEmpty">
         </text-field-search>
         <v-btn icon @click="showSearch" v-if="search || searchCallback" v-show="!showingSearch">
             <v-icon>search</v-icon>
         </v-btn>
-        <slot name="toolbar" v-show="!showingSearch"></slot>
+        <slot name="toolbar" v-show="!showingSearch"/>
         <v-toolbar-items>
-            <slot name="toolbar-items"></slot>
+            <slot name="toolbar-items"/>
         </v-toolbar-items>
         <template #extension>
-            <slot name="tabs"></slot>
+            <slot name="tabs"/>
         </template>
     </v-toolbar>
 </template>

@@ -1,10 +1,10 @@
 <template>
     <v-navigation-drawer v-model="visible" class="scroll-y" :right="right" app clipped
                          :disable-resize-watcher="right" :max-width="maxWidth" :width="width">
-        <v-toolbar class="elevation-0" v-if="title || $slots.toolbar">
+        <v-toolbar v-if="title || $slots.toolbar">
             <v-toolbar-title>{{ title }}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <slot name="toolbar"></slot>
+            <v-spacer/>
+            <slot name="toolbar"/>
             <v-tooltip bottom>
                 <template #activator="data">
                     <v-btn icon @click="visible = false" v-on="data.on">
@@ -14,7 +14,7 @@
                 <span>Close</span>
             </v-tooltip>
         </v-toolbar>
-        <slot></slot>
+        <slot/>
     </v-navigation-drawer>
 </template>
 

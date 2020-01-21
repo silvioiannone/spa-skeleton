@@ -2,15 +2,15 @@
     <v-app :light="theme === 'light'" :dark="theme === 'dark'">
         <template v-if="status === 'ready' || status === 'loading'">
             <slot name="navigation-drawer">
-                <animated-router-view name="navigationDrawer"></animated-router-view>
+                <animated-router-view name="navigationDrawer"/>
             </slot>
             <slot name="navigation-drawer-right">
-                <router-view name="navigationDrawerRight"></router-view>
+                <router-view name="navigationDrawerRight"/>
             </slot>
             <slot name="toolbar">
                 <app-bar-main app>
                     <template #toolbar>
-                        <animated-router-view name="toolbar"></animated-router-view>
+                        <animated-router-view name="toolbar"/>
                     </template>
                 </app-bar-main>
             </slot>
@@ -21,16 +21,16 @@
                 </animated-router-view>
             </slot>
             <error-unauthorized v-if="status === 'unauthorized'">
-                <slot name="error-unauthorized"></slot>
+                <slot name="error-unauthorized"/>
             </error-unauthorized>
-            <error-server-error v-if="status === 'error'"></error-server-error>
-            <error-not-found v-if="status === 'notFound'"></error-not-found>
+            <error-server-error v-if="status === 'error'"/>
+            <error-not-found v-if="status === 'notFound'"/>
             <error-service-unavailable v-if="status === 'serviceUnavailable'">
             </error-service-unavailable>
-            <error-too-many-attempts v-if="status === 'tooManyAttempts'"></error-too-many-attempts>
+            <error-too-many-attempts v-if="status === 'tooManyAttempts'"/>
         </v-content>
-        <footer-app-update v-if="app.updateAvailable"></footer-app-update>
-        <snackbar-global></snackbar-global>
+        <footer-app-update v-if="app.updateAvailable"/>
+        <snackbar-global/>
     </v-app>
 </template>
 
