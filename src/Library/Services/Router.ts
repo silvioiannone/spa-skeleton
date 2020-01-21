@@ -10,7 +10,6 @@ import { Translator }                from './Translator';
 import Routes                        from '../../../../../resources/ts/App/Routes';
 import { StateMachine }              from './StateMachine';
 import { Root as MixinRoot }         from '../../Components/Mixins/Root.vue';
-import { Root as RootViewComponent } from '../../Components/Views/Root.vue';
 import { Plugins }                   from './Plugins';
 
 /**
