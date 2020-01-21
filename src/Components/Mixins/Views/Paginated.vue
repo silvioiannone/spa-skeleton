@@ -43,6 +43,11 @@
                 return;
             }
 
+            // For the same reason as the previous check we also need to check the filters.
+            if (_.isEqual(oldPagination.filters, newPagination.filters)) {
+                return;
+            }
+
             this.$store.commit('app/INSERT', {
                 ui: {
                     newPagination
