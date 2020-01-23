@@ -1,12 +1,12 @@
 <template>
-    <v-layout>
-        <v-flex xs3 @keydown.enter="stopEnterPropagation">
+    <v-row>
+        <v-col xl="3" @keydown.enter="stopEnterPropagation">
             <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
                             :outlined="_outlined" item-value="prefix" :filter="filter"
                             :disabled="disabled">
                 <template #item="props">
                     <v-list-item-avatar>
-                        <span :class="'flag-icon flag-icon-' + props.item.iso"></span>
+                        <span :class="'flag-icon flag-icon-' + props.item.iso"/>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title>
@@ -19,14 +19,13 @@
                     <strong>+{{ props.item.prefix }}</strong>
                 </template>
             </v-autocomplete>
-        </v-flex>
-        <v-flex xs9>
+        </v-col>
+        <v-col xl="9">
             <text-field-main label="Phone" v-model="phoneNumber" name="phone" :hint="hint"
                              :disabled="! countryPrefix || disabled" :label="label"
-                             :mask="selectedCountryPhonePrefix.mask" :rules="rules">
-            </text-field-main>
-        </v-flex>
-    </v-layout>
+                             :mask="selectedCountryPhonePrefix.mask" :rules="rules"/>
+        </v-col>
+    </v-row>
 </template>
 
 <script lang="ts">

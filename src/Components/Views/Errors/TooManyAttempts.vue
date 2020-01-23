@@ -1,12 +1,12 @@
 <template>
     <error-main :back-button="false" icon="mdi-clock-alert-outline" title="Too many attempts">
-        <v-flex xs12>
+        <v-col>
             <p class="my-5 text-center">
                 Please wait before making another request. Navigation will automatically
                 resume in {{ delta }} seconds.
             </p>
             <v-progress-linear v-model="progress"></v-progress-linear>
-        </v-flex>
+        </v-col>
     </error-main>
 </template>
 

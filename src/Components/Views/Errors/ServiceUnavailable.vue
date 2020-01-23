@@ -1,8 +1,8 @@
 <template>
     <error-main :back-button="false" title="Application under maintenance">
-        <v-flex xs12>
+        <v-col>
             <p class="text-center">Please try again in a few minutes.</p>
-        </v-flex>
+        </v-col>
     </error-main>
 </template>
 

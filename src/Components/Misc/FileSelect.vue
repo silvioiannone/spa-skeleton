@@ -1,17 +1,15 @@
 <template>
-    <v-layout wrap>
-        <v-flex sm12 md6 v-if="$vuetify.breakpoint.mdAndUp"></v-flex>
-        <v-flex sm12 md6>
+    <v-row>
+        <v-col v-if="$vuetify.breakpoint.mdAndUp" sm="12" md="6"/>
+        <v-col sm="12" md="6">
             <v-text-field solo :placeholder="$t('common.search') + '...'" prepend-icon="search"
-                          v-model="searchText">
-            </v-text-field>
-        </v-flex>
-        <v-flex xs12>
+                          v-model="searchText"/>
+        </v-col>
+        <v-col cols="12">
             <slot :files="files" :pagination="pagination" :update-pagination="updatePagination"
-                  :loading="loading" :selected="selected" :toggle-file="toggleFile">
-            </slot>
-        </v-flex>
-    </v-layout>
+                  :loading="loading" :selected="selected" :toggle-file="toggleFile"/>
+        </v-col>
+    </v-row>
 </template>
 
 <script lang="ts">

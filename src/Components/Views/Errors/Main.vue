@@ -1,31 +1,30 @@
 <template>
     <v-container fill-height>
-        <v-layout align-center justify-center wrap>
-            <v-flex xs12>
+        <v-row align="center" justify="center">
+            <v-col cols="12">
                 <v-container class="mt-5">
-                    <v-layout wrap>
-                        <v-flex xs12>
-                            <div class="text-center mb-5">
+                    <v-row>
+                        <v-col cols="12" class="text-center">
+                            <div class="mb-5">
                                 <v-icon x-large color="error">{{ icon }}</v-icon>
                             </div>
-                            <h1 class="text-center display-2">{{ title }}</h1>
-                        </v-flex>
-                        <v-flex xs12 class="my-5" v-if="$slots.default">
-                            <v-divider></v-divider>
-                        </v-flex>
-                        <slot></slot>
-                    </v-layout>
+                            <h1 class="display-2">{{ title }}</h1>
+                        </v-col>
+                        <v-col v-if="$slots.default" cols="12" class="my-5">
+                            <v-divider/>
+                        </v-col>
+                        <slot/>
+                    </v-row>
                 </v-container>
-            </v-flex>
-            <v-flex xs12 v-if="backButton">
-                <div class="text-center">
-                    <v-btn color="primary" large outlined @click="goBack()" >
-                        <v-icon left>arrow_back</v-icon>{{$t('misc.goBack')}}
-                    </v-btn>
-                </div>
-            </v-flex>
+            </v-col>
+            <v-col v-if="backButton" cols="12" class="text-center">
+                <v-btn color="primary" large outlined @click="goBack()" >
+                    <v-icon left>arrow_back</v-icon>{{$t('misc.goBack')}}
+                </v-btn>
+            </v-col>
             <template>
-                <v-flex xs12 v-if="app.config.env !== 'production' && error && error.body.message">
+                <v-col v-if="app.config.env !== 'production' && error && error.body.message"
+                       cols="12">
                     <v-expansion-panels>
                         <v-expansion-panel>
                             <v-expansion-panel-content>
@@ -44,17 +43,17 @@
                                         </h5>
                                     </v-card-text>
                                     <v-card-text class="monospaced">
-                                <pre>
-                                    <code>{{ error.body.trace }}</code>
-                                </pre>
+                                        <pre>
+                                            <code>{{ error.body.trace }}</code>
+                                        </pre>
                                     </v-card-text>
                                 </v-card>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                     </v-expansion-panels>
-                </v-flex>
+                </v-col>
             </template>
-        </v-layout>
+        </v-row>
     </v-container>
 </template>
 
@@ -66,22 +65,12 @@
     @Component({
         components: {
             LayoutApp
-        },
-        props: {
-
-            /**
-             * Whether or not to display the back button.
-             */
-            backButton: {
-                type: Boolean,
-                default: true
-            }
         }
     })
     export class ErrorMain extends Vue
     {
         /**
-         * Whether or not to display the back button.
+         * Whether to display the back button.
          */
         @Prop({ type: Boolean, default: true }) backButton: boolean;
 
@@ -95,17 +84,17 @@
          */
         @Prop({ type: String, default: 'error_outline' }) icon: string;
 
-        get app()
+        get app(): any
         {
             return this.$store.getters.app;
         }
 
-        get error()
+        get error(): any
         {
             return this.app.error;
         }
 
-        goBack()
+        goBack(): void
         {
             window.history.back();
         }

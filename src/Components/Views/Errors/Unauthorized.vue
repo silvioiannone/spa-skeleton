@@ -1,12 +1,12 @@
 <template>
     <error-main :back-button="false" :title="$t('misc.unauthorized')">
-        <v-flex xs12 offset-md3 md6 offset-lg4 lg4 class="mt-5">
+        <v-col class="mt-5">
             <v-alert type="error" :value="true">
                 {{$t('misc.youAreNotAuthorizedToViewThisPage')}}
                 {{$t('misc.authenticateInOrderToContinue')}}
             </v-alert>
-            <slot></slot>
-        </v-flex>
+            <slot/>
+        </v-col>
     </error-main>
 </template>
 

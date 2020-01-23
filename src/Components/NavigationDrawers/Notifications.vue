@@ -22,22 +22,22 @@
         </v-toolbar>
         <template v-if="unreadNotifications.length">
             <v-list two-line >
-                <slot :unread-notifications="unreadNotifications"></slot>
+                <slot :unread-notifications="unreadNotifications"/>
             </v-list>
-            <slot name="outer" :unread-notifications="unreadNotifications"></slot>
+            <slot name="outer" :unread-notifications="unreadNotifications"/>
         </template>
         <v-container class="mt-4" v-else>
-            <v-layout wrap>
-                <v-flex class="text-center" xs12>
+            <v-row>
+                <v-col class="text-center" cols="12">
                     <v-icon x-large>notifications_none</v-icon>
-                </v-flex>
-                <v-flex xs12>
-                    <v-divider class="my-3"></v-divider>
-                </v-flex>
-                <v-flex class="text-center" xs12>
+                </v-col>
+                <v-col cols="12">
+                    <v-divider class="my-3"/>
+                </v-col>
+                <v-col class="text-center" cols="12">
                     <p>{{ $t('navigationDrawer.noNewNotifications') }}</p>
-                </v-flex>
-            </v-layout>
+                </v-col>
+            </v-row>
         </v-container>
         <v-list class="navigation-drawer--bottom">
             <v-list-item three-line>
