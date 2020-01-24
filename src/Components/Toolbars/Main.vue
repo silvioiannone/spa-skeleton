@@ -137,7 +137,7 @@
         {
             this.$store.commit(
                 'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
-                !this.ui.navigationDrawerVisible
+                !this.ui.navigationDrawers.leftVisible
             );
         }
 
