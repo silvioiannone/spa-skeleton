@@ -17,16 +17,14 @@
         </template>
         <v-content>
             <slot>
-                <animated-router-view v-if="status === 'ready' || status === 'loading'">
-                </animated-router-view>
+                <animated-router-view v-if="status === 'ready' || status === 'loading'"/>
             </slot>
             <error-unauthorized v-if="status === 'unauthorized'">
                 <slot name="error-unauthorized"/>
             </error-unauthorized>
             <error-server-error v-if="status === 'error'"/>
             <error-not-found v-if="status === 'notFound'"/>
-            <error-service-unavailable v-if="status === 'serviceUnavailable'">
-            </error-service-unavailable>
+            <error-service-unavailable v-if="status === 'serviceUnavailable'"/>
             <error-too-many-attempts v-if="status === 'tooManyAttempts'"/>
         </v-content>
         <footer-app-update v-if="app.updateAvailable"/>
