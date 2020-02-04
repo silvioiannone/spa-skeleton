@@ -74,7 +74,8 @@
                         },
                         attrs: {
                             min: this.min,
-                            max: this.max
+                            max: this.max,
+                            name: this.name
                         },
                         directives: vTextFieldDirectives,
                         on: {
