@@ -30,12 +30,14 @@
 
 <script lang="ts">
 
-    import { Config }                   from '../../Config';
-    import { Component, Mixins, Watch } from 'vue-property-decorator';
-    import { parseNumber }              from 'libphonenumber-js';
-    import CountryPhonePrefixes         from '../../Assets/Json/CountryPhonePrefixes.json';
-    import { Input }                    from '../Mixins/Input.vue';
-    import { Validatable }              from '../Mixins/Components/Validatable.vue';
+    import { Config }                    from '../../Config';
+    import { Component, Mixins, Watch }  from 'vue-property-decorator';
+    import CountryPhonePrefixes          from '../../Assets/Json/CountryPhonePrefixes.json';
+    import { Input }                     from '../Mixins/Input.vue';
+    import { Validatable }               from '../Mixins/Components/Validatable.vue';
+    import {
+        CountryCallingCode, parseNumber, ParsedNumber
+    } from 'libphonenumber-js';
 
     interface PrefixDescription {
         name: string,
@@ -96,11 +98,15 @@
             // First try to parse the phone number and init the component data accordingly.
             let parsedNumber = parseNumber(this.value, { extended: true });
 
-            if (! parsedNumber.countryCallingCode &&
+            if (parsedNumber === {}) {
+                return;
+            }
+
+            if (! (parsedNumber as ParsedNumber).countryCallingCode &&
                 ! (this.countryPrefix && this.countryPrefix.length)) {
-                // If the parsed number doesn't have any country calling code but the value is still
-                // set then assume that the value only contains the country calling code and assign
-                // it to the country prefix.
+                // If the parsed number doesn't have any country calling code, but the value is
+                // still set then assume that the value only contains the country calling code and
+                // assign it to the country prefix.
                 this.countryPrefix = this.value.slice(1, this.value.length);
                 return;
             }
@@ -108,19 +114,21 @@
             let countryPhonePrefix = this.countryPhonePrefixes
                 .find((item: PrefixDescription) =>
                 {
-                    if (! parsedNumber.countryCallingCode) {
+                    if (! (parsedNumber as ParsedNumber).countryCallingCode) {
                         return false;
                     }
 
-                    return item.prefix === parsedNumber.countryCallingCode.toString()
+                    return item.prefix === ((parsedNumber as ParsedNumber)
+                        .countryCallingCode as CountryCallingCode)
+                        .toString()
                 });
 
             if (countryPhonePrefix) {
                 this.countryPrefix = countryPhonePrefix.prefix;
             }
 
-            if (parsedNumber.phone) {
-                this.phoneNumber = parsedNumber.phone.toString();
+            if ((parsedNumber as ParsedNumber).phone) {
+                this.phoneNumber = (parsedNumber as ParsedNumber).phone.toString();
             }
         }
 
