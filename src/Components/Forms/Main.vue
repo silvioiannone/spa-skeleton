@@ -3,6 +3,9 @@
         <v-form @submit.prevent ref="vuetifyForm">
             <v-container fluid pa-0>
                 <v-row>
+                    <v-col cols="12" v-if="$slots.error">
+                        <slot name="error"/>
+                    </v-col>
                     <v-col cols="12" v-if="!! serverError">
                         <v-alert type="error" :value="true">
                             <template v-if="serverError && serverError.message">
