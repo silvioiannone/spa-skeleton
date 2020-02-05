@@ -38,16 +38,16 @@
 
             // We need to compare the old and the new pagination with lodash because, even if the
             // value of each key in the pagination object is equivalent, there could be differences
-            // (such as a key with an observer in the new pagination but no observer in the old
-            // one) that have caused this function to trigger. We want to update the route only if
-            // the pagination has actually changed.
+            // (such as a key with an observer in the new pagination but no observer in the old one)
+            // that have caused this function to trigger. We want to update the route only if the
+            // pagination has actually changed.
             if (_.isEqual(oldPagination, newPagination)) {
                 return;
             }
 
             this.$store.commit('app/INSERT', {
                 ui: {
-                    newPagination
+                    pagination: newPagination
                 }
             });
 
