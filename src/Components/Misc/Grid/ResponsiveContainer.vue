@@ -27,10 +27,6 @@
                 'responsive-container': true
             };
 
-            if (this.$vuetify.breakpoint.xs) {
-                classes['pa-0'] = true;
-            }
-
             this.attrs.forEach((attribute: string) =>
             {
                 classes[attribute] = true;
