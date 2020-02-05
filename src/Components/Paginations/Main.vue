@@ -1,33 +1,29 @@
 <template>
-    <v-pagination :length="pagination.last_page" v-model="page" :total-visible="7"></v-pagination>
+    <v-pagination :length="pagination.last_page" :value="pagination.page" :total-visible="7"
+                  @input="handleInput"/>
 </template>
 
 <script lang="ts">
 
-    import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Pagination } from '../../Library/Interfaces/Pagination';
 
     @Component
     export class PaginationMain extends Vue
     {
-        page = 1;
-
         /**
          * Pagination object.
          */
-        @Prop({type: Object, required: true}) pagination: any;
+        @Prop({type: Object, required: true}) pagination: Pagination;
 
-        @Watch('pagination', {immediate: true, deep: true})
-        onPaginationChange(): void
-        {
-            this.page = this.pagination.page;
-        }
-
-        @Watch('page')
-        onPageChange(): void
+        /**
+         * Handle the `input` event fired by the `v-pagination` component.
+         */
+        handleInput(value: any): void
         {
             this.$emit('update:pagination', {
                 ...this.pagination,
-                page: this.page
+                page: value
             });
         }
     }
