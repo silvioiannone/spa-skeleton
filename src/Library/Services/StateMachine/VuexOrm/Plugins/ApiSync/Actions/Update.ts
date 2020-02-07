@@ -54,7 +54,7 @@ export class Update extends Action
             payload['create'] = _.get(params, 'options.vuex.create');
         }
 
-        params.model.insertOrUpdate(payload);
+        params.model.insert(payload);
 
         Update.deleteEmptyRelations(payload, params);
     }

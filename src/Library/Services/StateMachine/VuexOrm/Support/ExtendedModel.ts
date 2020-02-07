@@ -17,7 +17,7 @@ export class ExtendedModel extends Model
      */
     public static async $create(
         data: any = '',
-        options: CreateParameters | null = null
+        options?: CreateParameters
     ): Promise<ResponseInterface>
     {
         return this.dispatch('$create', {
@@ -32,7 +32,7 @@ export class ExtendedModel extends Model
      */
     public static async $delete(
         data: any = '',
-        options: DeleteParameters | null = null
+        options?: DeleteParameters
     ): Promise<ResponseInterface>
     {
         return this.dispatch('$delete', {
@@ -47,7 +47,7 @@ export class ExtendedModel extends Model
      */
     public static async $get(
         id: string | number = '',
-        options: GetParameters | null = null
+        options?: GetParameters
     ): Promise <ResponseInterface>
     {
         return this.dispatch('$get', {
@@ -62,7 +62,7 @@ export class ExtendedModel extends Model
      */
     public static async $update(
         data: any = '',
-        options: UpdateParameterOptions | null = null
+        options?: UpdateParameterOptions
     ): Promise<ResponseInterface>
     {
         return this.dispatch('$update', {
