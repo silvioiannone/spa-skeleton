@@ -1,15 +1,46 @@
 /*
  * Input component.
  */
+
+@include theme(input__editor) using ($theme)
+
+    //.input__editor--focused
+    .input__editor-content
+        border-color: map-deep-get($theme, 'text', 'primary')
+
 .input
+
     &__editor
-        .menubar .v-toolbar__content
-            padding: 0
 
         &-content
-            > div
-                padding: 10px 0
-                min-height: 100px
             overflow-wrap: break-word
             word-wrap: break-word
             word-break: break-word
+
+            > div
+                padding: 10px 0
+                min-height: 100px
+
+        &--outlined
+
+            .input__editor-content
+                border-color: rgba(0, 0, 0, 0.42)
+                border-radius: 4px
+                border-style: solid
+                border-width: 1px
+                padding: 0 12px
+
+                > div:focus
+                    outline: none
+
+        &--focused
+
+            .input__editor-content
+                border-width: 2px
+
+        .menubar .v-toolbar__content
+            padding: 0
+            background: transparent
+
+        .theme--light.v-toolbar.v-sheet.menubar
+            background: transparent
