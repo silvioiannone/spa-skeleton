@@ -1,27 +1,30 @@
 <template>
     <v-btn-toggle>
-        <v-btn text @click="commands.heading({ level: 1 })"
-               :class="{ 'v-btn--active': isActive.heading({ level: 1 }) }">
-            <v-icon>mdi-format-header-1</v-icon>
-        </v-btn>
-        <v-btn text @click="commands.heading({ level: 2 })"
-               :class="{ 'v-btn--active': isActive.heading({ level: 2 }) }">
-            <v-icon>mdi-format-header-2</v-icon>
-        </v-btn>
-        <v-btn text @click="commands.heading({ level: 3 })"
-               :active="{ 'v-btn--active' : isActive.heading({ level: 3 }) }">
-            <v-icon>mdi-format-header-3</v-icon>
-        </v-btn>
+        <button-toolbar v-bind="buttonProps" icon="mdi-format-header-1"
+                        :active="isActive.heading({ level: 1 })"
+                        @click="commands.heading({ level: 1 })"/>
+        <button-toolbar v-bind="buttonProps" icon="mdi-format-header-2"
+                        :active="isActive.heading({ level: 2 })"
+                        @click="commands.heading({ level: 2 })"/>
+        <button-toolbar v-bind="buttonProps" icon="mdi-format-header-3"
+                        :active="isActive.heading({ level: 3 })"
+                        @click="commands.heading({ level: 3 })"/>
     </v-btn-toggle>
 </template>
 
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
+    import { ButtonToolbar }     from '../Buttons/Toolbar.vue';
     import { EditorCommand }     from '../Mixins/EditorCommand.vue';
+    import { ToolbarGroup }      from '../Mixins/ToolbarGroup.vue';
 
-    @Component
-    export class InputEditorButtonsHeadings extends Mixins(EditorCommand)
+    @Component({
+        components: {
+            ButtonToolbar
+        }
+    })
+    export class InputEditorButtonsHeadings extends Mixins(EditorCommand, ToolbarGroup)
     {
     }
 

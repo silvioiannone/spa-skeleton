@@ -1,24 +1,26 @@
 <template>
     <div>
-        <v-btn icon text @click="showDialog()" :disabled="! textIsSelected">
-            <v-icon>insert_link</v-icon>
-        </v-btn>
-        <editor-dialog-add-link v-model="dialog" @update="setLinkUrl"></editor-dialog-add-link>
+        <button-toolbar v-bind="buttonProps" icon="insert_link" :disabled="! textIsSelected"
+                        @click="showDialog()"/>
+        <editor-dialog-add-link v-model="dialog" @update="setLinkUrl"/>
     </div>
 </template>
 
 <script lang="ts">
 
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import { EditorCommand }                  from '../Mixins/EditorCommand.vue';
+    import { ButtonToolbar }                  from '../Buttons/Toolbar.vue';
     import { EditorDialogAddLink }            from '../Dialogs/AddLink.vue';
+    import { EditorCommand }                  from '../Mixins/EditorCommand.vue';
+    import { ToolbarGroup }                   from '../Mixins/ToolbarGroup.vue';
 
     @Component({
         components: {
+            ButtonToolbar,
             EditorDialogAddLink
         }
     })
-    export class EditorButtonLink extends Mixins(EditorCommand)
+    export class EditorButtonLink extends Mixins(EditorCommand, ToolbarGroup)
     {
         /**
          * Ref to the <editor> component.

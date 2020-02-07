@@ -1,23 +1,25 @@
 <template>
     <v-btn-toggle>
-        <v-btn text @click="commands.bullet_list"
-               :class="{ 'v-btn--active' : isActive.bullet_list() }">
-            <v-icon>format_list_bulleted</v-icon>
-        </v-btn>
-        <v-btn text @click="commands.ordered_list"
-               :class="{ 'v-btn--active' : isActive.ordered_list() }">
-            <v-icon>format_list_numbered</v-icon>
-        </v-btn>
+        <button-toolbar v-bind="buttonProps" icon="format_list_bulleted"
+                        :active="isActive.bullet_list()" @click="commands.bullet_list"/>
+        <button-toolbar v-bind="buttonProps" icon="format_list_numbered"
+                        :active="isActive.ordered_list()" @click="commands.ordered_list"/>
     </v-btn-toggle>
 </template>
 
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
+    import { ButtonToolbar }     from '../Buttons/Toolbar.vue';
     import { EditorCommand }     from '../Mixins/EditorCommand.vue';
+    import { ToolbarGroup }      from '../Mixins/ToolbarGroup.vue';
 
-    @Component
-    export class InputEditorButtonsLists extends Mixins(EditorCommand)
+    @Component({
+        components: {
+            ButtonToolbar
+        }
+    })
+    export class InputEditorButtonsLists extends Mixins(EditorCommand, ToolbarGroup)
     {
     }
 
