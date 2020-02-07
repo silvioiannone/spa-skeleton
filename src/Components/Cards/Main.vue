@@ -21,6 +21,12 @@
     export class CardMain extends Vue
     {
         /**
+         * Applies specified color to the control - it can be the name of material color (for
+         * example success or purple) or css color (#033 or rgba(255, 0, 0, 0.5)).
+         */
+        @Prop({ type: String, default: '' }) color: string;
+
+        /**
          * Displays linear progress bar. Can either be a String which specifies which color is
          * applied to the progress bar (any material color or theme color - primary, secondary,
          * success, info, warning, error) or a Boolean which uses the component color (set by color
