@@ -66,7 +66,7 @@ export class App extends Module
             /**
              * Set the give state key to the given value.
              */
-            'app/SET'(state: any, payload: { key: string; value: any}): void
+            'app/SET'(state: any, payload: { key: string; value: any }): void
             {
                 state = _.set(state, payload.key, payload.value);
             },
