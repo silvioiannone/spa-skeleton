@@ -11,6 +11,17 @@
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import VueDraggable             from 'vuedraggable';
 
+    /**
+     * This component allows you to sort the contained elements.
+     *
+     * It operates in two modes:
+     *
+     * - "index" mode: the items are sorted using their indexes in the `value` array. In simpler
+     *                 words: the items in the `value` prop are re-ordered by changing their
+     *                 position and no changes is made to the item's data.
+     * - "key" mode: the elements are sorted using a property on each item. This property (defaults
+     *               to `position`) is updated in order to keep track of item's position.
+     */
     @Component({
         components: {
             VueDraggable
@@ -22,6 +33,11 @@
          * Class that will be used to identify the handle.
          */
         @Prop({ type: String, default: '' }) handle: Array<any>;
+
+        /**
+         * Disable the key-based mode.
+         */
+        @Prop({ type: Boolean, default: false }) keyMode: boolean;
 
         /**
          * Key that denotes the key holding the position index. It can be a string with dot-sperated
@@ -57,6 +73,10 @@
 
         set model(value: Array<any>)
         {
+            if (this.keyMode) {
+                return;
+            }
+
             this.$emit('input', value);
         }
 
@@ -67,6 +87,10 @@
          */
         moveItem(movement: any): void
         {
+            if (! this.keyMode) {
+                return;
+            }
+
             movement         = movement.moved;
             let item         = movement.element;
             let oldPosition  = this.getPosition(item);
@@ -108,6 +132,8 @@
                         this.setPosition(currentItem, this.getPosition(currentItem) + 1);
                     });
             }
+
+            this.$emit('input', this.model);
         }
 
         /**
