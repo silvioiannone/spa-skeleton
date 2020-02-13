@@ -1,6 +1,5 @@
 import Vue                            from 'vue';
 import Router, { Route, RawLocation } from 'vue-router'
-import _                              from 'lodash';
 import { String }                     from './String';
 import { StateMachine }               from '../Services/StateMachine';
 import { Guard }                      from '../Guard';
@@ -100,12 +99,12 @@ export class Navigator
 
         try {
             result = await this.router.push(location);
-        } catch (e) {
-            if (e.name === 'NavigationDuplicated') {
+        } catch (error) {
+            if (error && error.name === 'NavigationDuplicated') {
                 return new Promise((): void => {});
             }
 
-            throw e;
+            throw error;
         }
 
         return result;
