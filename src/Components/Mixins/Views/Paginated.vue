@@ -31,8 +31,11 @@
 
             // Vuetify can set the sort to an empty string. We set it back to null if that's the
             // case so that the next comparison executes properly.
-            if (newPagination.sort === '' || oldPagination.sort === '') {
+            if (newPagination.sort === '') {
                 newPagination.sort = null;
+            }
+
+            if (oldPagination.sort === '') {
                 oldPagination.sort = null;
             }
 
