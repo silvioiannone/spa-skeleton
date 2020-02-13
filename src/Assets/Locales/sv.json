@@ -54,7 +54,7 @@
         "logIn": "@:common.logIn"
     },
     "validations": {
-        "min_value": "Fältet {_field_} måste vara { min } eller mer",
+        "min_value": "Fältet {_field_} måste vara {min} eller mer",
         "swedishSsn": "Ogiltig personnummer",
         "swedishSsn:org": "Ogiltig organisationsnummer"
     },
