@@ -28,9 +28,14 @@
         @Prop({ type: Boolean, default: false }) chips: boolean;
 
         /**
-         * Whether or not to display a button to clean the selectbox.
+         * Whether to display a button to clean the selectbox.
          */
         @Prop({ type: Boolean, default: false }) clearable: boolean;
+
+        /**
+         * Reduces the input height
+         */
+        @Prop({ type: Boolean, default: false }) dense: boolean;
 
         /**
          * Tagging functionality, allows you to enter/navigate/delete items.
