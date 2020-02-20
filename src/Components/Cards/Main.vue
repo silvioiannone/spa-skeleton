@@ -1,9 +1,10 @@
 <template>
     <v-card v-bind="$props" v-on="$listeners">
-        <v-card-title class="headline" v-if="title.length">
-            {{ title }}
-            <v-spacer/>
-            <slot name="title-actions"/>
+        <v-card-title class="headline d-flex" v-if="title.length">
+            <div class="flex-grow-1 flex-grow-0">{{ title }}</div>
+            <div class="flex-shrink-1 flex-grow-0 card__title__actions">
+                <slot name="title-actions"/>
+            </div>
         </v-card-title>
         <v-card-subtitle v-if="subtitle.length">{{ subtitle }}</v-card-subtitle>
         <slot/>
