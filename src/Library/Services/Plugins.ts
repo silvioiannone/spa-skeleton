@@ -12,6 +12,7 @@ import Vuetify                    from 'vuetify';
 import VueI18N                    from 'vue-i18n';
 import VueRouter                  from 'vue-router';
 import VueTheMask                 from 'vue-the-mask';
+import Vue2Filters                from 'vue2-filters';
 import { Api }                    from '../App/Plugins/Api';
 import { Config as ConfigPlugin } from '../App/Plugins/Config';
 import { EventHub }               from '../App/Plugins/EventHub';
@@ -26,6 +27,7 @@ import { WebSocket }              from '../App/Plugins/WebSocket';
 const SkeletonPlugins = {
     VueI18N,
     Vuetify,
+    Vue2Filters,
     VueRouter,
     VueTheMask,
     Api,
