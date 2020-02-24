@@ -1,8 +1,7 @@
 <template>
     <v-app-bar :app="app" clipped-left clipped-right elevate-on-scroll>
         <v-app-bar-nav-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
-                            v-if="navigationDrawer" aria-label="Toggle sidebar">
-        </v-app-bar-nav-icon>
+                            v-if="navigationDrawer" aria-label="Toggle sidebar"/>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
                 <slot name="title"/>
@@ -16,9 +15,8 @@
         </slot>
         <v-spacer/>
         <slot name="toolbar-text-right" v-show="showingTitle"/>
-        <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
-                           @blur="hideSearchIfEmpty">
-        </text-field-search>
+        <text-field-search v-model="routeSearchParameter" v-if="showingSearch"
+                           @click:clear="hideSearch" @blur="hideSearchIfEmpty"/>
         <v-btn icon @click="showSearch" v-if="search || searchCallback" v-show="!showingSearch">
             <v-icon>search</v-icon>
         </v-btn>
@@ -30,8 +28,7 @@
             <slot name="tabs"/>
         </template>
         <v-progress-linear absolute bottom :active="status === 'loading'"
-                           :indeterminate="status === 'loading'">
-        </v-progress-linear>
+                           :indeterminate="status === 'loading'"/>
     </v-app-bar>
 </template>
 
@@ -87,8 +84,6 @@
 
         protected showingSearch: boolean = false;
 
-        protected searchQuery: string | (string | null)[] = '';
-
         get status(): any
         {
             return this.$store.getters.app.status;
@@ -96,12 +91,24 @@
 
         get breadcrumbs(): Array<any>
         {
-            return this.$store.getters.app.ui.toolbar.breadcrumbs;
+            return this.ui.toolbar.breadcrumbs;
+        }
+
+        get routeSearchParameter(): string | undefined
+        {
+            return this.$route.query.search as (string | undefined);
+        }
+
+        set routeSearchParameter(value: string | undefined)
+        {
+            if (this.searchCallback) {
+                this.searchCallback(value);
+            }
         }
 
         get searchCallback(): Function | null
         {
-            return this.$store.getters.app.ui.search;
+            return this.ui.search;
         }
 
         get showingTitle(): boolean
@@ -142,7 +149,7 @@
         hideSearch(): void
         {
             this.showingSearch = false;
-            this.searchQuery = '';
+            this.routeSearchParameter = '';
         }
 
         /**
@@ -150,7 +157,7 @@
          */
         hideSearchIfEmpty(): void
         {
-            if (! this.searchQuery || this.searchQuery.length === 0) {
+            if (! this.routeSearchParameter?.length) {
                 this.hideSearch();
             }
         }
@@ -181,20 +188,17 @@
             );
         }
 
-        mounted(): void
+        @Watch('routeSearchParameter', { immediate: true })
+        onRouteSearchParameterChange(): void
         {
-            this.searchQuery = this.$route.query.search;
-
-            if (this.searchQuery) {
-                this.showSearch();
-            }
+            this.routeSearchParameter?.length ? this.showSearch() : this.hideSearch();
         }
 
-        @Watch('searchQuery')
-        onSearchQueryChanged(): void
+        @Watch('searchCallback')
+        onSearchCallbackChange(): void
         {
-            if (this.searchCallback) {
-                this.searchCallback(this.searchQuery);
+            if (! this.searchCallback) {
+                this.hideSearch();
             }
         }
     }

@@ -16,9 +16,8 @@
                 clearTimeout(this.timeout);
             }
 
-            this.timeout = setTimeout(() =>
-            {
-                // If the search subject is empty and the route params doesn't have any search
+            this.timeout = setTimeout(() => {
+                // If the search subject is empty, and the route params doesn't have any search
                 // parameter don't perform the navigation.
                 if ((! subject || ! subject.length) && ! this.$route.query.search) {
                     return;
