@@ -5,8 +5,7 @@
         </v-list-item-avatar>
         <v-list-item-content>
             <v-list-item-title>
-                <template v-if="title.length && ! canGoBack">{{ title }}</template>
-                <template v-else>Back</template>
+                <template v-if="title.length">{{ title }}</template>
             </v-list-item-title>
         </v-list-item-content>
     </v-list-item>
@@ -44,12 +43,7 @@
          */
         handleClick(): void
         {
-            if (this.to.length && ! this.canGoBack) {
-                this.$navigator.push(this.to);
-                return;
-            }
-
-            this.$router.go(-1);
+            this.$navigator.push(this.to);
         }
     }
 
