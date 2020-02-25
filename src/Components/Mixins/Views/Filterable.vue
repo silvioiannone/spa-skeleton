@@ -57,7 +57,11 @@
             // then use it to initialize the filters.
             for (let key in this.$route.query) {
                 if (this.filters.hasOwnProperty(key)) {
-                    let filterValue = (this.$route.query[key] as String).split(',');
+                    let filterValue = (this.$route.query[key]);
+
+                    if (typeof filterValue === 'string') {
+                        filterValue = filterValue.split(',');
+                    }
 
                     this.filters[key] = Array.isArray(this.filters[key]) ?
                         filterValue : filterValue[0];
