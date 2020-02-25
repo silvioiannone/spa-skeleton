@@ -58,7 +58,7 @@ export class Guard
     protected static afterErrorHooks: ((response: ResponseInterface) => void)[] = [];
 
     /**
-     * Register an hook that will be called after an error.
+     * Register a hook that will be called after an error.
      */
     public static afterError(callback: (response: ResponseInterface) => void): void
     {
@@ -82,13 +82,11 @@ export class Guard
      */
     public run(): void
     {
-        this.router.beforeEach((to: Route, from: Route, next: VueRouterNext): void =>
-        {
+        this.router.beforeEach((to: Route, from: Route, next: VueRouterNext): void => {
             this.beforeRouteLoads(to, from, next);
         });
 
-        this.router.afterEach((to: Route, from: Route): void =>
-        {
+        this.router.afterEach((to: Route, from: Route): void => {
             this.afterRouteLoads(to, from);
         });
     }
@@ -147,7 +145,6 @@ export class Guard
             return;
         }
 
-        this.store.commit('app/SET_STATUS', 'ready');
         next();
     }
 
@@ -171,16 +168,36 @@ export class Guard
      */
     protected afterRouteLoads(to: Route, from: Route): void
     {
-        if (this.ready) {
-            this.store.commit('app/SET_STATUS', 'ready');
+        this.store.commit('app/SET_STATUS', 'ready');
 
-            Log.info('Loaded ' + to.path + '.');
-        }
+        Log.info('Loaded ' + to.path + '.');
+
+        this.storeRoute(from);
 
         // Execute the completed hooks
-        this.router.app.$nextTick((): void =>
-        {
+        this.router.app.$nextTick((): void => {
             this.completedHooks.forEach((hook): any => hook(to, from));
+        });
+    }
+
+    /**
+     * Save the given route in the route's history in the state machine.
+     */
+    protected storeRoute(route: Route): void
+    {
+        // Push the previous route into the state machine.
+        let routesHistory = [...this.store.getters.app.router.history];
+        let routesHistoryCount = this.store.getters.app.router.historyCount;
+
+        routesHistory.push(route);
+
+        if (routesHistory.length > routesHistoryCount) {
+            routesHistory.shift();
+        }
+
+        this.store.commit('app/SET', {
+            key: 'router.history',
+            value: routesHistory
         });
     }
 

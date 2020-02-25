@@ -122,7 +122,7 @@ export class App extends Module
             },
 
             /**
-             * Show or hide the notifications drawer.
+             * Show or hide the notifications-drawer.
              *
              * @param state
              * @param value
@@ -194,6 +194,22 @@ export class App extends Module
              * Marks whether the app just finished loading or not.
              */
             fresh: true,
+
+            /**
+             * Router related settings and state.
+             */
+            router: {
+
+                /**
+                 * Hold the history of the latest `historyCount` routes visited.
+                 */
+                history: [],
+
+                /**
+                 * Number of routes that should be stored in the history.
+                 */
+                historyCount: 5
+            },
 
             /*
              * The app status.
