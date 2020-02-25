@@ -1,9 +1,9 @@
 <template>
-    <v-slide-x-transition :mode="mode" v-if="transition === 'slide-x'">
-        <router-view :name="name"></router-view>
+    <v-slide-x-transition v-if="transition === 'slide-x'" :mode="mode">
+        <router-view :name="name"/>
     </v-slide-x-transition>
-    <v-fade-transition :mode="mode" v-else-if="transition === 'fade'">
-        <router-view :name="name"></router-view>
+    <v-fade-transition v-else-if="transition === 'fade'" :mode="mode">
+        <router-view :name="name"/>
     </v-fade-transition>
 </template>
 
