@@ -1,6 +1,6 @@
 <template>
     <error-main :back-button="false" :title="$t('misc.unauthorized')">
-        <v-col class="mt-5">
+        <v-col xs="12" sm="8" md="6" lg="4" xl="3">
             <v-alert type="error" :value="true">
                 {{$t('misc.youAreNotAuthorizedToViewThisPage')}}
                 {{$t('misc.authenticateInOrderToContinue')}}

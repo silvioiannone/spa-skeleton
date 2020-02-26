@@ -3,7 +3,7 @@
         <v-row align="center" justify="center">
             <v-col cols="12">
                 <v-container class="mt-5">
-                    <v-row>
+                    <v-row class="justify-center">
                         <v-col cols="12" class="text-center">
                             <div class="mb-5">
                                 <v-icon x-large color="error">{{ icon }}</v-icon>
