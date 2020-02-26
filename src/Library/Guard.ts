@@ -129,10 +129,8 @@ export class Guard
         try {
             await this.runRouteActions(to, from);
         } catch (error) {
-            this.ready = false;
-            this.handleRouteActionError(error, to, next);
+            this.handleRouteActionError(error, to);
             next(error);
-            return;
         }
 
         // Once all the data has been loaded run the guards.
@@ -140,10 +138,11 @@ export class Guard
             await this.runRouteGuards(to, from);
         } catch (error) {
             this.store.commit('app/SET_STATUS', 'unauthorized');
-            this.ready = false;
             next();
             return;
         }
+
+        this.ready = true;
 
         next();
     }
@@ -151,16 +150,12 @@ export class Guard
     /**
      * Handle a route action error.
      */
-    protected handleRouteActionError(error: any, to: Route, next?: Function): void
+    protected handleRouteActionError(error: any, to: Route): void
     {
         Log.error('View ' + to.path + ' failed to load.');
         Log.error(error);
 
         Guard.afterErrorHooks.map((callback: Function): any => callback(error));
-
-        if (next) {
-            next(error);
-        }
     }
 
     /**
@@ -168,6 +163,10 @@ export class Guard
      */
     protected afterRouteLoads(to: Route, from: Route): void
     {
+        if (! this.ready) {
+            return;
+        }
+
         this.store.commit('app/SET_STATUS', 'ready');
 
         Log.info('Loaded ' + to.path + '.');
@@ -286,15 +285,13 @@ export class Guard
 
         let availableGuards = {...SkeletonGuards, ...Guards};
 
-        guards.forEach((guard): void =>
-        {
+        guards.forEach((guard): void => {
             if (! availableGuards[guard]) {
                 throw 'The guard ' + guard + ' doesn\'t exist.';
             }
             let guardPromise = new availableGuards[guard](this.store).execute();
 
-            guardPromise.catch((error: any): void =>
-            {
+            guardPromise.catch((error: any): void => {
                 Log.error('The guard ' + guard + ' blocked the loading of the view.');
                 console.error(error);
             });
