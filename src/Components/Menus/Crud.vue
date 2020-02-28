@@ -6,6 +6,7 @@
             </v-btn>
         </template>
         <v-list>
+            <slot/>
             <v-list-item v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
                 <v-list-item-avatar>
                     <v-icon color="red">delete</v-icon>
