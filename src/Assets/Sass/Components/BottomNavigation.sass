@@ -1,0 +1,9 @@
+/*
+ * Bottom navigation.
+ */
+
+@include theme(v-bottom-navigation) using ($theme)
+
+    @if($effect-frost)
+        background-color: rgba(map_get($theme, 'background'), 0.7) !important
+        @include frost()
