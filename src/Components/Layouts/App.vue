@@ -27,6 +27,9 @@
             <error-service-unavailable v-if="status === 'serviceUnavailable'"/>
             <error-too-many-attempts v-if="status === 'tooManyAttempts'"/>
         </v-content>
+        <slot name="bottomNavigation">
+            <animated-router-view name="bottomNavigation"/>
+        </slot>
         <footer-app-update v-if="app.updateAvailable"/>
         <snackbar-global/>
     </v-app>
