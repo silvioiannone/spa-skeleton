@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import _                     from 'lodash';
     import { Vue, Component }    from 'vue-property-decorator';
     import { ResponseInterface } from '../../../Library/Api/ResponseInterface';
 
@@ -10,9 +11,11 @@
     @Component
     export class RequestParametersWatcher extends Vue
     {
+        afterResponseCallbacks: Array<Function> = [];
+
         parameters: any = {};
 
-        afterResponseCallbacks: Array<Function> = [];
+        previousParameters: any = {};
 
         /**
          * Set the initial request parameters value.
@@ -21,17 +24,9 @@
          */
         setParameters(parameters: object): void
         {
-            let oldParameters = this.getParameters();
-            let newParameters = {
-                ...this.parameters,
-                ...parameters
-            };
+            this.previousParameters = this.getParameters();
 
-            if (JSON.stringify(oldParameters) === JSON.stringify(newParameters)) {
-                return;
-            }
-
-            this.parameters = newParameters;
+            this.parameters = parameters;
         }
 
         /**
@@ -49,6 +44,7 @@
          */
         onRequestParametersChange(parameters: any): Promise<ResponseInterface>
         {
+            // Use this function in order to retrieve data from the server.
             return <Promise<ResponseInterface>><unknown>false;
         }
 
@@ -81,7 +77,7 @@
         /**
          * Request the data from the server.
          */
-        async requestData(): Promise<ResponseInterface>
+        async requestData(): Promise<ResponseInterface | void>
         {
             let response = await this.onRequestParametersChange(
                 this.cleanParameters(this.getParameters())
@@ -92,7 +88,7 @@
             return response;
         }
 
-        mounted()
+        mounted(): void
         {
             // We need to define the watcher inside the `created` hook in order to avoid it from
             // being triggered multiple times. If the watcher is defined using `@Watch` then the
@@ -100,7 +96,12 @@
             // mixin causing it to be called multiple times.
             // Since this will only be called once then we don't even need to compare the new
             // parameters with the old ones in order to determine if something changed.
-            this.$watch('parameters', async () => {
+            this.$watch('parameters', (): void => {
+                // No need to fetch the data again if the parameters haven't changed.
+                if (_.isEqual(this.parameters, this.previousParameters)) {
+                    return;
+                }
+
                 this.requestData();
             });
         }

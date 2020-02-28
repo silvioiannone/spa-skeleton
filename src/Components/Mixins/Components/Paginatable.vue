@@ -53,20 +53,20 @@
         /**
          * Get the paginated data.
          */
-        whenResponseIsReceived(response: ResponseInterface): void
+        fetchPaginationFromResponse(response: ResponseInterface): void
         {
             this.pagination = Pagination.makeFromResponse(response);
         }
 
         created(): void
         {
-            this.afterResponse(this.whenResponseIsReceived);
+            this.afterResponse(this.fetchPaginationFromResponse);
             this.setParameters(
                 Pagination.makeQueryParamsFromPagination(this.pagination)
             );
         }
 
-        @Watch('pagination', { deep: true })
+        @Watch('pagination', { deep: true, immediate: true })
         onPaginationChange(): void
         {
             let newParameters = Pagination.makeQueryParamsFromPagination(

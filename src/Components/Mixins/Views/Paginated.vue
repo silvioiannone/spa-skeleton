@@ -105,7 +105,6 @@
                 query.load = oldLoad;
                 query.wheres = oldWheres;
 
-
                 let sortDirection = sortParam.charAt(0) === '-' ? 'desc' : 'asc';
                 let sortField = sortDirection === 'desc' ?
                     sortParam.slice(1, sortParam.length) : sortParam;
