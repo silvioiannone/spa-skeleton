@@ -1,6 +1,6 @@
 <template>
     <card-main v-bind="getProps()" v-on="getOn()" v-show="jobs.length">
-        <slot :jobs="jobs"></slot>
+        <slot :jobs="jobs"/>
     </card-main>
 </template>
 
@@ -49,7 +49,7 @@
             let index = this.jobs.findIndex(_job => payload.id == _job.id);
 
             if (index >= 0) {
-                this.$nextTick(() => {
+                requestAnimationFrame(() => {
                     this.$set(this.jobs, index, {
                         ...this.jobs[index],
                         message: payload.message
@@ -74,8 +74,7 @@
             // Whenever a job is processed or has failed remove it after some time.
             this.jobs.forEach((job: any) => {
                 if (job.status === 'processed' || job.status === 'failed') {
-                    setTimeout(() =>
-                    {
+                    setTimeout(() => {
                         let index = this.jobs.findIndex(_job => job.id === _job.id);
                         this.$delete(this.jobs, index);
                     }, 8000);

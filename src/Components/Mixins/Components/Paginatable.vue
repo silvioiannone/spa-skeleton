@@ -69,21 +69,29 @@
         @Watch('pagination', { deep: true, immediate: true })
         onPaginationChange(): void
         {
-            let newParameters = Pagination.makeQueryParamsFromPagination(
+            // The only properties which should be watched are `page`, `per_page` and `sort`, and
+            // we update the parameters only if one of those have changed.
+            if (this.pagination.page === this.previousPagination.page &&
+                this.pagination.per_page === this.previousPagination.per_page &&
+                this.pagination.sort === this.previousPagination.sort) {
+                return;
+            }
+
+            let parameters = Pagination.makeQueryParamsFromPagination(
                 this.pagination as PaginationInterface
             );
 
             // If the `sortBy` or the `descending` props has changed then we need to reset the
             // pagination.
-            if (
+            if (this.previousPagination.sort !== undefined &&
                 this.pagination.sort !== this.previousPagination.sort &&
-                this.pagination.page !== 1
-            ) {
-                newParameters['page[number]'] = 1;
+                this.pagination.page !== 1) {
+                parameters['page[number]'] = 1;
             }
 
-            this.previousPagination = { ...this.pagination };
-            this.setParameters(newParameters);
+            this.previousPagination = { ...this.previousPagination, ...this.pagination };
+
+            this.setParameters(parameters);
         }
     }
 
