@@ -37,13 +37,13 @@
 
         created()
         {
-            this.setParameters(this.getFilterParameters());
+            this.mergeParameters(this.getFilterParameters());
         }
 
         @Watch('filters', { deep: true })
         onFiltersChange()
         {
-            this.setParameters(this.getFilterParameters());
+            this.mergeParameters(this.getFilterParameters());
         }
     }
 

@@ -1,7 +1,8 @@
 <script lang="ts">
 
     import { Query }                             from '@vuex-orm/core';
-    import { Component, Watch, Mixins }          from 'vue-property-decorator';
+    import { Config } from 'spa-skeleton/index';
+    import { Component, Mixins }                 from 'vue-property-decorator';
     import { Pagination as PaginationInterface } from '../../../Library/Interfaces/Pagination';
     import { ResponseInterface }                 from '../../../Library/Api/ResponseInterface';
     import { Pagination }                        from '../../../Library/Utils/Pagination';
@@ -58,17 +59,29 @@
             this.pagination = Pagination.makeFromResponse(response);
         }
 
-        created(): void
+        /**
+         * Initialize the pagination.
+         */
+        initPagination(): void
         {
-            this.afterResponse(this.fetchPaginationFromResponse);
-            this.setParameters(
-                Pagination.makeQueryParamsFromPagination(this.pagination)
-            );
+            this.pagination = {
+                page: 1,
+                per_page: Config.app.paginationSize,
+                sort: '',
+                total: 0,
+                last_page: 1
+            };
         }
 
-        @Watch('pagination', { deep: true, immediate: true })
-        onPaginationChange(): void
+        /**
+         * Set the pagination.
+         */
+        setPagination(pagination: PaginationInterface)
         {
+            this.previousPagination = {...this.pagination};
+
+            this.pagination = pagination;
+
             // The only properties which should be watched are `page`, `per_page` and `sort`, and
             // we update the parameters only if one of those have changed.
             if (this.pagination.page === this.previousPagination.page &&
@@ -89,9 +102,15 @@
                 parameters['page[number]'] = 1;
             }
 
-            this.previousPagination = { ...this.previousPagination, ...this.pagination };
+            this.previousPagination = { ...this.pagination };
 
-            this.setParameters(parameters);
+            this.mergeParameters(parameters);
+        }
+
+        created(): void
+        {
+            this.afterResponse(this.fetchPaginationFromResponse);
+            this.initPagination();
         }
     }
 

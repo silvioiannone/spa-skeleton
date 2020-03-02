@@ -33,13 +33,13 @@
                     parameters['page[number]'] = 1;
                 }
 
-                this.setParameters(parameters);
+                this.mergeParameters(parameters);
             }, 500);
         }
 
-        created()
+        created(): void
         {
-            this.setParameters({
+            this.mergeParameters({
                 search: null
             });
         }

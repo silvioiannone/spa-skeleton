@@ -30,6 +30,14 @@
         }
 
         /**
+         * Merge the parameters with the existing parameters.
+         */
+        mergeParameters(parameters: object): void
+        {
+            this.setParameters({...this.getParameters(), ...parameters});
+        }
+
+        /**
          * Get the request parameters.
          */
         getParameters(): any
