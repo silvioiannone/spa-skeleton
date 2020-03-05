@@ -4,6 +4,7 @@ const config = require('spa-skeleton/webpack.config'),
     fs = require('fs'),
     merge = require('webpack-merge'),
     mix = require('laravel-mix'),
+    os = require('os'),
     path = require('path'),
     BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
 
@@ -29,12 +30,7 @@ module.exports = {
      */
     build: function ()
     {
-        mix.options({
-            hmrOptions: {
-                host: '0.0.0.0',
-                port: 8081
-            }
-        });
+        this.setOptions();
 
         this.mix = mix;
 
@@ -58,6 +54,29 @@ module.exports = {
         mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
         mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
         mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
+    },
+
+    /**
+     * Set the Laravel Mix options.
+     */
+    setOptions: function ()
+    {
+        let options = {
+            hmrOptions: {
+                host: '0.0.0.0',
+                port: 8081
+            }
+        };
+
+        let cpusCount = os.cpus().length;
+
+        if (cpusCount <= 2) {
+            options['terser'] = {
+                parallel: cpusCount
+            }
+        }
+
+        mix.options(options);
     },
 
     /**
