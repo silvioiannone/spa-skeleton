@@ -21,6 +21,11 @@
         @Prop({ type: Boolean, default: false }) icon: boolean;
 
         /**
+         * Makes the background transparent and applies a thin border.
+         */
+        @Prop({ type: Boolean, default: false }) outlined: boolean;
+
+        /**
          * Designates the button as icon - round and flat.
          */
         @Prop({ type: Boolean, default: false }) small: boolean;
