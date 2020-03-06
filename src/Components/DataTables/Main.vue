@@ -69,6 +69,9 @@
             return [paginationSize, paginationSize * 2, paginationSize * 4];
         }
 
+        /**
+         * Render the element.
+         */
         render(createElement: Function)
         {
             let component = {
@@ -83,14 +86,36 @@
                     ...this.$listeners,
                     'input': (value: any): this => this.$emit('input', value),
                     'update:options': (value: any): void => this.updatePagination(value)
-                }
+                },
+                scopedSlots: {}
             };
 
-            if (this.$vnode.data) {
-                component['scopedSlots'] = this.$vnode.data.scopedSlots;
+            if (this.$vnode.data?.scopedSlots?.item) {
+                component.scopedSlots['item'] = (scopeProps: any) => {
+                    scopeProps.select = this.select;
+                    return (this.$vnode.data?.scopedSlots?.item as any)(scopeProps);
+                }
             }
 
             return createElement('v-data-table', component);
+        }
+
+        /**
+         * Select an item.
+         */
+        select(item: any): void
+        {
+            let selected = [...this.value];
+
+            let position = selected.indexOf(item);
+
+            if(position >= 0) {
+                delete selected[position];
+            } else {
+                selected.push(item);
+            }
+
+            this.$emit('input', selected);
         }
     }
 
