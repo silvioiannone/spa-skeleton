@@ -63,7 +63,7 @@ module.exports = {
     {
         let options = {
             hmrOptions: {
-                host: '0.0.0.0',
+                host: process.env.APP_DOMAIN,
                 port: 8081
             }
         };

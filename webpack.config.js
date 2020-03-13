@@ -1,12 +1,13 @@
 /* eslint-disable */
 
+const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
 const LaravelMix = require('laravel-mix');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
-module.exports = {
+let config = {
     profile: true,
     resolve: {
         extensions: ['.ts', '.vue'],
@@ -64,9 +65,19 @@ module.exports = {
         new VuetifyLoaderPlugin()
     ],
     devServer: {
-        disableHostCheck: true
+        disableHostCheck: true,
     },
     watchOptions: {
         ignored: /node_modules\/(?!(spa-skeleton)\/).*/
     }
 };
+
+// Add the certificates if serving over https.
+if (process.env.APP_URL.startsWith('https')) {
+    config.devServer.https = {
+        key: fs.readFileSync(process.env.APP_SSL_KEY),
+        cert: fs.readFileSync(process.env.APP_SSL_CERT)
+    }
+}
+
+module.exports = config;
