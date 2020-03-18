@@ -32,18 +32,41 @@ export class Validator extends Service
     public boot(): void
     {
         let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
-        let translator = (new Translator).get();
+        let translatorService = new Translator;
+        let translator = translatorService.get();
+
+        translatorService.merge(messages.messages, 'validations.vendor');
 
         configure({
-            defaultMessage: (_, values: any): any =>
-                translator.t(`validations.${values._rule_}`, values)
+            defaultMessage: (field: string, values: any): any => {
+                field = field.toLowerCase();
+
+                // Translate the field.
+                values._field_ = translator.t(`validations.names.${field}`);
+
+                // If there's a custom field translation use that one. Custom translations are
+                // stored in the locale file under `validation.fields.<field>.<rule>`.
+                let customFieldTranslationKey = `validations.fields.${field}.${values._rule_}`;
+
+                if (translator.te(customFieldTranslationKey)) {
+                    return translator.t(customFieldTranslationKey, values);
+                }
+
+                // If not custom field translation is found, try with a custom rule translation.
+                let customRuleTranslationKey = `validations.rules.${values._rule_}`;
+
+                if (translator.te(customRuleTranslationKey)) {
+                    return translator.t(customRuleTranslationKey, values);
+                }
+
+                // If even the custom field translation cannot be found, use the default translation
+                // provided by `vee-validate`.
+                return translator.t(`validations.vendor.${values._rule_}`, values);
+            }
         });
 
         for (let key in VeeValidateRules) {
-            extend(key, {
-                ...VeeValidateRules[key],
-                message: messages.messages[key]
-            });
+            extend(key, VeeValidateRules[key]);
         }
 
         let availableRules = { ...skeletonRules, ...AppRules };

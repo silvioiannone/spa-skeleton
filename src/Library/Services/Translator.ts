@@ -28,6 +28,16 @@ export class Translator extends Service
     }
 
     /**
+     * Merge the given messages with the already existing ones.
+     */
+    public merge(messages: any, key: string, locale: string = Config.locale): void
+    {
+        let messagesToMerge = _.set({}, key, messages);
+
+        Translator.instance.mergeLocaleMessage(locale, messagesToMerge);
+    }
+
+    /**
      * Boot the translator.
      */
     public boot(): Translator
