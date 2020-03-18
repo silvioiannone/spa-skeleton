@@ -1,5 +1,4 @@
 /* eslint-disable */
-
 const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
@@ -64,19 +63,22 @@ let config = {
         }),
         new VuetifyLoaderPlugin()
     ],
-    devServer: {
-        disableHostCheck: true,
-    },
     watchOptions: {
         ignored: /node_modules\/(?!(spa-skeleton)\/).*/
     }
 };
 
 // Add the certificates if serving over https.
-if (process.env.APP_URL.startsWith('https')) {
-    config.devServer.https = {
-        key: fs.readFileSync(process.env.APP_SSL_KEY),
-        cert: fs.readFileSync(process.env.APP_SSL_CERT)
+if (process.env.APP_URL.startsWith('https') && Mix.isUsing('hmr')) {
+    config.output = {
+        publicPath: 'https://' + process.env.APP_DOMAIN + ':8080/',
+    };
+    config.devServer = {
+        publicPath: 'https://' + process.env.APP_DOMAIN + ':8080/',
+        https: {
+            key: fs.readFileSync(process.env.APP_SSL_KEY),
+            cert: fs.readFileSync(process.env.APP_SSL_CERT)
+        }
     }
 }
 
