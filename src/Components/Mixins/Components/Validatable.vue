@@ -28,11 +28,6 @@
          */
         @Prop({ type: String, default: '' }) validationName: any;
 
-        get _validationName(): string
-        {
-            return this.label.length ? this.label : this.name;
-        }
-
         /**
          * Handle the `blur` event fired by `v-text-field` component.
          */

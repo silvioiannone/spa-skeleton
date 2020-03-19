@@ -63,13 +63,14 @@
             return createElement('validation-provider', {
                 props: {
                     rules: this.rules,
-                    name: this._validationName,
+                    name: this.name,
                     vid: this.name,
                 },
                 scopedSlots: {
                     default: (props: { errors: any }): VNode => createElement('v-text-field', {
                         props: {
                             ...this.textFieldProps,
+                            label: this._label,
                             errorMessages: props.errors
                         },
                         attrs: {

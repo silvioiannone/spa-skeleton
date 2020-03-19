@@ -48,6 +48,11 @@
          * trigger validation.
          */
         @Prop({ type: Array, default: () => []}) errorMessages: Array<any>
+
+        get _label(): string
+        {
+            return this.label.charAt(0).toUpperCase() + this.label.slice(1, this.label.length);
+        }
     }
 
     export default Input;
