@@ -7,20 +7,20 @@
         </template>
         <v-list>
             <slot/>
-            <v-list-item v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
-                <v-list-item-avatar>
-                    <v-icon color="red">delete</v-icon>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                    <v-list-item-title>{{ $t('common.delete') }}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
             <v-list-item v-bind="updateTileProps" @click.stop="handleUpdateTileClick">
                 <v-list-item-avatar>
                     <v-icon>edit</v-icon>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                    <v-list-item-title>{{ $t('common.update') }}</v-list-item-title>
+                    <v-list-item-title>{{ $t('actions.update') }}</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-bind="deleteTileProps" @click.stop="handleDeleteTileClick">
+                <v-list-item-avatar>
+                    <v-icon color="red">delete</v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                    <v-list-item-title>{{ $t('actions.delete') }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
         </v-list>
