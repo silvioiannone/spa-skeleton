@@ -1,8 +1,11 @@
 {
-    "common": {
-        "cancel": "Avbryt",
+    "actions": {
         "create": "Skapa",
         "delete": "Radera",
+        "update": "Uppdatera"
+    },
+    "common": {
+        "cancel": "Avbryt",
         "done": "Klar",
         "email": "E-post",
         "logIn": "Logga in",
