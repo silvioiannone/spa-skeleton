@@ -131,6 +131,14 @@ export class Users extends ApiResource
     }
 
     /**
+     * Delete a user.
+     */
+    public delete(data: any): Promise<ResponseInterface>
+    {
+        return this._delete('', data);
+    }
+
+    /**
      * Update a user.
      */
     public update(data: any): Promise<ResponseInterface>
