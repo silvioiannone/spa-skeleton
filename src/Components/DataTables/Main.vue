@@ -80,7 +80,8 @@
                     footerProps: {
                         itemsPerPageOptions: this.itemsPerPageOptions
                     },
-                    ...this.getVuePagination(this.pagination)
+                    ...this.getVuePagination(this.pagination),
+                    headers: this._headers
                 },
                 on: {
                     ...this.$listeners,
@@ -98,6 +99,17 @@
             }
 
             return createElement('v-data-table', component);
+        }
+
+        get _headers(): any[]
+        {
+            return this.headers.map((header: any): any => {
+                if (header.text) {
+                    header.text = this.$options?.filters?.capitalize(header.text);
+                }
+
+                return header;
+            });
         }
 
         /**
