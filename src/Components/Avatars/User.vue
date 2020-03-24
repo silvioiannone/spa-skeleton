@@ -42,9 +42,9 @@
             return this.to.length ? this.to : '/users/' + this.user.id;
         }
 
-        get userHasCustomAvatar()
+        get userHasCustomAvatar(): boolean
         {
-            return this.user.settings?.avatar?.small;
+            return !! this.user.settings?.avatar?.small;
         }
     }
 
