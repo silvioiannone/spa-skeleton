@@ -1,8 +1,9 @@
 <script lang="ts">
 
-    import { Config }                  from '../../Config';
     import { CreateElement, VNode }    from 'vue';
+    import { ScopedSlot }              from 'vue/types/vnode';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import { Config }                  from '../../Config';
     import { Autocomplete }            from '../Mixins/Autocomplete.vue';
     import { Validatable }             from '../Mixins/Components/Validatable.vue';
 
@@ -82,24 +83,19 @@
          */
         render(createElement: CreateElement): VNode
         {
-            let scopedSlots = {};
+            let scopedSlots: { [key: string]: ScopedSlot | undefined } = {};
 
             // If there are scoped slots...
-            if (this.$vnode.data && this.$vnode.data.scopedSlots) {
-                let initialScopedSlots = this.$vnode.data.scopedSlots;
+            if (this.$vnode?.data?.scopedSlots) {
+                scopedSlots = this.$vnode.data.scopedSlots;
 
                 // We add a remove function to the scoped slots so that it can be accessed from
                 // within the selection scoped slot.
-                if (initialScopedSlots.selection) {
-                    scopedSlots['selection'] = (props: any) =>
-                    {
+                if (scopedSlots.selection) {
+                    scopedSlots.selection = (props: any) => {
                         props.remove = this.remove;
-                        return (<any>(initialScopedSlots.selection))(props);
+                        return (<any>(scopedSlots.selection))(props);
                     }
-                }
-
-                if (initialScopedSlots.item) {
-                    scopedSlots['item'] = initialScopedSlots.item;
                 }
             }
 
@@ -152,7 +148,7 @@
             return createElement('validation-provider', {
                 props: {
                     rules: this.rules,
-                    name: this.name,
+                    name: this._validationName,
                     vid: this.name
                 },
                 scopedSlots: {
