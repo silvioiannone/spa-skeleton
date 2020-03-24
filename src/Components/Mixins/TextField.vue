@@ -75,6 +75,11 @@
         @Prop({ type: String, default: '' }) appendIcon: string;
 
         /**
+         * Appends an icon to the outside the component's input, uses same syntax as `v-icon`.
+         */
+         @Prop({ type: String, default: '' }) appendOuterIcon: string;
+
+        /**
          * Make the text field clearable.
          */
         @Prop({ type: Boolean, default: false }) clearable: boolean;
