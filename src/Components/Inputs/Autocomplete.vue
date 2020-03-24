@@ -148,7 +148,7 @@
             return createElement('validation-provider', {
                 props: {
                     rules: this.rules,
-                    name: this._validationName,
+                    name: this.name,
                     vid: this.name
                 },
                 scopedSlots: {
