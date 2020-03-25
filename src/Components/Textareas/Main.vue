@@ -1,6 +1,6 @@
 <template>
-    <validation-provider #default="{ errors }" :rules="rules" :name="_validationName" :vid="name"
-                         ref="validationProvider" slim>
+    <validation-provider #default="{ errors }" :rules="rules" :name="name" ref="validationProvider"
+                         slim>
         <v-textarea v-bind="textareaProps" v-on="$listeners" :error-messages="errors" :value="value"
                     :outlined="_outlined || outlined" @blur="handleBlur">
         </v-textarea>
