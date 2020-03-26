@@ -56,6 +56,36 @@
         @Prop({ type: Boolean, default: false }) disabled: boolean;
 
         /**
+         * Designates the button as a floating-action-button - round.
+         */
+        @Prop({ type: Boolean, default: false }) fab: boolean;
+
+        /**
+         * Applies position: fixed to the component.
+         */
+        @Prop({ type: Boolean, default: false }) fixed: boolean;
+
+        /**
+         * Aligns the component towards the bottom.
+         */
+        @Prop({ type: Boolean, default: false }) bottom: boolean;
+
+        /**
+         * Aligns the component to the right
+         */
+        @Prop({ type: Boolean, default: false }) right: boolean;
+
+        /**
+         * Aligns the component towards the top.
+         */
+        @Prop({ type: Boolean, default: false }) top: boolean;
+
+        /**
+         * Aligns the component to the left.
+         */
+        @Prop({ type: Boolean, default: false }) left: boolean;
+
+        /**
          * On click callback action.
          *
          * This function should be a callback executor compatible function.
