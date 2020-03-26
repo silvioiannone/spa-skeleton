@@ -91,7 +91,9 @@
                 scopedSlots: {}
             };
 
-            if (this.$vnode.data?.scopedSlots?.item) {
+            if (this.$vnode.data?.scopedSlots) {
+                component.scopedSlots = this.$vnode.data.scopedSlots;
+
                 component.scopedSlots['item'] = (scopeProps: any) => {
                     scopeProps.select = this.select;
                     return (this.$vnode.data?.scopedSlots?.item as any)(scopeProps);
