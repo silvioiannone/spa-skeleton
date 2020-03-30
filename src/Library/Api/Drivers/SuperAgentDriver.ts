@@ -124,12 +124,16 @@ export class SuperAgentDriver extends AbstractApiDriver
         request: SuperAgent.SuperAgentRequest
     ): Promise<SuperAgent.Response>
     {
-        return new Promise(async (resolve, reject): Promise<void> =>
-        {
+        return new Promise(async (resolve, reject): Promise<void> => {
+            // Clean the parameters
+            this.parameters = {};
+
+            // Clean the attachments
+            this.attachments = [];
+
             let interceptedRequest = await this.interceptRequest(request);
 
-            interceptedRequest.request.end(async (error, response): Promise<void> =>
-            {
+            interceptedRequest.request.end(async (error, response): Promise<void> => {
                 if (error) {
                     reject(response);
                     return;
@@ -139,12 +143,6 @@ export class SuperAgentDriver extends AbstractApiDriver
 
                 resolve(interceptedResponse);
             });
-
-            // Clean the parameters
-            this.parameters = {};
-
-            // Clean the attachments
-            this.attachments = [];
         });
     }
 
