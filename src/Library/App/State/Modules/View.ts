@@ -1,6 +1,7 @@
 import { Module }                                from '../../../State/Module';
 import { Config, ResponseInterface, ViewAction } from 'spa-skeleton';
 import { Store }                                 from 'vuex';
+import { RouteRecord } from 'vue-router';
 
 /**
  * State machine view module.
@@ -165,5 +166,15 @@ export class View extends Module
     protected routeIs(payload: any, route: string): boolean
     {
         return payload.route.matched[payload.route.matched.length - 1].path === route;
+    }
+
+    /**
+     * Check if the current route is a child route.
+     */
+    protected routeIsChildRoute(payload: any, route: string): boolean
+    {
+        return !! payload.route.matched.find((matched: RouteRecord) => {
+            return matched.path.startsWith(route) && matched.path !== route;
+        });
     }
 }
