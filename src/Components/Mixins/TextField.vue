@@ -147,32 +147,26 @@
 
         render(createElement: Function): VNode
         {
-            let self = this;
-
-            let props = {
-                ...self.$props,
-                value: self.value
-            };
-
             let directives = [];
 
             if (this.mask.length) {
                 directives.push({
                     name: 'mask',
-                    value: self.mask
+                    value: this.mask
                 });
             }
 
             return createElement('v-text-field', {
                 attrs: {
-                    name: self.name,
-                    type: self.type,
-                    step: self.step,
-                    min: self.min,
-                    max: self.max
+                    autocomplete: this.autocomplete,
+                    name: this.name,
+                    type: this.type,
+                    step: this.step,
+                    min: this.min,
+                    max: this.max
                 },
                 directives,
-                props,
+                props: this.$props,
                 on: this.$listeners
             });
         }

@@ -74,14 +74,13 @@
                             errorMessages: props.errors
                         },
                         attrs: {
+                            autocomplete: this.autocomplete,
                             min: this.min,
                             max: this.max,
-                            name: this.name
+                            name: this.name,
                         },
                         directives: vTextFieldDirectives,
-                        on: {
-                            ...this.listeners
-                        }
+                        on: this.listeners
                     })
                 },
                 ref: 'validationProvider'

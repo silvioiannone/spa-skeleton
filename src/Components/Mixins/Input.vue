@@ -43,6 +43,11 @@
         @Prop({ type: String, default: ''}) name: string;
 
         /**
+         * Set the `autocomplete` attribute.
+         */
+        @Prop({ type: String, default: ''}) autocomplete: string;
+
+        /**
          * Puts the input in an error state and passes through custom error messsages. Will be
          * combined with any validations that occur from the rules prop. This field will not
          * trigger validation.
