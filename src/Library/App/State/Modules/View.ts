@@ -174,7 +174,9 @@ export class View extends Module
     protected routeIsChildRoute(payload: any, route: string): boolean
     {
         return !! payload.route.matched.find((matched: RouteRecord) => {
-            return matched.path.startsWith(route) && matched.path !== route;
+            return matched.path.startsWith(route) &&
+                matched.path !== route &&
+                matched.path !== route + '/';
         });
     }
 }

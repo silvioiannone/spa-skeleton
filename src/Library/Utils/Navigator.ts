@@ -74,7 +74,7 @@ export class Navigator
      */
     public toParent(levels = 1): void
     {
-        this.router.push({
+        this.push({
             path: String.parentPath(this.route.path, levels),
             query: this.route.query
         });
