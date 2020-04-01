@@ -35,7 +35,7 @@
         @Prop({ type: String, default: '' }) handle: Array<any>;
 
         /**
-         * Disable the key-based mode.
+         * Enable the key-based mode.
          */
         @Prop({ type: Boolean, default: false }) keyMode: boolean;
 
