@@ -1,9 +1,12 @@
 <template>
     <v-card v-bind="$props" v-on="$listeners">
-        <v-card-title class="headline d-flex" v-if="title.length">
-            <div class="flex-grow-1 flex-grow-0">{{ title }}</div>
-            <div class="flex-shrink-1 flex-grow-0 card__title__actions">
+        <v-card-title class="headline d-flex" style="flex-flow: row nowrap" v-if="title.length">
+            <div class="flex-grow-1">{{ title }}</div>
+            <div class="flex-shrink-0 flex-grow-0 card__title__actions">
                 <slot name="title-actions"/>
+                <v-btn v-if="closable" icon @click="$emit('cancel')">
+                    <v-icon>mdi-close</v-icon>
+                </v-btn>
             </div>
         </v-card-title>
         <v-card-subtitle v-if="subtitle.length">{{ subtitle }}</v-card-subtitle>
@@ -21,6 +24,11 @@
     @Component
     export class CardMain extends Vue
     {
+        /**
+         * Display a close button.
+         */
+        @Prop({ type: Boolean }) closable: boolean;
+
         /**
          * Applies specified color to the control - it can be the name of material color (for
          * example success or purple) or css color (#033 or rgba(255, 0, 0, 0.5)).
