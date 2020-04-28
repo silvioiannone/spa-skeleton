@@ -1,5 +1,5 @@
 <template>
-    <v-list-item :to="to" :exact="exact">
+    <v-list-item :to="to" :exact="exact" :append="append">
         <v-list-item-avatar>
             <v-icon>{{ icon }}</v-icon>
         </v-list-item-avatar>
@@ -16,6 +16,11 @@
     @Component
     export class ListItemNav extends Vue
     {
+        /**
+         * Whether the path shoulud be appended to the current route.
+         */
+        @Prop({ type: Boolean, default: false }) append: boolean;
+
         /**
          * Highlight the list item if the route (`to` prop) matches exactly.
          */
