@@ -16,6 +16,7 @@ export class Guard extends Handler
      */
     protected errorStatusMap: {[key: number]: string} = {
         401: 'unauthorized',
+        403: 'unauthorized',
         404: 'notFound',
         429: 'tooManyAttempts',
         503: 'serviceUnavailable'
