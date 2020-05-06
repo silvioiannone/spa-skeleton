@@ -34,6 +34,19 @@
 
         __component = CardMain;
 
+        get _closable(): boolean
+        {
+            if (this.closable) {
+                return true;
+            }
+
+            if (this.$vuetify.breakpoint.smAndDown) {
+                return true;
+            }
+
+            return false;
+        }
+
         /**
          * Propagates the cancel form event to the parent.
          */
