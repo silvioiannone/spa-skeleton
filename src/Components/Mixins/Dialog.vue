@@ -53,10 +53,21 @@
          */
         @Prop({ type: Boolean, default: false }) eager: boolean;
 
+        /**
+         * Mark the dialog as closable.
+         */
+        @Prop({ type: Boolean, default: false }) closable: boolean;
+
         get _fullscreen()
         {
             // Make the dialog fullscreen on small devices.
             return this.fullscreen || this.$vuetify.breakpoint.xs;
+        }
+
+        get _closable()
+        {
+
+            return this.closable || this.$vuetify.breakpoint.smAndDown;
         }
 
         get model()
@@ -98,28 +109,6 @@
 
         render(createElement: CreateElement): VNode
         {
-            if (this._fullscreen) {
-                let button = createElement('v-btn', {
-                    class: {
-                        'dialog--button-close': true
-                    },
-                    props: this.getProps(),
-                    on: {
-                        click: this.close
-                    }
-                }, [
-                    createElement('v-icon', {
-                        props: {
-                            color: 'primary'
-                        }
-                    }, 'close')
-                ]);
-
-                if (this.$slots.default) {
-                    this.$slots.default.push(button);
-                }
-            }
-
             return createElement('v-dialog', {
                 props: this.getProps(),
                 on: {

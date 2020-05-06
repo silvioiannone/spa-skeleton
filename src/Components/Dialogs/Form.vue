@@ -1,15 +1,15 @@
 <template>
     <dialog-main v-model="model" v-bind="getProps()">
-        <slot :bubble-submit="bubbleSubmit" :bubble-cancel="bubbleCancel"></slot>
+        <slot :bubble-submit="bubbleSubmit" :bubble-cancel="bubbleCancel" :closable="_closable"/>
     </dialog-main>
 </template>
 
 <script lang="ts">
 
     import { Component, Mixins, Watch, Prop } from 'vue-property-decorator';
+    import { Dialog }                         from '../Mixins/Dialog.vue';
     import { Wrapper }                        from '../Mixins/Wrapper.vue';
     import { DialogMain }                     from './Main.vue';
-    import { Dialog }                         from '../Mixins/Dialog.vue';
 
     /**
      * This is a dialog that can hold a form in it.
