@@ -1,11 +1,16 @@
 /*
  * List component.
  */
-.v-list-item
+.v-list
 
-    > span
-        width: 100%
+    width: 100%
 
-.v-list-item__title
-    // Fix an issue with flex children with `white-space: no-wrap` and `text-overflow: ellipsis`.
-    min-width: 0
+    &-item
+
+        > span
+            width: 100%
+
+        &__title
+            // Fix an issue with flex children with `white-space: no-wrap` and `text-overflow: ellipsis`.
+            min-width: 0
+
