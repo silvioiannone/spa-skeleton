@@ -10,12 +10,12 @@
                 {{ title }}
             </router-link>
         </v-toolbar-title>
-        <slot name="toolbar-text" v-show="showingTitle">
+        <slot name="toolbar-text" v-if="showingBreadcrumbs">
             <breadcrumbs-main :items="breadcrumbs"/>
         </slot>
         <v-spacer/>
-        <slot name="toolbar-text-right" v-show="showingTitle"/>
-        <text-field-search v-model="routeSearchParameter" v-if="showingSearch"
+        <slot name="toolbar-text-right" v-if="showingTitle"/>
+        <text-field-search v-if="showingSearch" v-model="routeSearchParameter"
                            @click:clear="hideSearch" @blur="hideSearchIfEmpty"/>
         <v-btn icon @click="showSearch" v-if="search || searchCallback" v-show="!showingSearch">
             <v-icon>search</v-icon>
@@ -111,17 +111,22 @@
             return this.ui.search;
         }
 
+        get showingBreadcrumbs(): boolean
+        {
+            return this.$vuetify.breakpoint.smAndDown ? !this.showingSearch : true;
+        }
+
         get showingTitle(): boolean
         {
-            if (this.$vuetify.breakpoint.xs) {
+            if (this.$vuetify.breakpoint.smAndDown) {
                 return false;
             }
 
             if (this.$vuetify.breakpoint.mdAndUp) {
                 return !!(!!this.$slots.title || (this.title && this.title.length))
-            } else {
-                return !(this.showingSearch && window.innerWidth <= 576);
             }
+
+            return true;
         }
 
         get toolbarTitleRedirectUrl(): string
