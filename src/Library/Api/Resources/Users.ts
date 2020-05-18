@@ -27,16 +27,6 @@ export class Users extends ApiResource
     }
 
     /**
-     * Change the user password after it has been reset.
-     */
-    public changePassword(
-        data: {password: string; password_confirmation: string}
-    ): Promise<ResponseInterface>
-    {
-        return this._post('changePassword', data);
-    }
-
-    /**
      * Get the user.
      */
     public find(userId: any): Promise<ResponseInterface>
@@ -105,21 +95,19 @@ export class Users extends ApiResource
     }
 
     /**
-     * Reset the user password.
+     * Ask for a password reset (will send the password reset notification).
      */
-    public resetPassword(data: any): Promise<ResponseInterface>
+    public askReset(data: { email: string }): Promise<ResponseInterface>
     {
-        return this._post('resetPassword', data);
+       return this._post('askReset', data);
     }
 
     /**
-     * Reset the user's password.
+     * Reset the user password.
      */
-    public sendPasswordResetEmail(email: any): Promise<ResponseInterface>
+    public reset(data: { password: string, token: string }): Promise<ResponseInterface>
     {
-        return this._post('sendPasswordResetEmail', {
-            'email': email
-        });
+        return this._post('reset', data);
     }
 
     /**
@@ -154,5 +142,19 @@ export class Users extends ApiResource
         return this
             .attach('avatar', avatar)
             ._post(id + '/avatar');
+    }
+
+    /**
+     * Update the user password after it has been reset.
+     */
+    public updatePassword(
+        data: {
+            old_password: string,
+            password: string;
+            password_confirmation: string
+        }
+    ): Promise<ResponseInterface>
+    {
+        return this._post('updatePassword', data);
     }
 }
