@@ -1,4 +1,9 @@
 {
+    "actions": {
+        "create": "Create",
+        "delete": "Delete",
+        "update": "Update"
+    },
     "common": {
         "cancel": "Cancel",
         "delete": "Delete",
