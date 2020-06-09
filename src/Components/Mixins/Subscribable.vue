@@ -15,12 +15,12 @@
          */
         subscriptions: Array<Subscription> = [];
 
-        created()
+        created(): void
         {
             this.$ws.listen(this.subscriptions);
         }
 
-        beforeDestroy()
+        beforeDestroy(): void
         {
             this.$ws.silence(this.subscriptions);
         }
