@@ -1,7 +1,7 @@
 <template>
     <dialog-main v-bind="getProps()">
         <v-card>
-            <v-card-title class="headline">{{ this.title }}</v-card-title>
+            <v-card-title class="text-h5">{{ this.title }}</v-card-title>
             <v-card-text>
                 <slot name="alert"></slot>
                 <slot></slot>

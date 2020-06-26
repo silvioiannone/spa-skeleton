@@ -1,6 +1,6 @@
 <template>
     <v-card v-bind="$props" v-on="$listeners">
-        <v-card-title class="headline d-flex" style="flex-flow: row nowrap" v-if="title.length">
+        <v-card-title class="text-h5 d-flex" style="flex-flow: row nowrap" v-if="title.length">
             <div class="flex-grow-1">{{ title }}</div>
             <div class="flex-shrink-0 flex-grow-0 card__title__actions">
                 <slot name="title-actions"/>

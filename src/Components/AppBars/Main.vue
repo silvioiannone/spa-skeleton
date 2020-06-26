@@ -49,7 +49,7 @@
     {
         /**
          * Designates the component as part of the application layout. Used for dynamically
-         * adjusting content sizing. Components using this prop should reside outside of v-content
+         * adjusting content sizing. Components using this prop should reside outside of v-main
          * component to function properly. You can more information about layouts on the application
          * page.
          */

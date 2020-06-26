@@ -15,7 +15,7 @@
                 </app-bar-main>
             </slot>
         </template>
-        <v-content>
+        <v-main>
             <slot>
                 <animated-router-view v-if="status === 'ready' || status === 'loading'"/>
             </slot>
@@ -26,7 +26,7 @@
             <error-not-found v-if="status === 'notFound'"/>
             <error-service-unavailable v-if="status === 'serviceUnavailable'"/>
             <error-too-many-attempts v-if="status === 'tooManyAttempts'"/>
-        </v-content>
+        </v-main>
         <slot name="bottomNavigation">
             <animated-router-view name="bottomNavigation"/>
         </slot>

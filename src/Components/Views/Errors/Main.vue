@@ -8,7 +8,7 @@
                             <div class="mb-5">
                                 <v-icon x-large color="error">{{ icon }}</v-icon>
                             </div>
-                            <h1 class="display-2">{{ title }}</h1>
+                            <h1 class="text-h2">{{ title }}</h1>
                         </v-col>
                         <v-col v-if="$slots.default" cols="12" class="my-5">
                             <v-divider/>
@@ -30,7 +30,7 @@
                             <v-expansion-panel-content>
                                 <div slot="header">{{$t('misc.details')}}</div>
                                 <v-card>
-                                    <v-card-title class="headline">
+                                    <v-card-title class="text-h5">
                                         <span v-if="error.status">{{ error.status }}</span>
                                         - {{ error.body.message }}
                                     </v-card-title>

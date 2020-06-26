@@ -1,7 +1,7 @@
 <template>
     <dialog-main v-model="model">
         <v-card>
-            <v-card-title class="headline">{{ title }}</v-card-title>
+            <v-card-title class="text-h5">{{ title }}</v-card-title>
             <slot></slot>
             <v-card-actions>
                 <v-spacer></v-spacer>
