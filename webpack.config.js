@@ -42,8 +42,12 @@ let config = {
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(__dirname, "tsconfig.json"),
-            vue: true
+            typescript: {
+                configFile: path.resolve(__dirname, "tsconfig.json"),
+                extensions: {
+                    vue: true
+                }
+            },
         }),
         new Webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
