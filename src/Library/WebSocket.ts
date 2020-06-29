@@ -1,19 +1,19 @@
-import Echo                            from 'laravel-echo';
-import IO                              from 'socket.io-client';
-import { Logger as Log }               from './Services/Logger';
-import Vue                             from 'vue';
+import Echo, { Channel as EchoChannel } from 'laravel-echo';
+import IO                               from 'socket.io-client';
+import { Logger as Log }                from './Services/Logger';
+import Vue                              from 'vue';
 import { Config }                       from '../Config';
-import Subscriptions                   from '../../../../resources/ts/App/Subscriptions';
-import { ApiFactory }                  from './Api';
-import { Admin as AdminChannel }       from './WebSocket/Channels/Admin';
-import { App as AppChannel }           from './WebSocket/Channels/App';
-import { User as UserChannel }         from './WebSocket/Channels/User';
-import { AppHandler }                  from './Events/AppHandler';
-import { ModelHandler }                from './Events/ModelHandler';
-import { Token }                       from './Api/Token';
-import { Subscription }                from './Interfaces/Subscription';
-import { Channel }                     from './Types/Channel';
-import { Channel as ChannelInterface } from './Interfaces/Channel';
+import Subscriptions                    from '../../../../resources/ts/App/Subscriptions';
+import { ApiFactory }                   from './Api';
+import { Admin as AdminChannel }        from './WebSocket/Channels/Admin';
+import { App as AppChannel }            from './WebSocket/Channels/App';
+import { User as UserChannel }          from './WebSocket/Channels/User';
+import { AppHandler }                   from './Events/AppHandler';
+import { ModelHandler }                 from './Events/ModelHandler';
+import { Token }                        from './Api/Token';
+import { Subscription }                 from './Interfaces/Subscription';
+import { Channel }                      from './Types/Channel';
+import { Channel as ChannelInterface }  from './Interfaces/Channel';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -128,19 +128,28 @@ export class WebSocket
      */
     public silence(subscriptions: Subscription[]): void
     {
-        subscriptions.forEach((subscription): void =>
-        {
-            let index = this.activeSubscriptions.indexOf(subscription);
+        subscriptions.forEach((subscription): void => {
+            // Find where the current subscription's position.
+            let index = this.activeSubscriptions.findIndex((activeSubscription): boolean => {
+                return activeSubscription.event === subscription.event
+            });
+
+            // This will remove the event callbacks.
+            this.activeSubscriptions[index].channels.forEach((channel) => {
+                let channelInstance = WebSocket.makeChannel(channel);
+                this.makeEchoChannel(channelInstance).stopListening(subscription.event);
+            });
+
+            // Remove teh subscription.
             this.activeSubscriptions.splice(index, 1);
 
-            subscription.channels.forEach((channel: any): void =>
-            {
-                let channelName = WebSocket.makeChannel(channel).name();
+            subscription.channels.forEach((channel: any): void => {
+                let channelInstance = WebSocket.makeChannel(channel);
 
-                Log.info('No longer listening to ' + subscription.event + ' in the ' + channelName
-                    + ' room.');
+                Log.info('No longer listening to ' + subscription.event + ' in the ' +
+                    channelInstance.name() + ' room.');
 
-                this.leaveChannelIfUnused(channel);
+                this.leaveChannelIfUnused(channelInstance);
             });
         });
     }
@@ -148,21 +157,18 @@ export class WebSocket
     /**
      * Leave a channel if it's not used by any event.
      */
-    public leaveChannelIfUnused(channel: Channel): void
+    public leaveChannelIfUnused(channel: ChannelInterface): void
     {
-        let channelName = WebSocket.makeChannel(channel).name();
         let channelInUse = false;
 
-        this.activeSubscriptions.forEach((subscription): void =>
-        {
+        this.activeSubscriptions.forEach((subscription): void => {
             if (channelInUse) {
                 return;
             }
 
-            let found = subscription.channels
-                .find((channel: any): boolean =>
-                    WebSocket.makeChannel(channel).name() === channelName
-                );
+            let found = subscription.channels.find((channel: any): boolean =>
+                WebSocket.makeChannel(channel).name() === channel.name()
+            );
 
             if (found) {
                 channelInUse = true;
@@ -170,8 +176,8 @@ export class WebSocket
         });
 
         if (! channelInUse) {
-            this.echo.leave(channelName);
-            Log.debug('Channel ' + channelName + ' left.');
+            this.echo.leave(channel.name());
+            Log.debug('Channel ' + channel.name() + ' left.');
         }
     }
 
@@ -189,18 +195,24 @@ export class WebSocket
 
         Log.info('Listening to ' + event + ' in the ' + channelInstance.name() + ' room.');
 
-        let _channel = channelInstance.isPrivate() ?
-            this.echo.private(channelInstance.name()) :
-            this.echo.channel(channelInstance.name());
+        this.makeEchoChannel(channelInstance)
+            .listen(event, (payload: any): void => {
+                if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
+                    Log.debug('Notification received: ' + payload.response.type + '.');
+                }
 
-        _channel.listen(event, (payload: any): void =>
-        {
-            if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
-                Log.debug('Notification received: ' + payload.response.type + '.');
-            }
+                self.broadcast(event, payload);
+            });
+    }
 
-            self.broadcast(event, payload);
-        });
+    /**
+     * Create an Echo Channel instance.
+     */
+    protected makeEchoChannel(channel: ChannelInterface): EchoChannel
+    {
+        return channel.isPrivate() ?
+            this.echo.private(channel.name()) :
+            this.echo.channel(channel.name());
     }
 
     /**
