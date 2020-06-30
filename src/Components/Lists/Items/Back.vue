@@ -35,8 +35,6 @@
          */
         @Prop({ type: String, default: '' }) to: string;
 
-        route: string;
-
         get canGoBack(): boolean
         {
             return !! this.lastVisitableView;
@@ -53,8 +51,27 @@
             // the order of the previous routes.
             return [...this.previousRoutes].reverse()
                 .find((route: Route): boolean => {
-                    return ! route.path.startsWith(this.route) && route.path !== '/';
+                    // Skip the root route.
+                    if (route.path === '/') {
+                        return false;
+                    }
+
+                    // Skip sibling routes.
+                    return ! this.routeIsSibling(route);
                 });
+        }
+
+        /**
+         * Whether the given route is a sibling of the current route.
+         */
+        routeIsSibling(route: Route): boolean
+        {
+            let pieces = this.$route.path.split('/');
+
+            let parent = pieces.slice(0, pieces.length - 1)
+                .join('/');
+
+            return route.path.startsWith(parent) && route.path.length > parent.length;
         }
 
         /**
@@ -71,11 +88,6 @@
             }
 
             this.$navigator.push(this.to);
-        }
-
-        mounted(): void
-        {
-            this.route = this.$route.path as string;
         }
     }
 
