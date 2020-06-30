@@ -166,8 +166,8 @@ export class WebSocket
                 return;
             }
 
-            let found = subscription.channels.find((channel: any): boolean =>
-                WebSocket.makeChannel(channel).name() === channel.name()
+            let found = subscription.channels.find((currentChannel: any): boolean =>
+                WebSocket.makeChannel(currentChannel).name() === channel.name()
             );
 
             if (found) {
