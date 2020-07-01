@@ -38,7 +38,7 @@
         /**
          * Visibility timeout.
          */
-        timeout: number = 2000;
+        timeout: number = 5000;
 
         /**
          * Controls the snackbar visibilty.
@@ -51,7 +51,7 @@
             {
                 this.message = typeof event === 'string' ? event: event.message;
                 this.color = event.color || 'primary';
-                this.timeout = event.timeout || 2000;
+                this.timeout = event.timeout || 5000;
                 this.visible = true;
                 this.multiLine = event.multiLine;
             });
