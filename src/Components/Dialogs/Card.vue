@@ -3,9 +3,11 @@
         <v-card>
             <v-card-title class="text-h5">{{ this.title }}</v-card-title>
             <v-card-text>
-                <slot name="alert"></slot>
-                <slot></slot>
+                <slot/>
             </v-card-text>
+            <v-card-actions v-if="$slots.actions">
+                <slot name="actions"/>
+            </v-card-actions>
         </v-card>
     </dialog-main>
 </template>
