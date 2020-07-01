@@ -1,6 +1,8 @@
 import { AbstractHandler } from './AbstractHandler';
+import { Token }           from '../Api/Token';
 import { Notification }    from '../App/State/Models/Notification';
 import Notifications       from '../App/Notifications';
+import { Router }          from '../Services/Router';
 
 /**
  * Handle events that should make changes to the App state machine module.
@@ -35,6 +37,32 @@ export class AppHandler extends AbstractHandler
         this.vue.$store.commit('app/SET', {
             key: 'updateAvailable',
             value: true
+        });
+    }
+
+    /**
+     * Handle the `Bloom\Cluster\Kernel\App\Events\App\DbSeeded` event.
+     */
+    public '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\DbSeeded'(event: any): void
+    {
+        Token.remove();
+
+        this.vue.$navigator.push('/');
+
+        this.vue.$eh.$emit('SnackbarDisplayMessage', {
+            color: 'success',
+            message: 'DB seeded. You can now log back in.'
+        });
+    }
+
+    /**
+     * Handle the `Bloom\Cluster\Kernel\App\Events\App\DbSeeded` event.
+     */
+    public '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\DbSeedingStarted'(event: any): void
+    {
+        this.vue.$eh.$emit('SnackbarDisplayMessage', {
+            color: 'warning',
+            message: 'DB seeding initiated. You will soon be logged out and redirected.'
         });
     }
 

@@ -40,6 +40,16 @@ export class WebSocket
             handlers: [AppHandler]
         },
         {
+            event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\DbSeeded',
+            channels: [AppChannel],
+            handlers: [AppHandler]
+        },
+        {
+            event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\DbSeedingStarted',
+            channels: [AppChannel],
+            handlers: [AppHandler]
+        },
+        {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\SettingsUpdated',
             channels: [AppChannel],
             handlers: [AppHandler]
