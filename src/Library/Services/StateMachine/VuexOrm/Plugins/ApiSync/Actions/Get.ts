@@ -1,6 +1,6 @@
 import { ExtendedModel }     from '../../../Support/ExtendedModel';
 import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
-import { Action }            from './Action';
+import { Action }            from '../Action';
 import { Store }             from 'vuex';
 import _                     from 'lodash';
 

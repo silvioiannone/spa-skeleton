@@ -1,7 +1,7 @@
 import _                                from 'lodash';
 import { ExtendedModel }                from '../../../Support/ExtendedModel';
 import { ResponseInterface }            from '../../../../../../Api/ResponseInterface';
-import { Action }                       from './Action';
+import { Action }                       from '../Action';
 import { Store }                        from 'vuex';
 import { Model, MorphToMany, Relation } from '@vuex-orm/core';
 
@@ -121,9 +121,9 @@ interface VuexOrmPayload
 {
     where: number;
     data: any;
-    insert?: string[],
-    create?: string[],
-    insertOrUpdate?: string[]
+    insert?: string[];
+    create?: string[];
+    insertOrUpdate?: string[];
 }
 
 /**

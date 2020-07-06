@@ -1,8 +1,8 @@
-import { ApiFactory, ApiClient } from '../../../../../../Api';
+import { ApiFactory, ApiClient } from 'spa-skeleton/src/Library/Api';
 import { Store }                 from 'vuex';
 import Pluralize                 from 'pluralize';
-import { ApiResource }           from '../../../../../../Api/Resources/ApiResource';
-import { ResponseInterface }     from '../../../../../../Api/ResponseInterface';
+import { ApiResource }           from 'spa-skeleton/src/Library/Api/Resources/ApiResource';
+import { ResponseInterface }     from 'spa-skeleton/src/Library/Api/ResponseInterface';
 
 /**
  * An action.
@@ -33,7 +33,7 @@ export abstract class Action
     {
         return new Promise((): void => {
             throw 'Define the default action in the extending class.'
-        })
+        });
     }
 
     /**

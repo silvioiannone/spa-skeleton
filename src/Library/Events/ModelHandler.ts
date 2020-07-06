@@ -1,3 +1,4 @@
+import { BelongsToMany }   from '@vuex-orm/core';
 import { AbstractHandler } from './AbstractHandler';
 import Models              from '../App/State/Models';
 import { ExtendedModel }   from '../Services/StateMachine/VuexOrm/Support/ExtendedModel';
@@ -18,15 +19,18 @@ export class ModelHandler extends AbstractHandler
      * The order of the events is important!
      */
     protected static knownEvents: string[] = [
-        'Attached', 'Created', 'PivotUpdated', 'Updated', 'Deleted'
+        'Attached', 'Detached', 'Created', 'PivotUpdated', 'Updated', 'Deleted'
     ];
 
     /**
      * Maps each model event to a function that will process it.
      */
     protected eventProcessors = {
-        'Created': ModelHandler.createdProcessor,
-        'Updated': ModelHandler.updatedProcessor
+        Created: ModelHandler.createdProcessor,
+        Updated: ModelHandler.updatedProcessor,
+        Deleted: ModelHandler.deletedProcessor,
+        Attached: ModelHandler.attachedProcessor,
+        Detached: ModelHandler.detachedProcessor
     };
 
     /**
@@ -36,8 +40,7 @@ export class ModelHandler extends AbstractHandler
     {
         let eventDescription = ModelHandler.describeEvent(event);
 
-        ModelHandler.knownEvents.forEach((knownEvent): void =>
-        {
+        ModelHandler.knownEvents.forEach((knownEvent): void => {
             if (eventDescription.type !== knownEvent) {
                 return;
             }
@@ -63,11 +66,11 @@ export class ModelHandler extends AbstractHandler
      */
     protected static createdProcessor(model: typeof ExtendedModel, message: any): void
     {
-        model.insert(message);
+        model.insert({ data: message.data });
     }
 
     /**
-     * Process the the update model event.
+     * Process the updated model event.
      */
     protected static updatedProcessor(model: typeof ExtendedModel, message: any): void
     {
@@ -75,6 +78,52 @@ export class ModelHandler extends AbstractHandler
             where: message.data.id,
             data: message.data
         });
+    }
+
+    /**
+     * Process the deleted model event.
+     */
+    protected static deletedProcessor(model: typeof ExtendedModel, message: any): void
+    {
+        model.delete(message.data.id);
+    }
+
+    /**
+     * Process the attached model event.
+     */
+    protected static attachedProcessor(model: typeof ExtendedModel, message: any): void
+    {
+        model.insert({ data: message.data });
+
+        let relationship = model.fields()[message.related] as BelongsToMany;
+
+        if (! relationship) {
+            console.error('Cannot process attached event: the related field "' + message.related +
+                '" cannot be found on the model.');
+            return;
+        }
+
+        if (! (relationship instanceof BelongsToMany)) {
+            console.error('Wrong relationship type.');
+            return;
+        }
+
+        message.ids.forEach((id: any): void => {
+            let data = {};
+
+            data[relationship.foreignPivotKey] = message.data.id;
+            data[relationship.relatedPivotKey] = id;
+
+            relationship.pivot.insert({ data });
+        });
+    }
+
+    /**
+     * Process the detached model event.
+     */
+    protected static detachedProcessor(model: typeof ExtendedModel, message: any): void
+    {
+        model.delete(message.data.id);
     }
 
     /**
