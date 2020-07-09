@@ -53,7 +53,7 @@
                 }
             }
 
-            this.$navigator.push({ path: this.$route.path, query});
+            this.$navigator.push({ path: this.$route.path, query });
         }
 
         created()

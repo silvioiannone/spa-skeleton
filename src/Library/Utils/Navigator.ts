@@ -100,7 +100,7 @@ export class Navigator
         try {
             result = await this.router.push(location);
         } catch (error) {
-            if (error && error.name === 'NavigationDuplicated') {
+            if (error.toString().includes('Avoided redundant navigation')) {
                 return new Promise((): void => {});
             }
 
