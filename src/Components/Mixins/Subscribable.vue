@@ -1,7 +1,6 @@
 <script lang="ts">
 
-    import Vue              from 'vue';
-    import { Component }    from 'vue-property-decorator';
+    import { Component, Watch, Vue } from 'vue-property-decorator';
     import { Subscription } from '../../Library/Interfaces/Subscription';
 
     /**
@@ -13,10 +12,15 @@
         /**
          * Override this in order to define the subscriptions.
          */
-        subscriptions: Array<Subscription> = [];
+        subscriptions: Subscription[] = [];
 
-        created(): void
+        @Watch('subscriptions', { immediate: true })
+        onSubscriptionsChange(): void
         {
+            if (! this.subscriptions.length) {
+                return;
+            }
+
             this.$ws.listen(this.subscriptions);
         }
 
