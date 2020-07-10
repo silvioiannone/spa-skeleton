@@ -1,7 +1,7 @@
-import { BelongsToMany }   from '@vuex-orm/core';
+import { BelongsToMany, MorphedByMany } from '@vuex-orm/core';
 import { AbstractHandler } from './AbstractHandler';
-import Models              from '../App/State/Models';
-import { ExtendedModel }   from '../Services/StateMachine/VuexOrm/Support/ExtendedModel';
+import Models from '../App/State/Models';
+import { ExtendedModel } from '../Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
 interface EventDescription {
     model: string;
@@ -93,9 +93,7 @@ export class ModelHandler extends AbstractHandler
      */
     protected static attachedProcessor(model: typeof ExtendedModel, message: any): void
     {
-        model.insert({ data: message.data });
-
-        let relationship = model.fields()[message.related] as BelongsToMany;
+        let relationship = model.fields()[message.related] as BelongsToMany|MorphedByMany;
 
         if (! relationship) {
             console.error('Cannot process attached event: the related field "' + message.related +
@@ -103,7 +101,8 @@ export class ModelHandler extends AbstractHandler
             return;
         }
 
-        if (! (relationship instanceof BelongsToMany)) {
+        if ((! (relationship instanceof BelongsToMany)) &&
+            (! (relationship instanceof MorphedByMany))) {
             console.error('Wrong relationship type.');
             return;
         }
@@ -111,11 +110,20 @@ export class ModelHandler extends AbstractHandler
         message.ids.forEach((id: any): void => {
             let data = {};
 
-            data[relationship.foreignPivotKey] = message.data.id;
-            data[relationship.relatedPivotKey] = id;
+            // Create the pivot table entries.
+            if (relationship instanceof BelongsToMany) {
+                data[relationship.foreignPivotKey] = message.data.id;
+                data[relationship.relatedPivotKey] = id;
+            } else if (relationship instanceof MorphedByMany) {
+                data[relationship.relatedId] = message.data.id;
+                data[relationship.id] = id;
+                data[relationship.type] = relationship.related.entity
+            }
 
-            relationship.pivot.insert({ data });
+            relationship.pivot.insertOrUpdate({ data });
         });
+
+        ModelHandler.createdProcessor(model, message);
     }
 
     /**
