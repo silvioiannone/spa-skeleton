@@ -292,7 +292,7 @@ export class Guard
 
             guardPromise.catch((error: any): void => {
                 Log.error('The guard ' + guard + ' blocked the loading of the view.');
-                console.error(error);
+                throw error;
             });
 
             guardPromises.push(guardPromise);
