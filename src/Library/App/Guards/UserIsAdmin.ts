@@ -1,4 +1,4 @@
-import { AbstractGuard } from 'spa-skeleton/src/Library/Guards/AbstractGuard';
+import { AbstractGuard } from '../../../Library/Guards/AbstractGuard';
 
 /**
  * UserIsAdmin guard.

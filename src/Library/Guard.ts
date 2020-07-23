@@ -276,8 +276,7 @@ export class Guard
         let guards: string[] = [];
         let guardPromises: Promise<any>[] = [];
 
-        to.matched.forEach((match): void =>
-        {
+        to.matched.forEach((match): void => {
             if (typeof match.meta.guards !== 'undefined') {
                 guards = guards.concat(match.meta.guards);
             }

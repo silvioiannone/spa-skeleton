@@ -5,6 +5,7 @@ export { ApiFactory as Api } from './src/Library/Api';
 export { ResponseInterface } from './src/Library/Api/ResponseInterface';
 export { Module as StateMachineModule } from './src/Library/State/Module';
 export { AbstractRule as ValidationRule } from './src/Library/Validation/AbstractRule';
+export { AbstractGuard } from './src/Library/Guards/AbstractGuard';
 export { Token } from './src/Library/Api/Token';
 
 /*
