@@ -17,7 +17,7 @@ let Pagination = {
         let uri = URIjs(response.request.url);
         let pagination = this.makeFromMetaObject(meta);
 
-        pagination.sort = uri.search(true).sort;
+        pagination.sort = uri.search(true).sort || '';
 
         return pagination;
     },
