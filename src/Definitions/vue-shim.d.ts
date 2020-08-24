@@ -34,6 +34,7 @@ declare module 'vue/types/vue'
         $ui: {
             toolbar: typeof Toolbar
         };
+        $user: any,
         $ws: WebSocket;
         errors: ErrorBag;
     }
