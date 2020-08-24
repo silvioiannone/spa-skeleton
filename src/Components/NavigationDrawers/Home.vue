@@ -3,11 +3,11 @@
         <v-list class="pa-0">
             <v-list-item avatar>
                 <v-list-item-avatar>
-                    <avatar-user :size="38" :user="user"></avatar-user>
+                    <avatar-user :size="38" :user="$user"/>
                 </v-list-item-avatar>
                 <v-list-item-content>
                     <v-list-item-title>
-                        {{ user.first_name }} {{ user.last_name }}
+                        {{ $user.first_name }} {{ $user.last_name }}
                     </v-list-item-title>
                 </v-list-item-content>
                 <v-list-item-action>
@@ -29,9 +29,9 @@
                 </v-list-item-action>
             </v-list-item>
         </v-list>
-        <v-divider></v-divider>
+        <v-divider/>
         <v-list>
-            <slot></slot>
+            <slot/>
         </v-list>
     </navigation-drawer-main>
 </template>
@@ -56,11 +56,6 @@
                 return typeof value === 'function'
             }
         }) quit: Function;
-
-        get user(): any
-        {
-            return this.$store.getters.app.user;
-        }
 
         /**
          * Quit from the application.

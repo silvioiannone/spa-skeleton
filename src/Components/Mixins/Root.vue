@@ -11,12 +11,11 @@
     {
         get userLanguage(): any
         {
-            if(!this.$store.getters.app.user.settings)
-            {
+            if(! this.$user.settings) {
                 return Config.locale;
             }
 
-            return this.$store.getters.app.user.settings.language;
+            return this.$user.settings.language;
         }
 
         @Watch('userLanguage')

@@ -135,17 +135,12 @@
                 return this.titleTo;
             }
 
-            return (this.user.id) ? '/home' : '/';
+            return (this.$user.id) ? '/home' : '/';
         }
 
         get ui(): any
         {
             return this.$store.getters.app.ui;
-        }
-
-        get user(): any
-        {
-            return this.$store.getters.app.user;
         }
 
         /**

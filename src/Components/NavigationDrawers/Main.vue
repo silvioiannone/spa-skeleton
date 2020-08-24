@@ -59,18 +59,12 @@
 
         set visible(value: boolean)
         {
-            if (this.right)
-            {
+            if (this.right) {
                 this.$store.commit('ui/SET_RIGHT_NAVIGATION_DRAWER_VISIBILITY', value);
                 return;
             }
 
             this.$store.commit('ui/SET_NAVIGATION_DRAWER_VISIBILITY', value);
-        }
-
-        get user(): any
-        {
-            return this.$store.getters.app.user;
         }
 
         created(): void

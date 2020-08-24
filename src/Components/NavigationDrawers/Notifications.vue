@@ -111,15 +111,13 @@
          */
         enableDesktopNotifications(enable: boolean): void
         {
-            let user = this.$store.getters.app.user;
-
             if (enable) {
                 if (! PushJS.Permission.has()) {
                     PushJS.Permission.request(() => {
                         this.desktopNotifications = true;
                         this.$api.users.update({
-                            id: user.id,
-                            settings: user.settings
+                            id: this.$user.id,
+                            settings: this.$user.settings
                         });
                     }, () => {
                         setTimeout(() => {
@@ -129,15 +127,15 @@
                 } else {
                     this.desktopNotifications = true;
                     this.$api.users.update({
-                        id: user.id,
-                        settings: user.settings
+                        id: this.$user.id,
+                        settings: this.$user.settings
                     });
                 }
             } else {
                 this.desktopNotifications = false;
                 this.$api.users.update({
-                    id: user.id,
-                    settings: user.settings
+                    id: this.$user.id,
+                    settings: this.$user.settings
                 });
             }
         }
