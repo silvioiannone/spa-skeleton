@@ -129,7 +129,7 @@ module.exports = {
     {
         let sources = [
             'public/css/app.css',
-            'node_modules/vue2-dropzone/dist/vue2Dropzone.css',
+            'node_modules/vue2-dropzone/dist/vue2Dropzone.min.css',
             'node_modules/material-design-icons/iconfont/material-icons.css',
             'node_modules/@mdi/font/css/materialdesignicons.css',
             'node_modules/github-markdown-css/github-markdown.css'
