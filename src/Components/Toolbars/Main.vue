@@ -2,8 +2,7 @@
     <v-toolbar :fixed="fixed" app clipped-left :color="color" clipped-right :tabs="tabs"
                :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
         <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
-                             v-if="navigationDrawer" aria-label="Toggle sidebar">
-        </v-toolbar-side-icon>
+                             v-if="navigationDrawer" aria-label="Toggle sidebar"/>
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
                 <slot name="title"/>
@@ -18,8 +17,7 @@
         <v-spacer/>
         <slot name="toolbar-text-right" v-show="showingTitle"/>
         <text-field-search v-model="searchQuery" v-show="showingSearch" @click:clear="hideSearch"
-                           @blur="hideSearchIfEmpty">
-        </text-field-search>
+                           @blur="hideSearchIfEmpty"/>
         <v-btn icon @click="showSearch" v-if="search || searchCallback" v-show="!showingSearch">
             <v-icon>search</v-icon>
         </v-btn>

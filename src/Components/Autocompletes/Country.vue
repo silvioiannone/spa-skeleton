@@ -3,14 +3,14 @@
                     item-value="name" :filter="_filter" v-on="$listeners">
         <template #item="{ item }">
             <v-list-item-avatar>
-                <span :class="'flag-icon flag-icon-' + item.iso"></span>
+                <span :class="'flag-icon flag-icon-' + item.iso"/>
             </v-list-item-avatar>
             <v-list-item-content>
                 <v-list-item-title>{{ item.name }}</v-list-item-title>
             </v-list-item-content>
         </template>
         <template #selection="{ item }">
-            <span :class="'flag-icon flag-icon-' + item.iso" class="mr-2"></span>
+            <span :class="'flag-icon flag-icon-' + item.iso" class="mr-2"/>
             {{ item.name }}
         </template>
     </v-autocomplete>

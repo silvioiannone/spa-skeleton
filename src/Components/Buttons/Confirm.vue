@@ -3,11 +3,11 @@
         <v-btn v-if="confirmed" error @click="abort" color="error" :text="text" :large="large"
                :x-large="xLarge">
             <div>Abort</div>
-            <v-progress-circular class="ml-3" :value="progress" :rotate="270"></v-progress-circular>
+            <v-progress-circular class="ml-3" :value="progress" :rotate="270"/>
         </v-btn>
         <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color" :text="text"
                :large="large" :x-large="xLarge" @click.stop="handleConfirmation">
-            <slot></slot>
+            <slot/>
         </v-btn>
         <button-submit v-if="showConfirmation && !confirmed" :on-click="verificationClick"
                        :text="text" color="warning" :large="large" :x-large="xLarge">

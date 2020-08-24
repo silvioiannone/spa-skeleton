@@ -1,5 +1,5 @@
 <template>
-    <v-breadcrumbs :divider="divider" :items="_items"></v-breadcrumbs>
+    <v-breadcrumbs :divider="divider" :items="_items"/>
 </template>
 
 <script lang="ts">
@@ -12,8 +12,7 @@
     {
         get _items()
         {
-            return this.items.map(item =>
-            {
+            return this.items.map(item => {
                 return {
                     disabled: ! item.to,
                     exact: true,

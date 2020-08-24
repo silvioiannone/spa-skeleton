@@ -1,6 +1,6 @@
 <template>
     <dialog-card v-bind="getProps()" v-on="getOn()" title="Add link">
-        <v-text-field label="URL" v-model="url"></v-text-field>
+        <v-text-field label="URL" v-model="url"/>
         <v-btn color="primary" :disabled="! url.length" @click="save">Add link</v-btn>
     </dialog-card>
 </template>

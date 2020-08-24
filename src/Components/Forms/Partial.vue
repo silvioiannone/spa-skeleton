@@ -1,6 +1,6 @@
 <template>
     <div class="d-flex flex-wrap pa-0">
-        <slot></slot>
+        <slot/>
     </div>
 </template>
 

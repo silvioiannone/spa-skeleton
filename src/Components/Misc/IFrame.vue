@@ -1,5 +1,5 @@
 <template>
-    <iframe :frameborder="frameBorder"></iframe>
+    <iframe :frameborder="frameBorder"/>
 </template>
 
 <style lang="sass">

@@ -1,5 +1,5 @@
 <template>
-    <vue-markdown class="markdown-body" :source="source"></vue-markdown>
+    <vue-markdown class="markdown-body" :source="source"/>
 </template>
 
 <script lang="ts">

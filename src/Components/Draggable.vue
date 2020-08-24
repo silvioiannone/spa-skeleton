@@ -1,7 +1,7 @@
 <template>
     <vue-draggable v-model="model" @change="moveItem" v-bind="options" :handle="handle"
                    :class="[_class]">
-        <slot></slot>
+        <slot/>
     </vue-draggable>
 </template>
 

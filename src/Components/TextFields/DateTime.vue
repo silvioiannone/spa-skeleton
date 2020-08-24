@@ -2,21 +2,18 @@
     <v-menu ref="remindDateMenu" v-model="remindDateMenu" offset-y max-width="290px"
             :close-on-content-click="false" minx-width="290px">
         <template #activator="{ on }">
-            <text-field-main v-bind="getProps()" :value="textFieldRemindDateTime" v-on="on">
-            </text-field-main>
+            <text-field-main v-bind="getProps()" :value="textFieldRemindDateTime" v-on="on"/>
         </template>
         <v-stepper v-model="stepperStep">
             <v-stepper-items>
                 <v-stepper-content step="1" class="pa-0">
                     <v-date-picker v-model="remindDate" no-title @input="stepperStep++"
-                                   :allowed-dates="allowedDates">
-                    </v-date-picker>
+                                   :allowed-dates="allowedDates"/>
                 </v-stepper-content>
                 <v-stepper-content step="2" class="pa-0">
                     <v-time-picker v-model="remindTime" format="24hr" ref="timePicker"
                                    @click:minute="handleTimePickerClickMinute"
-                                   :allowed-hours="allowedHours" :allowed-minutes="allowedMinutes">
-                    </v-time-picker>
+                                   :allowed-hours="allowedHours" :allowed-minutes="allowedMinutes"/>
                 </v-stepper-content>
             </v-stepper-items>
         </v-stepper>

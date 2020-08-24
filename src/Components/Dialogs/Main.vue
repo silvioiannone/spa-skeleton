@@ -8,7 +8,6 @@
     @Component
     export class DialogMain extends Mixins(Dialog)
     {
-
     }
 
     export default DialogMain;

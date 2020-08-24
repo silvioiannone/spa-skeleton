@@ -2,7 +2,7 @@
     <v-navigation-drawer v-model="visible" class="scroll-y" right app fixed width="450" temporary>
         <v-toolbar class="elevation-0">
             <v-toolbar-title>{{ $t('navigationDrawer.notifications') }}</v-toolbar-title>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <v-tooltip bottom>
                 <template #activator="data">
                     <v-btn icon @click="markAllAsRead" v-on="data.on">
@@ -21,7 +21,7 @@
             </v-tooltip>
         </v-toolbar>
         <template v-if="unreadNotifications.length">
-            <v-list two-line >
+            <v-list two-line>
                 <slot :unread-notifications="unreadNotifications"/>
             </v-list>
             <slot name="outer" :unread-notifications="unreadNotifications"/>
@@ -50,8 +50,7 @@
                 </v-list-item-content>
                 <v-list-item-action>
                     <v-switch v-model="desktopNotifications" inset
-                              @change="enableDesktopNotifications">
-                    </v-switch>
+                              @change="enableDesktopNotifications"/>
                 </v-list-item-action>
             </v-list-item>
         </v-list>

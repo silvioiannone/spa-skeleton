@@ -2,8 +2,7 @@
     <validation-provider #default="{ errors }" :rules="rules" :name="name" ref="validationProvider"
                          slim>
         <v-textarea v-bind="textareaProps" v-on="$listeners" :error-messages="errors" :value="value"
-                    :outlined="_outlined || outlined" @blur="handleBlur">
-        </v-textarea>
+                    :outlined="_outlined || outlined" @blur="handleBlur"/>
     </validation-provider>
 </template>
 

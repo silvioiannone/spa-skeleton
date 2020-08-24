@@ -2,7 +2,7 @@
     <dialog-main v-model="model">
         <v-card>
             <v-card-title class="text-h5">{{ title }}</v-card-title>
-            <slot></slot>
+            <slot/>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn text @click="$emit('input', false)">Cancel</v-btn>
