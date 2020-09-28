@@ -117,4 +117,22 @@ export class Navigator
     {
         history.back();
     }
+
+    /**
+     * Navigate back if possible. If not navigate to the given path.
+     */
+    public async backOr(path: string): Promise<void>
+    {
+        let history = (StateMachine.getStore()).getters.app.router.history.reverse()
+            .filter((route: Route): boolean => {
+                // Skip the root route.
+                return route.path !== '/';
+            });
+
+        if (history.length) {
+            this.back();
+        }
+
+        await this.push(path);
+    }
 }

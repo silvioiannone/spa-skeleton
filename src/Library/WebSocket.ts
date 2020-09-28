@@ -118,8 +118,7 @@ export class WebSocket
 
         this.updateEchoHeaders();
 
-        subscriptions.forEach((subscription): void =>
-        {
+        subscriptions.forEach((subscription): void => {
             if (this.activeSubscriptions.indexOf(subscription) >= 0) return;
 
             // TODO: add the subscription to the list of the active subscriptions only if the
