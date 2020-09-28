@@ -18,6 +18,12 @@
         @Prop({ type: Boolean, default: false }) outlined: boolean;
 
         /**
+         * Creates counter for input length; if no number is specified, it defaults to 25. Does not
+         * apply any validation.
+         */
+        @Prop({ default: undefined }) counter: number;
+
+        /**
          * Prepend an icon to the text field.
          */
         @Prop({ type: String, default: '' }) prependIcon: string;
