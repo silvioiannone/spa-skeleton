@@ -17,13 +17,22 @@
             let props = {
                 ...this.$props,
                 outlined: this._outlined || this.outlined,
-                value: this.value
+                value: this.value,
+                type: 'file'
             };
 
             // The rules will only be passed to the `validation-provider` component.
             delete props['rules'];
 
             return props;
+        }
+
+        /**
+         * Handle the change event fired by the `v-file-input` component.
+         */
+        handleChange(file: File): void
+        {
+            this.$emit('input', file);
         }
 
         /**
@@ -35,6 +44,10 @@
                 attrs: {
                     name: this.name,
                     accept: this.accept
+                },
+                on: {
+                    ...this.$listeners,
+                    change: this.handleChange
                 },
                 props: this.fileInputProps,
             });
