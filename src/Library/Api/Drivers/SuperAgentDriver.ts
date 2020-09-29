@@ -96,11 +96,21 @@ export class SuperAgentDriver extends AbstractApiDriver
     {
         let request = this.httpClient.post(this.getAction(action));
 
-        this.attachments.forEach((attachment): void =>
-        {
-            request.attach(attachment.name, attachment.file);
+        this.attachments.forEach((attachment: any): void => {
+            if (Array.isArray(attachment.file)) {
+                if (attachment.file.length > 1) {
+                    attachment.file.forEach((file: any): void => {
+                        request.attach(attachment.name + '[]', file);
+                    });
+                } else {
+                    request.attach(attachment.name, attachment.file[0])
+                }
+            } else {
+                request.attach(attachment.name, attachment.file);
+            }
         });
 
+        // `send()` cannot be used with attachments so we instead need to use `dispatchReqeust()`.
         if (this.attachments.length) {
             // Attach any data as a field so we can send a multipart form.
             for (let key in data) {
