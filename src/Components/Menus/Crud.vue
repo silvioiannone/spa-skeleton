@@ -1,7 +1,7 @@
 <template>
     <v-menu>
         <template #activator="data">
-            <v-btn icon v-on="data.on">
+            <v-btn icon v-on="data.on" :small="small">
                 <v-icon>more_vert</v-icon>
             </v-btn>
         </template>
@@ -39,14 +39,19 @@
     export class MenuCrud extends Vue
     {
         /**
-         * Resource.
-         */
-        @Prop({ type: Object }) resource: Resource|undefined;
-
-        /**
          * Resource prefix.
          */
         @Prop({ type: String }) prefix: string|undefined;
+
+        /**
+         * Make the button small.
+         */
+        @Prop({ type: Boolean, default: false }) small: boolean;
+
+        /**
+         * Resource.
+         */
+        @Prop({ type: Object }) resource: Resource|undefined;
 
         get deleteTileProps(): any
         {
