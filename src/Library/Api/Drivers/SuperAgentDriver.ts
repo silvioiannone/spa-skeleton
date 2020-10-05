@@ -96,19 +96,9 @@ export class SuperAgentDriver extends AbstractApiDriver
     {
         let request = this.httpClient.post(this.getAction(action));
 
-        this.attachments.forEach((attachment: any): void => {
-            if (Array.isArray(attachment.file)) {
-                if (attachment.file.length > 1) {
-                    attachment.file.forEach((file: any): void => {
-                        request.attach(attachment.name + '[]', file);
-                    });
-                } else {
-                    request.attach(attachment.name, attachment.file[0])
-                }
-            } else {
-                request.attach(attachment.name, attachment.file);
-            }
-        });
+        this.parseData(data);
+
+        this.attachAttachments(request);
 
         // `send()` cannot be used with attachments so we instead need to use `dispatchReqeust()`.
         if (this.attachments.length) {
@@ -125,6 +115,26 @@ export class SuperAgentDriver extends AbstractApiDriver
         request.send(data);
 
         return this.dispatchRequest(request);
+    }
+
+    /**
+     * Attach any attachment to the request.
+     */
+    protected attachAttachments(request: SuperAgent.SuperAgentRequest): void
+    {
+        this.attachments.forEach((attachment: any): void => {
+            if (Array.isArray(attachment.file)) {
+                if (attachment.file.length > 1) {
+                    attachment.file.forEach((file: any): void => {
+                        request.attach(attachment.name + '[]', file);
+                    });
+                } else {
+                    request.attach(attachment.name, attachment.file[0])
+                }
+            } else {
+                request.attach(attachment.name, attachment.file);
+            }
+        });
     }
 
     /**
@@ -198,8 +208,7 @@ export class SuperAgentDriver extends AbstractApiDriver
      */
     public refreshToken(): Promise<void>
     {
-        return new Promise((resolve, reject): void =>
-        {
+        return new Promise((resolve, reject): void => {
             this.httpClient
                 .post(Config.api.basePath + 'oauth/token')
                 .send({

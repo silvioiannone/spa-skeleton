@@ -49,6 +49,22 @@ export abstract class AbstractApiDriver
     }
 
     /**
+     * Parse request data.
+     */
+    protected parseData(data: { [key: string]: any }): void {
+        // If a file is found add it to the attachments and remove it from the request data.
+        for (let key in data) {
+            let isAnArrayContainigFiles =
+                Array.isArray(data[key]) && data[key].length && data[key][0] instanceof File;
+
+            if (isAnArrayContainigFiles || data[key] instanceof File) {
+                this.attach(key, data[key]);
+                delete data[key];
+            }
+        }
+    }
+
+    /**
      * Register a hook that will be called after a response has been received.
      */
     public static afterResponse(callback: (response: ResponseInterface) => void): void
