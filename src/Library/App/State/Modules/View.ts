@@ -45,8 +45,7 @@ export class View extends Module
          */
         actions['view/HOME'] = (store: Store<any>): Promise<ResponseInterface> =>
         {
-            return new Promise((resolve, reject): void =>
-            {
+            return new Promise((resolve, reject): void => {
                 let userId = store.getters.app.user.id;
 
                 if (userId) {

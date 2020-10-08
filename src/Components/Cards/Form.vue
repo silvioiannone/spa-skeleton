@@ -5,7 +5,7 @@
         </template>
         <template #default>
             <v-card-text>
-                <slot :bubble-cancel="bubbleCancel" :bubble-submit="bubbleSubmit"/>
+                <slot :on="on"/>
             </v-card-text>
             <v-card-actions v-if="$slots.actions">
                 <slot name="actions"/>
@@ -47,10 +47,18 @@
             return false;
         }
 
+        get on(): { [key: string]: Function }
+        {
+            return {
+                cancel: this.handleCancel,
+                submit: this.handleSubmit
+            }
+        }
+
         /**
          * Propagates the cancel form event to the parent.
          */
-        bubbleCancel(event: Event): void
+        handleCancel(event: Event): void
         {
             this.$emit('cancel', event);
         }
@@ -58,7 +66,7 @@
         /**
          * Propagates the submit form event to the parent.
          */
-        bubbleSubmit(event: Event): void
+        handleSubmit(event: Event): void
         {
             this.$emit('submit', event)
         }

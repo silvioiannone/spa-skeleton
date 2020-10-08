@@ -1,6 +1,6 @@
 <template>
     <dialog-main v-model="model" v-bind="getProps()">
-        <slot :bubble-submit="bubbleSubmit" :bubble-cancel="bubbleCancel" :closable="_closable"/>
+        <slot :on="on" :closable="_closable"/>
     </dialog-main>
 </template>
 
@@ -48,19 +48,18 @@
             });
         }
 
-        @Watch('model', { immediate: true })
-        onValueChange()
+        get on(): { [key: string]: Function }
         {
-            // Focus the first form element as soon as the dialog is displayed.
-            if (this.model) {
-                this.focus();
+            return {
+                cancel: this.handleCancel,
+                submit: this.handleSubmit
             }
         }
 
         /**
          * Propagates the cancel form event to the parent.
          */
-        bubbleCancel(event: Event): void
+        handleCancel(event: Event): void
         {
             this.$emit('cancel', event);
             this.model = false;
@@ -69,10 +68,19 @@
         /**
          * Propagates the submit form event to the parent.
          */
-        bubbleSubmit(event: Event): void
+        handleSubmit(event: Event): void
         {
             this.$emit('submit', event);
             this.model = false;
+        }
+
+        @Watch('model', { immediate: true })
+        onValueChange()
+        {
+            // Focus the first form element as soon as the dialog is displayed.
+            if (this.model) {
+                this.focus();
+            }
         }
     }
 
