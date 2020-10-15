@@ -26,7 +26,7 @@ export class App extends Module
              */
             'app/SETTINGS_UPDATE':
                 async (store: Store<any>, payload: any): Promise<ResponseInterface> => {
-                    let response = await this.api.app.saveSettings(payload);
+                    let response = await this.api.app.updateSetting(payload.key, payload.value);
 
                     store.commit('app/SET', {
                         key: 'settings',
@@ -34,7 +34,7 @@ export class App extends Module
                     });
 
                     return response;
-                }
+                },
         };
     }
 

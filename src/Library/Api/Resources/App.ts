@@ -25,11 +25,14 @@ export class App extends ApiResource
     }
 
     /**
-     * Save the application settings.
+     * Update an application setting.
      */
-    public saveSettings(settings: any): Promise<ResponseInterface>
+    public updateSetting(key: string, value: any): Promise<ResponseInterface>
     {
-        return this._patch('settings', settings);
+        return this._patch('settings', {
+            key,
+            value: JSON.stringify(value)
+        });
     }
 
     /**
