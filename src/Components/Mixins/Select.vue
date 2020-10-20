@@ -82,6 +82,11 @@
         @Prop({ type: Boolean, default: undefined }) outlined: boolean;
 
         /**
+         * Changes select to multiple. Accepts array for value.
+         */
+        @Prop({ type: Boolean, default: true }) multiple: boolean;
+
+        /**
          * Changes the selection behavior to return the object directly rather than the value
          * specified with item-value.
          */
@@ -116,11 +121,6 @@
          * Items available for selection.
          */
         _items: Array<any> = [];
-
-        get multiple(): boolean
-        {
-            return Array.isArray(this.value);
-        }
 
         get _outlined(): boolean
         {

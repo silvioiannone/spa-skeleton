@@ -12,7 +12,6 @@
         {
             let props = {
                 ...this.$props,
-                multiple: this.multiple,
                 outlined: this._outlined
             };
 
