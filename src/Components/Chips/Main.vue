@@ -1,6 +1,5 @@
 <template>
-    <v-chip :close="close" :label="label" :outlined="outlined" :small="small" :color="color"
-            @input="bubbleInput" :large="large" :x-large="xLarge">
+    <v-chip v-bind="$props" v-on="$listeners">
         <slot/>
     </v-chip>
 </template>
@@ -13,10 +12,6 @@
     @Component
     export class ChipMain extends Mixins(Chip)
     {
-        bubbleInput(value: any)
-        {
-            this.$emit('input', value);
-        }
     }
 
     export default ChipMain;
