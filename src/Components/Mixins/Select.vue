@@ -181,7 +181,7 @@
         initSelected(): void
         {
             if (this.multiple) {
-                this.$data._selected = this.value
+                this.$data._selected = (this.value || [])
                     .filter((selected: any) => typeof selected !== 'undefined')
                     .map((selected: any) =>
                         this.$data._items.find((item: any) => item.id === selected.id) || selected);
