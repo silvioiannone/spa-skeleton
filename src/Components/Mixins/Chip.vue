@@ -26,6 +26,11 @@
         @Prop({ type: Boolean, default: false }) small: boolean;
 
         /**
+         * Decreases the chip size.
+         */
+        @Prop({ type: Boolean, default: false }) xSmall: boolean;
+
+        /**
          * Makes the component large.
          */
         @Prop({ type: Boolean, default: false }) large: boolean;
