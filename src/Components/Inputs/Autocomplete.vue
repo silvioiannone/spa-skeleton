@@ -52,6 +52,7 @@
         handleChangeEvent(value: any): void
         {
             this.searchQuery = '';
+            this.$emit('change', value);
         }
 
         /**
