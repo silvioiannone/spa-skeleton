@@ -15,8 +15,8 @@
                     </v-col>
                     <slot/>
                     <v-col cols="12" :class="{'text-center': centerActions, 'pb-0': true}">
-                        <button-submit :on-click="handleSubmit" color="primary" :disabled="invalid"
-                                       v-if="submit">
+                        <button-submit v-if="submit" :on-click="handleSubmit" color="primary"
+                                       :disabled="invalid || disabled">
                             {{ submitText || $t('form.submit') }}
                         </button-submit>
                         <slot name="actions"/>

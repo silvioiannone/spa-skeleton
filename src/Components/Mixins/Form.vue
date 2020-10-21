@@ -39,6 +39,11 @@
         @Prop({ type: Boolean, default: false }) batch: boolean;
 
         /**
+         * Disable the submit button.
+         */
+        @Prop({ type: Boolean, default: false }) disabled: boolean;
+
+        /**
          * Form model value.
          */
         @Prop() value: any;
