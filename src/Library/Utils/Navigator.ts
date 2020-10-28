@@ -131,6 +131,7 @@ export class Navigator
 
         if (history.length) {
             this.back();
+            return;
         }
 
         await this.push(path);
