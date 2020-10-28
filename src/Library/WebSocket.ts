@@ -25,16 +25,6 @@ export class WebSocket
      */
     protected skeletonSubscriptions: Subscription[] = [
         {
-            event: 'Models.User.Updated',
-            channels: [AdminChannel, UserChannel],
-            handlers: [AppHandler]
-        },
-        {
-            event: '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent',
-            channels: [UserChannel],
-            handlers: [AppHandler]
-        },
-        {
             event: '.Bloom\\Cluster\\Kernel\\App\\Events\\App\\AppUpdated',
             channels: [AppChannel],
             handlers: [AppHandler]

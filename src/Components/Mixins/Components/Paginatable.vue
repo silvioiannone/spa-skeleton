@@ -78,7 +78,7 @@
          */
         setPagination(pagination: PaginationInterface)
         {
-            this.previousPagination = {...this.pagination};
+            this.previousPagination = { ...this.pagination };
 
             this.pagination = pagination;
 

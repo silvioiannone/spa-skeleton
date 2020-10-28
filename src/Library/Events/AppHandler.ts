@@ -2,7 +2,6 @@ import { AbstractHandler } from './AbstractHandler';
 import { Token }           from '../Api/Token';
 import { Notification }    from '../App/State/Models/Notification';
 import Notifications       from '../App/Notifications';
-import { Router }          from '../Services/Router';
 
 /**
  * Handle events that should make changes to the App state machine module.
