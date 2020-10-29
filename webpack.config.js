@@ -4,7 +4,6 @@ const path = require('path');
 const Webpack = require('webpack');
 const LaravelMix = require('laravel-mix');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 let config = {
     profile: true,
@@ -64,8 +63,7 @@ let config = {
             WEBSOCKET_SERVER_KEY: JSON.stringify(process.env.WEBSOCKET_SERVER_KEY),
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
-        }),
-        new VuetifyLoaderPlugin()
+        })
     ],
     watchOptions: {
         ignored: /node_modules\/(?!(spa-skeleton)\/).*/

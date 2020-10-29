@@ -2,11 +2,12 @@
 
 const config = require('spa-skeleton/webpack.config'),
     fs = require('fs'),
-    merge = require('webpack-merge'),
+    { merge } = require('webpack-merge'),
     mix = require('laravel-mix'),
     os = require('os'),
     path = require('path'),
-    BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
+    BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales'),
+    VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 module.exports = {
 
@@ -38,8 +39,14 @@ module.exports = {
         mix.webpackConfig(merge(config, this.userWebpackConfig));
 
         mix.extend('buildLocales', new BuildLocales);
+        mix.extend('vuetify', new class {
+            webpackConfig (config) {
+                config.plugins.push(new VuetifyLoaderPlugin)
+            }
+        });
 
         mix.buildLocales();
+        mix.vuetify();
         this.buildJS();
         this.buildStyles();
 
