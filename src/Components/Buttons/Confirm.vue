@@ -45,7 +45,7 @@
         /**
          * Abort button timeout (in seconds).
          */
-        @Prop({ type: Number, default: 10 }) timeout: number;
+        @Prop({ type: Number, default: 10 }) timeout: number = 0;
 
         confirmed = false;
 

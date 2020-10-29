@@ -127,7 +127,7 @@ export class Plugins extends Service
     /**
      * Get the Vuetify plugin instance.
      */
-    public static getVuetify(): typeof Vuetify
+    public static getVuetify(): Vuetify
     {
         return new Vuetify();
     }
