@@ -1,13 +1,23 @@
 import Moment from 'moment';
+import _ from 'lodash';
 
 /**
  * String utilities.
  */
-let String = {
+export class String
+{
+    /**
+     * Capitalize a string.
+     */
+    public static capitalize(string: string): string
+    {
+        return _.capitalize(string);
+    }
+
     /**
      * Limit a string to the specified number of words.
      */
-    limit(string: string, wordsCount: number): string
+    public static limit(string: string, wordsCount: number): string
     {
         wordsCount = wordsCount || 25;
 
@@ -21,26 +31,24 @@ let String = {
         }
 
         return result.join('') + '...';
-    },
+    }
 
     /**
      * Transforms the time string into a human readable format.
      */
-    time(string: string, format: string): string
+    public static time(string: string, format: string): string
     {
         format = format || 'lll';
 
         return Moment(string).format(format);
-    },
+    }
 
     /**
      * Return the parent path of the given path.
      */
-    parentPath(path: string, levels = 1): string
+    public static parentPath(path: string, levels = 1): string
     {
         let parent = path.split('/');
         return '/' + parent.splice(1, parent.length - levels - 1).join('/');
     }
 }
-
-export { String };

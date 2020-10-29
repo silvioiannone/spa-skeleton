@@ -19,6 +19,7 @@ import { EventHub }               from '../App/Plugins/EventHub';
 import { Head }                   from '../App/Plugins/Head';
 import { Navigator }              from '../App/Plugins/Navigator';
 import { Ui }                     from '../App/Plugins/Ui';
+import { Utils }                  from '../App/Plugins/Utils';
 import { User }                   from '../App/Plugins/User';
 import { WebSocket }              from '../App/Plugins/WebSocket';
 
@@ -37,6 +38,7 @@ const SkeletonPlugins = {
     EventHub,
     Head,
     Ui,
+    Utils,
     User,
     WebSocket
 };
