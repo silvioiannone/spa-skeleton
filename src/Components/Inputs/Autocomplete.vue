@@ -27,6 +27,11 @@
             return Config.ui.components.textField.defaultStyle === 'outlined';
         }
 
+        get _label(): string
+        {
+            return this.$utils.string.capitalize(this.label);
+        }
+
         /**
          * Perform the search serverside.
          */
@@ -133,6 +138,7 @@
 
             let autocompleteProps = {
                 ...this.$props,
+                label: this._label,
                 value: this.value,
                 items,
                 loading: this.$data._loading,
