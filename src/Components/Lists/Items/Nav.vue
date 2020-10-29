@@ -4,7 +4,7 @@
             <v-icon>{{ icon }}</v-icon>
         </v-list-item-avatar>
         <v-list-item-content>
-            <v-list-item-title>{{ title }}</v-list-item-title>
+            <v-list-item-title>{{ title | capitalize }}</v-list-item-title>
         </v-list-item-content>
     </v-list-item>
 </template>
