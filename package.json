@@ -19,7 +19,7 @@
     "babel-preset-env": "^1.7.0",
     "country-json": "^1.1.0",
     "cross-env": "^7.0.2",
-    "css-loader": "^5.0.0",
+    "css-loader": "^3.6.0",
     "deepmerge": "^4.2.2",
     "fibers": "^5.0.0",
     "flag-icon-css": "^3.5.0",
