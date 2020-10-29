@@ -15,7 +15,7 @@
          *
          * The promise should resolve with the items displayed by the dropdown.
          */
-        @Prop({ type: Function, required: true }) search: (query: string) => Promise<any>;
+        @Prop({ type: Function }) search: ((query: string) => Promise<any>) | undefined;
 
         /**
          * Set property of items's value.
@@ -34,7 +34,9 @@
         {
             this.$data._loading = true;
 
-            this.search(this.searchQuery)
+            let search = this.search || this.defaultSearch;
+
+            search(this.searchQuery)
                 .then((result: Array<any>) => {
                     if (! Array.isArray(result)) {
                         throw 'The return value of the `search` function must be an Array.';
@@ -44,6 +46,14 @@
                     this.$data._loading = false;
                 })
                 .catch(() => this.$data._loading = false );
+        }
+
+        /**
+         * Default (local) search function.
+         */
+        defaultSearch(query: string): Promise<void>
+        {
+            return new Promise<any>((resolve) => { resolve([]) });
         }
 
         /**
@@ -77,6 +87,16 @@
         handleUpdateError(value: any): void
         {
             this.$emit('update:error', value);
+        }
+
+        /**
+         * Default filter functionality.
+         */
+        defaultFilter(item: any, queryText: string, itemText: string): boolean {
+            const text = item[this.itemText].toLowerCase();
+            const searchText = queryText.toLowerCase();
+
+            return text.indexOf(searchText) > -1;
         }
 
         /**
@@ -124,9 +144,7 @@
             delete autocompleteProps['rules'];
 
             if (this.local) {
-                if (this.filter) {
-                    autocompleteProps['filter'] = this.filter;
-                }
+                autocompleteProps['filter'] = this.filter || this.defaultFilter;
             } else {
                 // If we're making a remote search (fetch the items from the server) we need to
                 // cache the items (using the `cache-items` prop) because otherwise, after

@@ -27,12 +27,12 @@
         /**
          * Set property of items's text value
          */
-        @Prop({ type: String, default: '' }) itemText: string;
+        @Prop({ type: String, default: 'text' }) itemText: string;
 
         /**
          * Set property of items's value.
          */
-        @Prop({ type: String, default: '' }) itemValue: string;
+        @Prop({ type: String, default: 'value' }) itemValue: string;
 
         /**
          * Hides the menu when there are no options to show. Useful for preventing the menu from
