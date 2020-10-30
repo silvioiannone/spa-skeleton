@@ -1,8 +1,15 @@
 export { Config } from './src/Config';
+/**
+ * Interfaces.
+ */
+export type { InputDescription } from './src/Library/Interfaces/InputDescription';
+export type { Subscription } from './src/Library/Interfaces/Subscription';
+export type { Pagination as PaginationInterface } from './src/Library/Interfaces/Pagination';
+export type { ResponseInterface } from './src/Library/Api/ResponseInterface';
+
 export { ApiResource } from './src/Library/Api/Resources/ApiResource';
 export { CrudResource } from './src/Library/Api/Resources/CrudResource';
 export { ApiFactory as Api } from './src/Library/Api';
-export { ResponseInterface } from './src/Library/Api/ResponseInterface';
 export { Module as StateMachineModule } from './src/Library/State/Module';
 export { AbstractRule as ValidationRule } from './src/Library/Validation/AbstractRule';
 export { AbstractGuard } from './src/Library/Guards/AbstractGuard';
@@ -11,7 +18,7 @@ export { Token } from './src/Library/Api/Token';
 /*
  * Types.
  */
-export { ViewAction } from './src/Library/Types/ViewAction';
+export type { ViewAction } from './src/Library/Types/ViewAction';
 
 /*
  * Utils.
@@ -27,11 +34,8 @@ export { ExtendedModel as Model } from './src/Library/Services/StateMachine/Vuex
 export { Notification } from './src/Library/App/State/Models/Notification';
 
 /**
- * Interfaces.
+ * Classes
  */
-export { InputDescription } from './src/Library/Interfaces/InputDescription';
-export { Subscription } from './src/Library/Interfaces/Subscription';
-export { Pagination as PaginationInterface } from './src/Library/Interfaces/Pagination';
 export { AbstractChannel as Channel } from './src/Library/WebSocket/AbstractChannel';
 export { AbstractHandler as EventHandler } from './src/Library/Events/AbstractHandler';
 export { PushNotification } from 'spa-skeleton/src/Library/Notifications/PushNotification';
