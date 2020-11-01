@@ -31,6 +31,7 @@
         {
             let props = {
                 ...this.$props,
+                label: this._label,
                 outlined: this._outlined || this.outlined,
                 value: this.value,
                 type: 'file'
