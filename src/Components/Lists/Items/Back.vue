@@ -5,7 +5,7 @@
         </v-list-item-avatar>
         <v-list-item-content>
             <v-list-item-title>
-                <template v-if="canGoBack">Go back</template>
+                <template v-if="canGoBack">{{ $t('common.back') | capitalize }}</template>
                 <template v-else-if="! canGoBack && title.length">
                     {{ title | capitalize }}
                 </template>
