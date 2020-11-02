@@ -29,13 +29,12 @@ export class Validator extends Service
     /**
      * Boot the validator.
      */
-    public boot(): void
+    public static boot(): void
     {
         let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
-        let translatorService = new Translator;
-        let translator = translatorService.get();
+        let translator = Translator.get();
 
-        translatorService.merge(messages.messages, 'validations.vendor');
+        Translator.merge(messages.messages, 'validations.vendor');
 
         configure({
             defaultMessage: (field: string, values: any): any => {

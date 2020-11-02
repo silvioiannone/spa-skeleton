@@ -4,7 +4,7 @@ import { Service }           from './Service';
 import { Logger }            from './Logger'
 import { Translator }        from './Translator';
 import { Config }            from '../../Config';
-import { VuetifyUseOptions } from 'vuetify';
+import { UserVuetifyPreset } from 'vuetify/types/services/presets';
 import AppPlugins            from '../../../../../resources/ts/App/Plugins';
 
 // Skeleton plugins
@@ -58,27 +58,7 @@ export class Plugins extends Service
     /**
      * Actions to perform before registering a plug-in.
      */
-    protected beforeActions: BeforeActions = {};
-
-    /**
-     * Constructor.
-     */
-    public constructor()
-    {
-        super();
-
-        this.before('Vuetify', (): VuetifyUseOptions =>
-        {
-            let translatorInstance = (new Translator).boot().get();
-
-            return {
-                //lang: {
-                //    t: (key: string, ...params: any): string =>
-                //        translatorInstance.t(key, params) as string
-                //}
-            }
-        });
-    }
+    protected static beforeActions: BeforeActions = {};
 
     /**
      * Bind the plugins.
@@ -97,8 +77,8 @@ export class Plugins extends Service
                 };
             }
 
-            if (this.beforeActions[key]) {
-                this.beforeActions[key].forEach((action: Function): void => {
+            if (Plugins.beforeActions[key]) {
+                Plugins.beforeActions[key].forEach((action: Function): void => {
                     let actionSettings = action();
                     settings = _.merge(settings, actionSettings)
                 });
@@ -113,13 +93,13 @@ export class Plugins extends Service
     /**
      * Register a callback that should be executed before a plugin is registered.
      */
-    public before(plugin: string, callback: Function): Plugins
+    public static before(plugin: string, callback: Function): Plugins
     {
-        if (! this.beforeActions[plugin]) {
-            this.beforeActions[plugin] = [];
+        if (! Plugins.beforeActions[plugin]) {
+            Plugins.beforeActions[plugin] = [];
         }
 
-        this.beforeActions[plugin].push(callback);
+        Plugins.beforeActions[plugin].push(callback);
 
         return this;
     }
@@ -129,6 +109,13 @@ export class Plugins extends Service
      */
     public static getVuetify(): Vuetify
     {
-        return new Vuetify();
+        let translator = Translator.get();
+
+        return new Vuetify({
+            lang: {
+                t: (key: string, ...params: any): string =>
+                    translator.t(key, params) as string
+            }
+        });
     }
 }

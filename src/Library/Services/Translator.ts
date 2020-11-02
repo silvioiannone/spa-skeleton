@@ -1,8 +1,9 @@
-import { Logger as Log } from "./Logger";
-import _                 from "lodash";
-import VueI18N           from 'vue-i18n';
-import { Service }       from './Service';
-import { Config }        from "../../Config";
+import { Logger as Log }  from "./Logger";
+import _                  from "lodash";
+import VueI18N            from 'vue-i18n';
+import { Service }        from './Service';
+import { Config }         from "../../Config";
+import * as VuetifyLocale from 'vuetify/src/locale';
 
 /**
  * This service provides translations.
@@ -22,7 +23,7 @@ export class Translator extends Service
     /**
      * Get the translator instance.
      */
-    public get(): VueI18N
+    public static get(): VueI18N
     {
         return Translator.instance;
     }
@@ -30,11 +31,11 @@ export class Translator extends Service
     /**
      * Merge the given messages with the already existing ones.
      */
-    public merge(messages: any, key: string, locale: string = Config.locale): void
+    public static merge(messages: any, key: string, locale: string = Config.locale): void
     {
-        let messagesToMerge = _.set({}, key, messages);
+        let messagesToMerge = key.length ? _.set({}, key, messages) : messages;
 
-        Translator.instance.mergeLocaleMessage(locale, messagesToMerge);
+        Translator.get().mergeLocaleMessage(locale, messagesToMerge);
     }
 
     /**
@@ -50,7 +51,11 @@ export class Translator extends Service
 
         let messages = {};
 
-        messages[locale] = _.merge(skeletonLocale, appLocale);
+        messages[locale] = _.merge(
+            skeletonLocale,
+            appLocale,
+            { $vuetify: VuetifyLocale[locale] }
+        );
 
         Log.debug(`Locale set to "${locale}".`);
         Log.debug('Language loaded.');
@@ -62,6 +67,6 @@ export class Translator extends Service
             silentTranslationWarn: Config.app.services.translator.hideWarnings
         });
 
-        return this;
+        return Translator;
     }
 }
