@@ -28,6 +28,11 @@ export { Pagination } from './src/Library/Utils/Pagination';
 export { Time } from './src/Library/Utils/Time';
 
 /*
+ * Services.
+ */
+export { Translator } from './src/Library/Services/Translator';
+
+/*
  * Models.
  */
 export { ExtendedModel as Model } from './src/Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
