@@ -19,7 +19,7 @@ export class Directives extends Service
     /**
      * Boot the service.
      */
-    public boot(): void
+    public static boot(): void
     {
         let availableDirectives = {...SkeletonDirectives, ...DirectivesList};
 

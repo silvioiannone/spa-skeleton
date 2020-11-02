@@ -47,7 +47,7 @@ export class Components extends Service
     /**
      * Register the components.
      */
-    public boot(): void
+    public static boot(): void
     {
         // Register the skeleton components
         let availableComponents = {...SkeletonComponents, ...AppComponents};

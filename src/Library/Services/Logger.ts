@@ -20,7 +20,7 @@ export class Logger extends Service
     /**
      * Boot the service.
      */
-    public boot(): void
+    public static boot(): void
     {
         if (Logger.logger) {
             return;

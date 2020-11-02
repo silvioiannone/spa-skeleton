@@ -83,7 +83,7 @@ export class Plugins extends Service
     /**
      * Bind the plugins.
      */
-    public boot(): void
+    public static boot(): void
     {
         let availablePlugins = {...SkeletonPlugins, ...AppPlugins};
 

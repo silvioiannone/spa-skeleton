@@ -17,14 +17,14 @@ export class SwedishSsn extends AbstractRule
      */
     public getMessage(field: string, params: any[], data: any): string
     {
-        let translator = (new Translator).get();
+        let translator = Translator.get();
 
         let translationKey = 'validations.swedishSsn';
 
         if (params[0] === 'org') {
             translationKey += ':org';
         }
-        
+
         return translator.t(translationKey) as string;
     }
 

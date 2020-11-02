@@ -44,7 +44,7 @@ export class Filters extends Service
     /**
      * Boot the service.
      */
-    public boot(): void
+    public static boot(): void
     {
         let availableFilters = {... SkeletonFilters, ...AppFilters};
         let store = StateMachine.getStore();

@@ -40,7 +40,7 @@ export class Translator extends Service
     /**
      * Boot the translator.
      */
-    public boot(): Translator
+    public static boot(): typeof Translator
     {
         Log.debug('Loading language...');
 

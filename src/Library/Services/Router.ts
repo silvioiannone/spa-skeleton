@@ -28,11 +28,6 @@ export class Router extends Service
     protected api: Api;
 
     /**
-     * Set the translator.
-     */
-    protected translator: Translator;
-
-    /**
      * Current router instance.
      */
     protected static instance: VueRouter;
@@ -45,7 +40,6 @@ export class Router extends Service
         super();
 
         this.api = new Api;
-        this.translator = new Translator;
     }
 
     /**
@@ -59,7 +53,7 @@ export class Router extends Service
     /**
      * Boot the router.
      */
-    public boot(): void
+    public static boot(): void
     {
         let store = StateMachine.getStore();
         let guard = new Guard;
@@ -122,7 +116,7 @@ export class Router extends Service
             mixins: [MixinRoot],
 
             // TODO: check if this is still needed.
-            i18n: this.translator.get(),
+            i18n: Translator.get(),
 
             vuetify: Plugins.getVuetify(),
 

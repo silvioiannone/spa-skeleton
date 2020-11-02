@@ -15,7 +15,7 @@ export class ErrorHandler extends Service
     /**
      * Boot the service.
      */
-    public boot(): void
+    public static boot(): void
     {
         Guard.afterError((response): void => {
             (new GuardHandler(response)).handle();

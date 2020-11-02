@@ -24,6 +24,11 @@ export class App
     protected name: string = Config.app.name;
 
     /**
+     * Functions that will be executed after the services have been initialized.
+     */
+    protected static bootCallbacks: Function[] = [];
+
+    /**
      * App's mandatory services.
      *
      * These services are booted regardless and are required by the app.
@@ -56,17 +61,23 @@ export class App
     {
         let t0 = performance.now();
 
-        App.mandatoryServices.forEach((service): Service => App.bootService(service));
+        App.mandatoryServices.forEach((service): void => App.bootService(service));
 
         App.prepare();
 
         Logger.info(`Starting the application...`);
 
-        App.services.forEach((service: typeof Service): void =>
-        {
-            let instance = App.bootService(service);
-            Logger.debug(`Service ${instance.name} booted.`);
+        App.services.forEach((service: typeof Service): void => {
+            App.bootService(service);
+            Logger.debug(`Service ${service.name} booted.`);
         });
+
+        Logger.debug('Services booted.');
+        Logger.debug('Running boot callbacks...');
+
+        App.bootCallbacks.forEach((callback: Function): void => callback());
+
+        Logger.debug('Boot callbacks executed.');
 
         let t1 = performance.now();
 
@@ -76,15 +87,21 @@ export class App
     }
 
     /**
+     * Register a callback that will be executed after the services have been booted.
+     */
+    public static boot(callback: Function): typeof App
+    {
+        this.bootCallbacks.push(callback);
+
+        return App;
+    }
+
+    /**
      * Boot a service.
      */
-    protected static bootService(service: typeof Service): Service
+    protected static bootService(service: typeof Service): void
     {
-        let instance = new service;
-
-        instance.boot();
-
-        return instance;
+        service.boot();
     }
 
     /**

@@ -11,7 +11,7 @@ export class Service
     /**
      * Boot the application service.
      */
-    public boot(): void
+    public static boot(): void
     {
         throw `Implement the service!`;
     }
