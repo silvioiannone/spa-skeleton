@@ -109,8 +109,8 @@
 
         created(): void
         {
-            this.afterResponse(this.fetchPaginationFromResponse);
             this.initPagination();
+            this.afterResponse(this.fetchPaginationFromResponse);
         }
     }
 

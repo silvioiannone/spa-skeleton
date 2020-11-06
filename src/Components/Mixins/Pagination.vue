@@ -42,6 +42,10 @@
          */
         getVuePagination(pagination: any): any
         {
+            if (! pagination) {
+                return undefined;
+            }
+
             let vuePagination = {
                 serverItemsLength: pagination.total,
                 itemsPerPage: pagination.per_page,

@@ -19,8 +19,6 @@
 
         /**
          * Set the initial request parameters value.
-         *
-         * If this is called multiple times the parameters will be merged with the existing ones.
          */
         setParameters(parameters: object): void
         {
