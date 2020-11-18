@@ -84,7 +84,7 @@
         /**
          * Changes select to multiple. Accepts array for value.
          */
-        @Prop({ type: Boolean, default: true }) multiple: boolean;
+        @Prop({ type: Boolean, default: false }) multiple: boolean;
 
         /**
          * Changes the selection behavior to return the object directly rather than the value
