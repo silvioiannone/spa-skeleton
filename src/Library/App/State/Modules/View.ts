@@ -136,6 +136,22 @@ export class View extends Module
     }
 
     /**
+     * Get query filters.
+     */
+    protected getQueryFilters(payload: any, filters: string[]): any
+    {
+        let parameters = {};
+
+        filters.forEach((filter: string): void => {
+            if (payload.route.query[filter]) {
+                parameters[`filter[${filter}]`] = payload.route.query[filter];
+            }
+        });
+
+        return parameters;
+    }
+
+    /**
      * Check if the given route is matching the one in the payload.
      */
     protected isMatchingRoute(payload: any, route: string): boolean
