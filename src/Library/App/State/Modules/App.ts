@@ -49,8 +49,8 @@ export class App extends Module
                         settings
                     });
 
-                    store.commit('app/SET', {
-                        key: 'user.settings',
+                    store.commit('app/INSERT', {
+                        key: 'user',
                         value: response.body.data
                     });
 
