@@ -72,7 +72,7 @@ export class Navigator
     /**
      * Go to the parent route.
      */
-    public toParent(levels = 1): void
+    public toParent(levels: number = 1): void
     {
         this.push({
             path: String.parentPath(this.route.path, levels),
@@ -119,10 +119,15 @@ export class Navigator
     }
 
     /**
-     * Navigate back if possible. If not navigate to the given path.
+     * Navigate back if possible. If not navigate to the given path or execute a callback.
      */
-    public async backOr(path: string): Promise<void>
+    public async backOr(pathOrCallback: string|Function): Promise<void>
     {
+        if (typeof pathOrCallback === 'function') {
+            pathOrCallback();
+            return;
+        }
+
         let history = (StateMachine.getStore()).getters.app.router.history.reverse()
             .filter((route: Route): boolean => {
                 // Skip the root route.
@@ -134,6 +139,14 @@ export class Navigator
             return;
         }
 
-        await this.push(path);
+        await this.push(pathOrCallback);
+    }
+
+    /**
+     * Navigate back if possible or, if not, to a parent route.
+     */
+    public async backOrToParent(levels: number = 1)
+    {
+        return this.backOr(() => this.toParent(levels));
     }
 }
