@@ -5,19 +5,16 @@
     import { Config }                from '../../Config';
     import * as VuetifyLocales       from 'vuetify/src/locale';
 
-    /**
-     * This mixin adds multilanguage support to every component.
-     */
     @Component
     export class Root extends Vue
     {
         get language(): any
         {
-            if(! this.$user.settings) {
-                return Config.locale;
+            if (this.$user.settings) {
+                return this.$user.settings.language;
             }
 
-            return this.$user.settings.language;
+            return Config.locale;
         }
 
         @Watch('language')
@@ -41,7 +38,7 @@
             this.$ws.connect(this);
             this.$ws.subscribe();
 
-            document.documentElement.setAttribute('lang', Config.locale);
+            document.documentElement.setAttribute('lang', this.language);
         }
     }
 
