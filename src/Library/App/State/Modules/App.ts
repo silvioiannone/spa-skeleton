@@ -35,6 +35,27 @@ export class App extends Module
 
                     return response;
                 },
+
+            /**
+             * Update a user setting.
+             */
+            'app/USER_SETTINGS_UPDATE':
+                async (store: Store<any>, payload: any): Promise<ResponseInterface> => {
+                    let user = store.getters.app.user;
+                    let settings = _.set(user.settings, payload.key, payload.value);
+
+                    let response = await this.api.users.update({
+                        id: user.id,
+                        settings
+                    });
+
+                    store.commit('app/SET', {
+                        key: 'user.settings',
+                        value: response.body.data
+                    });
+
+                    return response;
+                }
         };
     }
 
