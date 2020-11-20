@@ -15,10 +15,9 @@ export class UserIsAdmin extends AbstractGuard
     /**
      * Run the guard.
      */
-    public handle(): Promise<any>
+    public handle(): Promise<void|string>
     {
-        return new Promise((resolve, reject): void =>
-        {
+        return new Promise((resolve, reject): void => {
             this.store.getters.app.user.role.name === 'administrator' ?
                 resolve() : reject('You\'re not an administrator. Go away.');
         });

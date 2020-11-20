@@ -95,7 +95,7 @@ export class Router extends Service
 
                     // The timeout is needed because we need to wait for the view animation to
                     // finish.
-                    setTimeout((): void => resolve(), 500);
+                    setTimeout((): void => resolve(null), 500);
                 })
             }
         });

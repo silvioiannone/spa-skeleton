@@ -21,7 +21,7 @@ export class View extends Module
         let actions = {};
 
         // / route.
-        actions['view/ROOT'] = (store: Store<any>): Promise<ResponseInterface> =>
+        actions['view/ROOT'] = (store: Store<any>): Promise<ResponseInterface|void> =>
         {
             return new Promise((resolve, reject): void =>
             {
@@ -43,7 +43,7 @@ export class View extends Module
         /**
          * /home route
          */
-        actions['view/HOME'] = (store: Store<any>): Promise<ResponseInterface> =>
+        actions['view/HOME'] = (store: Store<any>): Promise<ResponseInterface|void> =>
         {
             return new Promise((resolve, reject): void => {
                 let userId = store.getters.app.user.id;
@@ -73,7 +73,7 @@ export class View extends Module
         /**
          * /settings route
          */
-        actions['view/SETTINGS'] = (store: Store<any>): Promise<ResponseInterface> =>
+        actions['view/SETTINGS'] = (store: Store<any>): Promise<ResponseInterface|void> =>
         {
             return new Promise((resolve, reject): void =>
             {
