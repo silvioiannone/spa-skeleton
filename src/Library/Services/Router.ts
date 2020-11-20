@@ -75,10 +75,8 @@ export class Router extends Service
             linkActiveClass: Config.app.services.router.linkActiveClass,
             mode : Config.app.services.router.mode,
             routes: Routes,
-            async scrollBehavior(to: Route, from: Route, savedPosition: any): Promise<any>
-            {
-                return new Promise(async (resolve, reject): Promise<any> =>
-                {
+            async scrollBehavior(to: Route, from: Route, savedPosition: any): Promise<any> {
+                return new Promise(async (resolve, reject): Promise<any> => {
                     try {
                         await scrollPromise;
                     } catch (error) {
@@ -95,7 +93,7 @@ export class Router extends Service
 
                     // The timeout is needed because we need to wait for the view animation to
                     // finish.
-                    setTimeout((): void => resolve(null), 500);
+                    setTimeout((): void => resolve({}), 500);
                 })
             }
         });
