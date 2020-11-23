@@ -1,5 +1,5 @@
 <template>
-    <dialog-card v-bind="getProps()" v-on="getOn()" title="Add link">
+    <dialog-card v-bind="$props" v-on="$listeners" title="Add link">
         <v-text-field label="URL" v-model="url"/>
         <v-btn color="primary" :disabled="! url.length" @click="save">Add link</v-btn>
     </dialog-card>
@@ -8,18 +8,15 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import { Wrapper }           from '../../../Mixins/Wrapper.vue';
-    import { DialogCard }        from '../../../Dialogs/Card.vue';
+    import { DialogCard } from '../../../Dialogs/Card.vue';
 
     @Component({
         components: {
             DialogCard,
         }
     })
-    export class EditorDialogAddLink extends Mixins(Wrapper)
+    export class EditorDialogAddLink extends Mixins(DialogCard)
     {
-        __component = DialogCard;
-
         url: string = '';
 
         save(): void

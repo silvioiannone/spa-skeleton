@@ -1,7 +1,33 @@
 {
+  "_from": "spa-skeleton@0.8.15",
+  "_id": "spa-skeleton@0.8.15",
+  "_inBundle": false,
+  "_integrity": "sha512-umffhZiS0KNuGKv33jLJNlhL6blBhlATjVYGB20DDn0qVxO2zfHCFXHDDw0RAWIhykrLF5ei6ILGsbWac8A5AQ==",
+  "_location": "/spa-skeleton",
+  "_phantomChildren": {
+    "cross-spawn": "7.0.3"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "spa-skeleton@0.8.15",
+    "name": "spa-skeleton",
+    "escapedName": "spa-skeleton",
+    "rawSpec": "0.8.15",
+    "saveSpec": null,
+    "fetchSpec": "0.8.15"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.8.15.tgz",
+  "_shasum": "7f9b6be1497243226a1635d710f3d5c98db5590f",
+  "_spec": "spa-skeleton@0.8.15",
+  "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
+  "bundleDependencies": false,
   "dependencies": {
     "@mdi/font": "^5.8.55",
     "@types/chrome": "^0.0.126",

@@ -1,5 +1,5 @@
 <template>
-    <dialog-main v-bind="getProps()">
+    <dialog-main v-bind="$props" v-on="$listeners">
         <v-card>
             <v-card-title class="text-h5">{{ this.title }}</v-card-title>
             <v-card-text>
@@ -15,15 +15,14 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Wrapper }                 from '../Mixins/Wrapper.vue';
-    import { DialogMain }              from './Main.vue';
+    import { DialogMain } from './Main.vue';
 
     @Component({
         components: {
             DialogMain
         }
     })
-    export class DialogCard extends Mixins(Wrapper)
+    export class DialogCard extends Mixins(DialogMain)
     {
         /**
          * Title displayed by the dialog.

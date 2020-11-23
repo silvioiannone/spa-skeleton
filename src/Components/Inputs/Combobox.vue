@@ -13,7 +13,7 @@
          *
          * The promise should resolve with the items displayed by the dropdown.
          */
-        @Prop({ type: Function, required: true }) search: (query: string) => Promise<any>
+        @Prop({ type: Function }) search: (query: string) => Promise<any>
 
         get computedProps()
         {
@@ -94,7 +94,7 @@
                     attrs: {
                         name: this.name
                     },
-                    props: this.getProps(),
+                    props: this.$props,
                     on: {
                         input: this.handleInput,
                         change: this.handleChange,

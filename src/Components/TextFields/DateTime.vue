@@ -1,8 +1,8 @@
 <template>
-    <v-menu ref="remindDateMenu" v-model="remindDateMenu" offset-y max-width="290px"
-            :close-on-content-click="false" minx-width="290px">
+    <v-menu v-bind="$props" v-on="$listeners" ref="remindDateMenu" v-model="remindDateMenu" offset-y
+            max-width="290px" :close-on-content-click="false" minx-width="290px">
         <template #activator="{ on }">
-            <text-field-main v-bind="getProps()" :value="textFieldRemindDateTime" v-on="on"/>
+            <text-field-main v-bind="$props" :value="textFieldRemindDateTime" v-on="on"/>
         </template>
         <v-stepper v-model="stepperStep">
             <v-stepper-items>
@@ -22,16 +22,13 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import Moment                             from 'moment';
-    import { Wrapper }                        from '../Mixins/Wrapper.vue';
-    import { TextFieldMain }                  from './Main.vue';
+    import Moment from 'moment';
+    import { Component, Mixins, Watch } from 'vue-property-decorator';
+    import { TextFieldMain }  from './Main.vue';
 
     @Component
-    export class TextFieldDateTime extends Mixins(Wrapper)
+    export class TextFieldDateTime extends Mixins(TextFieldMain)
     {
-        __component = TextFieldMain;
-
         partialHour: number;
 
         remindDate: string = '';

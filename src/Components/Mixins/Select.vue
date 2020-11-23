@@ -45,7 +45,7 @@
         /**
          * Items that will be available in the selectbox.
          */
-        @Prop({ type: Array, required: true }) items: Array<any>;
+        @Prop({ type: Array, default: () => [] }) items: any[];
 
         /**
          * Pass props through to the v-menu component. Accepts either a string for boolean props
@@ -162,6 +162,10 @@
          */
         transformItems(): void
         {
+            if (! this.items) {
+                return;
+            }
+
             this.$data._items = this.items.map((item: any) => this._transformItem(item));
         }
 

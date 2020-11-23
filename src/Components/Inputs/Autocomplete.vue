@@ -35,7 +35,7 @@
         /**
          * Perform the search serverside.
          */
-        _search(): void
+        remoteSearch(): void
         {
             this.$data._loading = true;
 

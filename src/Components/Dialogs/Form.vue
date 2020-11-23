@@ -1,5 +1,5 @@
 <template>
-    <dialog-main v-model="model" v-bind="getProps()">
+    <dialog-main v-bind="$props" v-on="$listeners" v-model="model">
         <slot :on="on" :closable="_closable"/>
     </dialog-main>
 </template>
@@ -7,9 +7,8 @@
 <script lang="ts">
 
     import { Component, Mixins, Watch, Prop } from 'vue-property-decorator';
-    import { Dialog }                         from '../Mixins/Dialog.vue';
-    import { Wrapper }                        from '../Mixins/Wrapper.vue';
-    import { DialogMain }                     from './Main.vue';
+    import { Dialog } from '../Mixins/Dialog.vue';
+    import { DialogMain } from './Main.vue';
 
     /**
      * This is a dialog that can hold a form in it.
@@ -19,10 +18,8 @@
             DialogMain
         }
     })
-    export class DialogForm extends Mixins(Wrapper, Dialog)
+    export class DialogForm extends Mixins(Dialog)
     {
-        __component = DialogMain;
-
         /**
          * The dialog will be persistent and that will prevent it from closing when clicking on
          * the backdrop.

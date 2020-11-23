@@ -7,8 +7,6 @@
      * This mixin can be used to build autocomplete inputs.
      *
      * Override the search function and use it to retrieve some data from the server.
-     *
-     * Use `$data._search` as the search string.
      */
     @Component
     export class Autocomplete extends Mixins(TextField)
@@ -93,7 +91,7 @@
         /**
          * Override this method in order to define what to do when querying the search.
          */
-        _search() {}
+        remoteSearch() {}
 
         /**
          * Handle the search.
@@ -111,9 +109,8 @@
                 clearTimeout(this.timeout);
             }
 
-            this.timeout = setTimeout(() =>
-            {
-                this._search();
+            this.timeout = setTimeout(() => {
+                this.remoteSearch();
             }, 250);
         }
 

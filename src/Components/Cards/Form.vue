@@ -1,5 +1,5 @@
 <template>
-    <card-main v-on="getOn()" v-bind="getProps()">
+    <card-main v-bind="$props" v-on="$listeners">
         <template #title-actions>
             <slot name="title-actions"/>
         </template>
@@ -17,7 +17,6 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Wrapper } from '../Mixins/Wrapper.vue';
     import { CardMain } from './Main.vue';
 
     @Component({
@@ -25,14 +24,12 @@
             CardMain
         }
     })
-    export class CardForm extends Mixins(Wrapper)
+    export class CardForm extends Mixins(CardMain)
     {
         /**
          * Display a close button.
          */
         @Prop({ type: Boolean, default: false }) closable: boolean;
-
-        __component = CardMain;
 
         get _closable(): boolean
         {

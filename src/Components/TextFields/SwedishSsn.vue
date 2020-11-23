@@ -1,11 +1,10 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { TextFieldMain }           from './Main.vue';
-    import { Wrapper }                 from '../Mixins/Wrapper.vue';
+    import { TextFieldMain } from './Main.vue';
 
     @Component
-    export class TextFieldSwedishSsn extends Mixins(Wrapper, TextFieldMain)
+    export class TextFieldSwedishSsn extends Mixins(TextFieldMain)
     {
         /**
          * Social security number.
@@ -26,8 +25,6 @@
          * Returns the unmodified masked string.
          */
         @Prop({ type: Boolean, default: true }) returnMaskedValue: boolean;
-
-        __component = TextFieldMain;
 
         get _validation(): any
         {

@@ -110,7 +110,7 @@
         render(createElement: CreateElement): VNode
         {
             return createElement('v-dialog', {
-                props: this.getProps(),
+                props: this.$props,
                 on: {
                     input: this.updateModel
                 }

@@ -48,7 +48,6 @@ export { PushNotification } from 'spa-skeleton/src/Library/Notifications/PushNot
 /**
  * Mixins
  */
-export { Wrapper } from './src/Components/Mixins/Wrapper.vue';
 export { Filterable as ComponentFilterable } from './src/Components/Mixins/Components/Filterable.vue';
 export { Paginatable as ComponentPaginatable } from './src/Components/Mixins/Components/Paginatable.vue';
 export { Searchable as ComponentSearchable } from './src/Components/Mixins/Components/Searchable.vue';
@@ -69,8 +68,9 @@ export { Button } from './src/Components/Mixins/Button.vue';
 export { AppBarMain } from './src/Components/AppBars/Main.vue';
 export { AutocompleteCountry } from './src/Components/Autocompletes/Country.vue';
 export { AvatarUser } from './src/Components/Avatars/User.vue';
-export { ButtonSubmit } from './src/Components/Buttons/Submit.vue';
+export { ButtonMain } from './src/Components/Buttons/Main.vue';
 export { ButtonConfirm } from './src/Components/Buttons/Confirm.vue';
+export { ButtonSubmit } from './src/Components/Buttons/Submit.vue';
 export { BreadcrumbsMain } from './src/Components/Breadcrumbs/Main.vue';
 export { CardBackgroundJobs } from './src/Components/Cards/BackgroundJobs.vue';
 export { CardForm } from './src/Components/Cards/Form.vue';

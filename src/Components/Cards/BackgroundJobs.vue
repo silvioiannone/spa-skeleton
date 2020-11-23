@@ -1,5 +1,5 @@
 <template>
-    <card-main v-bind="getProps()" v-on="getOn()" v-show="jobs.length">
+    <card-main v-bind="$props" v-on="$listeners" v-show="jobs.length">
         <slot :jobs="jobs"/>
     </card-main>
 </template>
@@ -8,17 +8,14 @@
 
     import { Component, Mixins, Watch } from 'vue-property-decorator';
     import { CardMain }                 from './Main.vue';
-    import { Wrapper }                  from '../Mixins/Wrapper.vue';
 
     @Component({
         components: {
             CardMain
         }
     })
-    export class CardBackgroundJobs extends Mixins(Wrapper)
+    export class CardBackgroundJobs extends Mixins(CardMain)
     {
-        __component = CardMain;
-
         jobs: Array<any> = [];
 
         mounted()

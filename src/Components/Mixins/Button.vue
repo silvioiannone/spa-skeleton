@@ -109,7 +109,7 @@
         render(createElement: Function): VNode
         {
             return createElement('v-btn', {
-                props: this.getProps(),
+                props: this.$props,
                 on: {
                     ...this.$listeners,
                     click: (event: any) => this.handleClick(event),
