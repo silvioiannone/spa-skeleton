@@ -16,6 +16,7 @@ import { ErrorHandler } from './Library/Services/ErrorHandler';
 // Vendor dependencies.
 import DayJS from 'dayjs';
 import Duration from 'dayjs/plugin/duration';
+import IsSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import UTC from 'dayjs/plugin/utc';
 
@@ -122,6 +123,7 @@ export class App
 
         // Configure DayJS.
         DayJS.extend(Duration);
+        DayJS.extend(IsSameOrAfter);
         DayJS.extend(RelativeTime);
         DayJS.extend(UTC);
         DayJS.locale(Config.locale);
