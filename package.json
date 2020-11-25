@@ -1,8 +1,8 @@
 {
-  "_from": "spa-skeleton@0.8.15",
-  "_id": "spa-skeleton@0.8.15",
+  "_from": "spa-skeleton@0.9.0",
+  "_id": "spa-skeleton@0.9.0",
   "_inBundle": false,
-  "_integrity": "sha512-umffhZiS0KNuGKv33jLJNlhL6blBhlATjVYGB20DDn0qVxO2zfHCFXHDDw0RAWIhykrLF5ei6ILGsbWac8A5AQ==",
+  "_integrity": "sha512-inob30L48QJ2sIybbIFCDR4YTBoNC5EYaTA+fr8a3YFC+MIJPalAYEdvoB+xyUWHCbTXzvimO4pfLNLAXi5YDA==",
   "_location": "/spa-skeleton",
   "_phantomChildren": {
     "cross-spawn": "7.0.3"
@@ -10,20 +10,20 @@
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "spa-skeleton@0.8.15",
+    "raw": "spa-skeleton@0.9.0",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "0.8.15",
+    "rawSpec": "0.9.0",
     "saveSpec": null,
-    "fetchSpec": "0.8.15"
+    "fetchSpec": "0.9.0"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.8.15.tgz",
-  "_shasum": "7f9b6be1497243226a1635d710f3d5c98db5590f",
-  "_spec": "spa-skeleton@0.8.15",
-  "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.9.0.tgz",
+  "_shasum": "c131f73c51452d1479708c4e9d864b5be110c604",
+  "_spec": "spa-skeleton@0.9.0",
+  "_where": "/home/silvio/Programming/Projects/bloomestate",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
@@ -46,6 +46,7 @@
     "country-json": "^1.1.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.6.0",
+    "dayjs": "^1.9.6",
     "deepmerge": "^4.2.2",
     "fibers": "^5.0.0",
     "flag-icon-css": "^3.5.0",
@@ -59,7 +60,6 @@
     "lodash": "^4.17.20",
     "loglevel": "^1.7.0",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.29.1",
     "node-env-file": "^0.1.8",
     "npm": "^6.14.8",
     "pluralize": "^8.0.0",

@@ -1,6 +1,6 @@
-import * as Moment        from 'moment';
+import DayJS from 'dayjs';
 import { AbstractFilter } from './AbstractFilter';
-import { Config }         from '../../../Config';
+import { Config } from '../../../Config';
 
 /**
  * This filter formats a date taking into consideration the user's locale value.
@@ -12,12 +12,12 @@ export class ReadableDate extends AbstractFilter
      */
     public run(): (value: string) => string
     {
-        return (value: string): string =>
-        {
-            let settings = this.store.getters.app.user.settings;
+        return (value: string): string => {
+            let language = this.store.getters.app.user.settings.language;
 
-            return Moment(value).locale(settings.language)
-                .format(Config.app.system.dateAndTime.dateFormat);
+            DayJS.locale(language);
+
+            return DayJS(value).format(Config.app.system.dateAndTime.dateFormat);
         }
     }
 }

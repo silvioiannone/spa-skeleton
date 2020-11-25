@@ -11,8 +11,7 @@
 <script lang="ts">
 
     import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-    import Moment                          from 'moment';
-    import { Config }                      from '../../Config';
+    import DayJS from 'dayjs';
 
     let interval: any = null;
 
@@ -31,11 +30,14 @@
 
         _time: string = '';
 
-        update()
+        /**
+         * Update the time.
+         */
+        update(): void
         {
-            this.$data._time = Moment.utc(this.time)
+            this.$data._time = DayJS(this.time)
+                .utc()
                 .local()
-                .locale(Config.locale)
                 .fromNow();
         }
 

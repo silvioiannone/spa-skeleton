@@ -1,4 +1,4 @@
-import Moment from 'moment';
+import DayJS from 'dayjs';
 
 export class Time
 {
@@ -7,7 +7,7 @@ export class Time
      */
     public static fromUtcToLocal(dateTime: string): string
     {
-        return Moment(Moment.utc(dateTime))
+        return DayJS(dateTime).utc()
             .local()
             .format('YYYY-MM-DD HH:mm:ss');
     }

@@ -1,5 +1,5 @@
-import Moment from 'moment';
 import _ from 'lodash';
+import DayJS from 'dayjs';
 
 /**
  * String utilities.
@@ -40,7 +40,7 @@ export class String
     {
         format = format || 'lll';
 
-        return Moment(string).format(format);
+        return DayJS(string).format(format);
     }
 
     /**

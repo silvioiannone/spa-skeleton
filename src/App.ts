@@ -13,6 +13,12 @@ import { Validator }    from './Library/Services/Validator';
 import { Router }       from './Library/Services/Router';
 import { ErrorHandler } from './Library/Services/ErrorHandler';
 
+// Vendor dependencies.
+import DayJS from 'dayjs';
+import Duration from 'dayjs/plugin/duration';
+import RelativeTime from 'dayjs/plugin/relativeTime';
+import UTC from 'dayjs/plugin/utc';
+
 /**
  * The single page application.
  */
@@ -113,6 +119,12 @@ export class App
     {
         // Clean the session storage.
         window.sessionStorage.clear();
+
+        // Configure DayJS.
+        DayJS.extend(Duration);
+        DayJS.extend(RelativeTime);
+        DayJS.extend(UTC);
+        DayJS.locale(Config.locale);
     }
 
     /**

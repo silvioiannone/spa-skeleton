@@ -1,4 +1,4 @@
-import * as Moment        from 'moment';
+import DayJS from 'dayjs';
 import { AbstractFilter } from './AbstractFilter';
 
 /**
@@ -14,7 +14,7 @@ export class Date extends AbstractFilter
         return (value: string): string =>
         {
             let settings = this.store.getters.app.user.settings;
-            let date = Moment(value);
+            let date = DayJS(value);
 
             return Intl.DateTimeFormat(settings.language).format(date.toDate());
         }

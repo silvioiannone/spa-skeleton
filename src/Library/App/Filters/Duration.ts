@@ -1,4 +1,4 @@
-import * as Moment        from 'moment';
+import DayJS from 'dayjs';
 import { AbstractFilter } from './AbstractFilter';
 
 /**
@@ -10,7 +10,9 @@ export class Duration extends AbstractFilter
     {
         return (value: string): string =>
         {
-            return Moment.utc(parseInt(value) * 1000).format('HH:mm:ss');
+            let duration = DayJS.duration(parseInt(value) * 1000);
+
+            return DayJS(duration.asMilliseconds()).utc().format('HH:mm:ss')
         }
     }
 }
