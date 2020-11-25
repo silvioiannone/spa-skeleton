@@ -1,4 +1,29 @@
 {
+  "_from": "spa-skeleton@0.9.3",
+  "_id": "spa-skeleton@0.9.3",
+  "_inBundle": false,
+  "_integrity": "sha512-SG02XBY4z/DPWZjlFyiyr2KpqQ9aXWSr7M4940CsfaCdUcmpN42N2b51/Kh4wT71wm0QECeZq2cxcVPb+I/45A==",
+  "_location": "/spa-skeleton",
+  "_phantomChildren": {
+    "cross-spawn": "7.0.3"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "spa-skeleton@0.9.3",
+    "name": "spa-skeleton",
+    "escapedName": "spa-skeleton",
+    "rawSpec": "0.9.3",
+    "saveSpec": null,
+    "fetchSpec": "0.9.3"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/spa-skeleton/-/spa-skeleton-0.9.3.tgz",
+  "_shasum": "0bd342bb0f6bde4eb7b93eab1eb6f0b2269e70fa",
+  "_spec": "spa-skeleton@0.9.3",
+  "_where": "/home/silvio/Programming/Projects/bloomestate",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
