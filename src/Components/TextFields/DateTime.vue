@@ -22,7 +22,7 @@
 
 <script lang="ts">
 
-    import DayJS from 'moment';
+    import DayJS from 'dayjs';
     import { Component, Mixins, Watch } from 'vue-property-decorator';
     import { TextFieldMain }  from './Main.vue';
 
@@ -89,7 +89,7 @@
                 return false;
             }
 
-            if (DayJS(this.remindDate).isSame(DayJS.now(), 'date')) {
+            if (DayJS(this.remindDate).isSame(DayJS(), 'date')) {
                 return value >= DayJS().hour();
             }
 
@@ -103,8 +103,8 @@
             }
 
             if (
-                DayJS(this.remindDate).isSame(DayJS.now(), 'date') &&
-                this.partialHour === DayJS(DayJS.now()).hour()
+                DayJS(this.remindDate).isSame(DayJS(), 'date') &&
+                this.partialHour === DayJS(DayJS()).hour()
             ) {
                 return value > DayJS().minute();
             }
