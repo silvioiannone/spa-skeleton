@@ -1,10 +1,10 @@
 <template>
     <v-card v-bind="$props" v-on="$listeners">
         <v-card-title v-if="title.length || $scopedSlots.title" class="text-h5 d-flex"
-                      style="flex-flow: row nowrap" >
-            <slot name="title">
-                <div class="flex-grow-1">{{ title }}</div>
-            </slot>
+                      style="flex-flow: row nowrap">
+            <div class="flex-grow-1">
+                <slot name="title" class="flex-grow-1">{{ title }}</slot>
+            </div>
             <div class="flex-shrink-0 flex-grow-0 card__title__actions">
                 <slot name="title-actions"/>
                 <v-btn v-if="closable" icon @click="$emit('cancel')">
