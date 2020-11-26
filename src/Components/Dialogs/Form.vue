@@ -1,5 +1,5 @@
 <template>
-    <dialog-main v-bind="$props" v-on="$listeners" v-model="model">
+    <dialog-main v-bind="$props" v-on="$listeners">
         <slot :on="on" :closable="_closable"/>
     </dialog-main>
 </template>
@@ -59,7 +59,7 @@
         handleCancel(event: Event): void
         {
             this.$emit('cancel', event);
-            this.model = false;
+            this.$emit('hidden');
         }
 
         /**
@@ -68,14 +68,14 @@
         handleSubmit(event: Event): void
         {
             this.$emit('submit', event);
-            this.model = false;
+            this.$emit('hidden');
         }
 
-        @Watch('model', { immediate: true })
-        onValueChange()
+        @Watch('value', { immediate: true })
+        onValueChange(): void
         {
             // Focus the first form element as soon as the dialog is displayed.
-            if (this.model) {
+            if (this.value) {
                 this.focus();
             }
         }

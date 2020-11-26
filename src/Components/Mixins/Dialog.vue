@@ -60,28 +60,13 @@
 
         get _fullscreen()
         {
-            // Make the dialog fullscreen on small devices.
+            // Make the dialog fullscreen on extra-small devices.
             return this.fullscreen || this.$vuetify.breakpoint.xs;
         }
 
         get _closable()
         {
-
             return this.closable || this.$vuetify.breakpoint.smAndDown;
-        }
-
-        get model()
-        {
-            return this.value;
-        }
-
-        set model(value: boolean)
-        {
-            if (! value) {
-                this.$emit('hidden');
-            }
-
-            this.$emit('input', value);
         }
 
         get computedProps()
@@ -92,19 +77,11 @@
         }
 
         /**
-         * Close the dialog.
+         * Hide the dialog.
          */
-        close(): void
+        hide(): void
         {
-            this.model = false;
-        }
-
-        /**
-         * Update the model.
-         */
-        updateModel(value: boolean): void
-        {
-            this.model = value;
+            this.$emit('hidden');
         }
 
         render(createElement: CreateElement): VNode
@@ -112,15 +89,10 @@
             return createElement('v-dialog', {
                 props: this.$props,
                 on: {
-                    input: this.updateModel
+                    ...this.$listeners,
+                    'click:outside': this.hide
                 }
             }, this.$slots.default)
-        }
-
-        @Watch('value')
-        onValueChange()
-        {
-            this.$emit('input', this.value);
         }
     }
 

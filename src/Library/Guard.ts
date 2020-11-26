@@ -131,6 +131,7 @@ export class Guard
         } catch (error) {
             this.handleRouteActionError(error, to);
             next(error);
+            return;
         }
 
         // Once all the data has been loaded run the guards.
