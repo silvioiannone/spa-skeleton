@@ -21,8 +21,8 @@
             </v-autocomplete>
         </v-col>
         <v-col xl="9">
-            <text-field-main label="Phone" v-model="phoneNumber" name="phone" :hint="hint"
-                             :disabled="! countryPrefix || disabled" :label="label"
+            <text-field-main :label="$t('common.phone')" v-model="phoneNumber" name="phone"
+                             :hint="hint" :disabled="! countryPrefix || disabled"
                              :mask="selectedCountryPhonePrefix.mask" :rules="rules"/>
         </v-col>
     </v-row>

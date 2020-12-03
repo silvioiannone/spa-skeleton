@@ -4,6 +4,7 @@
     import { Translator }            from '../../Library/Services/Translator';
     import { Config }                from '../../Config';
     import * as VuetifyLocales       from 'vuetify/src/locale';
+    import { Time }                  from '../../Library/Services/Time';
 
     @Component
     export class Root extends Vue
@@ -29,8 +30,11 @@
             Translator.merge(VuetifyLocales[this.language], '$vuetify', this.language);
             Translator.get().locale = this.language;
 
-            // Change the locale for Vuetify.
+            // Change the Vuetify locale.
             this.$vuetify.lang.current = this.language;
+
+            // Chamge the time service.
+            Time.changeLocale(this.language);
         }
 
         created(): void

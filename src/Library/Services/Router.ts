@@ -59,8 +59,7 @@ export class Router extends Service
         let guard = new Guard;
         let scrollPromise = new Promise((resolve: Function): void =>
         {
-            guard.onComplete((to: Route): void =>
-            {
+            guard.onComplete((to: Route): void => {
                 if (to.hash) {
                     resolve({ selector: to.hash });
                     return;

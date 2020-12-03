@@ -4,6 +4,7 @@
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { Config }                  from '../../Config';
     import { Input }                   from './Input.vue';
+    import { MixinComponent }          from '../Mixins/Component.vue';
 
     /**
      * This mixin can be used in order to create text fields.
@@ -12,7 +13,7 @@
      * the same name.
      */
     @Component
-    export class TextField extends Mixins(Input)
+    export class TextField extends Mixins(Input, MixinComponent)
     {
         /**
          * Make the input required.
@@ -166,7 +167,7 @@
                     max: this.max
                 },
                 directives,
-                props: this.$props,
+                props: this.getProps(),
                 on: this.$listeners
             });
         }

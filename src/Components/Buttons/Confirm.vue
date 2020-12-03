@@ -2,7 +2,7 @@
     <div class="button--submit">
         <v-btn v-if="confirmed" error @click="abort" color="error" :text="text" :large="large"
                :x-large="xLarge">
-            <div>Abort</div>
+            <div>{{ $t('actions.cancel') }}</div>
             <v-progress-circular class="ml-3" :value="progress" :rotate="270"/>
         </v-btn>
         <v-btn v-if="!showConfirmation" success :disabled="disabled" :color="color" :text="text"
@@ -11,7 +11,7 @@
         </v-btn>
         <button-submit v-if="showConfirmation && !confirmed" :on-click="verificationClick"
                        :text="text" color="warning" :large="large" :x-large="xLarge">
-            {{ verificationText }}
+            {{ _verificationText }}
         </button-submit>
     </div>
 </template>
@@ -40,7 +40,7 @@
         /**
          * Text that will be displayed on the button after the first click.
          */
-        @Prop({ type: String, default: 'Are you sure?' }) verificationText: string;
+        @Prop({ type: String }) verificationText: string;
 
         /**
          * Abort button timeout (in seconds).
@@ -56,6 +56,11 @@
         showConfirmation = false;
 
         abortCountdown = null;
+
+        get _verificationText(): string
+        {
+            return this.verificationText || this.$t('phrases.are_you_sure') as string;
+        }
 
         /**
          * Abort the action.

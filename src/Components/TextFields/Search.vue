@@ -7,11 +7,6 @@
     export class TextFieldSearch extends Mixins(TextField)
     {
         /**
-         * Placeholder.
-         */
-        @Prop({ type: String, default: 'Search...' }) placeholder: string;
-
-        /**
          * Append an icon to the text field.
          */
         @Prop({ type: String, default: 'search' }) appendIcon: string;
@@ -35,6 +30,10 @@
          * Display the text field with a "solo" style.
          */
         @Prop({ type: Boolean, default: true }) solo: boolean;
+
+        __props = {
+            placeholder: this.$t('actions.search') + '...'
+        };
     }
 
     export default TextFieldSearch;
