@@ -15,7 +15,7 @@
             <v-btn color="primary" @click="upload" :loadinig="uploading">
                 {{ $t('common.upload') }}
             </v-btn>
-            <v-btn text @click="cancel">{{ $t('common.cancel') }}</v-btn>
+            <v-btn text @click="cancel">{{ $t('actions.cancel') }}</v-btn>
         </div>
 
         <!-- Template preview -->

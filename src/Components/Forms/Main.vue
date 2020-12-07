@@ -21,7 +21,7 @@
                         </button-submit>
                         <slot name="actions"/>
                         <v-btn v-if="cancellable" text @click.stop="cancel">
-                            {{ $t('form.cancel') }}
+                            {{ $t('actions.cancel') }}
                         </v-btn>
                     </v-col>
                 </v-row>

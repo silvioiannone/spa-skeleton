@@ -20,7 +20,6 @@
         "upload": "Upload"
     },
     "form": {
-        "cancel": "@:common.cancel",
         "changePassword": "Change password",
         "email": "@:common.email",
         "logIn": "@:common.logIn",

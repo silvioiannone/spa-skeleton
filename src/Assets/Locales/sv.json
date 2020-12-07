@@ -1,13 +1,11 @@
 {
     "actions": {
-        "cancel": "Avbryta",
         "create": "Skapa",
         "delete": "Radera",
         "update": "Uppdatera",
         "search": "Sök"
     },
     "common": {
-        "cancel": "Avbryt",
         "done": "Klar",
         "email": "E-post",
         "logIn": "Logga in",
@@ -19,7 +17,6 @@
         "upload": "Ladda up"
     },
     "form": {
-        "cancel": "@:common.cancel",
         "changePassword": "Byt lösenord",
         "email": "@:common.email",
         "logIn": "@:common.logIn",
