@@ -65,7 +65,38 @@ export class App extends Module
     protected getters(): any
     {
         return {
-            'app': (state: any): any => state,
+            app: (state: any): any => state,
+
+            ui: (state: any): any => {
+                return {
+                    /**
+                     * Whether there are active filters.
+                     */
+                    isFiltering: (): boolean => {
+                        let filtersCount = 0;
+
+                        state.ui.pagination.filters.forEach((filter: any) => {
+                            let value = filter.value;
+                            if (Array.isArray(value) || typeof value === 'string') {
+                                if (value.length) {
+                                    filtersCount++
+                                }
+                            } else if (value) {
+                                filtersCount++
+                            }
+                        });
+
+                        return !! filtersCount;
+                    },
+
+                    /**
+                     * Whether there are active sorts.
+                     */
+                    isSorting: (): boolean => {
+                        return !! state.ui.pagination.sort?.length;
+                    }
+                }
+            }
         }
     }
 
