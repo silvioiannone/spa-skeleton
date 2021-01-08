@@ -126,6 +126,11 @@
          */
         @Prop({ type: Boolean, default: false }) dense: boolean;
 
+        /**
+         * Make the component read-only.
+         */
+        @Prop({ type: Boolean, default: false }) readonly: boolean;
+
         get _outlined(): boolean
         {
             if (this.outlined === undefined) {
