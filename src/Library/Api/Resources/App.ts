@@ -42,4 +42,12 @@ export class App extends ApiResource
     {
         return this._get(`hashids/decode?hashid=${hashid}&resource=${resource}`);
     }
+
+    /**
+     * Encode an ID.
+     */
+    public encodeId(id: string, resource: string): Promise<ResponseInterface>
+    {
+        return this._get(`hashids/encode?id=${id}&resource=${resource}`);
+    }
 }
