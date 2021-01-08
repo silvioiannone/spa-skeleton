@@ -200,6 +200,17 @@ const defaultConfig = {
         components: {
 
             /**
+             * Card component settings.
+             */
+            card: {
+
+                /**
+                 * The default style that the component should use.
+                 */
+                defaultStyle: null,
+            },
+
+            /**
              * Text field component settings.
              */
             textField: {

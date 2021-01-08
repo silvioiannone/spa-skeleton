@@ -1,5 +1,5 @@
 <template>
-    <v-card v-bind="$props" v-on="$listeners">
+    <v-card v-bind="$props" v-on="$listeners" :outlined="this._outlined">
         <v-card-title v-if="title.length || $scopedSlots.title" class="text-h5 d-flex"
                       style="flex-flow: row nowrap">
             <div class="flex-grow-1">
@@ -22,6 +22,7 @@
 
 <script lang="ts">
 
+    import { Config } from 'spa-skeleton/src/Config';
     import { Vue, Component, Prop } from 'vue-property-decorator';
 
     @Component
@@ -49,7 +50,7 @@
         /**
          * Removes card elevation shadow and adds a thin border.
          */
-        @Prop({ type: Boolean, default: false }) outlined: boolean;
+        @Prop({ type: Boolean, default: undefined }) outlined: boolean;
 
         /**
          * Removes the card's elevation.
@@ -70,6 +71,15 @@
          * Card subtitle.
          */
         @Prop({ type: String, default: '' }) subtitle: string;
+
+        get _outlined(): boolean
+        {
+            if (this.outlined === undefined) {
+                return Config.ui.components.card.defaultStyle === 'outlined';
+            }
+
+            return this.outlined;
+        }
     }
 
     export default CardMain;
