@@ -1,5 +1,5 @@
-import { PusherChannel } from './pusher-channel';
-import { PresenceChannel } from './presence-channel';
+import { PusherChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/pusher-channel';
+import { PresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/presence-channel';
 /**
  * This class represents a Pusher presence channel.
  */

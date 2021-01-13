@@ -1,4 +1,4 @@
-import { Channel, PresenceChannel } from './channel';
+import { Channel, PresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel';
 /**
  * This class is the primary API for interacting with broadcasting.
  */

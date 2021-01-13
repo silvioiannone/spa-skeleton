@@ -1,16 +1,16 @@
-import Vue                           from 'vue';
-import VueRouter, { Route }          from 'vue-router';
-import { sync }                      from 'vuex-router-sync';
-import { ApiFactory as Api }         from '../Api';
-import { Config }                    from '../../Config';
-import { Guard }                     from '../Guard';
-import { Logger }                    from './Logger';
-import { Service }                   from './Service';
-import { Translator }                from './Translator';
-import Routes                        from '../../../../../resources/ts/App/Routes';
-import { StateMachine }              from './StateMachine';
-import { Root as MixinRoot }         from '../../Components/Mixins/Root.vue';
-import { Plugins }                   from './Plugins';
+import Vue                   from 'vue';
+import VueRouter, { Route }  from 'vue-router';
+import { sync }              from 'vuex-router-sync';
+import { ApiFactory as Api } from '../Api';
+import { Config }            from '../../Config';
+import { Guard }             from '../Guard';
+import { Logger }            from './Logger';
+import { Service }           from './Service';
+import { Translator }        from './Translator';
+import Routes                from '../../../../../resources/ts/App/Routes';
+import { StateMachine }      from './StateMachine';
+import { Root as MixinRoot } from '../../Components/Mixins/Root.vue';
+import { Plugins }           from './Plugins';
 
 /**
  * This service provides a navigation router.

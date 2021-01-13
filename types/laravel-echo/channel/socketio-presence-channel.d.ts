@@ -1,5 +1,5 @@
-import { PresenceChannel } from './presence-channel';
-import { SocketIoPrivateChannel } from './socketio-private-channel';
+import { PresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/presence-channel';
+import { SocketIoPrivateChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/socketio-private-channel';
 /**
  * This class represents a Socket.io presence channel.
  */

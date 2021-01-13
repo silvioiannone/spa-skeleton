@@ -1,10 +1,10 @@
-/* eslint-disable */
+// Load the environment variables.
+require('dotenv').config({ path: '.env' });
 
-const config = require('spa-skeleton/webpack.config'),
-    fs = require('fs'),
-    { merge } = require('webpack-merge'),
+const webpackConfig = require('spa-skeleton/webpack.config'),
+    // merge = require('webpack-merge'),
     mix = require('laravel-mix'),
-    os = require('os'),
+    fs = require('fs'),
     path = require('path'),
     BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales'),
     VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
@@ -17,9 +17,14 @@ module.exports = {
     additionalModulesToExtract: [],
 
     /**
-     * Laravel mix.
+     * Additional Sass files that will be compiled.
      */
-    mix: null,
+    additionalSass: [
+        {
+            path: 'node_modules/spa-skeleton/src/Assets/Sass/Skeleton.sass',
+            file: 'Skeleton.css'
+        }
+    ],
 
     /**
      * User defined Webpack config.
@@ -31,12 +36,28 @@ module.exports = {
      */
     build: function ()
     {
-        this.setOptions();
-
-        this.mix = mix;
+        mix.options({
+            hmrOptions: {
+                host: process.env.APP_DOMAIN,
+                port: 8080,
+            }
+        });
 
         // Load the Configuration from SPA-Skeleton
-        mix.webpackConfig(merge(config, this.userWebpackConfig));
+        mix.webpackConfig(webpackConfig);
+        mix.webpackConfig(this.userWebpackConfig);
+
+        // We need to remove the first `ts-loader` defined by Laravel mix since we'll inject our
+        // own.
+        mix.override((config) => {
+            let index = 0;
+
+            while (config.module.rules[index].loader !== 'ts-loader') {
+                index++;
+            }
+
+            config.module.rules.splice(index, 1);
+        });
 
         mix.extend('buildLocales', new BuildLocales);
         mix.extend('vuetify', new class {
@@ -54,36 +75,13 @@ module.exports = {
             mix.version();
         }
 
-        if (process.env.APP_ENV !== 'production') {
-            mix.sourceMaps();
-        }
-
         mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
         mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
         mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
-    },
 
-    /**
-     * Set the Laravel Mix options.
-     */
-    setOptions: function ()
-    {
-        let options = {
-            hmrOptions: {
-                host: process.env.APP_DOMAIN,
-                port: 8080
-            }
-        };
-
-        let cpusCount = os.cpus().length;
-
-        if (cpusCount <= 2) {
-            options['terser'] = {
-                parallel: cpusCount
-            }
+        if (process.env.APP_ENV !== 'production') {
+            mix.sourceMaps();
         }
-
-        mix.options(options);
     },
 
     /**
@@ -106,24 +104,18 @@ module.exports = {
     buildJS()
     {
         let modulesToExtract = [
-            'vue',
-            'vue-router',
-            'vuex',
-            'vuetify',
-            'vee-validate',
-            'loglevel',
-            'moment',
-            'lodash',
-            'vue-markdown',
-            'push.js'
-        ].concat(this.additionalModulesToExtract);
+            'vue', 'vue-router', 'vuex', 'vuetify', 'vee-validate', 'loglevel', 'moment', 'lodash',
+            'raven-js', 'vue-markdown'
+        ]
+            .concat(this.additionalModulesToExtract);
 
-        this.mix.js('resources/ts/App.ts', './public/js/app.js')
-            .extract(modulesToExtract, './public/js/vendor.js');
+        mix.ts('resources/ts/App.ts', 'js/app.js')
+            .vue({ version: 2 })
+            .extract(modulesToExtract, 'js/vendor.js');
 
         // Build the loader if it exists.
         if (fs.existsSync('resources/ts/Loader.ts')) {
-            this.mix.js('resources/ts/Loader.ts', './public/js/loader.js');
+            mix.ts('resources/ts/Loader.ts', './public/js/loader.js');
         }
     },
 
@@ -142,23 +134,23 @@ module.exports = {
             'node_modules/github-markdown-css/github-markdown.css'
         ];
 
-        this.mix.sass('resources/sass/app.sass', 'public/css', {
+        mix.sass('resources/sass/app.sass', 'public/css', {
             // These options are required in order to build the SASS imports in Vuetify components.
-            implementation: require('sass'),
-            sassOptions: {
-                fiber: require('fibers'),
-                indentedSyntax: true
-            }
+            // implementation: require('sass'),
+            // sassOptions: {
+            //     fiber: require('fibers'),
+            //     indentedSyntax: true
+            // }
         });
 
-        this.mix.options({
-            processCssUrls: false
-        });
+        // mix.options({
+        //     processCssUrls: false
+        // });
 
-        this.mix.styles(sources, 'public/css/all.css');
+        mix.styles(sources, 'public/css/all.css');
 
         if (fs.existsSync('resources/ts/Loader.ts')) {
-            this.mix.sass(
+            mix.sass(
                 'node_modules/spa-skeleton/src/Assets/Sass/Components/Loader.sass',
                 'public/css/loader.css'
             );

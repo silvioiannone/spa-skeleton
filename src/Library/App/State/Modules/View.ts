@@ -16,7 +16,7 @@ export class View extends Module
     /**
      * Get the module's actions.
      */
-    protected actions(): { (key: string): ViewAction } | {}
+    protected actions(): { [key: string]: ViewAction } | {}
     {
         let actions = {};
 

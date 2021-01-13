@@ -1,5 +1,5 @@
-import { NullChannel } from './null-channel';
-import { PresenceChannel } from './presence-channel';
+import { NullChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/null-channel';
+import { PresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/presence-channel';
 /**
  * This class represents a null presence channel.
  */

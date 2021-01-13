@@ -1,33 +1,29 @@
-import { Connector } from './connector';
-import { PusherChannel, PresenceChannel } from './../channel';
+import { Connector } from 'spa-skeleton/Definitions/laravel-echo/connector/connector';
+import { NullChannel, NullPrivateChannel, PresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel';
 /**
- * This class creates a connector to Pusher.
+ * This class creates a null connector.
  */
-export declare class PusherConnector extends Connector {
-    /**
-     * The Pusher instance.
-     */
-    pusher: any;
+export declare class NullConnector extends Connector {
     /**
      * All of the subscribed channel names.
      */
     channels: any;
     /**
-     * Create a fresh Pusher connection.
+     * Create a fresh connection.
      */
     connect(): void;
     /**
      * Listen for an event on a channel instance.
      */
-    listen(name: string, event: string, callback: Function): PusherChannel;
+    listen(name: string, event: string, callback: Function): NullChannel;
     /**
      * Get a channel instance by name.
      */
-    channel(name: string): PusherChannel;
+    channel(name: string): NullChannel;
     /**
      * Get a private channel instance by name.
      */
-    privateChannel(name: string): PusherChannel;
+    privateChannel(name: string): NullPrivateChannel;
     /**
      * Get a presence channel instance by name.
      */
@@ -41,7 +37,7 @@ export declare class PusherConnector extends Connector {
      */
     socketId(): string;
     /**
-     * Disconnect Pusher connection.
+     * Disconnect the connection.
      */
     disconnect(): void;
 }

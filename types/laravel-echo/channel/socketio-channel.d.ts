@@ -1,5 +1,5 @@
-import { EventFormatter } from './../util';
-import { Channel } from './channel';
+import { EventFormatter } from 'spa-skeleton/Definitions/laravel-echo/util';
+import { Channel } from 'spa-skeleton/Definitions/laravel-echo/channel/channel';
 /**
  * This class represents a Socket.io channel.
  */

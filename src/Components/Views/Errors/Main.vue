@@ -60,13 +60,8 @@
 <script lang="ts">
 
     import { Vue, Component, Prop } from 'vue-property-decorator';
-    import { LayoutApp } from 'spa-skeleton/src/Components/Layouts/App.vue';
 
-    @Component({
-        components: {
-            LayoutApp
-        }
-    })
+    @Component
     export class ErrorMain extends Vue
     {
         /**

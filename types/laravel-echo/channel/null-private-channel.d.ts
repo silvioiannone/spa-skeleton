@@ -1,4 +1,4 @@
-import { NullChannel } from './null-channel';
+import { NullChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/null-channel';
 /**
  * This class represents a null private channel.
  */

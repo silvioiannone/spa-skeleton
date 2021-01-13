@@ -6,35 +6,31 @@ const LaravelMix = require('laravel-mix');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 let config = {
+    context: __dirname,
     profile: true,
     resolve: {
-        extensions: ['.ts', '.vue'],
         alias: {
             'spa-skeleton$': path.resolve(__dirname, 'index.ts')
         },
         modules: [
-            'resources',
             'node_modules'
         ]
     },
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
-                use: {
-                    loader: 'babel-loader',
-                    options: LaravelMix.config.babel(path.resolve(__dirname, '.babelrc')),
-                }
-            },
-            {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
-                exclude: /node_modules\/(?!(spa-skeleton)\/).*/,
                 options: {
+                    // Make the current directory the context.
+                    // context: __dirname,
                     appendTsSuffixTo: [/\.vue$/],
-                    configFile: path.resolve(__dirname, "tsconfig.json"),
-                    transpileOnly: true
+                    // configFile: path.resolve(__dirname, "tsconfig.json"),
+                    // Use this option together with `ForkTsCheckerWebpackPlugin` to get full type
+                    // checking.
+                    transpileOnly: true,
+                    // Allow compilation of TS files in the `node_modules` directory.
+                    allowTsInNodeModules: true
                 }
             }
         ]
@@ -42,7 +38,7 @@ let config = {
     plugins: [
         new ForkTsCheckerWebpackPlugin({
             typescript: {
-                configFile: path.resolve(__dirname, "tsconfig.json"),
+                configFile: path.resolve(__dirname, "./../../tsconfig.json"),
                 extensions: {
                     vue: true
                 }
@@ -71,12 +67,16 @@ let config = {
 };
 
 // Add the certificates if serving over https.
-if (process.env.APP_URL.startsWith('https') && Mix.isUsing('hmr')) {
+if (process.env.APP_URL.startsWith('https') && process.argv.includes('--hot')) {
     config.output = {
         publicPath: 'https://' + process.env.APP_DOMAIN + ':8080/',
     };
     config.devServer = {
-        publicPath: 'https://' + process.env.APP_DOMAIN + ':8080/',
+        // client: {
+        //     host: process.env.APP_DOMAIN,
+        //     port: 8080
+        // },
+        public: 'https://' + process.env.APP_DOMAIN + ':8080/',
         https: {
             key: fs.readFileSync(process.env.APP_SSL_KEY),
             cert: fs.readFileSync(process.env.APP_SSL_CERT)

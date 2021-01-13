@@ -1,4 +1,4 @@
-import { Channel } from './channel';
+import { Channel } from 'spa-skeleton/Definitions/laravel-echo/channel/channel';
 /**
  * This class represents a null channel.
  */

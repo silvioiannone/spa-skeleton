@@ -46,7 +46,7 @@ export class Translator extends Service
         Log.debug('Loading language...');
 
         let locale = Config.locale;
-        let appLocale = require('locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
+        let appLocale = require('./../../../../../resources/locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
         let skeletonLocale = require('./../../Assets/Locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
 
         let messages = {};

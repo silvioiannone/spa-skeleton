@@ -1,4 +1,4 @@
-import { PusherChannel } from './pusher-channel';
+import { PusherChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/pusher-channel';
 /**
  * This class represents a Pusher private channel.
  */

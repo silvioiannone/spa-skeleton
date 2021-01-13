@@ -1,4 +1,4 @@
-import { Channel, PresenceChannel } from './../channel';
+import { Channel, PresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel';
 export declare abstract class Connector {
     /**
      * Default connector options.

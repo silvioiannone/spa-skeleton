@@ -4,13 +4,18 @@ import { VuetifyObject }       from 'vuetify';
 import { Store }               from 'vuex';
 import VueI18n, { IVueI18n }   from 'vue-i18n';
 import { ErrorBag, Validator } from 'vee-validate';
-import Config                  from '../Config';
-import { ApiClient }           from '../Library/Api';
-import WebSocket               from '../Library/WebSocket';
-import Navigator               from '../Library/Utils/Navigator';
-import Head                    from '../Library/Utils/Head';
-import { String }              from '../Library/Utils/String';
-import { Toolbar }             from '../Library/Utils/Ui/Toolbar';
+import Config                  from 'spa-skeleton/src/Config';
+import { ApiClient }           from 'spa-skeleton/src/Library/Api';
+import WebSocket               from 'spa-skeleton/src/Library/WebSocket';
+import Navigator               from 'spa-skeleton/src/Library/Utils/Navigator';
+import Head                    from 'spa-skeleton/src/Library/Utils/Head';
+import { String }              from 'spa-skeleton/src/Library/Utils/String';
+import { Toolbar }             from 'spa-skeleton/src/Library/Utils/Ui/Toolbar';
+
+declare module "*.vue" {
+    import Vue from "vue";
+    export default Vue;
+}
 
 declare module 'vue/types/vue'
 {
@@ -42,10 +47,4 @@ declare module 'vue/types/vue'
         $ws: WebSocket;
         errors: ErrorBag;
     }
-}
-
-declare module "*.vue"
-{
-    import Vue from 'vue';
-    export default Vue;
 }

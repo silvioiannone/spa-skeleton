@@ -1,4 +1,4 @@
-import { SocketIoChannel } from './socketio-channel';
+import { SocketIoChannel } from 'spa-skeleton/Definitions/laravel-echo/channel/socketio-channel';
 /**
  * This class represents a Socket.io presence channel.
  */

@@ -1,6 +1,5 @@
 <template>
-    <error-main :title="$t('misc.pageNotFound')" icon="error_outline">
-    </error-main>
+    <error-main :title="$t('misc.pageNotFound')" icon="error_outline"/>
 </template>
 
 <script lang="ts">
