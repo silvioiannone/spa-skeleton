@@ -29,7 +29,7 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#12d8d0054b3ec5834c03f95901331659835d1609",
+  "_resolved": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#ccf7474e524241e0cd26878d5cea11e938cb9e0b",
   "_shasum": "62a75d3b7986b8ff4b71a2ab33c33847c30652d9",
   "_spec": "spa-skeleton@git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
   "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
@@ -99,7 +99,7 @@
     "vue2-filters": "^0.11.1",
     "vuedraggable": "^2.24.3",
     "vuetify": "2.4.2",
-    "vuetify-loader": "git@github.com:awill1988/vuetify-loader.git#support-webpack-5",
+    "vuetify-loader": "git+ssh://git@github.com/awill1988/vuetify-loader.git#support-webpack-5",
     "vuex": "^3.6.0",
     "vuex-router-sync": "^5.0.0"
   },

@@ -10,11 +10,6 @@
         ],
         "esModuleInterop": true,
         "noEmit": true,
-        "baseUrl": ".",
-        "paths": {
-            "spa-skeleton": ["node_modules/spa-skeleton/index.ts"],
-            "spa-skeleton/*": ["node_modules/spa-skeleton/src/*"]
-        },
         "experimentalDecorators": true,
         "resolveJsonModule": true,
     },

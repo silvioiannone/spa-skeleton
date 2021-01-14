@@ -22,10 +22,8 @@ let config = {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
                 options: {
-                    // Make the current directory the context.
-                    // context: __dirname,
+                    configFile: path.resolve(__dirname, 'tsconfig.json'),
                     appendTsSuffixTo: [/\.vue$/],
-                    // configFile: path.resolve(__dirname, "tsconfig.json"),
                     // Use this option together with `ForkTsCheckerWebpackPlugin` to get full type
                     // checking.
                     transpileOnly: true,
@@ -38,7 +36,8 @@ let config = {
     plugins: [
         new ForkTsCheckerWebpackPlugin({
             typescript: {
-                configFile: path.resolve(__dirname, "./../../tsconfig.json"),
+                // configFile: path.resolve(__dirname, "./../../tsconfig.json"),
+                configFile: path.resolve(__dirname, 'tsconfig.json'),
                 extensions: {
                     vue: true
                 }
@@ -62,26 +61,31 @@ let config = {
         })
     ],
     watchOptions: {
-        ignored: /node_modules\/(?!(spa-skeleton)\/).*/
+        // Ignore all the files in the `node_modules` folder except the ones in the `spa-skeleton`.
+        ignored: /node_modules\/(?!(spa-skeleton)\/).*/,
     }
 };
 
-// Add the certificates if serving over https.
+// Additional configuration if hot reloading over HTTPS.
 if (process.env.APP_URL.startsWith('https') && process.argv.includes('--hot')) {
     config.output = {
         publicPath: 'https://' + process.env.APP_DOMAIN + ':8080/',
     };
     config.devServer = {
-        // client: {
-        //     host: process.env.APP_DOMAIN,
-        //     port: 8080
-        // },
-        public: 'https://' + process.env.APP_DOMAIN + ':8080/',
         https: {
             key: fs.readFileSync(process.env.APP_SSL_KEY),
             cert: fs.readFileSync(process.env.APP_SSL_CERT)
         }
-    }
+    };
+    // Override Laravel Mix's `http()` function in HotReloading. We need to override this
+    // function because by default Laravel Mix looks at the presence of the `--https` cli
+    // option. This causes the webpack dev server to create its own certificates and to ignore
+    // the ones defined in the `devServer` Webpack config.
+    process.argv.push(
+        '--https',
+        '--key ' + process.env.APP_SSL_KEY,
+        '--cert ' + process.env.APP_SSL_CERT
+    );
 }
 
 module.exports = config;

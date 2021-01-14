@@ -36,6 +36,34 @@ module.exports = {
      */
     build: function ()
     {
+        this.init();
+
+        mix.buildLocales();
+        mix.vuetify();
+
+        this.buildJS();
+        this.buildStyles();
+
+        if (process.env.APP_ENV !== 'local') {
+            mix.version();
+        }
+
+        mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
+        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
+        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
+
+        if (process.env.APP_ENV !== 'production') {
+            mix.sourceMaps();
+        }
+    },
+
+    /**
+     * Initialize.
+     *
+     * @protected
+     */
+    init: function ()
+    {
         mix.options({
             hmrOptions: {
                 host: process.env.APP_DOMAIN,
@@ -59,29 +87,13 @@ module.exports = {
             config.module.rules.splice(index, 1);
         });
 
+        // Register plugins.
         mix.extend('buildLocales', new BuildLocales);
         mix.extend('vuetify', new class {
             webpackConfig (config) {
                 config.plugins.push(new VuetifyLoaderPlugin)
             }
         });
-
-        mix.buildLocales();
-        mix.vuetify();
-        this.buildJS();
-        this.buildStyles();
-
-        if (process.env.APP_ENV !== 'local') {
-            mix.version();
-        }
-
-        mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
-        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
-        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
-
-        if (process.env.APP_ENV !== 'production') {
-            mix.sourceMaps();
-        }
     },
 
     /**
@@ -134,19 +146,7 @@ module.exports = {
             'node_modules/github-markdown-css/github-markdown.css'
         ];
 
-        mix.sass('resources/sass/app.sass', 'public/css', {
-            // These options are required in order to build the SASS imports in Vuetify components.
-            // implementation: require('sass'),
-            // sassOptions: {
-            //     fiber: require('fibers'),
-            //     indentedSyntax: true
-            // }
-        });
-
-        // mix.options({
-        //     processCssUrls: false
-        // });
-
+        mix.sass('resources/sass/app.sass', 'public/css');
         mix.styles(sources, 'public/css/all.css');
 
         if (fs.existsSync('resources/ts/Loader.ts')) {
