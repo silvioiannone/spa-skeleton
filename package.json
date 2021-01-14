@@ -1,5 +1,5 @@
 {
-  "_from": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#next",
+  "_from": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
   "_id": "spa-skeleton@0.9.9",
   "_inBundle": false,
   "_integrity": "",
@@ -18,20 +18,20 @@
   },
   "_requested": {
     "type": "git",
-    "raw": "spa-skeleton@git+ssh://git@github.com/silvioiannone/spa-skeleton.git#next",
+    "raw": "spa-skeleton@git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
     "name": "spa-skeleton",
     "escapedName": "spa-skeleton",
-    "rawSpec": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#next",
-    "saveSpec": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#next",
+    "rawSpec": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
+    "saveSpec": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
     "fetchSpec": "ssh://git@github.com/silvioiannone/spa-skeleton.git",
-    "gitCommittish": "next"
+    "gitCommittish": "laravel-mix-6"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#2e4d8a310c77ae0e390a1475d47658d700a5fc6b",
+  "_resolved": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#12d8d0054b3ec5834c03f95901331659835d1609",
   "_shasum": "62a75d3b7986b8ff4b71a2ab33c33847c30652d9",
-  "_spec": "spa-skeleton@git+ssh://git@github.com/silvioiannone/spa-skeleton.git#next",
+  "_spec": "spa-skeleton@git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
   "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
@@ -99,7 +99,7 @@
     "vue2-filters": "^0.11.1",
     "vuedraggable": "^2.24.3",
     "vuetify": "2.4.2",
-    "vuetify-loader": "1.6.0",
+    "vuetify-loader": "git@github.com:awill1988/vuetify-loader.git#support-webpack-5",
     "vuex": "^3.6.0",
     "vuex-router-sync": "^5.0.0"
   },
