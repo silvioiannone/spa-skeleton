@@ -68,7 +68,8 @@ module.exports = {
             hmrOptions: {
                 host: process.env.APP_DOMAIN,
                 port: 8080,
-            }
+            },
+            runtimeChunkPath: 'js'
         });
 
         // Load the Configuration from SPA-Skeleton

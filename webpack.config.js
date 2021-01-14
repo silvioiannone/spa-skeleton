@@ -2,12 +2,15 @@
 const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
-const LaravelMix = require('laravel-mix');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 let config = {
     context: __dirname,
     profile: true,
+    output: {
+        // Output the JS chunks in the `js` folder.
+        chunkFilename: 'js/[name].js',
+    },
     resolve: {
         alias: {
             'spa-skeleton$': path.resolve(__dirname, 'index.ts')
