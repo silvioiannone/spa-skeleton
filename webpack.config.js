@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { VuetifyLoaderPlugin } = require('vuetify-loader')
 
 let config = {
     context: __dirname,
@@ -39,7 +40,6 @@ let config = {
     plugins: [
         new ForkTsCheckerWebpackPlugin({
             typescript: {
-                // configFile: path.resolve(__dirname, "./../../tsconfig.json"),
                 configFile: path.resolve(__dirname, 'tsconfig.json'),
                 extensions: {
                     vue: true
@@ -61,7 +61,8 @@ let config = {
             WEBSOCKET_SERVER_KEY: JSON.stringify(process.env.WEBSOCKET_SERVER_KEY),
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
-        })
+        }),
+        new VuetifyLoaderPlugin()
     ],
     watchOptions: {
         // Ignore all the files in the `node_modules` folder except the ones in the `spa-skeleton`.

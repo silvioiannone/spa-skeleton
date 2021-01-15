@@ -29,10 +29,10 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#ccf7474e524241e0cd26878d5cea11e938cb9e0b",
+  "_resolved": "git+ssh://git@github.com/silvioiannone/spa-skeleton.git#b8bda4eb5a7e7f90190755f7a2d78f8cc253e5a8",
   "_shasum": "62a75d3b7986b8ff4b71a2ab33c33847c30652d9",
   "_spec": "spa-skeleton@git+ssh://git@github.com/silvioiannone/spa-skeleton.git#laravel-mix-6",
-  "_where": "/Users/silvioiannone/Programming/Projects/BloomEstate",
+  "_where": "/home/silvio/Programming/Projects/bloomestate",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },

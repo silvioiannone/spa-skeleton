@@ -6,8 +6,8 @@ const webpackConfig = require('spa-skeleton/webpack.config'),
     mix = require('laravel-mix'),
     fs = require('fs'),
     path = require('path'),
-    BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales'),
-    VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
+    util = require('util'),
+    BuildLocales = require('./src/Library/Mix/Extensions/BuildLocales');
 
 module.exports = {
 
@@ -39,7 +39,6 @@ module.exports = {
         this.init();
 
         mix.buildLocales();
-        mix.vuetify();
 
         this.buildJS();
         this.buildStyles();
@@ -69,7 +68,9 @@ module.exports = {
                 host: process.env.APP_DOMAIN,
                 port: 8080,
             },
-            runtimeChunkPath: 'js'
+            runtimeChunkPath: 'js',
+            // Extract .vue component styling to file, rather than inline.
+            extractVueStyles: true
         });
 
         // Load the Configuration from SPA-Skeleton
@@ -77,7 +78,7 @@ module.exports = {
         mix.webpackConfig(this.userWebpackConfig);
 
         // We need to remove the first `ts-loader` defined by Laravel mix since we'll inject our
-        // own.
+        // own in `webpack.config.js`.
         mix.override((config) => {
             let index = 0;
 
@@ -88,13 +89,32 @@ module.exports = {
             config.module.rules.splice(index, 1);
         });
 
+        // We need to add some additional SASS options in order to allow our variables to override
+        // the ones declared by Vuetify.
+        mix.override((config) => {
+            // For SASS
+            let sassRule = config.module.rules.find(
+                (rule) => rule.test.toString() === /\.sass$/.toString()
+            );
+            let sassOneOf = sassRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
+            let sassLoader = sassOneOf.use.find((use) => use.loader === 'sass-loader');
+
+            sassLoader.options.additionalData = '@import "resources/sass/app.sass"';
+            sassLoader.options.sassOptions.indentedSyntax = true;
+
+            // For SCSS
+            let scssRule = config.module.rules.find(
+                (rule) => rule.test.toString() === /\.scss$/.toString()
+            );
+            let scssOneOf = scssRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
+            let scssLoader = scssOneOf.use.find((use) => use.loader === 'sass-loader');
+
+            scssLoader.options.additionalData = '@import "resources/sass/app.sass";';
+            sassLoader.options.sassOptions.indentedSyntax = true;
+        });
+
         // Register plugins.
         mix.extend('buildLocales', new BuildLocales);
-        mix.extend('vuetify', new class {
-            webpackConfig (config) {
-                config.plugins.push(new VuetifyLoaderPlugin)
-            }
-        });
     },
 
     /**
