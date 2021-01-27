@@ -1,8 +1,8 @@
 <script lang="ts">
 
-    import { VNode, CreateElement }           from 'vue';
-    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import { MixinComponent }                 from './Component.vue';
+    import { VNode, CreateElement }    from 'vue';
+    import { Component, Mixins, Prop } from 'vue-property-decorator';
+    import { MixinComponent }          from './Component.vue';
 
     /*
      * This mixin can be used in order to create new dialogs.
