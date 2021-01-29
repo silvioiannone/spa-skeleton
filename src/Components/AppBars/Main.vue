@@ -63,24 +63,24 @@
         /**
          * Whether the search button should be displayed.
          */
-        @Prop({type: Boolean, default: false}) search: boolean;
+        @Prop({ type: Boolean, default: false }) search: boolean;
 
         /**
          * Whether there is a navigation drawer.
          *
          * If there isn't one (false) the app bar nav icon is hidden.
          */
-        @Prop({type: Boolean, default: true}) navigationDrawer: boolean;
+        @Prop({ type: Boolean, default: true }) navigationDrawer: boolean;
 
         /**
          * Toolbar title.
          */
-        @Prop({type: String, default: Config.app.name}) title: string;
+        @Prop({ type: String, default: Config.app.name }) title: string;
 
         /**
          * Toolbar title link.
          */
-        @Prop({type: String, default: ''}) titleTo: string;
+        @Prop({ type: String, default: '' }) titleTo: string;
 
         protected showingSearch: boolean = false;
 
@@ -101,9 +101,11 @@
 
         set routeSearchParameter(value: string | undefined)
         {
-            if (this.searchCallback) {
-                this.searchCallback(value);
+            if (! this.searchCallback) {
+                return;
             }
+
+            this.searchCallback(value);
         }
 
         get searchCallback(): Function | null
@@ -149,7 +151,6 @@
         hideSearch(): void
         {
             this.showingSearch = false;
-            this.routeSearchParameter = '';
         }
 
         /**
@@ -191,7 +192,9 @@
         @Watch('routeSearchParameter', { immediate: true })
         onRouteSearchParameterChange(): void
         {
-            this.routeSearchParameter?.length ? this.showSearch() : this.hideSearch();
+            if (this.routeSearchParameter?.length) {
+                this.showSearch();
+            }
         }
 
         @Watch('searchCallback')
