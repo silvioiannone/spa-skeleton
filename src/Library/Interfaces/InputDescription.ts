@@ -7,5 +7,6 @@ export interface InputDescription
     name: string;
     label: string;
     placeholder: string;
+    rules: string;
     type: string;
 }
