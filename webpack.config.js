@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { VuetifyLoaderPlugin } = require('vuetify-loader')
 
 let config = {
@@ -38,14 +37,6 @@ let config = {
         ]
     },
     plugins: [
-        new ForkTsCheckerWebpackPlugin({
-            typescript: {
-                configFile: path.resolve(__dirname, 'tsconfig.json'),
-                extensions: {
-                    vue: true
-                }
-            },
-        }),
         new Webpack.DefinePlugin({
             APP_ENV: JSON.stringify(process.env.APP_ENV),
             APP_LOG_LEVEL: JSON.stringify(process.env.APP_LOG_LEVEL),
