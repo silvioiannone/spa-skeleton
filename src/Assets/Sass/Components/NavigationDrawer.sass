@@ -2,11 +2,14 @@
  * Navigation drawer
  */
 
-+theme(v-navigation-drawer) using ($material)
++theme(v-navigation-drawer) using ($theme)
 
     // Remove the navigation drawer border
     &:not(.v-navigation-drawer--floating) .v-navigation-drawer__border
         background-color: transparent
+
+    .navigation-drawer--bottom
+        background-color: map_get($theme, 'background')
 
 .v-navigation-drawer
 
@@ -14,3 +17,7 @@
         bottom: 0
         position: absolute !important
         width: 100%
+
+    .navigation-drawer--notifications-container
+        // Height of the `.navigation-drawer--bottom`.
+        margin-bottom: 100px

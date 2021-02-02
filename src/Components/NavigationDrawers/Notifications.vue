@@ -21,10 +21,12 @@
             </v-tooltip>
         </v-toolbar>
         <template v-if="unreadNotifications.length">
-            <v-list two-line>
-                <slot :unread-notifications="unreadNotifications"/>
-            </v-list>
-            <slot name="outer" :unread-notifications="unreadNotifications"/>
+            <div class="navigation-drawer--notifications-container">
+                <v-list two-line>
+                    <slot :unread-notifications="unreadNotifications"/>
+                </v-list>
+                <slot name="outer" :unread-notifications="unreadNotifications"/>
+            </div>
         </template>
         <v-container class="mt-4" v-else>
             <v-row>
