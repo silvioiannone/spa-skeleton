@@ -292,7 +292,8 @@ export class SuperAgentDriver extends AbstractApiDriver
             status: response.status,
             request: {
                 url: response['req'].url
-            }
+            },
+            text: response.text
         };
     }
 }

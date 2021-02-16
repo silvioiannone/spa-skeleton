@@ -16,4 +16,5 @@ export interface ResponseInterface
     };
     status: HttpStatusCodes;
     request: Request;
+    text: string;
 }
