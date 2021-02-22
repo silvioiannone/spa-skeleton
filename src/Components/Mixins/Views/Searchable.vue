@@ -25,7 +25,8 @@
 
                 let query = {
                     ...this.$route.query,
-                    search: subject
+                    search: subject,
+                    page: 1
                 };
 
                 if (! subject) {
