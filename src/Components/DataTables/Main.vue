@@ -80,8 +80,8 @@
                     footerProps: {
                         itemsPerPageOptions: this.itemsPerPageOptions
                     },
+                    headers: this._headers,
                     ...this.getVuePagination(this.pagination),
-                    headers: this._headers
                 },
                 on: {
                     ...this.$listeners,

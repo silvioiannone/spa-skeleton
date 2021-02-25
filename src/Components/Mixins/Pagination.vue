@@ -34,7 +34,7 @@
                 pagination['sort'] = sort;
             }
 
-            this.$emit('update:pagination', pagination)
+            this.$emit('update:pagination', { ...this.pagination, ...pagination })
         }
 
         /**
@@ -48,8 +48,10 @@
 
             let vuePagination = {
                 serverItemsLength: pagination.total,
-                itemsPerPage: pagination.per_page,
-                page: pagination.page
+                options: {
+                    itemsPerPage: pagination.per_page,
+                    page: pagination.page
+                }
             }
 
             let sort = pagination.sort;
