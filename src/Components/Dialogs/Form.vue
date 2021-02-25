@@ -60,6 +60,7 @@
         {
             this.$emit('cancel', event);
             this.$emit('hidden');
+            this.$emit('input', false);
         }
 
         /**
@@ -69,6 +70,7 @@
         {
             this.$emit('submit', event);
             this.$emit('hidden');
+            this.$emit('input', false);
         }
 
         @Watch('value', { immediate: true })
