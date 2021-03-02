@@ -19,7 +19,7 @@
                                        :disabled="invalid || disabled">
                             {{ submitText || $t('form.submit') }}
                         </button-submit>
-                        <slot name="actions"/>
+                        <slot name="actions" :disabled="invalid || disabled"/>
                         <v-btn v-if="cancellable" text @click.stop="cancel">
                             {{ $t('actions.cancel') }}
                         </v-btn>
