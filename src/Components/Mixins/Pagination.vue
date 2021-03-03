@@ -47,7 +47,6 @@
             }
 
             let vuePagination = {
-                serverItemsLength: pagination.total,
                 options: {
                     itemsPerPage: pagination.per_page,
                     page: pagination.page
