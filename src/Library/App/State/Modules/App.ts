@@ -304,7 +304,6 @@ export class App extends Module
                  * Stores the pagination object for views displaying paginated data.
                  */
                 pagination: {
-                    descending: false,
                     filters: [],
                     page: 1,
                     per_page: Config.app.paginationSize,

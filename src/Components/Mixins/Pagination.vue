@@ -11,7 +11,7 @@
         @Prop({ type: Object, default: () => ({}) }) pagination: any
 
         /**
-         * Update the pagination from the value of the table's options prop.
+         * Update the pagination from the value of the Vuetify's options prop.
          */
         updatePagination(value: any): void
         {
@@ -21,17 +21,14 @@
                 sort: ''
             }
 
-            let sortBy = ([...value.sortBy]);
-            if (sortBy.length) {
-                let sort = '';
-                let descending = [...value.sortDesc][0];
+            if (value.sortBy.length) {
+                let sort = value.sortBy[0];
 
-                if (descending) {
-                    sort = '-';
+                if (value.sortDesc.length && value.sortDesc[0]) {
+                    sort = '-' + sort;
                 }
 
-                sort += sortBy;
-                pagination['sort'] = sort;
+                pagination.sort = sort;
             }
 
             this.$emit('update:pagination', { ...this.pagination, ...pagination })
@@ -40,13 +37,14 @@
         /**
          * Get the Vue compatible pagination props from a pagination object.
          */
-        getVuePagination(pagination: any): any
+        getVuePaginationProps(pagination: any): any
         {
             if (! pagination) {
                 return undefined;
             }
 
             let vuePagination = {
+                serverItemsLength: pagination.total,
                 options: {
                     itemsPerPage: pagination.per_page,
                     page: pagination.page
@@ -63,8 +61,10 @@
                     sort = sort.slice(1, sort.length)
                 }
 
-                vuePagination['sortBy'] = sort;
-                vuePagination['sortDesc'] = descending;
+                vuePagination['sortBy'] = [sort];
+                vuePagination.options['sortBy'] = [sort];
+                vuePagination['sortDesc'] = [descending];
+                vuePagination.options['sortDesc'] = [descending];
             }
 
             return vuePagination;

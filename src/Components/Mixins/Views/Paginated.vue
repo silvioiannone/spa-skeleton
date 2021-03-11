@@ -44,17 +44,17 @@
             // (such as a key with an observer in the new pagination but no observer in the old one)
             // that have caused this function to trigger. We want to update the route only if the
             // pagination has actually changed.
-            if (_.isEqual(oldPagination, newPagination)) {
-                return;
-            }
-
-            this.$store.commit('app/INSERT', {
-                ui: {
-                    pagination: newPagination
-                }
-            });
-
             if (this.initialized) {
+                if (_.isEqual(oldPagination, newPagination)) {
+                    return;
+                }
+
+                this.$store.commit('app/INSERT', {
+                    ui: {
+                        pagination: newPagination
+                    }
+                });
+
                 setTimeout(() => this.updateRoute(newPagination));
             }
         }
@@ -123,7 +123,6 @@
             // Read the query parameters and apply them to the pagination in the state machine.
             let queryParameters = this.$route.query;
             let pagination = {
-                descending: false,
                 filters: [],
                 page: 1,
                 per_page: Config.app.paginationSize,

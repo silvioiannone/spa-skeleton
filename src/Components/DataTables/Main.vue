@@ -81,7 +81,7 @@
                         itemsPerPageOptions: this.itemsPerPageOptions
                     },
                     headers: this._headers,
-                    ...this.getVuePagination(this.pagination),
+                    ...this.getVuePaginationProps(this.pagination),
                 },
                 on: {
                     ...this.$listeners,
