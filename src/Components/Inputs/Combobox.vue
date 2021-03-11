@@ -43,7 +43,6 @@
             }
 
             this.$data._items = result;
-
             this.$data._loading = false;
         }
 
@@ -94,7 +93,11 @@
                     attrs: {
                         name: this.name
                     },
-                    props: this.$props,
+                    props: {
+                        items: this.$data._items,
+                        loading: this.$data._loading,
+                        ...this.$props,
+                    },
                     on: {
                         input: this.handleInput,
                         change: this.handleChange,
