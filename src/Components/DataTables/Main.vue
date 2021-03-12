@@ -82,6 +82,10 @@
                     },
                     headers: this._headers,
                     ...this.getVuePaginationProps(this.pagination),
+                    // Override the `serverItemsLength` prop returned from the
+                    // `getVuePaginationProps`.
+                    serverItemsLength: this.getVuePaginationProps(this.pagination).serverItemsLength
+                        || this.items.length,
                 },
                 on: {
                     ...this.$listeners,
