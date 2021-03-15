@@ -16,58 +16,33 @@
     {
         filters = {};
 
-        initialFilters = {};
-
         /**
-         * Whether the value is an empty array.
-         */
-        isEmptyArray(value: any): boolean
-        {
-            return Array.isArray(value) && value.length === 0;
-        }
-
-        /**
-         * Synch the filter with the store.
+         * Synch the filters with the ones in the store.
          */
         syncStore(): void
         {
-            // Insert the filters that have a value different from the initial one in the store.
-            let storeFilters = [];
-
-            for (let filter in this.filters) {
-                if (this.filters[filter] !== this.initialFilters[filter]) {
-                    storeFilters.push({
-                        filter,
-                        value: this.filters[filter]
-                    });
+            // Get the applied filters from the store and initialize the local ones.
+            this.$store.getters.app.ui.filters.forEach((filter: any): void => {
+                if (this.filters.hasOwnProperty(filter.name)) {
+                    if (Array.isArray(this.filters[filter.name])) {
+                        this.filters[filter.name] = filter.value.split(',');
+                    } else {
+                        this.filters[filter.name] = filter.value;
+                    }
                 }
-            }
-
-            this.$store.commit('app/SET', {
-                key: 'ui.pagination.filters',
-                value: storeFilters
             });
+        }
+
+        /**
+         * Update a boolean filter.
+         */
+        updateBooleanFilter(filter: string, value: boolean)
+        {
+            this.filters[filter] = value ? 'true' : 'false';
         }
 
         created(): void
         {
-            this.initialFilters = { ... this.filters };
-
-            // Get the query parameters and if there's a parameter with the same name as the filter
-            // then use it to initialize the filters.
-            for (let key in this.$route.query) {
-                if (this.filters.hasOwnProperty(key)) {
-                    let filterValue = (this.$route.query[key]);
-
-                    if (typeof filterValue === 'string') {
-                        filterValue = filterValue.split(',');
-                    }
-
-                    this.filters[key] = Array.isArray(this.filters[key]) ?
-                        filterValue : filterValue[0];
-                }
-            }
-
             this.syncStore();
         }
 
@@ -88,7 +63,7 @@
                 let queryValue = query[key];
 
                 // If a filter is in the query but not in the filters then we remove it.
-                if ((! filterValue || this.isEmptyArray(filterValue))) {
+                if ((filterValue === null || this.$utils.array.isEmpty(filterValue))) {
                     if (queryValue) {
                         delete query[key];
                     }
@@ -105,7 +80,6 @@
                 ...queryFilters
             };
 
-            this.syncStore();
             this.$navigator.push({ query });
         }
     }

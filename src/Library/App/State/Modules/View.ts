@@ -138,14 +138,29 @@ export class View extends Module
     /**
      * Get query filters.
      */
-    protected getQueryFilters(payload: any, filters: string[]): any
-    {
+    protected getQueryFilters(
+        store: any,
+        payload: any,
+        filters: string[] = [],
+        defaultFilters: any = {}
+    ): any {
         let parameters = {};
+        let appliedFilters: { name: string, value: any }[] = [];
 
         filters.forEach((filter: string): void => {
-            if (payload.route.query[filter]) {
+            if (payload.route.query.hasOwnProperty(filter)) {
                 parameters[`filter[${filter}]`] = payload.route.query[filter];
+                appliedFilters.push({ name: filter, value: payload.route.query[filter] })
+            } else if (defaultFilters[filter]) {
+                parameters[`filter[${filter}]`] = defaultFilters[filter];
+                appliedFilters.push({ name: filter, value: defaultFilters[filter] })
             }
+        });
+
+        // Set the parameter into the store
+        store.commit('app/SET', {
+            key: 'ui.filters',
+            value: appliedFilters
         });
 
         return parameters;

@@ -75,7 +75,7 @@ export class App extends Module
                     isFiltering: (): boolean => {
                         let filtersCount = 0;
 
-                        state.ui.pagination.filters.forEach((filter: any) => {
+                        state.ui.filters.forEach((filter: any) => {
                             let value = filter.value;
                             if (Array.isArray(value) || typeof value === 'string') {
                                 if (value.length) {
