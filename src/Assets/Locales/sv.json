@@ -1,5 +1,6 @@
 {
     "actions": {
+        "cancel": "Avbryt",
         "create": "Skapa",
         "delete": "Radera",
         "update": "Uppdatera",
