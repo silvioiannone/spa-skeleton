@@ -1,11 +1,13 @@
 <template>
-    <router-link :to="_to" tag="div" class="clickable">
-        <v-avatar v-if="userHasCustomAvatar"
-                  :size="size + 'px'">
-            <img :src="`storage/${user.settings.avatar.small}`"
-                 :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
-        </v-avatar>
-        <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size"/>
+    <router-link :to="_to" class="clickable" custom v-slot="{ navigate }">
+        <div @click="navigate">
+            <v-avatar v-if="userHasCustomAvatar"
+                      :size="size + 'px'">
+                <img :src="`storage/${user.settings.avatar.small}`"
+                     :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
+            </v-avatar>
+            <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size"/>
+        </div>
     </router-link>
 </template>
 
