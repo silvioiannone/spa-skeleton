@@ -13,6 +13,8 @@
     @Component
     export class ViewPaginated extends Vue
     {
+        leaving: boolean = false;
+
         initialized: boolean = false;
 
         get pagination(): any
@@ -64,6 +66,10 @@
          */
         async updateRoute(pagination: Pagination): Promise<void>
         {
+            if (this.leaving) {
+                return;
+            }
+
             let query = { ...this.$route.query };
 
             if (pagination.page) {
@@ -80,7 +86,7 @@
                 delete query['sort'];
             }
 
-            await this.$navigator.push({ path: this.$route.path, query });
+            await this.$navigator.push({ query });
 
             window.scrollTo(0, 0);
         }
@@ -144,6 +150,20 @@
             this.pagination = pagination;
 
             setTimeout(() => this.initialized = true);
+        }
+
+        beforeRouteLeave(to, from, next): void
+        {
+            this.leaving = true;
+
+            next();
+        }
+
+        beforeRouteUpdate(to, from, next): void
+        {
+            this.leaving = false;
+
+            next();
         }
 
         created(): void
