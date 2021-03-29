@@ -71,12 +71,6 @@ export class Plugins extends Service
 
             let settings = {};
 
-            if (key === 'Vuetify') {
-                settings = {
-                    theme: Config.ui.colors,
-                };
-            }
-
             if (Plugins.beforeActions[key]) {
                 Plugins.beforeActions[key].forEach((action: Function): void => {
                     let actionSettings = action();
@@ -115,6 +109,11 @@ export class Plugins extends Service
             lang: {
                 t: (key: string, ...params: any): string =>
                     translator.t(key, params) as string
+            },
+            theme: {
+                themes: {
+                    light: Config.ui.colors
+                }
             }
         });
     }
