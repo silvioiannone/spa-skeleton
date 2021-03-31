@@ -17,16 +17,6 @@ module.exports = {
     additionalModulesToExtract: [],
 
     /**
-     * Additional Sass files that will be compiled.
-     */
-    additionalSass: [
-        {
-            path: 'node_modules/spa-skeleton/src/Assets/Sass/Skeleton.sass',
-            file: 'Skeleton.css'
-        }
-    ],
-
-    /**
      * User defined Webpack config.
      */
     userWebpackConfig: {},
@@ -191,19 +181,13 @@ module.exports = {
     },
 
     /**
-     * Include an additional SASS file.
+     * Compile SASS file.
      *
      * @param {String} sourcePath
+     * @param {String} outputPath
      */
-    sass: function (sourcePath)
+    sass: function (sourcePath, outputPath)
     {
-        this.additionalSass.push({
-            // Location of the source file
-            path: sourcePath,
-            // Name of the output file
-            file: path.basename(sourcePath, path.extname(sourcePath)) + '.css'
-        });
-
-        return this;
+        mix.sass(sourcePath, outputPath);
     }
 };
