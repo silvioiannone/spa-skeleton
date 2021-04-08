@@ -120,15 +120,26 @@
         remove(item: any): void
         {
             let selected = this.value;
-            let match = selected.find(
-                (current: any) => current[this.itemValue] === item[this.itemValue]
-            );
+            let index = -1;
 
-            if (! match) {
+            if (this.returnObject) {
+                index = selected.indexOf(item);
+            } else {
+                let match = selected.find(
+                    (current: any) => current[this.itemValue] === item[this.itemValue]
+                );
+
+                if (! match) {
+                    return;
+                }
+
+                index = selected.indexOf(match);
+            }
+
+            if (index < 0) {
                 return;
             }
 
-            let index = selected.indexOf(match);
             selected.splice(index, 1);
             this.$emit('input', selected);
         }

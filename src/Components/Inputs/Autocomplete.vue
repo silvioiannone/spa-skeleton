@@ -109,20 +109,13 @@
          */
         render(createElement: CreateElement): VNode
         {
-            let scopedSlots: { [key: string]: ScopedSlot | undefined } = {};
+            let scopedSlots: { [key: string]: ScopedSlot | undefined } = { ...this.$scopedSlots };
 
-            // If there are scoped slots...
-            if (this.$vnode?.data?.scopedSlots) {
-                scopedSlots = this.$vnode.data.scopedSlots;
-
-                // We add a remove function to the scoped slots so that it can be accessed from
-                // within the selection scoped slot.
-                if (scopedSlots.selection) {
-                    scopedSlots.selection = (props: any) => {
-                        props.remove = this.remove;
-                        return (<any>(scopedSlots.selection))(props);
-                    }
-                }
+            if (scopedSlots.selection) {
+                scopedSlots.selection = (props) =>
+                    // Add a remove function to the scoped slots so that it can be accessed from
+                    // within the selection scoped slot.
+                    this.$scopedSlots.selection({ ...props, remove: this.remove });
             }
 
             let items = [...this.items, ...this.$data._items];
