@@ -119,28 +119,9 @@
          */
         remove(item: any): void
         {
-            let selected = this.value;
-            let index = -1;
+            let selected = [...this.value]
+                .filter((current: any) => current[this.itemValue] !== item[this.itemValue]);
 
-            if (this.returnObject) {
-                index = selected.indexOf(item);
-            } else {
-                let match = selected.find(
-                    (current: any) => current[this.itemValue] === item[this.itemValue]
-                );
-
-                if (! match) {
-                    return;
-                }
-
-                index = selected.indexOf(match);
-            }
-
-            if (index < 0) {
-                return;
-            }
-
-            selected.splice(index, 1);
             this.$emit('input', selected);
         }
 
