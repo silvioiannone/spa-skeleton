@@ -40,6 +40,11 @@
         @Prop({ type: Boolean, default: false }) hideNoData: boolean;
 
         /**
+         * Display text when there is no data.
+         */
+         @Prop({ type: String, default: '$vuetify.noDataText' }) noDataText: string;
+
+        /**
          * Displays linear progress bar.
          */
         @Prop({ type: Boolean, default: false }) loading: boolean;
