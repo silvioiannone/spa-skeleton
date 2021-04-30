@@ -15,6 +15,11 @@
     export class DataTableMain extends Mixins(BasePaginatable)
     {
         /**
+         * Function used to sort items.
+         */
+        @Prop() customSort;
+
+        /**
          * Disables pagination completely.
          */
         @Prop({ type: Boolean, default: false }) disablePagination: boolean;
@@ -75,18 +80,7 @@
         render(createElement: Function)
         {
             let component = {
-                props: {
-                    ...this.$props,
-                    footerProps: {
-                        itemsPerPageOptions: this.itemsPerPageOptions
-                    },
-                    headers: this._headers,
-                    ...this.getVuePaginationProps(this.pagination),
-                    // Override the `serverItemsLength` prop returned from the
-                    // `getVuePaginationProps`.
-                    serverItemsLength: this.getVuePaginationProps(this.pagination).serverItemsLength
-                        || this.items.length,
-                },
+                props: this.props,
                 on: {
                     ...this.$listeners,
                     'input': (value: any): this => this.$emit('input', value),
@@ -107,6 +101,27 @@
             return createElement('v-data-table', component);
         }
 
+        get props(): any
+        {
+            let props = {
+                ...this.$props,
+                footerProps: {
+                    itemsPerPageOptions: this.itemsPerPageOptions
+                },
+                headers: this._headers
+            };
+
+            if (! this.hasCustomSort) {
+                props = {
+                    ...props,
+                    ...this.getVuePaginationProps(this.pagination),
+                    serverItemsLength: this._serverItemLength
+                }
+            }
+
+            return props;
+        }
+
         get _headers(): any[]
         {
             return this.headers.map((header: any): any => {
@@ -116,6 +131,27 @@
 
                 return header;
             });
+        }
+
+        get _serverItemLength(): [] | undefined
+        {
+            return this.getVuePaginationProps(this.pagination).serverItemsLength
+                || this.items.length;
+        }
+
+        /**
+         * Whether a custom sort is defined.
+         */
+        hasCustomSort(): boolean {
+            if (this.customSort) {
+                return true;
+            }
+
+            if (this.headers.find((header: any) => header.sort)) {
+                return true;
+            }
+
+            return false;
         }
 
         /**
