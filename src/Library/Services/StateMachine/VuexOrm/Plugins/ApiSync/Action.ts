@@ -1,5 +1,5 @@
 import { ApiFactory, ApiClient } from 'spa-skeleton/src/Library/Api';
-import { Store, ActionObject, ActionContext } from 'vuex';
+import { Store, ActionObject }   from 'vuex';
 import Pluralize                 from 'pluralize';
 import { ApiResource }           from 'spa-skeleton/src/Library/Api/Resources/ApiResource';
 import { ResponseInterface }     from 'spa-skeleton/src/Library/Api/ResponseInterface';
@@ -12,19 +12,19 @@ export abstract class Action
     /**
      * Api client.
      */
-    protected static api: ApiClient;
+    protected api!: ApiClient;
 
     /**
      * Make the action.
      */
-    public static make(): ActionObject<any, any>
+    public static make<T extends Action>(this: new () => T): ActionObject<any, any>
     {
-        Action.boot();
+        let instance = new this();
+        instance.api = ApiFactory.make();
 
         return {
             root: false,
-            handler: (store: any, injectee: any, payload?: any): any =>
-                Action.execute(store, payload)
+            handler: (store: any, payload?: any): any => instance.execute(store, payload)
         }
     }
 
@@ -33,25 +33,12 @@ export abstract class Action
      *
      * Override this function.
      */
-    public static execute(store: Store<any>, params: any): Promise<any>
-    {
-        throw "Implement execute function.";
-    }
-
-    /**
-     * Boot the action.
-     */
-    protected static boot(): Action
-    {
-        Action.api = ApiFactory.make();
-
-        return Action;
-    }
+    protected abstract execute(store: Store<any>, params: any): Promise<any>;
 
     /**
      * Get the resource name.
      */
-    protected static getResourceName(store: Store<any>): string
+    protected getResourceName(store: Store<any>): string
     {
         return Pluralize(store.state.$name);
     }
@@ -59,21 +46,21 @@ export abstract class Action
     /**
      * Get the related resource.
      */
-    protected static getResource(store: Store<any>): ApiResource
+    protected getResource(store: Store<any>): ApiResource
     {
-        let name = Action.getResourceName(store);
+        let name = this.getResourceName(store);
 
-        Action.checkResourceName(name);
+        this.checkResourceName(name);
 
-        return Action.api[name];
+        return this.api[name];
     }
 
     /**
      * Check the existence of the given resource in the API client.
      */
-    protected static checkResourceName(name: string): void
+    protected checkResourceName(name: string): void
     {
-        if (! Action.api[name]) {
+        if (! this.api[name]) {
             throw `Resource "${name}" was not found in the API client.`;
         }
     }
@@ -81,7 +68,7 @@ export abstract class Action
     /**
      * Handle a successful response.
      */
-    protected static onSuccess(response: ResponseInterface, store: Store<any>, params: any): void
+    protected onSuccess(response: ResponseInterface, store: Store<any>, params: any): void
     {
         throw 'Define the `onSuccess` function in the extending class.'
     }
@@ -89,7 +76,7 @@ export abstract class Action
     /**
      * Handle an error response.
      */
-    protected static onError(response: ResponseInterface, store: Store<any>, params: any): void
+    protected onError(response: ResponseInterface, store: Store<any>, params: any): void
     {
         //throw 'Define the `onError` function in the extending class.'
     }

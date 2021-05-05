@@ -4,7 +4,6 @@ import { Action }            from '../Action';
 import { Store }             from 'vuex';
 import { StateMachine }      from '../../../../../StateMachine';
 
-
 /**
  * Create ($create) action.
  */
@@ -13,22 +12,22 @@ export class Create extends Action
     /**
      * Execute the action.
      */
-    public static async execute(
+    protected async execute(
         store: Store<any>,
         params: CreateParameters
     ): Promise<ResponseInterface>
     {
-        let resource = Create.getResource(store);
+        let resource = this.getResource(store);
         let response;
 
         try {
             response = await resource.create(params.data)
         } catch (error) {
-            Create.onError(error, store, params);
+            this.onError(error, store, params);
             throw error;
         }
 
-        Create.onSuccess(response, store, params);
+        this.onSuccess(response, store, params);
 
         return response;
     }
@@ -36,7 +35,7 @@ export class Create extends Action
     /**
      * Handle a successful response.
      */
-    public static onSuccess(
+    protected onSuccess(
         response: ResponseInterface,
         store: Store<any>,
         params: CreateParameters

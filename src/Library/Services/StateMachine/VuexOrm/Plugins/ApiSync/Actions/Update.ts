@@ -13,22 +13,22 @@ export class Update extends Action
     /**
      * Execute the action.
      */
-    public static async execute(
+    protected async execute(
         store: Store<any>,
         params: UpdateParameters
     ): Promise<ResponseInterface>
     {
-        let resource = Update.getResource(store);
+        let resource = this.getResource(store);
         let response;
 
         try {
             response = await resource.update(params.data);
         } catch (error) {
-            Update.onError(error, store, params);
+            this.onError(error, store, params);
             throw error;
         }
 
-        Update.onSuccess(response, store, params);
+        this.onSuccess(response, store, params);
 
         return response;
     }
@@ -36,7 +36,7 @@ export class Update extends Action
     /**
      * Handle a successful response.
      */
-    public static onSuccess(
+    protected onSuccess(
         response: ResponseInterface,
         store: Store<any>,
         params: UpdateParameters): void
@@ -56,13 +56,13 @@ export class Update extends Action
 
         params.model.insert(payload);
 
-        Update.deleteEmptyRelations(payload, params);
+        this.deleteEmptyRelations(payload, params);
     }
 
     /**
      * Delete the model relations which data in the payload is an empty array.
      */
-    protected static async deleteEmptyRelations(
+    protected async deleteEmptyRelations(
         payload: VuexOrmPayload,
         params: UpdateParameters
     ): Promise<void> {

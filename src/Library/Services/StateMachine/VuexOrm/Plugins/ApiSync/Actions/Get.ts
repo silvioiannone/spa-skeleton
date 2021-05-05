@@ -2,7 +2,7 @@ import { ExtendedModel }     from '../../../Support/ExtendedModel';
 import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
 import { Action }            from '../Action';
 import { Store }             from 'vuex';
-import _                     from 'lodash';
+import _ from 'lodash';
 
 /**
  * Get ($get) action.
@@ -12,31 +12,27 @@ export class Get extends Action
     /**
      * Execute the action.
      */
-    public static async execute(
+    protected async execute(
         store: Store<any>,
         params: ActionParameters
-    ): Promise<ResponseInterface>
-    {
-        let resource = Get.getResource(store);
+    ): Promise<ResponseInterface> {
+        let resource = this.getResource(store);
         let requestParameters = null;
         let response;
 
-        if (params.options && params.options.parameters) {
+        if (params?.options?.parameters) {
             requestParameters = params.options.parameters;
-        }
-
-        if (requestParameters) {
             resource.setParameters(requestParameters);
         }
 
         try {
             response = await resource.get(params.id);
         } catch (error) {
-            Get.onError(error, store, params);
+            this.onError(error, store, params);
             throw error;
         }
 
-        Get.onSuccess(response, store, params);
+        this.onSuccess(response, store, params);
 
         return response;
     }
@@ -44,7 +40,7 @@ export class Get extends Action
     /**
      * Handle a successful response.
      */
-    public static onSuccess(
+    protected onSuccess(
         response: ResponseInterface,
         store: Store<any>,
         params: ActionParameters
