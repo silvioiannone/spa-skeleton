@@ -92,5 +92,5 @@
   "scripts": {
     "build": "tsc"
   },
-  "version": "0.11.11"
+  "version": "0.12.0"
 }
