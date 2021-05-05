@@ -19,7 +19,7 @@ export class Create extends Action
     ): Promise<ResponseInterface>
     {
         let resource = Create.getResource(store);
-        let response = null;
+        let response;
 
         try {
             response = await resource.create(params.data)

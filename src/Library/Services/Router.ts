@@ -9,7 +9,7 @@ import { Service }           from './Service';
 import { Translator }        from './Translator';
 import Routes                from '../../../../../resources/ts/App/Routes';
 import { StateMachine }      from './StateMachine';
-import { Root as MixinRoot } from '../../Components/Mixins/Root.vue';
+import MixinRoot             from '../../Components/Mixins/Root.vue';
 import { Plugins }           from './Plugins';
 
 /**

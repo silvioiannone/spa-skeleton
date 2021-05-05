@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Input }                   from './Input.vue';
+    import Input from './Input.vue';
 
     /**
      * This mixin can be used in order to create text fields.

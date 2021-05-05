@@ -16,9 +16,9 @@ export class View extends Module
     /**
      * Get the module's actions.
      */
-    protected actions(): { [key: string]: ViewAction } | {}
+    protected actions(): { [key: string]: ViewAction }
     {
-        let actions = {};
+        let actions = {} as { [key: string]: ViewAction };
 
         // / route.
         actions['view/ROOT'] = (store: Store<any>): Promise<ResponseInterface|void> =>

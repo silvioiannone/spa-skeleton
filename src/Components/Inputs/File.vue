@@ -2,7 +2,7 @@
 
     import { VNode } from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { TextField } from '../Mixins/TextField.vue';
+    import TextField from '../Mixins/TextField.vue';
 
     @Component
     export class InputFile extends Mixins(TextField)

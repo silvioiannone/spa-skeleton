@@ -33,8 +33,8 @@
     import { Config }                    from '../../Config';
     import { Component, Mixins, Watch }  from 'vue-property-decorator';
     import CountryPhonePrefixes          from '../../Assets/Json/CountryPhonePrefixes.json';
-    import { Input }                     from '../Mixins/Input.vue';
-    import { Validatable }               from '../Mixins/Components/Validatable.vue';
+    import Input from '../Mixins/Input.vue';
+    import Validatable from '../Mixins/Components/Validatable.vue';
     import {
         CountryCallingCode, parseNumber, ParsedNumber
     } from 'libphonenumber-js';

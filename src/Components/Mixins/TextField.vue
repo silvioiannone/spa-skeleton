@@ -3,8 +3,8 @@
     import { VNode }                   from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { Config }                  from '../../Config';
-    import { Input }                   from './Input.vue';
-    import { MixinComponent }          from '../Mixins/Component.vue';
+    import Input from './Input.vue';
+    import MixinComponent from '../Mixins/Component.vue';
 
     /**
      * This mixin can be used in order to create text fields.

@@ -6,7 +6,7 @@
 
     import { Component, Prop, Vue } from 'vue-property-decorator';
     import { InputDescription } from '../../Library/Interfaces/InputDescription';
-    import { InputFile } from './File.vue';
+    import InputFile from './File.vue';
 
     @Component({
         components: {

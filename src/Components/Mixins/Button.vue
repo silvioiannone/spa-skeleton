@@ -2,7 +2,7 @@
 
     import { VNode }                   from 'vue';
     import { Component, Prop, Mixins } from 'vue-property-decorator';
-    import { MixinComponent }          from './Component.vue';
+    import MixinComponent from './Component.vue';
 
     /**
      * This mixin can be used in order to create buttons.

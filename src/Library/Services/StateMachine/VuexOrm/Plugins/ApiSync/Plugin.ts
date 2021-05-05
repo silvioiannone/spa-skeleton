@@ -28,15 +28,10 @@ export class Plugin
      */
     protected static setupActions(components: PluginComponents): void
     {
-        Get.boot();
-        Create.boot();
-        Update.boot();
-        Delete.boot();
-
-        components.Actions.$get = Get.execute.bind(Get);
-        components.Actions.$create = Create.execute.bind(Create);
-        components.Actions.$update = Update.execute.bind(Update);
-        components.Actions.$delete = Delete.execute.bind(Delete);
+        components.Actions.$get = Get.make();
+        components.Actions.$create = Create.make();
+        components.Actions.$update = Update.make();
+        components.Actions.$delete = Delete.make();
     }
 }
 

@@ -6,7 +6,7 @@
     import { Pagination as PaginationInterface } from '../../../Library/Interfaces/Pagination';
     import { ResponseInterface }                 from '../../../Library/Api/ResponseInterface';
     import { Pagination }                        from '../../../Library/Utils/Pagination';
-    import { RequestParametersWatcher }          from './RequestParametersWatcher.vue';
+    import RequestParametersWatcher from './RequestParametersWatcher.vue';
     import { ExtendedModel }                     from '../../../Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
     /**

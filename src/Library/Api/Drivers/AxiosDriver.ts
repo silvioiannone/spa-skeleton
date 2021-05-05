@@ -179,7 +179,8 @@ export class AxiosDriver extends AbstractApiDriver
             status: response.status,
             request: {
                 url: response.request.url
-            }
+            },
+            text: response.data
         }
     }
 }

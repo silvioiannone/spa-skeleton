@@ -2,19 +2,15 @@
 const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
-const { VuetifyLoaderPlugin } = require('vuetify-loader')
+const { VuetifyLoaderPlugin } = require('vuetify-loader');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 let config = {
-    context: __dirname,
-    profile: true,
     output: {
         // Output the JS chunks in the `js` folder.
         chunkFilename: 'js/[name].js',
     },
     resolve: {
-        alias: {
-            'spa-skeleton$': path.resolve(__dirname, 'index.ts')
-        },
         modules: [
             'node_modules'
         ]
@@ -25,7 +21,7 @@ let config = {
                 test: /\.tsx?$/,
                 loader: 'ts-loader',
                 options: {
-                    configFile: path.resolve(__dirname, 'tsconfig.json'),
+                    configFile: path.resolve(__dirname + '/../../', 'tsconfig.json'),
                     appendTsSuffixTo: [/\.vue$/],
                     // Use this option together with `ForkTsCheckerWebpackPlugin` to get full type
                     // checking.
@@ -53,7 +49,8 @@ let config = {
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
         }),
-        new VuetifyLoaderPlugin()
+        new VuetifyLoaderPlugin(),
+        new ForkTsCheckerWebpackPlugin()
     ],
     watchOptions: {
         // Ignore all the files in the `node_modules` folder except the ones in the `spa-skeleton`.

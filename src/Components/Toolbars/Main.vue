@@ -35,8 +35,8 @@
 
     import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
     import { Config }                      from '../../Config';
-    import { BreadcrumbsMain }             from '../Breadcrumbs/Main.vue';
-    import { TextFieldSearch }             from '../TextFields/Search.vue';
+    import BreadcrumbsMain from '../Breadcrumbs/Main.vue';
+    import TextFieldSearch from '../TextFields/Search.vue';
 
     @Component({
         components: {

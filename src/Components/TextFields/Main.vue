@@ -2,8 +2,8 @@
 
     import { VNode } from 'vue';
     import { Component, Mixins } from 'vue-property-decorator';
-    import { TextField } from '../Mixins/TextField.vue';
-    import { Validatable } from '../Mixins/Components/Validatable.vue';
+    import TextField from '../Mixins/TextField.vue';
+    import Validatable from '../Mixins/Components/Validatable.vue';
 
     @Component
     export class TextFieldMain extends Mixins(TextField, Validatable)

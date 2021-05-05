@@ -2,8 +2,8 @@
 
     import { VNode }                   from 'vue';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Button }                  from '../Mixins/Button.vue';
-    import { MixinComponent }          from '../Mixins/Component.vue';
+    import Button from '../Mixins/Button.vue';
+    import MixinComponent from '../Mixins/Component.vue';
 
     @Component
     export class ButtonMain extends Mixins(Button, MixinComponent)

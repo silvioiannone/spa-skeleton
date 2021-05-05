@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { TextFieldMain } from './Main.vue';
+    import TextFieldMain from './Main.vue';
 
     @Component
     export class TextFieldSwedishSsn extends Mixins(TextFieldMain)

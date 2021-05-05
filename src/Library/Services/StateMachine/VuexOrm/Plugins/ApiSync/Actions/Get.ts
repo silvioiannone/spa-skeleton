@@ -19,7 +19,7 @@ export class Get extends Action
     {
         let resource = Get.getResource(store);
         let requestParameters = null;
-        let response = null;
+        let response;
 
         if (params.options && params.options.parameters) {
             requestParameters = params.options.parameters;

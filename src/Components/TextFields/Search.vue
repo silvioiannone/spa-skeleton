@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { TextField }               from '../Mixins/TextField.vue';
+    import TextField from '../Mixins/TextField.vue';
 
     @Component
     export class TextFieldSearch extends Mixins(TextField)

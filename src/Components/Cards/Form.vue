@@ -17,7 +17,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { CardMain } from './Main.vue';
+    import CardMain from './Main.vue';
 
     @Component({
         components: {

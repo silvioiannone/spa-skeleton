@@ -1,5 +1,5 @@
 import { ApiFactory, ApiClient } from 'spa-skeleton/src/Library/Api';
-import { Store }                 from 'vuex';
+import { Store, ActionObject, ActionContext } from 'vuex';
 import Pluralize                 from 'pluralize';
 import { ApiResource }           from 'spa-skeleton/src/Library/Api/Resources/ApiResource';
 import { ResponseInterface }     from 'spa-skeleton/src/Library/Api/ResponseInterface';
@@ -15,13 +15,17 @@ export abstract class Action
     protected static api: ApiClient;
 
     /**
-     * Boot the action.
+     * Make the action.
      */
-    public static boot(): Action
+    public static make(): ActionObject<any, any>
     {
-        Action.api = ApiFactory.make();
+        Action.boot();
 
-        return Action;
+        return {
+            root: false,
+            handler: (store: any, injectee: any, payload?: any): any =>
+                Action.execute(store, payload)
+        }
     }
 
     /**
@@ -31,9 +35,17 @@ export abstract class Action
      */
     public static execute(store: Store<any>, params: any): Promise<any>
     {
-        return new Promise((): void => {
-            throw 'Define the default action in the extending class.'
-        });
+        throw "Implement execute function.";
+    }
+
+    /**
+     * Boot the action.
+     */
+    protected static boot(): Action
+    {
+        Action.api = ApiFactory.make();
+
+        return Action;
     }
 
     /**

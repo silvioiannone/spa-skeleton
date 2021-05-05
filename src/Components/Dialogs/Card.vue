@@ -15,7 +15,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { DialogMain } from './Main.vue';
+    import DialogMain from './Main.vue';
 
     @Component({
         components: {

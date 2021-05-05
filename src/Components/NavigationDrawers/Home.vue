@@ -39,8 +39,8 @@
 <script lang="ts">
 
     import { Component, Prop, Vue } from 'vue-property-decorator';
-    import { AvatarUser }           from '../Avatars/User.vue';
-    import { NavigationDrawerMain } from './Main.vue';
+    import AvatarUser from '../Avatars/User.vue';
+    import NavigationDrawerMain from './Main.vue';
 
     @Component({
         components: {

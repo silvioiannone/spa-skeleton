@@ -8,7 +8,7 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import { DialogCard } from '../../../Dialogs/Card.vue';
+    import DialogCard from '../../../Dialogs/Card.vue';
 
     @Component({
         components: {

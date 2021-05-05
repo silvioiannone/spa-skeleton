@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import { TextField }                      from './TextField.vue';
+    import TextField from './TextField.vue';
 
     @Component
     export class Combobox extends Mixins(TextField)

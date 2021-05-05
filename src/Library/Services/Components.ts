@@ -7,16 +7,16 @@ import '../ComponentHooks';
 import AppComponents from '../../../../../resources/ts/App/Components';
 
 // Skeleton components
-import { AnimatedRouterView }  from '../../Components/Misc/AnimatedRouterView.vue';
-import { AppBarMain }          from '../../Components/AppBars/Main.vue';
-import { ButtonMain }          from '../../Components/Buttons/Main.vue';
-import { ButtonSubmit }        from '../../Components/Buttons/Submit.vue';
-import { FormMain }            from '../../Components/Forms/Main.vue';
-import { TextareaMain }        from '../../Components/Textareas/Main.vue';
-import { TextFieldMain }       from '../../Components/TextFields/Main.vue';
-import { TimeFromNow }         from '../../Components/Partials/TimeFromNow.vue';
-import { ResponsiveContainer } from '../../Components/Misc/Grid/ResponsiveContainer.vue';
-import { ToolbarMain }         from '../../Components/Toolbars/Main.vue';
+import AnimatedRouterView from '../../Components/Misc/AnimatedRouterView.vue';
+import AppBarMain from '../../Components/AppBars/Main.vue';
+import ButtonMain from '../../Components/Buttons/Main.vue';
+import ButtonSubmit from '../../Components/Buttons/Submit.vue';
+import FormMain from '../../Components/Forms/Main.vue';
+import TextareaMain from '../../Components/Textareas/Main.vue';
+import TextFieldMain from '../../Components/TextFields/Main.vue';
+import TimeFromNow from '../../Components/Partials/TimeFromNow.vue';
+import ResponsiveContainer from '../../Components/Misc/Grid/ResponsiveContainer.vue';
+import ToolbarMain from '../../Components/Toolbars/Main.vue';
 
 const SkeletonComponents = {
     AnimatedRouterView,

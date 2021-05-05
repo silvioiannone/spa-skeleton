@@ -20,7 +20,7 @@
 
     import { Config } from '../../Config';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Autocomplete } from '../Mixins/Autocomplete.vue';
+    import Autocomplete from '../Mixins/Autocomplete.vue';
     import Countries from '../../Assets/Json/CountryPhonePrefixes.json';
 
     @Component

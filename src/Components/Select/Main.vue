@@ -2,8 +2,8 @@
 
     import { VNode, CreateElement } from 'vue';
     import { Component, Mixins }    from 'vue-property-decorator';
-    import { Select }               from '../Mixins/Select.vue';
-    import { Validatable }          from '../Mixins/Components/Validatable.vue';
+    import Select from '../Mixins/Select.vue';
+    import Validatable from '../Mixins/Components/Validatable.vue';
 
     @Component
     export class SelectMain extends Mixins(Select, Validatable)

@@ -1,8 +1,11 @@
 {
+    "compileOnSave": false,
     "compilerOptions": {
-        "target": "ES2017",
+        "baseUrl": "../..",
         "module": "ESNext",
         "moduleResolution": "Node",
+        "strict": true,
+        "target": "ES6",
         "lib": [
             "ESNext",
             "ESNext.AsyncIterable",
@@ -12,16 +15,12 @@
         "noEmit": true,
         "experimentalDecorators": true,
         "resolveJsonModule": true,
+        "noImplicitAny": false,
     },
-    "files": [
-        "resources/ts/App.ts"
-    ],
     "include": [
-        "resources/ts/**/*",
-        "resources/ts/**/*.vue",
-        "node_modules/spa-skeleton/src/**/*",
-        "node_modules/spa-skeleton/src/**/*.vue",
-        "node_modules/spa-skeleton/types/**/*",
-    ],
-    "compileOnSave": false
+        "../../resources/ts/**/*",
+        "../../resources/ts/**/*.vue",
+        "src/**/*",
+        "src/**/*.vue"
+    ]
 }

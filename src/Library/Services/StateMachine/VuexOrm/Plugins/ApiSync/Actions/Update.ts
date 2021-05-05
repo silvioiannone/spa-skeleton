@@ -19,7 +19,7 @@ export class Update extends Action
     ): Promise<ResponseInterface>
     {
         let resource = Update.getResource(store);
-        let response = null;
+        let response;
 
         try {
             response = await resource.update(params.data);

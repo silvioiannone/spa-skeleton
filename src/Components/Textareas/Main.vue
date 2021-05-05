@@ -10,8 +10,8 @@
 
     import { Config } from '../../Config';
     import { Component, Mixins } from 'vue-property-decorator';
-    import { Textarea } from '../Mixins/Textarea.vue';
-    import { Validatable } from '../Mixins/Components/Validatable.vue';
+    import Textarea from '../Mixins/Textarea.vue';
+    import Validatable from '../Mixins/Components/Validatable.vue';
 
     @Component
     export class TextareaMain extends Mixins(Textarea, Validatable)

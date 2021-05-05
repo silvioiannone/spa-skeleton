@@ -2,7 +2,7 @@
 
     import { Config }                         from '../../Config';
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import { Input }                          from './Input.vue';
+    import Input from './Input.vue';
 
     /**
      * This mixin can be used in order to bootstrap the creation of a select box.

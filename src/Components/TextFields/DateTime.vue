@@ -24,7 +24,7 @@
 
     import DayJS from 'dayjs';
     import { Component, Mixins, Watch } from 'vue-property-decorator';
-    import { TextFieldMain }  from './Main.vue';
+    import TextFieldMain from './Main.vue';
 
     @Component
     export class TextFieldDateTime extends Mixins(TextFieldMain)

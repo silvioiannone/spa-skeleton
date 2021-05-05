@@ -5,9 +5,7 @@ import Vue                              from 'vue';
 import { Config }                       from '../Config';
 import Subscriptions                    from '../../../../resources/ts/App/Subscriptions';
 import { ApiFactory }                   from './Api';
-import { Admin as AdminChannel }        from './WebSocket/Channels/Admin';
 import { App as AppChannel }            from './WebSocket/Channels/App';
-import { User as UserChannel }          from './WebSocket/Channels/User';
 import { AppHandler }                   from './Events/AppHandler';
 import { ModelHandler }                 from './Events/ModelHandler';
 import { Token }                        from './Api/Token';
@@ -64,7 +62,7 @@ export class WebSocket
     /**
      * Vue.
      */
-    protected vue: Vue;
+    protected vue!: Vue;
 
     /**
      * Whether the connection with the WS server is established.
@@ -242,7 +240,7 @@ export class WebSocket
     {
         let subscription = this.activeSubscriptions
             .find((subscription): boolean => subscription.event === event);
-        let handlers = [];
+        let handlers: ModelHandler[] = [];
 
         if (! subscription) {
             throw new Error('Event ' + event + ' cannot be handled.');

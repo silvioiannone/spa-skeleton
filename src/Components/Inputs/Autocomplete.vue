@@ -4,8 +4,8 @@
     import { ScopedSlot }              from 'vue/types/vnode';
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { Config }                  from '../../Config';
-    import { Autocomplete }            from '../Mixins/Autocomplete.vue';
-    import { Validatable }             from '../Mixins/Components/Validatable.vue';
+    import Autocomplete from '../Mixins/Autocomplete.vue';
+    import Validatable from '../Mixins/Components/Validatable.vue';
 
     @Component
     export class InputAutocomplete extends Mixins(Autocomplete, Validatable)

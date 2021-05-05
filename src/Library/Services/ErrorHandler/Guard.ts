@@ -9,7 +9,7 @@ export class Guard extends Handler
     /**
      * The error.
      */
-    protected error: ResponseInterface;
+    protected error!: ResponseInterface;
 
     /**
      * Errors mapped to the app status.

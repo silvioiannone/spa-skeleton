@@ -8,7 +8,7 @@
 
 <script lang="ts">
 
-    import { Button }            from '../Mixins/Button.vue';
+    import Button from '../Mixins/Button.vue';
     import { Component, Mixins } from 'vue-property-decorator';
 
     @Component

@@ -33,7 +33,7 @@
 <script lang="ts">
 
     import { Component, Mixins } from 'vue-property-decorator';
-    import { Form }              from '../Mixins/Form.vue';
+    import Form from '../Mixins/Form.vue';
 
     @Component
     export class FormMain extends Mixins(Form)

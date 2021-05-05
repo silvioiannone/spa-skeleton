@@ -12,17 +12,17 @@ export class Navigator
     /**
      * Vue router.
      */
-    protected router: Router;
+    protected router!: Router;
 
     /**
      * Current route.
      */
-    protected route: Route;
+    protected route!: Route;
 
     /**
      * Previous route.
      */
-    protected fromRoute: Route;
+    protected fromRoute!: Route;
 
     /**
      * Set the vue instance.
@@ -95,7 +95,7 @@ export class Navigator
      */
     public async push(location: RawLocation): Promise<Route|void>
     {
-        let result = null;
+        let result;
 
         try {
             result = await this.router.push(location);
@@ -145,7 +145,7 @@ export class Navigator
     /**
      * Navigate back if possible or, if not, to a parent route.
      */
-    public async backOrToParent(levels: number = 1)
+    public async backOrToParent(levels: number = 1): Promise<void>
     {
         return this.backOr(() => this.toParent(levels));
     }

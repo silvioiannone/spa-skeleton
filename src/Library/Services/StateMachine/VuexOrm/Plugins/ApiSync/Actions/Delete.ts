@@ -1,9 +1,8 @@
-import { StateMachine }      from '../../../../../StateMachine';
-import { ExtendedModel }     from '../../../Support/ExtendedModel';
-import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
-import { Action }            from '../Action';
-import { Store }             from 'vuex';
-
+import { StateMachine }        from '../../../../../StateMachine';
+import { ExtendedModel }       from '../../../Support/ExtendedModel';
+import { ResponseInterface }   from '../../../../../../Api/ResponseInterface';
+import { Action }              from '../Action';
+import { Store, ActionObject } from 'vuex';
 
 /**
  * Delete ($delete) action.
@@ -13,13 +12,10 @@ export class Delete extends Action
     /**
      * Execute the action.
      */
-    public static async execute(
-        store: Store<any>,
-        params: DeleteParameters
-    ): Promise<ResponseInterface>
+    public static async execute(store: Store<any>, params: DeleteParameters): Promise<any>
     {
         let resource = Delete.getResource(store);
-        let response = null;
+        let response;
 
         try {
             response = await resource.delete(params.data)

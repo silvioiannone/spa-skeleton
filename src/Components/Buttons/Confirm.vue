@@ -27,7 +27,7 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Button }                  from '../Mixins/Button.vue';
+    import Button from '../Mixins/Button.vue';
 
     @Component
     export class ButtonConfirm extends Mixins(Button)

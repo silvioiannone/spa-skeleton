@@ -38,13 +38,13 @@
 <script lang="ts">
 
     import { Vue, Component }          from 'vue-property-decorator';
-    import { SnackbarGlobal }          from '../Snackbars/Global.vue';
-    import { ErrorNotFound }           from '../Views/Errors/NotFound.vue';
-    import { ErrorServerError }        from '../Views/Errors/ServerError.vue';
-    import { ErrorServiceUnavailable } from '../Views/Errors/ServiceUnavailable.vue';
-    import { ErrorUnauthorized }       from '../Views/Errors/Unauthorized.vue';
-    import { ErrorTooManyAttempts }    from '../Views/Errors/TooManyAttempts.vue';
-    import { FooterAppUpdate }         from '../Footers/AppUpdate.vue';
+    import SnackbarGlobal from '../Snackbars/Global.vue';
+    import ErrorNotFound from '../Views/Errors/NotFound.vue';
+    import ErrorServerError from '../Views/Errors/ServerError.vue';
+    import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
+    import ErrorUnauthorized from '../Views/Errors/Unauthorized.vue';
+    import ErrorTooManyAttempts from '../Views/Errors/TooManyAttempts.vue';
+    import FooterAppUpdate from '../Footers/AppUpdate.vue';
 
     @Component({
         components: {

@@ -30,17 +30,17 @@ export class Guard
     /**
      * Router.
      */
-    protected router: Router;
+    protected router!: Router;
 
     /**
      * Router routes.
      */
-    protected routes: RouteConfig[];
+    protected routes!: RouteConfig[];
 
     /**
      * State machine store.
      */
-    protected store: Store<any>;
+    protected store!: Store<any>;
 
     /**
      * Completed hooks.

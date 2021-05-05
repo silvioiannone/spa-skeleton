@@ -9,7 +9,7 @@
 
     import { Component, Mixins, Prop } from 'vue-property-decorator';
     import { Config }                  from '../../Config';
-    import { BasePaginatable }         from '../Mixins/Pagination.vue';
+    import BasePaginatable from '../Mixins/Pagination.vue';
 
     @Component
     export class DataTableMain extends Mixins(BasePaginatable)

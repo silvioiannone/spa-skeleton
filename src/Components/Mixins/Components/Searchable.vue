@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { Component, Watch, Mixins } from 'vue-property-decorator';
-    import { RequestParametersWatcher } from './RequestParametersWatcher.vue';
+    import RequestParametersWatcher from './RequestParametersWatcher.vue';
 
     /**
      * This mixin handles searches performed by a component that can search for data.

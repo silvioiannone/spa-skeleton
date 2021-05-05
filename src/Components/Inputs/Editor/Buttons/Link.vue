@@ -9,10 +9,10 @@
 <script lang="ts">
 
     import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import { ButtonToolbar }                  from '../Buttons/Toolbar.vue';
-    import { EditorDialogAddLink }            from '../Dialogs/AddLink.vue';
-    import { EditorCommand }                  from '../Mixins/EditorCommand.vue';
-    import { ToolbarGroup }                   from '../Mixins/ToolbarGroup.vue';
+    import ButtonToolbar from '../Buttons/Toolbar.vue';
+    import EditorDialogAddLink from '../Dialogs/AddLink.vue';
+    import EditorCommand from '../Mixins/EditorCommand.vue';
+    import ToolbarGroup from '../Mixins/ToolbarGroup.vue';
 
     @Component({
         components: {

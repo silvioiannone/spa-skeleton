@@ -18,12 +18,12 @@ export abstract class AbstractApiDriver
     /**
      * Resource name.
      */
-    protected resourceName: string;
+    protected resourceName!: string;
 
     /**
      * Socket ID for the WS connection.
      */
-    protected socketId: string;
+    protected socketId!: string;
 
     /**
      * Authentication token.

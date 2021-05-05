@@ -60,28 +60,14 @@ module.exports = {
             },
             runtimeChunkPath: 'js',
             // Extract .vue component styling to file, rather than inline.
-            extractVueStyles: true
+            extractStyles: true
         });
 
-        // Load the Configuration from SPA-Skeleton
-        mix.webpackConfig(webpackConfig);
-        mix.webpackConfig(this.userWebpackConfig);
+        mix.override(config => {
+            // We need to remove the first `ts-loader` defined by Laravel Mix since we'll inject our
+            // own in `webpack.config.js`.
+            config.module.rules = config.module.rules.filter(rule => rule.loader !== 'ts-loader');
 
-        // We need to remove the first `ts-loader` defined by Laravel mix since we'll inject our
-        // own in `webpack.config.js`.
-        mix.override((config) => {
-            let index = 0;
-
-            while (config.module.rules[index].loader !== 'ts-loader') {
-                index++;
-            }
-
-            config.module.rules.splice(index, 1);
-        });
-
-        // We need to add some additional SASS options in order to allow our variables to override
-        // the ones declared by Vuetify.
-        mix.override((config) => {
             // For SASS
             let sassRule = config.module.rules.find(
                 (rule) => rule.test.toString() === /\.sass$/.toString()
@@ -102,6 +88,10 @@ module.exports = {
             scssLoader.options.additionalData = '@import "resources/sass/app.sass";';
             sassLoader.options.sassOptions.indentedSyntax = true;
         });
+
+        // Load the Configuration from SPA-Skeleton
+        mix.webpackConfig(webpackConfig);
+        mix.webpackConfig(this.userWebpackConfig);
 
         // Register plugins.
         mix.extend('buildLocales', new BuildLocales);
