@@ -301,10 +301,14 @@ export class App extends Module
                 },
 
                 /**
+                 * Applied filters.
+                 */
+                filters: [],
+
+                /**
                  * Stores the pagination object for views displaying paginated data.
                  */
                 pagination: {
-                    filters: [],
                     page: 1,
                     per_page: Config.app.paginationSize,
                     sort: ''
