@@ -60,10 +60,13 @@ let config = {
 
 // Additional configuration if hot reloading over HTTPS.
 if (process.env.APP_URL.startsWith('https') && process.argv.includes('--hot')) {
+    const public = 'https://' + process.env.APP_DOMAIN + ':8080/';
+
     config.output = {
-        publicPath: 'https://' + process.env.APP_DOMAIN + ':8080/',
+        publicPath: public
     };
     config.devServer = {
+        public,
         https: {
             key: fs.readFileSync(process.env.APP_SSL_KEY),
             cert: fs.readFileSync(process.env.APP_SSL_CERT)
