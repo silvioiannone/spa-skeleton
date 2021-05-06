@@ -101,10 +101,6 @@ module.exports = {
         mix.webpackConfig(webpackConfig);
         mix.webpackConfig(this.userWebpackConfig);
 
-        mix.override(config => {
-            console.log(config.devServer);
-        });
-
         // Register plugins.
         mix.extend('buildLocales', new BuildLocales);
     },
