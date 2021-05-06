@@ -48,9 +48,9 @@ export { PushNotification } from 'spa-skeleton/src/Library/Notifications/PushNot
 /**
  * Mixins
  */
-import * as ComponentFilterable from './src/Components/Mixins/Components/Filterable.vue';
-import * as ComponentPaginatable from './src/Components/Mixins/Components/Paginatable.vue';
-import * as ComponentSearchable from './src/Components/Mixins/Components/Searchable.vue';
+import ComponentFilterable from './src/Components/Mixins/Components/Filterable.vue';
+import ComponentPaginatable from './src/Components/Mixins/Components/Paginatable.vue';
+import ComponentSearchable from './src/Components/Mixins/Components/Searchable.vue';
 import Headful from './src/Components/Mixins/Components/Headful.vue';
 import Input from './src/Components/Mixins/Input.vue';
 import TextField from './src/Components/Mixins/TextField.vue';
