@@ -137,7 +137,10 @@
         fire(selected: any): void
         {
             if (selected === null) {
-                this.$emit('input', {});
+                this.returnObject ?
+                    this.$emit('input', {}) :
+                    this.$emit('input', null);
+
                 return;
             }
 

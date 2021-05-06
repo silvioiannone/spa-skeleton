@@ -42,7 +42,7 @@
                         },
                         on: {
                             ...this.$listeners,
-                            input: (value: any) => this.fire(value),
+                            input: (value: any) => this.fire(value)
                         },
                         scopedSlots
                     })
