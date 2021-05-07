@@ -111,7 +111,7 @@
                 headers: this._headers
             };
 
-            if (! this.hasCustomSort) {
+            if (! this.hasCustomSort()) {
                 props = {
                     ...props,
                     ...this.getVuePaginationProps(this.pagination),
@@ -142,7 +142,8 @@
         /**
          * Whether a custom sort is defined.
          */
-        hasCustomSort(): boolean {
+        hasCustomSort(): boolean
+        {
             if (this.customSort) {
                 return true;
             }
