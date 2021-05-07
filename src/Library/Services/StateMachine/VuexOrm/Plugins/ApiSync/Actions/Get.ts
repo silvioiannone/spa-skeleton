@@ -2,6 +2,7 @@ import { ExtendedModel }     from '../../../Support/ExtendedModel';
 import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
 import { Action }            from '../Action';
 import { Store }             from 'vuex';
+import { Pagination }        from '../../../../../../Utils/Pagination';
 import _ from 'lodash';
 
 /**
@@ -64,11 +65,13 @@ export class Get extends Action
 
         params.model[method](payload);
 
-        store.commit('app/INSERT', {
-            ui: {
-                pagination: response.body.meta
-            }
-        }, { root: true });
+        if (response.body.meta) {
+            store.commit('app/INSERT', {
+                ui: {
+                    pagination: Pagination.makeFromResponse(response)
+                }
+            }, { root: true });
+        }
     }
 }
 
