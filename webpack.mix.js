@@ -87,14 +87,6 @@ module.exports = {
 
             scssLoader.options.additionalData = '@import "resources/sass/app.sass";';
             sassLoader.options.sassOptions.indentedSyntax = true;
-
-            // Apply a workaround caused by Laravel Mix using the `webpack-dev-server@v4.0.0-beta`:
-            // https://github.com/webpack/webpack-dev-server/releases/tag/v4.0.0-beta.3.
-            // Basically the `dev` property has been deprecated in favor of `middleware`.
-            if (config.devServer) {
-                config.devServer.devMiddleware = config.devServer.dev;
-                delete config.devServer.dev;
-            }
         });
 
         // Load the Configuration from SPA-Skeleton
