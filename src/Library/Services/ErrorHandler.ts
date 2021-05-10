@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { Service }               from './Service';
 import { Config }                from '../../Config';
 import { Guard as GuardHandler } from './ErrorHandler/Guard';
@@ -20,15 +21,28 @@ export class ErrorHandler extends Service
      */
     public static boot(): void
     {
-        if (Config.env === 'production') {
-            Bugsnag.start({
-                apiKey: Config.app.services.errorHandler.key,
-                plugins: [new BugsnagPluginVue()]
-            });
-        }
-
         Guard.afterError((response): void => {
             (new GuardHandler(response)).handle();
         });
+
+        this.registerReporter();
+    }
+
+    /**
+     * Register the error reporer.
+     */
+    public static registerReporter(): void
+    {
+        if (! Config.app.services.errorHandler.key) {
+            return;
+        }
+
+        const bugsnag = Bugsnag.start({
+            apiKey: Config.app.services.errorHandler.key,
+            plugins: [new BugsnagPluginVue()]
+        });
+
+        bugsnag.getPlugin('vue')
+            ?.installVueErrorHandler(Vue);
     }
 }

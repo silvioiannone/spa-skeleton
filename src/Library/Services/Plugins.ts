@@ -1,3 +1,4 @@
+import BugsnagPluginVue from '@bugsnag/plugin-vue';
 import _                     from 'lodash';
 import Vue                   from 'vue';
 import { Service }           from './Service';
@@ -82,10 +83,6 @@ export class Plugins extends Service
             Vue.use(availablePlugins[key], settings);
 
             Logger.debug(`Plugin "${key}" registered.'`);
-        }
-
-        if (Config.env === 'production') {
-            Bugsnag.getPlugin('vue')?.installVueErrorHandler(Vue);
         }
     }
 

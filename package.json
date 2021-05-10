@@ -72,6 +72,8 @@
   "deprecated": false,
   "description": "A VueJS based SPA skeleton",
   "devDependencies": {
+    "@bugsnag/js": "^7.9.2",
+    "@bugsnag/plugin-vue": "^7.9.2",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^7.17.0",
