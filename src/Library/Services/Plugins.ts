@@ -22,6 +22,7 @@ import { Ui }                     from '../App/Plugins/Ui';
 import { Utils }                  from '../App/Plugins/Utils';
 import { User }                   from '../App/Plugins/User';
 import { WebSocket }              from '../App/Plugins/WebSocket';
+import Bugsnag                    from '@bugsnag/js';
 
 /**
  * SPA-Skeleton plugins. The order is important.
@@ -81,6 +82,10 @@ export class Plugins extends Service
             Vue.use(availablePlugins[key], settings);
 
             Logger.debug(`Plugin "${key}" registered.'`);
+        }
+
+        if (Config.env === 'production') {
+            Bugsnag.getPlugin('vue')?.installVueErrorHandler(Vue);
         }
     }
 

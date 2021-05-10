@@ -39,6 +39,7 @@ let config = {
             APP_NAME: JSON.stringify(process.env.APP_NAME),
             APP_DOMAIN: JSON.stringify(process.env.APP_DOMAIN),
             APP_URL: JSON.stringify(process.env.APP_URL),
+            BUGSNAG_API_KEY: JSON.stringify(process.env.BUGSNAG_API_KEY),
             MAIL_SUPPORT_ADDRESS: JSON.stringify(process.env.MAIL_SUPPORT_ADDRESS),
             PAGINATION_DEFAULT_SIZE: JSON.stringify(process.env.PAGINATION_DEFAULT_SIZE),
             SENTRY_DSN_JS: JSON.stringify(process.env.SENTRY_DSN_JS),

@@ -55,6 +55,17 @@ const defaultConfig = {
         services: {
 
             /**
+             * Error handler settings.
+             */
+            errorHandler: {
+
+                /**
+                 * Reporter API key (Bugsnag).
+                 */
+                key: BUGSNAG_API_KEY
+            },
+
+            /**
              * Router settings.
              *
              * These settings change the way the router (in this case vue-router) behaves.
@@ -176,17 +187,6 @@ const defaultConfig = {
          * WebSocket server auth key.
          */
         key: WEBSOCKET_SERVER_KEY
-    },
-
-    /**
-     * Sentry error reporting tool.
-     */
-    sentry: {
-
-        /**
-         * Sentry DSN.
-         */
-        dsn: SENTRY_DSN_JS
     },
 
     /**
