@@ -4,6 +4,8 @@
   },
   "bundleDependencies": [],
   "dependencies": {
+    "@bugsnag/js": "^7.9.2",
+    "@bugsnag/plugin-vue": "^7.9.2",
     "@mdi/font": "^5.9.55",
     "@types/chrome": "^0.0.135",
     "@types/chromecast-caf-sender": "^1.0.3",
@@ -72,8 +74,6 @@
   "deprecated": false,
   "description": "A VueJS based SPA skeleton",
   "devDependencies": {
-    "@bugsnag/js": "^7.9.2",
-    "@bugsnag/plugin-vue": "^7.9.2",
     "@typescript-eslint/eslint-plugin": "^4.13.0",
     "@typescript-eslint/parser": "^4.13.0",
     "eslint": "^7.17.0",
