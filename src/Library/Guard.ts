@@ -99,16 +99,16 @@ export class Guard
         Log.debug('Loading ' + to.path + '...');
 
         try {
-            await this.runRouteGuards(to, to);
+            await this.runRouteActions(to, to, true);
         } catch (error) {
-            this.store.commit('app/SET_STATUS', 'unauthorized');
+            this.handleRouteLoadError(error, to);
             throw error;
         }
 
         try {
-            await this.runRouteActions(to, to, true);
+            await this.runRouteGuards(to, to);
         } catch (error) {
-            this.handleRouteLoadError(error, to);
+            this.store.commit('app/SET_STATUS', 'unauthorized');
             throw error;
         }
 
@@ -125,20 +125,20 @@ export class Guard
 
         this.store.commit('app/SET_STATUS', 'loading');
 
-        // Check if the user is allowed to make the request.
-        try {
-            await this.runRouteGuards(to, from);
-        } catch (error) {
-            this.store.commit('app/SET_STATUS', 'unauthorized');
-            next();
-            return;
-        }
-
         // Fetch all the needed data for the current view.
         try {
             await this.runRouteActions(to, from);
         } catch (error) {
             this.handleRouteLoadError(error, to);
+            next();
+            return;
+        }
+
+        // Check if the user is allowed to make the request.
+        try {
+            await this.runRouteGuards(to, from);
+        } catch (error) {
+            this.store.commit('app/SET_STATUS', 'unauthorized');
             next();
             return;
         }
