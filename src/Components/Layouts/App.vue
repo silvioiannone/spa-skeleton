@@ -28,7 +28,8 @@
             <error-too-many-attempts v-if="status === 'tooManyAttempts'"/>
         </v-main>
         <slot name="bottomNavigation">
-            <animated-router-view name="bottomNavigation"/>
+            <animated-router-view v-if="status === 'ready' || status === 'loading'"
+                                  name="bottomNavigation"/>
         </slot>
         <footer-app-update v-if="app.updateAvailable"/>
         <snackbar-global/>
