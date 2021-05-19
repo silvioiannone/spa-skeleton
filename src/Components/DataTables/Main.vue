@@ -84,6 +84,7 @@
                 on: {
                     ...this.$listeners,
                     'input': (value: any): this => this.$emit('input', value),
+                    'click:row': (value: any): this => this.$emit('click', value),
                     'update:options': (value: any): void => this.updatePagination(value)
                 },
                 scopedSlots: {}
