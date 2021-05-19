@@ -22,32 +22,32 @@ export class Auth extends AbstractGuard
     {
         let api = ApiFactory.make();
 
-        return new Promise((resolve: Function, reject: Function): void =>
-        {
+        return new Promise(async (resolve: Function, reject: Function): Promise<void> => {
+            if (! this.store.getters.app?.user?.id) {
+                reject('The user is not logged in.');
+                return;
+            }
+
             // Avoid requesting a token if there's already a request pending
-            if(sessionStorage.getItem('fetchingToken'))
-            {
+            if(sessionStorage.getItem('fetchingToken')) {
                 resolve();
                 return;
             }
 
-            if(Token.isExpired())
-            {
-                api.users.refreshToken()
-                    .then((response: any): void =>
-                    {
-                        Token.save(response.body.access_token);
-                        sessionStorage.removeItem('fetchingToken');
-                        resolve();
-                    })
-                    .catch((response: any): void =>
-                    {
-                        Token.remove();
-                        sessionStorage.removeItem('fetchingToken');
-                        reject(response);
-                    });
+            if(Token.isExpired()) {
+                let response;
 
-                return;
+                try {
+                    response = await api.users.refreshToken()
+                } catch (error) {
+                    Token.remove();
+                    sessionStorage.removeItem('fetchingToken');
+                    reject(response);
+                    return;
+                }
+
+                Token.save(response.body.access_token);
+                sessionStorage.removeItem('fetchingToken');
             }
 
             resolve();

@@ -99,16 +99,16 @@ export class Guard
         Log.debug('Loading ' + to.path + '...');
 
         try {
-            await this.runRouteActions(to, to, true);
+            await this.runRouteGuards(to, to);
         } catch (error) {
-            this.handleRouteActionError(error, to);
+            this.store.commit('app/SET_STATUS', 'unauthorized');
             throw error;
         }
 
         try {
-            await this.runRouteGuards(to, to);
+            await this.runRouteActions(to, to, true);
         } catch (error) {
-            this.store.commit('app/SET_STATUS', 'unauthorized');
+            this.handleRouteLoadError(error, to);
             throw error;
         }
 
@@ -125,20 +125,20 @@ export class Guard
 
         this.store.commit('app/SET_STATUS', 'loading');
 
-        // Fetch all the needed data for the current view.
-        try {
-            await this.runRouteActions(to, from);
-        } catch (error) {
-            this.handleRouteActionError(error, to);
-            next(error);
-            return;
-        }
-
-        // Once all the data has been loaded run the guards.
+        // Check if the user is allowed to make the request.
         try {
             await this.runRouteGuards(to, from);
         } catch (error) {
             this.store.commit('app/SET_STATUS', 'unauthorized');
+            next();
+            return;
+        }
+
+        // Fetch all the needed data for the current view.
+        try {
+            await this.runRouteActions(to, from);
+        } catch (error) {
+            this.handleRouteLoadError(error, to);
             next();
             return;
         }
@@ -151,7 +151,7 @@ export class Guard
     /**
      * Handle a route action error.
      */
-    protected handleRouteActionError(error: any, to: Route): void
+    protected handleRouteLoadError(error: any, to: Route): void
     {
         Log.error('View ' + to.path + ' failed to load.');
         Log.error(error);
@@ -217,6 +217,8 @@ export class Guard
      */
     protected async runRouteActions(to: Route, from: Route, refresh: boolean = false): Promise<any>
     {
+        Log.debug('Running route actions...');
+
         let actions: string[] = [];
         let actionPromises: Promise<any>[] = [];
         let fromActions: any[] = [];
@@ -274,6 +276,8 @@ export class Guard
      */
     protected async runRouteGuards(to: Route, from: Route): Promise<any>
     {
+        Log.debug('Running route guards...');
+
         let guards: string[] = [];
         let guardPromises: Promise<any>[] = [];
 
@@ -293,7 +297,7 @@ export class Guard
 
             guardPromise.catch((error: any): void => {
                 Log.error('The guard ' + guard + ' blocked the loading of the view.');
-                throw error;
+                Log.error(error);
             });
 
             guardPromises.push(guardPromise);
