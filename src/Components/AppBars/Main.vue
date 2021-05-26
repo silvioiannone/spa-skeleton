@@ -150,6 +150,7 @@
          */
         hideSearch(): void
         {
+            this.routeSearchParameter = '';
             this.showingSearch = false;
         }
 
