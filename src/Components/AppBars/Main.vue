@@ -6,9 +6,7 @@
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
                 <slot name="title"/>
             </router-link>
-            <router-link :to="toolbarTitleRedirectUrl" v-if="title && title.length">
-                {{ title }}
-            </router-link>
+            <router-link v-else :to="toolbarTitleRedirectUrl">{{ title }}</router-link>
         </v-toolbar-title>
         <slot name="toolbar-text" v-if="showingBreadcrumbs">
             <breadcrumbs-main :items="breadcrumbs"/>
