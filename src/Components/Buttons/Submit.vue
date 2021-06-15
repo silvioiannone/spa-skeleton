@@ -11,7 +11,7 @@
     import { Component, Mixins } from 'vue-property-decorator';
 
     @Component
-    export class v-bind="$props" extends Mixins(Button)
+    export class ButtonSubmit extends Mixins(Button)
     {
         /**
          * The button status. Accepted values are 'ready' and 'loading'.
