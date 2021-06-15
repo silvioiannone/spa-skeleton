@@ -1,7 +1,6 @@
 <template>
-    <v-btn :loading="status === 'loading'" :disabled="disabled || status === 'loading'"
-           v-on="this.$listeners" :text="text" :color="color" :icon="icon" @click="_onClick()"
-           :large="large" type="submit" :aria-label="ariaLabel" :small="small" :x-large="xLarge">
+    <v-btn v-bind="$props" :loading="status === 'loading'" type="submit" :aria-label="ariaLabel"
+           :disabled="disabled || status === 'loading'" v-on="this.$listeners" @click="_onClick()">
         <slot/>
     </v-btn>
 </template>
@@ -12,7 +11,7 @@
     import { Component, Mixins } from 'vue-property-decorator';
 
     @Component
-    export class ButtonSubmit extends Mixins(Button)
+    export class v-bind="$props" extends Mixins(Button)
     {
         /**
          * The button status. Accepted values are 'ready' and 'loading'.
