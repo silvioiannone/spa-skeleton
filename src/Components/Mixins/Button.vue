@@ -85,13 +85,6 @@
          */
         @Prop({ type: Boolean, default: false }) left: boolean;
 
-        /**
-         * On click callback action.
-         *
-         * This function should be a callback executor compatible function.
-         */
-        @Prop({ type: Function }) onClick: () => Promise<any>;
-
         _onClick(event: any): void
         {
             this.onClick();

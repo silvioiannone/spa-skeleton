@@ -1,5 +1,5 @@
 <template>
-    <v-btn v-bind="$props" :loading="status === 'loading'" type="submit" :aria-label="ariaLabel"
+    <v-btn v-bind="props" :loading="status === 'loading'" type="submit" :aria-label="ariaLabel"
            :disabled="disabled || status === 'loading'" v-on="this.$listeners" @click="_onClick()">
         <slot/>
     </v-btn>
@@ -7,6 +7,7 @@
 
 <script lang="ts">
 
+    import { Prop } from 'vue-property-decorator';
     import Button from '../Mixins/Button.vue';
     import { Component, Mixins } from 'vue-property-decorator';
 
@@ -14,11 +15,28 @@
     export class ButtonSubmit extends Mixins(Button)
     {
         /**
+         * On click callback action.
+         *
+         * This function should be a callback executor compatible function.
+         */
+        @Prop({ type: Function, required: true }) onClick: () => Promise<any>;
+
+        /**
          * The button status. Accepted values are 'ready' and 'loading'.
          */
         status: 'ready' | 'loading' = 'ready';
 
         ariaLabel: string = '';
+
+        get props(): any
+        {
+            // Remove the `onClick` prop from the props passed to `v-btn`. This is required in order
+            // to avoid the "Function statements require a function name" error.
+            let props = { ...this.$props };
+            delete props['onClick'];
+
+            return props;
+        }
 
         async _onClick(): Promise<any>
         {
