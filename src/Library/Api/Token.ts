@@ -70,11 +70,13 @@ export class Token
      */
     public static save(accessToken: string, refreshToken: string = ''): void
     {
-        let accessTokenCookie = Token.accessTokenName + "=" + accessToken + "; path=/;";
-        let refreshTokenCookie = Token.refreshTokenName + "=" + refreshToken + "; path=/;";
+        let accessTokenCookie = Token.accessTokenName + "=" + accessToken
+            + "; Path=/; SameSite=None;";
+        let refreshTokenCookie = Token.refreshTokenName + "=" + refreshToken
+            + "; Path=/; SameSite=None;";
 
-        // If production send only over HTTPS
-        if(Config.env !== 'local') {
+        // Use 'Secure' everyone except on local environments that are not using https.
+        if(Config.env !== 'local' || (Config.env === 'local' && location.protocol === 'https:')) {
             accessTokenCookie += " Secure;";
             refreshTokenCookie += " Secure;";
         }
