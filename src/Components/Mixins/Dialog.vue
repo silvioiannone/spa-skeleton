@@ -81,6 +81,7 @@
          */
         hide(): void
         {
+            this.$emit('input', false);
             this.$emit('cancel');
             this.$emit('hidden');
         }
