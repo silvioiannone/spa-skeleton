@@ -1,14 +1,12 @@
 <template>
-    <router-link :to="_to" class="clickable" custom v-slot="{ navigate }">
-        <div @click="navigate">
-            <v-avatar v-if="userHasCustomAvatar"
-                      :size="size + 'px'">
-                <img :src="`storage/${user.settings.avatar.small}`"
-                     :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
-            </v-avatar>
-            <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size"/>
-        </div>
-    </router-link>
+    <div>
+        <v-avatar v-if="userHasCustomAvatar"
+                  :size="size + 'px'">
+            <img :src="`storage/${user.settings.avatar.small}`"
+                 :alt="user.first_name + ' ' + user.last_name + '\'s avatar'">
+        </v-avatar>
+        <vue-avatar v-else :username="user.first_name + ' ' + user.last_name" :size="size"/>
+    </div>
 </template>
 
 <script lang="ts">
@@ -33,16 +31,6 @@
          * User whose avatar will be displayed.
          */
         @Prop({ type: Object, required: true }) user: any;
-
-        /**
-         * Link of the router.
-         */
-        @Prop({ type: String, default: '' }) to: string;
-
-        get _to()
-        {
-            return this.to.length ? this.to : '/users/' + this.user.id;
-        }
 
         get userHasCustomAvatar(): boolean
         {
