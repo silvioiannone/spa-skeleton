@@ -16,11 +16,6 @@
     export class TextField extends Mixins(Input, MixinComponent)
     {
         /**
-         * Make the input required.
-         */
-        @Prop({ type: Boolean, default: false }) required: boolean;
-
-        /**
          * Input type.
          */
         @Prop({ type: String, default: '' }) type: string;
