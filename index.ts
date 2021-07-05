@@ -65,6 +65,7 @@ import Button from './src/Components/Mixins/Button.vue';
 /**
  * Components
  */
+import AlertMain from './src/Components/Alerts/Main.vue';
 import AppBarMain from './src/Components/AppBars/Main.vue';
 import AutocompleteCountry from './src/Components/Autocompletes/Country.vue';
 import AvatarUser from './src/Components/Avatars/User.vue';
@@ -132,6 +133,7 @@ export {
     /**
      * Components.
      */
+    AlertMain,
     AppBarMain,
     AutocompleteCountry,
     AvatarUser,

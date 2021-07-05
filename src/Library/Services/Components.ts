@@ -7,6 +7,7 @@ import '../ComponentHooks';
 import AppComponents from '../../../../../resources/ts/App/Components';
 
 // Skeleton components
+import AlertMain from '../../Components/Alerts/Main.vue';
 import AnimatedRouterView from '../../Components/Misc/AnimatedRouterView.vue';
 import AppBarMain from '../../Components/AppBars/Main.vue';
 import ButtonMain from '../../Components/Buttons/Main.vue';
@@ -19,6 +20,7 @@ import ResponsiveContainer from '../../Components/Misc/Grid/ResponsiveContainer.
 import ToolbarMain from '../../Components/Toolbars/Main.vue';
 
 const SkeletonComponents = {
+    AlertMain,
     AnimatedRouterView,
     AppBarMain,
     ButtonMain,
