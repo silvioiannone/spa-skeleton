@@ -23,12 +23,17 @@
 <script lang="ts">
 
     import DayJS from 'dayjs';
-    import { Component, Mixins, Watch } from 'vue-property-decorator';
+    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
     import TextFieldMain from './Main.vue';
 
     @Component
     export class TextFieldDateTime extends Mixins(TextFieldMain)
     {
+        /**
+         * Specify the allowed dates.
+         */
+        @Prop({ type: Function }) allowedDates: (value: any) => boolean
+
         partialHour: number;
 
         remindDate: string = '';
@@ -78,8 +83,15 @@
             return string;
         }
 
-        allowedDates(value: any): boolean
+        /**
+         * Specify the allowed dates.
+         */
+        _allowedDates(value: any): boolean
         {
+            if (this.allowedDates) {
+                return this.allowedDates(value);
+            }
+
             return DayJS(value).isSameOrAfter(DayJS().startOf('day'));
         }
 
