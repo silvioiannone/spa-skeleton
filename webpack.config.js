@@ -67,7 +67,7 @@ if (process.env.APP_URL.startsWith('https') && process.argv.includes('--hot')) {
         publicPath: public
     };
     config.devServer = {
-        public,
+        // public,
         https: {
             key: fs.readFileSync(process.env.APP_SSL_KEY),
             cert: fs.readFileSync(process.env.APP_SSL_CERT)

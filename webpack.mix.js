@@ -30,7 +30,7 @@ module.exports = {
 
         mix.buildLocales();
 
-        this.buildJS();
+        this.buildTS();
         this.buildStyles();
 
         if (process.env.APP_ENV !== 'local') {
@@ -64,16 +64,19 @@ module.exports = {
         });
 
         mix.override(config => {
-            // We need to remove the first `ts-loader` defined by Laravel Mix since we'll inject our
-            // own in `webpack.config.js`.
-            config.module.rules = config.module.rules.filter(rule => rule.loader !== 'ts-loader');
+            // We need to remove the webpack rule applied to `.tsx?` files defined by Laravel Mix
+            // since we'll inject our own in `webpack.config.js`.
+            config.module.rules = config.module.rules.filter(rule => {
+                return rule.test.toString() !== /\.tsx?$/.toString();
+            });
 
             // For SASS
             let sassRule = config.module.rules.find(
                 (rule) => rule.test.toString() === /\.sass$/.toString()
             );
+
             let sassOneOf = sassRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
-            let sassLoader = sassOneOf.use.find((use) => use.loader === 'sass-loader');
+            let sassLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
 
             sassLoader.options.additionalData = '@import "resources/sass/app.sass"';
             sassLoader.options.sassOptions.indentedSyntax = true;
@@ -82,10 +85,11 @@ module.exports = {
             let scssRule = config.module.rules.find(
                 (rule) => rule.test.toString() === /\.scss$/.toString()
             );
-            let scssOneOf = scssRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
-            let scssLoader = scssOneOf.use.find((use) => use.loader === 'sass-loader');
 
-            scssLoader.options.additionalData = '@import "resources/sass/app.sass";';
+            let scssOneOf = scssRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
+            let scssLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
+
+            scssLoader.options.additionalData = '@import "resources/sass/app.sass"';
             sassLoader.options.sassOptions.indentedSyntax = true;
         });
 
@@ -110,11 +114,11 @@ module.exports = {
     },
 
     /**
-     * Build JS files.
+     * Build TS files.
      *
      * @protected
      */
-    buildJS()
+    buildTS()
     {
         let modulesToExtract = [
             'vue', 'vue-router', 'vuex', 'vuetify', 'vee-validate', 'loglevel', 'moment', 'lodash',

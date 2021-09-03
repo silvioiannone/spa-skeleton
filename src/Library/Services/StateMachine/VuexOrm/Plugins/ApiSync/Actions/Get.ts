@@ -28,7 +28,7 @@ export class Get extends Action
 
         try {
             response = await resource.get(params.id);
-        } catch (error) {
+        } catch (error: any) {
             this.onError(error, store, params);
             throw error;
         }

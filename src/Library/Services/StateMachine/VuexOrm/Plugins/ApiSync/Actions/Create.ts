@@ -22,7 +22,7 @@ export class Create extends Action
 
         try {
             response = await resource.create(params.data)
-        } catch (error) {
+        } catch (error: any) {
             this.onError(error, store, params);
             throw error;
         }

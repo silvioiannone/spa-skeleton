@@ -8,7 +8,7 @@ export abstract class Module
     /**
      * Module name.
      */
-    protected abstract name: string = '';
+    protected abstract name: string;
 
     /**
      * Api client.

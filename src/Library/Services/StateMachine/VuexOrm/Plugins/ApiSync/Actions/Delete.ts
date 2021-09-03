@@ -21,7 +21,7 @@ export class Delete extends Action
 
         try {
             response = await resource.delete(params.data)
-        } catch (error) {
+        } catch (error: any) {
             this.onError(error, store, params);
             throw error;
         }

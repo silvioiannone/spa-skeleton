@@ -104,7 +104,7 @@ export abstract class AbstractApiDriver
 
         try {
             response = await this[functionName](action, data);
-        } catch (errorResponse) {
+        } catch (errorResponse: any) {
             AbstractApiDriver.afterResponseHooks
                 .forEach((callback): void => callback(errorResponse));
             throw this.parseResponse(errorResponse);

@@ -23,7 +23,7 @@ export class Update extends Action
 
         try {
             response = await resource.update(params.data);
-        } catch (error) {
+        } catch (error: any) {
             this.onError(error, store, params);
             throw error;
         }

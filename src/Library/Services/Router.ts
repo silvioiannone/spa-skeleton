@@ -78,7 +78,7 @@ export class Router extends Service
                 return new Promise(async (resolve, reject): Promise<any> => {
                     try {
                         await scrollPromise;
-                    } catch (error) {
+                    } catch (error: any) {
                         if (error !== {}) {
                             Logger.error('Scroll behaviour failed.');
                             Logger.error(error);

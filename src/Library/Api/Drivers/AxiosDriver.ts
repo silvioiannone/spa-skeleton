@@ -95,7 +95,7 @@ export class AxiosDriver extends AbstractApiDriver
                 client_secret: Config.client.secret,
                 scope: ''
             });
-        } catch (error) {
+        } catch (error: any) {
             this.token.remove();
             throw new error;
         }
