@@ -45,7 +45,7 @@
         /**
          * Set the `autocomplete` attribute.
          */
-        @Prop({ type: String, default: ''}) autocomplete: string;
+        @Prop({ type: String }) autocomplete: string;
 
         /**
          * Puts the input in an error state and passes through custom error messsages. Will be

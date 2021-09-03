@@ -32,12 +32,25 @@
             };
         }
 
+        get textFieldAttrs(): any
+        {
+            let attrs = {
+                autocomplete: this.autocomplete,
+                min: this.min,
+                max: this.max,
+                name: this.name,
+            }
+
+            return attrs;
+        }
+
         get textFieldProps(): any
         {
             let props = {
                 ...this.$props,
+                label: this._label,
                 outlined: this._outlined || this.outlined,
-                value: this.value
+                value: this.value,
             };
 
             // The rules will only be passed to the `validation-provider` component.
@@ -70,15 +83,9 @@
                     default: (props: { errors: any }): VNode => createElement('v-text-field', {
                         props: {
                             ...this.textFieldProps,
-                            label: this._label,
                             errorMessages: props.errors
                         },
-                        attrs: {
-                            autocomplete: this.autocomplete,
-                            min: this.min,
-                            max: this.max,
-                            name: this.name,
-                        },
+                        attrs: this.textFieldAttrs,
                         directives: vTextFieldDirectives,
                         on: this.listeners
                     })
