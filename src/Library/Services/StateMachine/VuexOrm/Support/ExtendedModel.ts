@@ -82,7 +82,9 @@ export class ExtendedModel extends Model
         let api = ApiFactory.make();
 
         let response = await execute(api);
+
         this.handleApiResponse(response);
+
         return response;
     }
 
@@ -91,7 +93,7 @@ export class ExtendedModel extends Model
      */
     protected static handleApiResponse(response: ResponseInterface): void
     {
-        if (response.body && response.body.meta) {
+        if (response?.body?.meta) {
             ExtendedModel.store()
                 .commit('app/INSERT', {
                     ui: {

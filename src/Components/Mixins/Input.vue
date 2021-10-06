@@ -38,11 +38,6 @@
         @Prop({ type: String, default: '' }) label: string;
 
         /**
-         * Input name attribute.
-         */
-        @Prop({ type: String, default: ''}) name: string;
-
-        /**
          * Set the `autocomplete` attribute.
          */
         @Prop({ type: String }) autocomplete: string;

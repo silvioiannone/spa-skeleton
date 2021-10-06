@@ -32,18 +32,6 @@
             };
         }
 
-        get textFieldAttrs(): any
-        {
-            let attrs = {
-                autocomplete: this.autocomplete,
-                min: this.min,
-                max: this.max,
-                name: this.name,
-            }
-
-            return attrs;
-        }
-
         get textFieldProps(): any
         {
             let props = {
@@ -85,7 +73,7 @@
                             ...this.textFieldProps,
                             errorMessages: props.errors
                         },
-                        attrs: this.textFieldAttrs,
+                        attrs: this.$attrs,
                         directives: vTextFieldDirectives,
                         on: this.listeners
                     })

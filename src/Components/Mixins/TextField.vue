@@ -16,24 +16,9 @@
     export class TextField extends Mixins(Input, MixinComponent)
     {
         /**
-         * Input type.
-         */
-        @Prop({ type: String, default: '' }) type: string;
-
-        /**
          * Field step size.
          */
         @Prop({ type: String, default: '1'}) step: string;
-
-        /**
-         * Maximum value.
-         */
-        @Prop(String) max: string;
-
-        /**
-         * Minimum value.
-         */
-        @Prop(String) min: string;
 
         /**
          * Input mask.
@@ -158,14 +143,7 @@
             }
 
             return createElement('v-text-field', {
-                attrs: {
-                    autocomplete: this.autocomplete,
-                    name: this.name,
-                    type: this.type,
-                    step: this.step,
-                    min: this.min,
-                    max: this.max
-                },
+                attrs: this.$attrs,
                 directives,
                 props: this.getProps(),
                 on: this.$listeners
