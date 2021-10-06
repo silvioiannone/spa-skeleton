@@ -16,6 +16,11 @@
     export class TextField extends Mixins(Input, MixinComponent)
     {
         /**
+         * Input type.
+         */
+        @Prop({ type: String }) type: string;
+
+        /**
          * Field step size.
          */
         @Prop({ type: String, default: '1'}) step: string;
