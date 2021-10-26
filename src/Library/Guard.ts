@@ -154,7 +154,6 @@ export class Guard
     protected handleRouteLoadError(error: any, to: Route): void
     {
         Log.error('View ' + to.path + ' failed to load.');
-        Log.error(error);
 
         Guard.afterErrorHooks.map((callback: Function): any => callback(error));
     }

@@ -78,6 +78,6 @@ export abstract class Action
      */
     protected onError(response: ResponseInterface, store: Store<any>, params: any): void
     {
-        //throw 'Define the `onError` function in the extending class.'
+        throw response;
     }
 }

@@ -39,6 +39,18 @@ export class Get extends Action
     }
 
     /**
+     * Handle an error response.
+     */
+    protected onError(error: ResponseInterface, store: Store<any>, params: ActionParameters)
+    {
+        if (error.status === 401) {
+            return;
+        }
+
+        super.onError(error, store, params);
+    }
+
+    /**
      * Handle a successful response.
      */
     protected onSuccess(
