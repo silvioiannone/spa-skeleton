@@ -28,6 +28,8 @@
         get component(): string
         {
             switch (this.description.kind) {
+                case 'checkbox':
+                    return 'v-checkbox';
                 case 'file':
                     return 'v-file-input';
                 case 'input':
