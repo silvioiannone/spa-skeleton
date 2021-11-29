@@ -1,5 +1,5 @@
 <template>
-    <iframe :frameborder="frameBorder"/>
+    <iframe :frameborder="frameBorder" ref="iframe" @load="handleOnLoad"/>
 </template>
 
 <style lang="sass">
@@ -28,11 +28,18 @@
          */
         @Prop({ type: String, required: true }) content: string;
 
+        /**
+         * Handle the iframe's `onload` event.
+         */
+        handleOnLoad(): void
+        {
+            this.$emit('load', this.$refs.iframe);
+        }
+
         @Watch('content', { immediate: true })
         onContentChange()
         {
-            this.$nextTick(() =>
-            {
+            this.$nextTick(() => {
                 let iframeWindow = (<HTMLIFrameElement>this.$el).contentWindow;
                 if (iframeWindow) {
                     let frame = iframeWindow.document;
