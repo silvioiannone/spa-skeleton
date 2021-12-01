@@ -5,7 +5,6 @@ import AppConfig from '../../../resources/ts/Config';
 
 // API drivers.
 import { SuperAgentDriver } from './Library/Api/Drivers/SuperAgentDriver';
-import { AxiosDriver }      from './Library/Api/Drivers/AxiosDriver';
 
 const defaultConfig = {
 
@@ -132,7 +131,6 @@ const defaultConfig = {
          * Available API drivers.
          */
         drivers: {
-            axios:      AxiosDriver,
             superAgent: SuperAgentDriver
         },
 
