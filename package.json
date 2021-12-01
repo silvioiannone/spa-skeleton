@@ -41,7 +41,7 @@
     "pluralize": "^8.0.0",
     "push.js": "^1.0.12",
     "qs": "^6.10.1",
-    "sass": "1.44.0",
+    "sass": "1.32.*",
     "sass-loader": "^12.3.0",
     "socket.io": "^4.4.0",
     "superagent": "^6.1.0",
