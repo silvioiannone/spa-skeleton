@@ -30,16 +30,16 @@ module.exports = {
 
         mix.buildLocales();
 
+        mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
+        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
+        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
+
         this.buildTS();
         this.buildStyles();
 
         if (process.env.APP_ENV !== 'local') {
             mix.version();
         }
-
-        mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
-        mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
-        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
 
         if (process.env.APP_ENV !== 'production') {
             mix.sourceMaps();
@@ -63,37 +63,37 @@ module.exports = {
             extractStyles: true
         });
 
-        mix.override(config => {
+         mix.override(config => {
             // We need to remove the webpack rule applied to `.tsx?` files defined by Laravel Mix
-            // since we'll inject our own in `webpack.config.js`.
+            // since we'll inject the one defined `webpack.config.js`.
             config.module.rules = config.module.rules.filter(rule => {
                 return rule.test.toString() !== /\.tsx?$/.toString();
             });
 
-            // For SASS
-            let sassRule = config.module.rules.find(
-                (rule) => rule.test.toString() === /\.sass$/.toString()
-            );
+             // We also need to update the "SASS" and "SCSS" rules defined by laravel in order to
+             // make those compatible with Vuetify.
+             let sassRule = config.module.rules.find(
+                 (rule) => rule.test.toString() === /\.sass$/.toString()
+             );
 
-            let sassOneOf = sassRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
-            let sassLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
+             let sassOneOf = sassRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
+             let sassLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
 
-            sassLoader.options.additionalData = '@import "resources/sass/app.sass"';
-            sassLoader.options.sassOptions.indentedSyntax = true;
+             // For SCSS.
+             let scssRule = config.module.rules.find(
+                 (rule) => rule.test.toString() === /\.scss$/.toString()
+             );
 
-            // For SCSS
-            let scssRule = config.module.rules.find(
-                (rule) => rule.test.toString() === /\.scss$/.toString()
-            );
+             let scssOneOf = scssRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
+             let scssLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
 
-            let scssOneOf = scssRule.oneOf.find((rule) => ! rule.hasOwnProperty('resourceQuery'));
-            let scssLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
+             [sassLoader, scssLoader].forEach(loader => {
+                 loader.options.additionalData = '@import "resources/sass/app.sass"';
+                 loader.options.sassOptions.indentedSyntax = true;
+             })
+         });
 
-            scssLoader.options.additionalData = '@import "resources/sass/app.sass"';
-            sassLoader.options.sassOptions.indentedSyntax = true;
-        });
-
-        // Load the Configuration from SPA-Skeleton
+        // Load the Configuration from SPA-Skeleton.
         mix.webpackConfig(webpackConfig);
         mix.webpackConfig(this.userWebpackConfig);
 
