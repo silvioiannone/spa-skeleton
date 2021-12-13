@@ -11,9 +11,9 @@ export class App extends ApiResource
     /**
      * Get a locale.
      */
-    public getLocale(locale: string): Promise<ResponseInterface>
+    public getLocale(locale: string): Promise<string>
     {
-        return this.httpClient.get('/locales/' + locale + '.json');
+        return import(/* @vite-ignore */ `/resources/locales/${locale}.json`);
     }
 
     /**

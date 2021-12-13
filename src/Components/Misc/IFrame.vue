@@ -12,22 +12,23 @@
 
 <script lang="ts">
 
-    import Vue                        from 'vue';
-    import { Component, Prop, Watch } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class IFrame extends Vue
-    {
+    name: 'IFrame',
+
+    props: {
         /**
          * Frame border attribute.
          */
-        @Prop({ type: Number, default: 0 }) frameBorder: number;
+        frameBorder: { type: Number, default: 0 },
 
         /**
          * Iframe content.
          */
-        @Prop({ type: String, required: true }) content: string;
+        content: { type: String, required: true }
+    },
 
+    methods: {
         /**
          * Handle the iframe's `onload` event.
          */
@@ -35,10 +36,11 @@
         {
             this.$emit('load', this.$refs.iframe);
         }
+    },
 
-        @Watch('content', { immediate: true })
-        onContentChange()
-        {
+    mounted()
+    {
+        this.$watch('content', () => {
             this.$nextTick(() => {
                 let iframeWindow = (<HTMLIFrameElement>this.$el).contentWindow;
                 if (iframeWindow) {
@@ -48,9 +50,8 @@
                     frame.close();
                 }
             });
-        }
+        }, { immediate: true })
     }
-
-    export default IFrame;
+}
 
 </script>

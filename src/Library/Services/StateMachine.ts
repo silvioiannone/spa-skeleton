@@ -3,7 +3,7 @@ import Vue                          from 'vue';
 import Vuex, { Store as VuexStore } from 'vuex';
 import VuexORM                      from '@vuex-orm/core';
 import { Service }                  from './Service';
-import Modules                      from '../../../../../resources/ts/App/State';
+import Modules                      from '@/ts/App/State';
 import Models                       from '../App/State/Models';
 import { Plugin as ApiSync }        from './StateMachine/VuexOrm/Plugins/ApiSync/Plugin';
 

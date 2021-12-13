@@ -16,38 +16,41 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
-    import { Route } from 'vue-router';
+import { Route } from 'vue-router';
 
-    @Component
-    export class ListItemBack extends Vue
-    {
+export default {
+
+    name: 'ListItemBack',
+
+    props: {
         /**
          * Highlight the list item only if the route matches exactly.
          */
-        @Prop({ type: Boolean, default: true }) exact: boolean;
+        exact: { type: Boolean, default: true },
 
         /**
          * Title displayed by the card.
          */
-        @Prop({ type: String, default: '' }) title: string;
+        title: { type: String, default: '' },
 
         /**
          * Link destination.
          */
-        @Prop({ type: String, default: '' }) to: string;
+        to: { type: String, default: '' }
+    },
 
-        get canGoBack(): boolean
+    computed: {
+        canGoBack(): boolean
         {
             return !! this.lastVisitableView;
-        }
+        },
 
-        get previousRoutes(): Route[]
+        previousRoutes(): Route[]
         {
             return this.$store.getters.app.router.history;
-        }
+        },
 
-        get lastVisitableView(): Route | undefined
+        lastVisitableView(): Route | undefined
         {
             // We need to work on a copy of the `previousRoutes` otherwise `reverse()` will change
             // the order of the previous routes.
@@ -62,7 +65,9 @@
                     return ! this.routeIsSibling(route);
                 });
         }
+    },
 
+    methods: {
         /**
          * Whether the given route is a sibling of the current route.
          */
@@ -74,7 +79,7 @@
                 .join('/');
 
             return route.path.startsWith(parent) && route.path.length > parent.length;
-        }
+        },
 
         /**
          * Handle the click on the button.
@@ -92,7 +97,6 @@
             this.$navigator.push(this.to);
         }
     }
-
-    export default ListItemBack;
+}
 
 </script>

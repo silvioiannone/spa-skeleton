@@ -1,21 +1,25 @@
 <script lang="ts">
 
-    import { Vue, Component, Watch } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class Sortable extends Vue
+    name: 'Sortable',
+
+    data()
     {
-        sort: string|null = null;
+        return {
+            sort: null,
+            descending: false
+        }
+    },
 
-        descending: boolean = false;
-
+    methods: {
         /**
          * Toggle the descending sorting direction.
          */
         toggleDescending(): void
         {
             this.descending = ! this.descending;
-        }
+        },
 
         /**
          * Update the route.
@@ -55,30 +59,29 @@
 
             this.$navigator.push({ path: this.$route.path, query });
         }
+    },
 
-        created()
-        {
-            let sort = this.$route.query.sort as string;
+    created()
+    {
+        let sort = this.$route.query.sort as string;
 
-            if (sort) {
-                this.descending = sort.charAt(0) === '-';
-                this.sort = this.descending ? sort.slice(1, sort.length) : sort;
-            }
+        if (sort) {
+            this.descending = sort.charAt(0) === '-';
+            this.sort = this.descending ? sort.slice(1, sort.length) : sort;
         }
+    },
 
-        @Watch('sort')
-        onSortChange()
+    watch: {
+        sort()
         {
             this.updateRoute();
-        }
+        },
 
-        @Watch('descending')
-        onDescendingChange()
+        descending()
         {
             this.updateRoute();
         }
     }
-
-    export default Sortable;
+}
 
 </script>

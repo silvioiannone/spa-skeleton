@@ -7,7 +7,7 @@ import { Guard }             from '../Guard';
 import { Logger }            from './Logger';
 import { Service }           from './Service';
 import { Translator }        from './Translator';
-import Routes                from '../../../../../resources/ts/App/Routes';
+import Routes                from '@/ts/App/Routes';
 import { StateMachine }      from './StateMachine';
 import MixinRoot             from '../../Components/Mixins/Root.vue';
 import { Plugins }           from './Plugins';
@@ -55,10 +55,8 @@ export class Router extends Service
      */
     public static boot(): void
     {
-        let store = StateMachine.getStore();
         let guard = new Guard;
-        let scrollPromise = new Promise((resolve: Function): void =>
-        {
+        let scrollPromise = new Promise((resolve: Function): void => {
             guard.onComplete((to: Route): void => {
                 if (to.hash) {
                     resolve({ selector: to.hash });
@@ -79,7 +77,7 @@ export class Router extends Service
                     try {
                         await scrollPromise;
                     } catch (error: any) {
-                        if (error !== {}) {
+                        if (Object.keys(error).length === 0 && error.constructor === Object) {
                             Logger.error('Scroll behaviour failed.');
                             Logger.error(error);
                             reject(error);
@@ -98,7 +96,7 @@ export class Router extends Service
         });
 
         // Execute the guard before loading each route
-        guard.init(Router.instance, store)
+        guard.init(Router.instance)
             .run();
 
         // Router root component
@@ -108,7 +106,7 @@ export class Router extends Service
             router: Router.instance,
 
             // Bind the store so that it's available to all children components
-            store,
+            store: StateMachine.getStore(),
 
             mixins: [MixinRoot],
 
@@ -125,6 +123,6 @@ export class Router extends Service
 
         // Synchronize the router with the store. Allows to save the router state in the state
         // machine store.
-        sync(store, Router.instance);
+        sync(StateMachine.getStore(), Router.instance);
     }
 }

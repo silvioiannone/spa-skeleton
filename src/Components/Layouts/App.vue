@@ -38,53 +38,53 @@
 
 <script lang="ts">
 
-    import { Vue, Component }          from 'vue-property-decorator';
-    import SnackbarGlobal from '../Snackbars/Global.vue';
-    import ErrorNotFound from '../Views/Errors/NotFound.vue';
-    import ErrorServerError from '../Views/Errors/ServerError.vue';
-    import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
-    import ErrorUnauthorized from '../Views/Errors/Unauthorized.vue';
-    import ErrorTooManyAttempts from '../Views/Errors/TooManyAttempts.vue';
-    import FooterAppUpdate from '../Footers/AppUpdate.vue';
+import SnackbarGlobal from '../Snackbars/Global.vue';
+import ErrorNotFound from '../Views/Errors/NotFound.vue';
+import ErrorServerError from '../Views/Errors/ServerError.vue';
+import ErrorServiceUnavailable from '../Views/Errors/ServiceUnavailable.vue';
+import ErrorUnauthorized from '../Views/Errors/Unauthorized.vue';
+import ErrorTooManyAttempts from '../Views/Errors/TooManyAttempts.vue';
+import FooterAppUpdate from '../Footers/AppUpdate.vue';
 
-    @Component({
-        components: {
-            ErrorNotFound,
-            ErrorServerError,
-            ErrorServiceUnavailable,
-            ErrorTooManyAttempts,
-            ErrorUnauthorized,
-            FooterAppUpdate,
-            SnackbarGlobal
-        },
-    })
-    export class LayoutApp extends Vue
-    {
-        get app()
+export default {
+
+    name: 'LayoutApp',
+
+    components: {
+        ErrorNotFound,
+        ErrorServerError,
+        ErrorServiceUnavailable,
+        ErrorTooManyAttempts,
+        ErrorUnauthorized,
+        FooterAppUpdate,
+        SnackbarGlobal
+    },
+
+    computed: {
+        app(): any
         {
             return this.$store.getters.app;
-        }
+        },
 
-        get status()
+        status(): string
         {
             return this.app.status;
-        }
+        },
 
-        get theme()
+        theme(): string
         {
             try {
                 return this.user.settings.ui.theme;
             } catch (error) {
                 return 'light';
             }
-        }
+        },
 
-        get user()
+        user(): any
         {
             return this.app.user;
         }
     }
-
-    export default LayoutApp;
+}
 
 </script>

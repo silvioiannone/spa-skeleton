@@ -14,34 +14,38 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Watch, Vue }       from 'vue-property-decorator';
-    import { Pagination }                        from '../../Library/Utils/Pagination';
-    import { Pagination as PaginationInterface } from '../../Library/Interfaces/Pagination';
+import { Pagination } from '../../Library/Utils/Pagination';
+import { Pagination as PaginationInterface } from '../../Library/Interfaces/Pagination';
 
-    let timeout: any = null;
+let timeout: any = null;
 
-    @Component
-    export class FileSelect extends Vue
-    {
+export default {
+
+    name: 'FileSelect',
+
+    props: {
         /**
          * API Endpoint (relative to the base URL) that will be used in order to retrieve the
          * files.
          *
          * Example: $api.files
          */
-        @Prop({ type: Object, required: true }) getEndpoint: any;
+        getEndpoint: { type: Object, required: true }
+    },
 
-        selected: Array<any> = [];
+    data()
+    {
+        return {
+            selected: [],
+            searchText: '',
+            loading: false,
+            files: [],
+            pagination: {} as PaginationInterface
+        }
+    },
 
-        searchText: string = '';
-
-        loading: boolean = false;
-
-        files: Array<any> = [];
-
-        pagination: PaginationInterface = {} as PaginationInterface;
-
-        get _getEndpoint(): any
+    computed: {
+        _getEndpoint(): any
         {
             let parameters = Pagination.makeQueryParamsFromPagination(this.pagination);
 
@@ -53,7 +57,9 @@
                 .setParameters(parameters)
                 .get();
         }
+    },
 
+    methods: {
         /**
          * Get the files.
          */
@@ -68,7 +74,7 @@
                     this.files = response.body.data;
                     this.pagination = Pagination.makeFromResponse(response);
                 });
-        }
+        },
 
         /**
          * Perform the search.
@@ -82,12 +88,10 @@
             timeout = setTimeout(() => {
                 this.getFiles();
             }, 500);
-        }
+        },
 
         /**
          * Toggle file selection.
-         *
-         * @param file {Object}
          */
         toggleFile(file: any): void
         {
@@ -98,31 +102,30 @@
             } else {
                 this.selected.push(file);
             }
-        }
+        },
 
         /**
          * Update the pagination.
-         *
-         * @param pagination
          */
         updatePagination(pagination: any): void
         {
             this.pagination = pagination;
             this.getFiles();
         }
+    },
 
-        mounted(): void
-        {
-            this.getFiles();
-        }
+    mounted(): void
+    {
+        this.getFiles();
+    },
 
-        @Watch('searchText')
-        onSearchTextChanged(): void
+    watch: {
+
+        searchText(): void
         {
             this.search();
         }
     }
-
-    export default FileSelect;
+}
 
 </script>

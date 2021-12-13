@@ -8,33 +8,46 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import ButtonToolbar from '../Buttons/Toolbar.vue';
-    import EditorDialogAddLink from '../Dialogs/AddLink.vue';
-    import EditorCommand from '../Mixins/EditorCommand.vue';
-    import ToolbarGroup from '../Mixins/ToolbarGroup.vue';
+import ButtonToolbar from '../Buttons/Toolbar.vue';
+import EditorDialogAddLink from '../Dialogs/AddLink.vue';
+import EditorCommand from '../Mixins/EditorCommand.vue';
+import ToolbarGroup from '../Mixins/ToolbarGroup.vue';
 
-    @Component({
-        components: {
-            ButtonToolbar,
-            EditorDialogAddLink
-        }
-    })
-    export class EditorButtonLink extends Mixins(EditorCommand, ToolbarGroup)
-    {
+export default {
+
+    name: 'EditorButtonLink',
+
+    mixins: [EditorCommand, ToolbarGroup],
+
+    components: {
+        ButtonToolbar,
+        EditorDialogAddLink
+    },
+
+    props: {
+
         /**
          * Ref to the <editor> component.
          */
-        @Prop({ type: Object, required: true }) editor: any;
+        editor: { type: Object, required: true }
+    },
 
-        dialog: boolean = false;
+    data() {
+        return {
+            dialog: false
+        }
+    },
 
-        get textIsSelected(): boolean
+    computed: {
+        textIsSelected(): boolean
         {
             let selection = this.editor.state.selection;
 
             return selection.$anchor.pos !== selection.$head.pos;
         }
+    },
+
+    methods: {
 
         /**
          * Show the add link dialog.
@@ -42,7 +55,7 @@
         showDialog(): void
         {
             this.dialog = true;
-        }
+        },
 
         /**
          * Set the link URL.
@@ -54,16 +67,16 @@
             this.commands.link({href: url});
             this.editor.focus();
         }
+    },
 
-        @Watch('dialog')
-        onDialogChange(): void
+    watch: {
+        dialog(): void
         {
             if (!this.dialog) {
                 this.editor.focus();
             }
         }
     }
-
-    export default EditorButtonLink;
+}
 
 </script>

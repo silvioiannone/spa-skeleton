@@ -2,7 +2,7 @@ import Vue              from 'vue';
 import { Logger }       from './Logger';
 import { Service }      from './Service';
 import { StateMachine } from './StateMachine';
-import AppFilters       from '../../../../../resources/ts/App/Filters';
+import AppFilters       from '@/ts/App/Filters';
 
 // Skeleton filters
 import { Capitalize }         from '../App/Filters/Capitalize';

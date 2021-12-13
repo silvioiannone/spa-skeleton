@@ -4,18 +4,15 @@
 
 <script lang="ts">
 
-    import { Component, Vue } from 'vue-property-decorator';
-    import ErrorMain from './Main.vue';
+import ErrorMain from './Main.vue';
 
-    @Component({
-        components: {
-            ErrorMain
-        }
-    })
-    export class ErrorNotFound extends Vue
-    {
+export default {
+
+    name: 'ErrorNotFound',
+
+    components: {
+        ErrorMain
     }
-
-    export default ErrorNotFound;
+}
 
 </script>

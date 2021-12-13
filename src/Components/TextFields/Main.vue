@@ -1,38 +1,25 @@
 <script lang="ts">
 
-    import { VNode } from 'vue';
-    import { Component, Mixins } from 'vue-property-decorator';
-    import TextField from '../Mixins/TextField.vue';
-    import Validatable from '../Mixins/Components/Validatable.vue';
+import { VNode } from 'vue';
+import TextField from '../Mixins/TextField.vue';
+import Validatable from '../Mixins/Components/Validatable.vue';
 
-    @Component
-    export class TextFieldMain extends Mixins(TextField, Validatable)
-    {
-        /**
-         * Handle the `input` event fired by the `v-text-field` component.
-         */
-        handleInput(eventValue: string): void
-        {
-            let value: string | number = eventValue;
+export default {
 
-            if (this.type === 'number') {
-                let parsedValue = parseFloat(eventValue);
+    name: 'TextFieldMain',
 
-                value = isNaN(parsedValue) ? '': parsedValue;
-            }
+    mixins: [TextField, Validatable],
 
-            this.$emit('input', value);
-        }
-
-        get listeners(): any
+    computed: {
+        listeners(): any
         {
             return {
                 ...this.$listeners,
                 input: this.handleInput
             };
-        }
+        },
 
-        get textFieldProps(): any
+        textFieldProps(): any
         {
             let props = {
                 ...this.$props,
@@ -46,43 +33,60 @@
 
             return props;
         }
+    },
 
+    methods: {
         /**
-         * Render the component.
+         * Handle the `input` event fired by the `v-text-field` component.
          */
-        render(createElement: Function): VNode
+        handleInput(eventValue: string): void
         {
-            let vTextFieldDirectives: { name: string, value: string }[] = [];
+            let value: string | number = eventValue;
 
-            if (this.mask.length) {
-                vTextFieldDirectives.push({
-                    name: 'mask',
-                    value: this.mask
-                })
+            if (this.type === 'number') {
+                let parsedValue = parseFloat(eventValue);
+
+                value = isNaN(parsedValue) ? '' : parsedValue;
             }
 
-            return createElement('validation-provider', {
-                props: {
-                    rules: this.rules,
-                    name: this.name,
-                    vid: this.name,
-                },
-                scopedSlots: {
-                    default: (props: { errors: any }): VNode => createElement('v-text-field', {
-                        props: {
-                            ...this.textFieldProps,
-                            errorMessages: props.errors
-                        },
-                        attrs: this.$attrs,
-                        directives: vTextFieldDirectives,
-                        on: this.listeners
-                    })
-                },
-                ref: 'validationProvider'
-            }, [])
+            this.$emit('input', value);
         }
-    }
+    },
 
-    export default TextFieldMain;
+    /**
+     * Render the component.
+     */
+    render(createElement: Function): VNode
+    {
+        let vTextFieldDirectives: { name: string, value: string }[] = [];
+
+        if (this.mask.length) {
+            vTextFieldDirectives.push({
+                name: 'mask',
+                value: this.mask
+            })
+        }
+
+        return createElement('validation-provider', {
+            props: {
+                rules: this.rules,
+                name: this.name,
+                vid: this.name,
+            },
+            scopedSlots: {
+                default: (props: { errors: any }): VNode => createElement('v-text-field', {
+                    props: {
+                        ...this.textFieldProps,
+                        errorMessages: props.errors
+                    },
+                    attrs: this.$attrs,
+                    directives: vTextFieldDirectives,
+                    on: this.listeners
+                })
+            },
+            ref: 'validationProvider'
+        }, [])
+    }
+}
 
 </script>

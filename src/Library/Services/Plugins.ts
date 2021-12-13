@@ -1,14 +1,14 @@
 import BugsnagPluginVue from '@bugsnag/plugin-vue';
-import _                     from 'lodash';
-import Vue                   from 'vue';
-import { Service }           from './Service';
-import { Logger }            from './Logger'
-import { Translator }        from './Translator';
-import { Config }            from '../../Config';
-import { UserVuetifyPreset } from 'vuetify/types/services/presets';
-import AppPlugins            from '../../../../../resources/ts/App/Plugins';
+import _                from 'lodash';
+import Vue              from 'vue';
+import { Service }      from './Service';
+import { Logger }       from './Logger'
+import { Translator }   from './Translator';
+import { Config }       from '../../Config';
+import AppPlugins       from '@/ts/App/Plugins';
 
 // Skeleton plugins
+import Bugsnag                    from '@bugsnag/js';
 import Vuetify                    from 'vuetify';
 import VueI18N                    from 'vue-i18n';
 import VueRouter                  from 'vue-router';
@@ -23,17 +23,16 @@ import { Ui }                     from '../App/Plugins/Ui';
 import { Utils }                  from '../App/Plugins/Utils';
 import { User }                   from '../App/Plugins/User';
 import { WebSocket }              from '../App/Plugins/WebSocket';
-import Bugsnag                    from '@bugsnag/js';
 
 /**
  * SPA-Skeleton plugins. The order is important.
  */
 const SkeletonPlugins = {
-    VueI18N,
-    Vuetify,
-    Vue2Filters,
     VueRouter,
+    VueI18N,
+    Vue2Filters,
     VueTheMask,
+    Vuetify,
     Api,
     Config: ConfigPlugin,
     Navigator,

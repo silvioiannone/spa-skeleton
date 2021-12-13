@@ -41,32 +41,29 @@ export class Translator extends Service
     /**
      * Boot the translator.
      */
-    public static boot(): typeof Translator
+    public static async boot(): Promise<void>
     {
         Log.debug('Loading language...');
 
         let locale = Config.locale;
-        let appLocale = require('./../../../../../resources/locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
-        let skeletonLocale = require('./../../Assets/Locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
-
-        let messages = {};
-
-        messages[locale] = _.merge(
-            skeletonLocale,
-            appLocale,
-            { $vuetify: VuetifyLocale[locale] }
-        );
-
-        Log.debug(`Locale set to "${locale}".`);
-        Log.debug('Language loaded.');
 
         Translator.instance = new VueI18N({
             locale,
             fallbackLocale: 'en',
-            messages,
+            messages: {},
             silentTranslationWarn: Config.app.services.translator.hideWarnings
         });
 
-        return Translator;
+        // TODO: replace import path when not using this package (spa-skeleton) as a linked
+        // dependency. Replace the one in the Validator service too.
+        let appLocale = await import(`../../../../bloomestate/resources/locales/${locale}.json`);
+        let skeletonLocale = await import(`../../../../bloomestate/node_modules/spa-skeleton/src/Assets/Locales/${locale}.json`);
+
+        Translator.merge(skeletonLocale, '', locale);
+        Translator.merge(appLocale, '', locale);
+        Translator.merge(VuetifyLocale[locale], '$vuetify', locale);
+
+        Log.debug(`Locale set to "${locale}".`);
+        Log.debug('Language loaded.');
     }
 }

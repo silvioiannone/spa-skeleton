@@ -4,25 +4,32 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class IconMimeType extends Vue
-    {
+    name: 'IconMimeType',
+
+    props: {
         /**
          * Mime type.
          */
-        @Prop({ type: String, required: true }) mime: string;
+         mime: { type: String, required: true }
+    },
 
-        categoryToIcon = {
-            application: 'mdi-application',
-            audio: 'mdi-file-music',
-            image: 'mdi-file-image',
-            text: 'mdi-file-document',
-            video: 'mdi-file-video'
-        };
+    data() {
+        return {
+            categoryToIcon: {
+                application: 'mdi-application',
+                audio: 'mdi-file-music',
+                image: 'mdi-file-image',
+                text: 'mdi-file-document',
+                video: 'mdi-file-video'
+            }
+        }
+    },
 
-        get icon(): string
+    computed: {
+
+        icon(): string
         {
             let result = /(.+)\/(.+)/.exec(this.mime);
             if (result) {
@@ -35,7 +42,6 @@
             }
         }
     }
-
-    export default IconMimeType;
+}
 
 </script>

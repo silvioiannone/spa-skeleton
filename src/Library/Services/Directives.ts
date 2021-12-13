@@ -1,7 +1,7 @@
 import Vue            from 'vue';
 import { Service }    from './Service';
 import { Logger }     from './Logger';
-import DirectivesList from '../../../../../resources/ts/App/Directives';
+import DirectivesList from '@/ts/App/Directives';
 
 // Directives
 import Autocomplete from '../App/Directives/Autocomplete';

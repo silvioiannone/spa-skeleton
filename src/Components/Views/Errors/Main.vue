@@ -59,42 +59,45 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class ErrorMain extends Vue
-    {
+    name: 'ErrorMain',
+
+    props: {
         /**
          * Whether to display the back button.
          */
-        @Prop({ type: Boolean, default: true }) backButton: boolean;
+        backButton: { type: Boolean, default: true },
 
         /**
          * The error's title.
          */
-        @Prop({ type: String, default: '' }) title: string;
+        title: { type: String, default: '' },
 
         /**
          * The error's icon.
          */
-        @Prop({ type: String, default: 'error_outline' }) icon: string;
+        icon: { type: String, default: 'error_outline' }
+    },
 
-        get app(): any
+    computed: {
+        app(): any
         {
             return this.$store.getters.app;
-        }
+        },
 
-        get error(): any
+        error(): any
         {
             return this.app.error;
         }
+    },
 
+    methods: {
         goBack(): void
         {
             window.history.back();
         }
     }
-
-    export default ErrorMain;
+}
 
 </script>

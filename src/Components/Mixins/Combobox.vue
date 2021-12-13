@@ -1,83 +1,88 @@
 <script lang="ts">
 
-    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import TextField from './TextField.vue';
+import TextField from './TextField.vue';
 
-    @Component
-    export class Combobox extends Mixins(TextField)
-    {
+export default {
+
+    mixins: [TextField],
+
+    props: {
         /**
          * Model.
          */
-        @Prop() value: any;
+         value: {},
 
         /**
          * Set property of items's text value.
          */
-        @Prop({ type: String, default: '' }) itemText: string;
+        itemText: { type: String, default: '' },
 
         /**
          * Displays linear progress bar.
          */
-        @Prop({ type: Boolean, default: false }) loading: boolean;
+        loading: { type: Boolean, default: false },
 
         /**
          * Changes select to multiple. Accepts array for value.
          */
-        @Prop({ type: Boolean, default: false }) multiple: boolean;
+        multiple: { type: Boolean, default: false },
 
         /**
          * Perform local search.
          */
-        @Prop({ type: Boolean, default: false }) local: boolean;
+        local: { type: Boolean, default: false },
 
         /**
          * Do not apply filtering when searching. Useful when data is being filtered server side.
          */
-        @Prop({ type: Boolean, default: false }) noFilter: boolean;
+        noFilter: { type: Boolean, default: false },
 
         /**
          * Changes the selection behavior to return the object directly rather than the value
          * specified with item-value.
          */
-        @Prop({ type: Boolean, default: false }) returnObject: boolean;
+        returnObject: { type: Boolean, default: false },
 
         /**
          * Changes display of selections to chips.
          */
-        @Prop({ type: Boolean, default: false }) chips: boolean;
+        chips: { type: Boolean, default: false },
 
         /**
          * When searching, will always highlight the first option.
          */
-        @Prop({ type: Boolean, default: false }) autoSelectFirst: boolean;
+        autoSelectFirst: { type: Boolean, default: false },
 
         /**
          * Adds a remove icon to selected chips.
          */
-         @Prop({ type: Boolean, default: false }) deletableChips: boolean;
+        deletableChips: { type: Boolean, default: false },
 
-         /**
-          * Hides the menu when there are no options to show. Useful for preventing the menu from
-          * opening before results are fetched asynchronously. Also has the effect of opening the
-          * menu when the items array changes if not already open.
-          */
-         @Prop({ type: Boolean, default: false }) hideNoData: boolean;
+        /**
+         * Hides the menu when there are no options to show. Useful for preventing the menu from
+         * opening before results are fetched asynchronously. Also has the effect of opening the
+         * menu when the items array changes if not already open.
+         */
+        hideNoData: { type: Boolean, default: false },
 
-         /**
-          * Do not display in the select menu items that are already selected.
-          */
-         @Prop({ type: Boolean, default: false }) hideSelected: boolean;
+        /**
+         * Do not display in the select menu items that are already selected.
+         */
+        hideSelected: { type: Boolean, default: false }
+    },
 
-        _loading: boolean = false;
+    data()
+    {
+        return {
+            _loading: false,
+            _items: [],
+            _selected: null,
+            searchQuery: '',
+            timeout: null as NodeJS.Timeout | null
+        }
+    },
 
-        _items: Array<any> = [];
-
-        _selected = null;
-
-        searchQuery: string = '';
-
-        timeout: NodeJS.Timeout | null = null;
+    methods: {
 
         /**
          * Emit the input event.
@@ -86,7 +91,7 @@
         {
             this.$data._selected = value.filter((selected: any) => selected !== '');
             this.$emit('input', this.$data._selected);
-        }
+        },
 
         /**
          * Handle the change event fired by the `v-combobox`.
@@ -103,7 +108,7 @@
             // remembers the last index, so if we try to add a new chip to the combobox that doesn't
             // exist in the menu, and then we press ENTER, it will fail returning an error.
             (<any>this.$refs.combobox).$refs.menu.listIndex = -1;
-        }
+        },
 
         /**
          * Handle the search.
@@ -125,7 +130,7 @@
             {
                 this._search();
             }, 250);
-        }
+        },
 
         /**
          * Remove an item from the selection.
@@ -142,12 +147,12 @@
             let index = selected.indexOf(match);
             selected.splice(index, 1);
             this.$emit('input', selected);
-        }
+        },
 
         /**
          * Override this method in order to define what to do when querying the search.
          */
-        _search() {}
+        _search() {},
 
         /**
          * Stop the propagation of the enter keypress event.
@@ -161,20 +166,18 @@
                 event.preventDefault();
             }
         }
+    },
 
-        @Watch('searchQuery', { immediate: true })
-        onSearchQueryChange()
-        {
+    created(): void
+    {
+        this.$watch('searchQuery', () => {
             this.handleSearch();
-        }
+        }, { immediate: true });
 
-        @Watch('value', { immediate: true })
-        onValueChange()
-        {
+        this.$watch('value', () => {
             this.$data._selected = this.value;
-        }
+        }, { immediate: true });
     }
-
-    export default Combobox;
+}
 
 </script>

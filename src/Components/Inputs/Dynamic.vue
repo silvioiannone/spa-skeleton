@@ -4,28 +4,31 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
-    import { InputDescription } from '../../Library/Interfaces/InputDescription';
-    import InputFile from './File.vue';
+import { InputDescription } from '../../Library/Interfaces/InputDescription';
+import InputFile from './File.vue';
 
-    @Component({
-        components: {
-            InputFile
-        }
-    })
-    export class InputDynamic extends Vue
-    {
+export default {
+
+    name: 'InputDynamic',
+
+    components: {
+        InputFile
+    },
+
+    props: {
         /**
          * Input description.
          */
-        @Prop({ type: Object, required: true }) description: InputDescription;
+        description: { type: Object, required: true } as InputDescription,
 
         /**
          * Value.
          */
-        @Prop({}) value: any;
+        value: {}
+    },
 
-        get component(): string
+    computed: {
+        component(): string
         {
             switch (this.description.kind) {
                 case 'checkbox':
@@ -37,17 +40,17 @@
                 case 'textarea':
                     return 'textarea-main';
             }
-        }
+        },
 
-        get props()
+        props()
         {
             return {
                 ...this.$props,
                 ...this.description
             }
-        }
+        },
 
-        get listeners()
+        listeners()
         {
             return {
                 ...this.$listeners,
@@ -56,7 +59,6 @@
             }
         }
     }
-
-    export default InputDynamic;
+}
 
 </script>

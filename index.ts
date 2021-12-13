@@ -1,4 +1,5 @@
 export { Config } from './src/Config';
+
 /**
  * Interfaces.
  */
@@ -43,7 +44,7 @@ export { Notification } from './src/Library/App/State/Models/Notification';
  */
 export { AbstractChannel as Channel } from './src/Library/WebSocket/AbstractChannel';
 export { AbstractHandler as EventHandler } from './src/Library/Events/AbstractHandler';
-export { PushNotification } from 'spa-skeleton/src/Library/Notifications/PushNotification';
+export { PushNotification } from './src/Library/Notifications/PushNotification';
 
 /**
  * Mixins

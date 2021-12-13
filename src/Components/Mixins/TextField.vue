@@ -1,122 +1,125 @@
 <script lang="ts">
 
-    import { VNode }                   from 'vue';
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import { Config }                  from '../../Config';
-    import Input from './Input.vue';
-    import MixinComponent from '../Mixins/Component.vue';
+import { VNode } from 'vue';
+import { Config } from '../../Config';
+import Input from './Input.vue';
+import MixinComponent from '../Mixins/Component.vue';
 
-    /**
-     * This mixin can be used in order to create text fields.
-     *
-     * It is possible to override any of the value of the props by defining a computed value with
-     * the same name.
-     */
-    @Component
-    export class TextField extends Mixins(Input, MixinComponent)
-    {
+/**
+ * This mixin can be used in order to create text fields.
+ *
+ * It is possible to override any of the value of the props by defining a computed value with
+ * the same name.
+ */
+export default {
+
+    mixins: [Input, MixinComponent],
+
+    props: {
         /**
          * Input type.
          */
-        @Prop({ type: String }) type: string;
+        type: { type: String },
 
         /**
          * Field step size.
          */
-        @Prop({ type: String, default: '1'}) step: string;
+        step: { type: String, default: '1' },
 
         /**
          * Input mask.
          */
-        @Prop({ type: String, default: '' }) mask: string;
+        mask: { type: String, default: '' },
 
         /**
          * Input field prefix.
          */
-        @Prop({ type: String, default: '' }) prefix: string;
+        prefix: { type: String, default: '' },
 
         /**
          * Suffix.
          */
-        @Prop({ type: String, default: '' }) suffix: string;
+        suffix: { type: String, default: '' },
 
         /**
          * Placeholder.
          */
-        @Prop({ type: String, default: '' }) placeholder: string;
+        placeholder: { type: String, default: '' },
 
         /**
          * Display the text field with a "solo" style.
          */
-        @Prop({ type: Boolean, default: false }) solo: boolean;
+        solo: { type: Boolean, default: false },
 
         /**
          * Prepend an icon to the text field.
          */
-        @Prop({ type: String, default: '' }) prependIcon: string;
+        prependIcon: { type: String, default: '' },
 
         /**
          * Prepend an icon to the text field.
          */
-        @Prop({ type: String, default: '' }) appendIcon: string;
+        appendIcon: { type: String, default: '' },
 
         /**
          * Appends an icon to the outside the component's input, uses same syntax as `v-icon`.
          */
-         @Prop({ type: String, default: '' }) appendOuterIcon: string;
+        appendOuterIcon: { type: String, default: '' },
 
         /**
          * Make the text field clearable.
          */
-        @Prop({ type: Boolean, default: false }) clearable: boolean;
+        clearable: { type: Boolean, default: false },
 
         /**
          * Creates counter for input length; if no number is specified, it defaults to 25. Does
          * not apply any validation.
          */
-        @Prop(Number) counter: number;
+        counter: Number,
 
         /**
          * Returns the unmodified masked string.
          */
-        @Prop({ type: Boolean, default: false }) returnMaskedValue: boolean;
+        returnMaskedValue: { type: Boolean, default: false },
 
         /**
          * Applies the alternate filled input style.
          */
-        @Prop({ type: Boolean, default: false }) filled: boolean;
+        filled: { type: Boolean, default: false },
 
         /**
          * Applies the alternate outline input style.
          */
-        @Prop({ type: Boolean, default: undefined }) outlined: boolean;
+        outlined: { type: Boolean, default: undefined },
 
         /**
          * Hides hint, validation errors
          */
-        @Prop({ type: Boolean, default: false }) hideDetails: string;
+        hideDetails: { type: Boolean, default: false },
 
         /**
          * Removes elevation (shadow) added to element when using the solo or solo-inverted props
          */
-        @Prop({ type: Boolean, default: false }) flat: boolean;
+        flat: { type: Boolean, default: false },
 
         /**
          * Reduces element opacity until focused.
          */
-        @Prop({ type: Boolean, default: false }) soloInverted: boolean;
+        soloInverted: { type: Boolean, default: false },
 
         /**
          * Reduces the input height.
          */
-        @Prop({ type: Boolean, default: false }) dense: boolean;
+        dense: { type: Boolean, default: false },
 
         /**
          * Make the component read-only.
          */
-        @Prop({ type: Boolean, default: false }) readonly: boolean;
+        readonly: { type: Boolean, default: false }
+    },
 
-        get _outlined(): boolean
+    computed: {
+        _outlined(): boolean
         {
             if (this.outlined === undefined) {
                 return Config.ui.components.textField.defaultStyle === 'outlined';
@@ -124,38 +127,37 @@
 
             return this.outlined;
         }
+    },
 
-        mounted(): void
-        {
-            // This is a work-around needed in order to prevent Vuetify text-input mask to trigger
-            // the validation too soon.
-            let input = this.$el.querySelector('input');
+    mounted(): void
+    {
+        // This is a work-around needed in order to prevent Vuetify text-input mask to trigger
+        // the validation too soon.
+        let input = this.$el.querySelector('input');
 
-            if (! input) {
-                return;
-            }
+        if (! input) {
+            return;
         }
+    },
 
-        render(createElement: Function): VNode
-        {
-            let directives = [];
+    render(createElement: Function): VNode
+    {
+        let directives = [];
 
-            if (this.mask.length) {
-                directives.push({
-                    name: 'mask',
-                    value: this.mask
-                });
-            }
-
-            return createElement('v-text-field', {
-                attrs: this.$attrs,
-                directives,
-                props: this.getProps(),
-                on: this.$listeners
+        if (this.mask.length) {
+            directives.push({
+                name: 'mask',
+                value: this.mask
             });
         }
-    }
 
-    export default TextField;
+        return createElement('v-text-field', {
+            attrs: this.$attrs,
+            directives,
+            props: this.getProps(),
+            on: this.$listeners
+        });
+    }
+}
 
 </script>

@@ -1,15 +1,15 @@
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class BasePaginatable extends Vue
-    {
+    props: {
         /**
          * Pagination object,
          */
-        @Prop({ type: Object, default: () => ({}) }) pagination: any
+        pagination: { type: Object, default: () => ({}) }
+    },
 
+    methods: {
         /**
          * Update the pagination from the value of the Vuetify's options prop.
          */
@@ -32,7 +32,7 @@
             }
 
             this.$emit('update:pagination', { ...this.pagination, ...pagination })
-        }
+        },
 
         /**
          * Get the Vue compatible pagination props from a pagination object.
@@ -70,7 +70,6 @@
             return vuePagination;
         }
     }
-
-    export default BasePaginatable;
+}
 
 </script>

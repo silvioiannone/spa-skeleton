@@ -7,17 +7,25 @@
 
 <script lang="ts">
 
-    import { Component, Mixins } from 'vue-property-decorator';
-    import DialogCard from '../../../Dialogs/Card.vue';
+import DialogCard from '../../../Dialogs/Card.vue';
 
-    @Component({
-        components: {
-            DialogCard,
+export default {
+
+    name: 'EditorDialogAddLink',
+
+    mixins: [DialogCard],
+
+    components: {
+        DialogCard
+    },
+
+    data() {
+        return {
+            url: ''
         }
-    })
-    export class EditorDialogAddLink extends Mixins(DialogCard)
-    {
-        url: string = '';
+    },
+
+    methods: {
 
         save(): void
         {
@@ -26,7 +34,6 @@
             this.url = '';
         }
     }
-
-    export default EditorDialogAddLink;
+}
 
 </script>

@@ -3,7 +3,7 @@ import Duration from 'dayjs/plugin/duration';
 import IsSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import UTC from 'dayjs/plugin/utc';
-import { Config } from 'spa-skeleton/src/Config';
+import { Config } from '../../Config';
 import { Service } from './Service';
 
 // Locales

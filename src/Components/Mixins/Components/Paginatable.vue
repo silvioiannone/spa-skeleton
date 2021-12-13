@@ -1,26 +1,31 @@
 <script lang="ts">
 
-    import { Query }                             from '@vuex-orm/core';
-    import { Config } from 'spa-skeleton/index';
-    import { Component, Mixins }                 from 'vue-property-decorator';
-    import { Pagination as PaginationInterface } from '../../../Library/Interfaces/Pagination';
-    import { ResponseInterface }                 from '../../../Library/Api/ResponseInterface';
-    import { Pagination }                        from '../../../Library/Utils/Pagination';
-    import RequestParametersWatcher from './RequestParametersWatcher.vue';
-    import { ExtendedModel }                     from '../../../Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
+import { Query } from '@vuex-orm/core';
+import { Config } from '../../../Config';
+import { Pagination as PaginationInterface } from '../../../Library/Interfaces/Pagination';
+import { ResponseInterface } from '../../../Library/Api/ResponseInterface';
+import { Pagination } from '../../../Library/Utils/Pagination';
+import RequestParametersWatcher from './RequestParametersWatcher.vue';
+import { ExtendedModel } from '../../../Library/Services/StateMachine/VuexOrm/Support/ExtendedModel';
 
-    /**
-     * This mixins handles the pagination and the paginated data displayed by a component.
-     */
-    @Component
-    export class Paginatable extends Mixins(RequestParametersWatcher)
+/**
+ * This mixins handles the pagination and the paginated data displayed by a component.
+ */
+export default {
+
+    mixins: [RequestParametersWatcher],
+
+    data()
     {
-        // We can force the object casting to a `PaginationInterface` since the pagination is
-        // initialized in the `created()` Vue lifecycle hook.
-        pagination: PaginationInterface = {} as PaginationInterface;
+        return {
+            // We can force the object casting to a `PaginationInterface` since the pagination is
+            // initialized in the `created()` Vue lifecycle hook.
+            pagination: {} as PaginationInterface,
+            previousPagination: {} as PaginationInterface
+        }
+    },
 
-        previousPagination: PaginationInterface = {} as PaginationInterface;
-
+    methods: {
         /**
          * Get the paginated resource.
          */
@@ -49,7 +54,7 @@
             }
 
             return query.get();
-        }
+        },
 
         /**
          * Get the paginated data.
@@ -57,7 +62,7 @@
         fetchPaginationFromResponse(response: ResponseInterface): void
         {
             this.pagination = Pagination.makeFromResponse(response);
-        }
+        },
 
         /**
          * Initialize the pagination.
@@ -71,7 +76,7 @@
                 total: 0,
                 last_page: 1
             };
-        }
+        },
 
         /**
          * Set the pagination.
@@ -106,14 +111,13 @@
 
             this.mergeParameters(parameters);
         }
+    },
 
-        created(): void
-        {
-            this.initPagination();
-            this.afterResponse(this.fetchPaginationFromResponse);
-        }
+    created(): void
+    {
+        this.initPagination();
+        this.afterResponse(this.fetchPaginationFromResponse);
     }
-
-    export default Paginatable;
+}
 
 </script>

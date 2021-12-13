@@ -16,22 +16,27 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import CardMain from './Main.vue';
+import CardMain from './Main.vue';
 
-    @Component({
-        components: {
-            CardMain
-        }
-    })
-    export class CardForm extends Mixins(CardMain)
-    {
+export default {
+
+    name: 'CardForm',
+
+    mixins: [CardMain],
+
+    components: {
+        CardMain
+    },
+
+    props: {
         /**
          * Display a close button.
          */
-        @Prop({ type: Boolean, default: false }) closable: boolean;
+        closable: ({ type: Boolean, default: false })
+    },
 
-        get _closable(): boolean
+    computed: {
+        _closable(): boolean
         {
             if (this.closable) {
                 return true;
@@ -42,23 +47,25 @@
             }
 
             return false;
-        }
+        },
 
-        get on(): { [key: string]: Function }
+        on(): { [key: string]: Function }
         {
             return {
                 cancel: this.handleCancel,
                 submit: this.handleSubmit
             }
         }
+    },
 
+    methods: {
         /**
          * Propagates the cancel form event to the parent.
          */
         handleCancel(event: Event): void
         {
             this.$emit('cancel', event);
-        }
+        },
 
         /**
          * Propagates the submit form event to the parent.
@@ -68,7 +75,6 @@
             this.$emit('submit', event)
         }
     }
-
-    export default CardForm;
+}
 
 </script>

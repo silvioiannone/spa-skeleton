@@ -3,7 +3,7 @@ import IO                               from 'socket.io-client';
 import { Logger as Log }                from './Services/Logger';
 import Vue                              from 'vue';
 import { Config }                       from '../Config';
-import Subscriptions                    from '../../../../resources/ts/App/Subscriptions';
+import Subscriptions                    from '@/ts/App/Subscriptions';
 import { ApiFactory }                   from './Api';
 import { App as AppChannel }            from './WebSocket/Channels/App';
 import { AppHandler }                   from './Events/AppHandler';
@@ -274,21 +274,17 @@ export class WebSocket
             broadcaster: 'socket.io',
             host: Config.webSocket.host + ':' + Config.webSocket.port
         });
+
         this.updateEchoHeaders();
 
         let callbacks = this.echo.connector.socket._callbacks;
 
-        callbacks.$connect.push((): void =>
-        {
+        callbacks.$reconnect.push((): void => {
             // Set the socket ID in the API
             ApiFactory.setSocketId(this.echo.socketId());
             this.isConnected = true;
             Log.debug('Connected to the WebSocket server (ID: ' + this.echo.socketId() + ')');
         });
-
-        if (! callbacks.$reconnect) {
-            callbacks.$reconnect = [];
-        }
 
         callbacks.$reconnect.push((): void => Log.debug('Reconnecting to the WebSocket server...'));
 
@@ -309,9 +305,11 @@ export class WebSocket
      */
     public disconnect(): void
     {
-        if (this.echo) {
-            this.echo.disconnect();
-            this.isConnected = false;
+        if (! this.echo) {
+            return
         }
+
+        this.echo.disconnect();
+        this.isConnected = false;
     }
 }

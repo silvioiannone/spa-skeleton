@@ -1,6 +1,6 @@
 import { ApiResource }       from './Api/Resources/ApiResource';
 import { AbstractApiDriver } from './Api/Drivers/AbstractApiDriver';
-import AppResources          from '../../../../resources/ts/App/Api';
+import AppResources          from '@/ts/App/Api';
 
 // Skeleton API resources
 import { App }           from './Api/Resources/App';

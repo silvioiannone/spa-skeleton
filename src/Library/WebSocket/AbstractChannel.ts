@@ -1,4 +1,5 @@
 import { Store }        from 'vuex';
+import State from '../../../../bloomestate/resources/ts/App/State';
 import { StateMachine } from '../Services/StateMachine';
 import { Channel }      from '../Interfaces/Channel';
 

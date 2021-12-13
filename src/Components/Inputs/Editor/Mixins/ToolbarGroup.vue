@@ -1,23 +1,25 @@
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class ToolbarGroup extends Vue
-    {
+    name: 'ToolbarGroup',
+
+    props: {
         /**
          * Display smaller buttons.
          */
-        @Prop({ type: Boolean, default: false }) small: boolean;
+        small: { type: Boolean, default: false }
+    },
 
-        get buttonProps()
+    computed: {
+
+        buttonProps()
         {
             return {
                 small: this.small
             }
         }
     }
-
-    export default ToolbarGroup;
+}
 
 </script>

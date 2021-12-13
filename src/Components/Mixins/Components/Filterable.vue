@@ -1,13 +1,21 @@
 <script lang="ts">
 
-    import { Component, Watch, Mixins } from 'vue-property-decorator';
-    import RequestParametersWatcher from './RequestParametersWatcher.vue';
+import RequestParametersWatcher from './RequestParametersWatcher.vue';
 
-    @Component
-    export class Filterable extends Mixins(RequestParametersWatcher)
+export default {
+
+    name: 'Filterable',
+
+    mixins: [RequestParametersWatcher],
+
+    data()
     {
-        filters = {};
+        return {
+            filters: {}
+        }
+    },
 
+    methods: {
         /**
          * Get the filter query parameters.
          */
@@ -34,19 +42,16 @@
 
             return parameters;
         }
+    },
 
-        created()
-        {
-            this.mergeParameters(this.getFilterParameters());
-        }
+    created(): void
+    {
+        this.mergeParameters(this.getFilterParameters());
 
-        @Watch('filters', { deep: true })
-        onFiltersChange()
-        {
+        this.$watch('filters', () => {
             this.mergeParameters(this.getFilterParameters());
-        }
+        }, { deep: true });
     }
-
-    export default Filterable;
+}
 
 </script>

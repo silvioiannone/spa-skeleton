@@ -1,4 +1,4 @@
-import AppPushNotifications from '../../../../../resources/ts/App/PushNotifications';
+import AppPushNotifications from '@/ts/App/PushNotifications';
 
 /**
  * The available notifications.

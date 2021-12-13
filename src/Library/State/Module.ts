@@ -1,4 +1,4 @@
-import { ApiFactory, ApiClient } from 'spa-skeleton/src/Library/Api';
+import { ApiFactory, ApiClient } from '../Api';
 
 /**
  * Abstract state machine module.

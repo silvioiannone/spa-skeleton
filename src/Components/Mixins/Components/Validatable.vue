@@ -1,32 +1,34 @@
 <script lang="ts">
 
-    import Vue from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class Validatable extends Vue
-    {
+    name: 'Validatable',
+
+    props: {
         /**
          * Input label.
          */
-        @Prop({ type: String, default: '' }) label: string;
+        label: { type: String, default: '' },
 
         /**
          * Value of the name attribute.
          */
-        @Prop({ type: String, default: '' }) name: string;
+        name: { type: String, default: '' },
 
         /**
          * Validation rules.
          */
-        @Prop({ type: String, default: '' }) rules: any;
+        rules: { type: String, default: '' },
 
         /**
          * Field name for validation purposes.
          *
          * Overwrites the `name` prop.
          */
-        @Prop({ type: String, default: '' }) validationName: any;
+        validationName: { type: String, default: '' }
+    },
+
+    methods: {
 
         /**
          * Handle the `blur` event fired by `v-text-field` component.
@@ -36,7 +38,6 @@
             (this.$refs.validationProvider as any).validate();
         }
     }
-
-    export default Validatable;
+}
 
 </script>

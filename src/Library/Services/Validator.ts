@@ -5,7 +5,7 @@ import Vue                                       from 'vue';
 import { Logger as Log }                         from './Logger';
 import { Service }                               from './Service';
 import { Translator }                            from './Translator';
-import AppRules                                  from '../../../../../resources/ts/App/Rules';
+import AppRules                                  from '@/ts/App/Rules';
 
 // Skeleton rules.
 import { Count }      from '../App/Rules/Count';
@@ -29,9 +29,9 @@ export class Validator extends Service
     /**
      * Boot the validator.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
-        let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
+        let messages = await import(`./../../../../bloomestate/node_modules/vee-validate/dist/locale/${Config.locale}.json`);
         let translator = Translator.get();
 
         Translator.merge(messages.messages, 'validations.vendor');

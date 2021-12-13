@@ -1,17 +1,16 @@
 <script lang="ts">
 
-    /*
-     * This mixin should be used by all the components that needs to access and set the application
-     * settings.
-     */
+import { ResponseInterface } from '../../Library/Api/ResponseInterface';
+import _ from 'lodash';
 
-    import { Vue, Component }    from 'vue-property-decorator';
-    import { ResponseInterface } from '../../Library/Api/ResponseInterface';
-    import _                     from 'lodash';
+/**
+ * This mixin should be used by all the components that needs to access and set the application
+ * settings.
+ */
+export default {
 
-    @Component
-    export class SettingsSetter extends Vue {
-        get settings(): any
+    computed: {
+        settings(): any
         {
             // If the settings.json file contains an empty object, we get an empty array from an API,
             // convert it to an empty Object
@@ -19,7 +18,9 @@
 
             return Array.isArray(settings) ? {} : settings;
         }
+    },
 
+    methods: {
         /**
          * Set an order setting.
          *
@@ -33,7 +34,7 @@
             _.set(settings, path, value);
 
             this.$store.commit('app/SET_SETTINGS', settings);
-        }
+        },
 
         /**
          * Save the settings.
@@ -52,5 +53,6 @@
             });
         }
     }
+}
 
 </script>

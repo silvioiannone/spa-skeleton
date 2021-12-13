@@ -1,23 +1,28 @@
 <script lang="ts">
 
-    import { Vue, Component, Watch } from 'vue-property-decorator';
+/**
+ * The purpose of this mixin is to facilitate the use of server-side filters.
+ *
+ * Usage: simply define the value of your filters in the `filters` data object. E.g.:
+ *
+ *     filters: {
+ *         identity_verification_status: null
+ *     }
+ */
+export default {
 
-    /*
-     * The purpose of this mixin is to facilitate the use of server-side filters.
-     *
-     * Usage: simply define the value of your filters in the `filters` data object. E.g.:
-     *
-     *     filters: {
-     *         identity_verification_status: null
-     *     }
-     */
-    @Component
-    export class Filterable extends Vue
+    name: 'Filterable',
+
+    data()
     {
-        filters = {};
+        return {
+            filters: {}
+        }
+    },
 
+    methods: {
         /**
-         * Synch the filters with the ones in the store.
+         * Sync the filters with the ones in the store.
          */
         syncStore(): void
         {
@@ -31,7 +36,7 @@
                     }
                 }
             });
-        }
+        },
 
         /**
          * Update a boolean filter.
@@ -40,15 +45,13 @@
         {
             this.filters[filter] = value ? 'true' : 'false';
         }
+    },
 
-        created(): void
-        {
-            this.syncStore();
-        }
+    created(): void
+    {
+        this.syncStore();
 
-        @Watch('filters', { deep: true })
-        onFiltersChange()
-        {
+        this.$watch('filters', () => {
             let query = { ...this.$route.query };
 
             // When applying a filter always reset the page number.
@@ -81,9 +84,8 @@
             };
 
             this.$navigator.push({ query });
-        }
-    }
-
-    export default Filterable;
+        }, { deep: true });
+    },
+}
 
 </script>

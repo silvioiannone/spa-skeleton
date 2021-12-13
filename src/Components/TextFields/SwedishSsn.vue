@@ -1,32 +1,37 @@
 <script lang="ts">
 
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import TextFieldMain from './Main.vue';
+import TextFieldMain from './Main.vue';
 
-    @Component
-    export class TextFieldSwedishSsn extends Mixins(TextFieldMain)
-    {
+export default {
+
+    name: 'TextFieldSwedishSsn',
+
+    mixins: [TextFieldMain],
+
+    props: {
         /**
          * Social security number.
          */
-        @Prop({ type: String, default: 'Social security number' }) label: string;
+        label: { type: String, default: 'Social security number' },
 
         /**
          * Input field name.
          */
-        @Prop({ type: String, default: 'ssn' }) name: string;
+        name: { type: String, default: 'ssn' },
 
         /**
          * Mask.
          */
-        @Prop({ type: String, default: '######-####' }) mask: string;
+        mask: { type: String, default: '######-####' },
 
         /**
          * Returns the unmodified masked string.
          */
-        @Prop({ type: Boolean, default: true }) returnMaskedValue: boolean;
+        returnMaskedValue: { type: Boolean, default: true }
+    },
 
-        get _validation(): any
+    computed: {
+        _validation(): any
         {
             if (typeof this.rules === 'string') {
                 return this.rules.concat('|', 'swedishSsn');
@@ -38,7 +43,6 @@
             }
         }
     }
-
-    export default TextFieldSwedishSsn;
+}
 
 </script>

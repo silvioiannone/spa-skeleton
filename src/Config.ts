@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // App configuration.
-import AppConfig from '../../../resources/ts/Config';
+import AppConfig from '@/ts/Config';
 
 // API drivers.
 import { SuperAgentDriver } from './Library/Api/Drivers/SuperAgentDriver';
@@ -16,12 +16,12 @@ const defaultConfig = {
     /**
      * This value specifies the environment the application is runnig.
      */
-    env: APP_ENV,
+    env: import.meta.env.VITE_APP_ENV,
 
     /**
      * Specify what logs to display in the console.
      */
-    logLevel: APP_LOG_LEVEL,
+    logLevel: import.meta.env.VITE_APP_LOG_LEVEL,
 
     /**
      * The locale that should be used by default.
@@ -36,17 +36,17 @@ const defaultConfig = {
         /**
          * The application name that should be displayed publicly.
          */
-        name: APP_NAME,
+        name: import.meta.env.VITE_APP_NAME,
 
         /**
          * Pagination size.
          */
-        paginationSize: parseInt(PAGINATION_DEFAULT_SIZE),
+        paginationSize: parseInt(import.meta.env.VITE_PAGINATION_DEFAULT_SIZE),
 
         /**
          * E-mail address to contact in case of need.
          */
-        support: MAIL_SUPPORT_ADDRESS,
+        support: import.meta.env.VITE_MAIL_SUPPORT_ADDRESS,
 
         /**
          * Services settings.
@@ -61,7 +61,7 @@ const defaultConfig = {
                 /**
                  * Reporter API key (Bugsnag).
                  */
-                key: BUGSNAG_API_KEY
+                key: import.meta.env.VITE_BUGSNAG_API_KEY
             },
 
             /**
@@ -148,12 +148,12 @@ const defaultConfig = {
         /**
          * Laravel Passport web client ID.
          */
-        id: WEB_CLIENT_ID,
+        id: import.meta.env.VITE_WEB_CLIENT_ID,
 
         /**
          * Laravel Passport web client secret.
          */
-        secret: WEB_CLIENT_SECRET
+        secret: import.meta.env.VITE_WEB_CLIENT_SECRET
     },
 
     /**
@@ -169,22 +169,22 @@ const defaultConfig = {
         /**
          * Host where the WebSocket server is hosted.
          */
-        host: WEBSOCKET_SERVER_HOST,
+        host: import.meta.env.VITE_WEBSOCKET_SERVER_HOST,
 
         /**
          * WebSocket server port.
          */
-        port: WEBSOCKET_SERVER_PORT,
+        port: import.meta.env.VITE_WEBSOCKET_SERVER_PORT,
 
         /**
          * WebSocket server app ID.
          */
-        app_id: WEBSOCKET_SERVER_APP_ID,
+        app_id: import.meta.env.VITE_WEBSOCKET_SERVER_APP_ID,
 
         /**
          * WebSocket server auth key.
          */
-        key: WEBSOCKET_SERVER_KEY
+        key: import.meta.env.VITE_WEBSOCKET_SERVER_APP_ID
     },
 
     /**

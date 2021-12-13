@@ -1,5 +1,5 @@
 import { Module }                                from '../../../State/Module';
-import { Config, ResponseInterface, ViewAction } from 'spa-skeleton';
+import { Config, ResponseInterface, ViewAction } from '../../../../../index';
 import { Store }                                 from 'vuex';
 import { RouteRecord } from 'vue-router';
 

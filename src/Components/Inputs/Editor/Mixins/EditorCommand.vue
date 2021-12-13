@@ -1,24 +1,24 @@
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+/**
+ * This mixin should be required by any component that extends the editor functionality.
+ */
+export default {
 
-    /**
-     * This mixins should be required by any component that extends the editor functionality.
-     */
-    @Component
-    export class EditorCommand extends Vue
-    {
+    name: 'EditorCommand',
+
+    props: {
+
         /**
          * TipTap editor commands prop.
          */
-        @Prop({ required: true }) commands: any;
+        commands: { required: true },
 
         /**
          * TipTap editor isActive prop.
          */
-        @Prop({ required: true }) isActive: any;
+        isActive: { required: true }
     }
-
-    export default EditorCommand;
+}
 
 </script>

@@ -32,91 +32,99 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-    import { Config }                      from '../../Config';
-    import BreadcrumbsMain from '../Breadcrumbs/Main.vue';
-    import TextFieldSearch from '../TextFields/Search.vue';
+import BreadcrumbsMain from '../Breadcrumbs/Main.vue';
+import TextFieldSearch from '../TextFields/Search.vue';
+import { Config } from '../../Config';
 
-    @Component({
-        components: {
-            BreadcrumbsMain,
-            TextFieldSearch
-        }
-    })
-    export class AppBarMain extends Vue
-    {
+export default {
+
+    name: 'AppBarMain',
+
+    components: {
+        BreadcrumbsMain,
+        TextFieldSearch
+    },
+
+    props: {
         /**
          * Designates the component as part of the application layout. Used for dynamically
          * adjusting content sizing. Components using this prop should reside outside of v-main
          * component to function properly. You can more information about layouts on the application
          * page.
          */
-        @Prop({ type: Boolean, default: false }) app: boolean;
+        app: { type: Boolean, default: false },
 
         /**
          * Make the app bar extended.
          */
-        @Prop({ type: Boolean, default: false }) extended: boolean;
+        extended: { type: Boolean, default: false },
 
         /**
          * Whether the search button should be displayed.
          */
-        @Prop({ type: Boolean, default: false }) search: boolean;
+        search: { type: Boolean, default: false },
 
         /**
          * Whether there is a navigation drawer.
          *
          * If there isn't one (false) the app bar nav icon is hidden.
          */
-        @Prop({ type: Boolean, default: true }) navigationDrawer: boolean;
+        navigationDrawer: { type: Boolean, default: true },
 
         /**
          * Toolbar title.
          */
-        @Prop({ type: String, default: Config.app.name }) title: string;
+        title: { type: String, default: Config.app.name },
 
         /**
          * Toolbar title link.
          */
-        @Prop({ type: String, default: '' }) titleTo: string;
+        titleTo: { type: String, default: '' }
+    },
 
-        protected showingSearch: boolean = false;
+    data() {
+        return {
+            showingSearch: false
+        }
+    },
 
-        get status(): any
+    computed: {
+        status(): any
         {
             return this.$store.getters.app.status;
-        }
+        },
 
-        get breadcrumbs(): Array<any>
+        breadcrumbs(): Array<any>
         {
             return this.ui.toolbar.breadcrumbs;
-        }
+        },
 
-        get routeSearchParameter(): string | undefined
-        {
-            return this.$route.query.search as (string | undefined);
-        }
+        routeSearchParameter: {
+            get(): string | undefined
+            {
+                return this.$route.query.search as (string | undefined);
+            },
+            set(value: string | undefined)
+            {
+                if (!this.searchCallback) {
+                    return;
+                }
 
-        set routeSearchParameter(value: string | undefined)
-        {
-            if (! this.searchCallback) {
-                return;
-            }
+                this.searchCallback(value);
+            },
+        },
 
-            this.searchCallback(value);
-        }
-
-        get searchCallback(): Function | null
+        searchCallback(): Function | null
         {
             return this.ui.search;
-        }
+        },
 
-        get showingBreadcrumbs(): boolean
+        showingBreadcrumbs(): boolean
         {
             return this.$vuetify.breakpoint.smAndDown ? !this.showingSearch : true;
-        }
+        },
 
-        get showingTitle(): boolean
+        showingTitle(): boolean
         {
             if (this.$vuetify.breakpoint.smAndDown) {
                 return false;
@@ -127,22 +135,24 @@
             }
 
             return true;
-        }
+        },
 
-        get toolbarTitleRedirectUrl(): string
+        toolbarTitleRedirectUrl(): string
         {
             if (this.titleTo.length) {
                 return this.titleTo;
             }
 
             return (this.$user.id) ? '/home' : '/';
-        }
+        },
 
-        get ui(): any
+        ui(): any
         {
             return this.$store.getters.app.ui;
         }
+    },
 
+    methods: {
         /**
          * Hide the search box.
          */
@@ -150,7 +160,7 @@
         {
             this.routeSearchParameter = '';
             this.showingSearch = false;
-        }
+        },
 
         /**
          * Hide the search box if it's empty.
@@ -161,50 +171,7 @@
                 this.hideSearch();
             }
         }
-
-        /**
-         * Show the search box.
-         */
-        showSearch(): void
-        {
-            this.showingSearch = true;
-
-            setTimeout(() => {
-                let input = this.$el.querySelector('input');
-                if (input) {
-                    input.focus();
-                }
-            });
-        }
-
-        /**
-         * Expand the navigationDrawer.
-         */
-        toggleNavigationDrawer(): void
-        {
-            this.$store.commit(
-                'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
-                ! this.ui.navigationDrawers.leftVisible
-            );
-        }
-
-        @Watch('routeSearchParameter', { immediate: true })
-        onRouteSearchParameterChange(): void
-        {
-            if (this.routeSearchParameter?.length) {
-                this.showSearch();
-            }
-        }
-
-        @Watch('searchCallback')
-        onSearchCallbackChange(): void
-        {
-            if (! this.searchCallback) {
-                this.hideSearch();
-            }
-        }
     }
-
-    export default AppBarMain;
+}
 
 </script>

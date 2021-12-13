@@ -6,37 +6,25 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Watch } from 'vue-property-decorator';
-    import CardMain from './Main.vue';
+import CardMain from './Main.vue';
 
-    @Component({
-        components: {
-            CardMain
-        }
-    })
-    export class CardBackgroundJobs extends Mixins(CardMain)
-    {
-        jobs: Array<any> = [];
+export default {
 
-        mounted()
-        {
-            this.$eh.$on(
-                '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Processed',
-                (job: any) => this.insertOrUpdateJob(job)
-            );
-            this.$eh.$on(
-                '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Failed',
-                (job: any) => this.insertOrUpdateJob(job)
-            );
-            this.$eh.$on(
-                '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Processing',
-                (job: any) => this.insertOrUpdateJob(job)
-            );
-            this.$eh.$on(
-                '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Message',
-                (message: any) => this.insertJobMessage(message)
-            )
+    name: 'CardBackgroundJobs',
+
+    components: {
+        CardMain
+    },
+
+    mixins: [CardMain],
+
+    data() {
+        return {
+            jobs: []
         }
+    },
+
+    methods: {
 
         /**
          * Insert a message into a Job.
@@ -53,7 +41,7 @@
                     });
                 });
             }
-        }
+        },
 
         /**
          * Insert or update a job.
@@ -64,10 +52,31 @@
 
             index >= 0 ? this.$set(this.jobs, index, job) : this.jobs.push(job);
         }
+    },
 
-        @Watch('jobs')
-        onJobsChange()
-        {
+    mounted()
+    {
+        this.$eh.$on(
+            '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Processed',
+            (job: any) => this.insertOrUpdateJob(job)
+        );
+        this.$eh.$on(
+            '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Failed',
+            (job: any) => this.insertOrUpdateJob(job)
+        );
+        this.$eh.$on(
+            '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Processing',
+            (job: any) => this.insertOrUpdateJob(job)
+        );
+        this.$eh.$on(
+            '.Bloom\\Cluster\\Kernel\\App\\Events\\Jobs\\Message',
+            (message: any) => this.insertJobMessage(message)
+        );
+    },
+
+    watch: {
+
+        jobs() {
             // Whenever a job is processed or has failed remove it after some time.
             this.jobs.forEach((job: any) => {
                 if (job.status === 'processed' || job.status === 'failed') {
@@ -79,7 +88,6 @@
             });
         }
     }
-
-    export default CardBackgroundJobs;
+}
 
 </script>

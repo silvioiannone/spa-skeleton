@@ -1,39 +1,39 @@
 <script lang="ts">
 
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Input from './Input.vue';
+import Input from './Input.vue';
 
-    /**
-     * This mixin can be used in order to create text fields.
-     *
-     * It is possible to override any of the value of the props by defining a computed value with
-     * the same name.
-     */
-    @Component
-    export class Textarea extends Mixins(Input)
-    {
+/**
+ * This mixin can be used in order to create text fields.
+ *
+ * It is possible to override any of the value of the props by defining a computed value with
+ * the same name.
+ */
+export default {
+
+    mixins: [Input],
+
+    props: {
         /**
          * Applies the alternate outline input style.
          */
-        @Prop({ type: Boolean, default: false }) outlined: boolean;
+        outlined: { type: Boolean, default: false },
 
         /**
-         * Creates counter for input length; if no number is specified, it defaults to 25. Does not
-         * apply any validation.
+         * Creates counter for input length; if no number is specified, it defaults to 25. Does
+         * not apply any validation.
          */
-        @Prop({ default: undefined }) counter: number;
+        counter: { default: undefined },
 
         /**
          * Prepend an icon to the text field.
          */
-        @Prop({ type: String, default: '' }) prependIcon: string;
+        prependIcon: { type: String, default: '' },
 
         /**
          * Default row count.
          */
-        @Prop({ type: Number, default: 5 }) rows: number;
+        rows: { type: Number, default: 5 }
     }
-
-    export default Textarea;
+}
 
 </script>

@@ -1,26 +1,27 @@
 <script lang="ts">
 
-    import { Vue, Component, Watch } from 'vue-property-decorator';
-    import { Route }                 from 'vue-router';
+import { Route } from 'vue-router';
 
-    import '../../../Library/ComponentHooks';
+import '../../../Library/ComponentHooks';
 
-    interface Head {
-        title?: null | string,
-        description?: null | string
-    }
+interface Head {
+    title?: null | string,
+    description?: null | string
+}
 
-    /**
-     * This mixin allows the head HTML tag content to be set dynamically.
-     */
-    @Component
-    export class Headful extends Vue
+export default {
+
+    data()
     {
-        head: Head = {
-            title: null,
-            description: null
+        return {
+            head: {
+                title: null,
+                description: null
+            } as Head
         }
+    },
 
+    methods: {
         /**
          * Refresh the head tag's content.
          */
@@ -28,7 +29,7 @@
         {
             this.setTitle();
             this.setDescription();
-        }
+        },
 
         /**
          * Set the head description.
@@ -38,7 +39,7 @@
             if (this.head.description) {
                 this.$head.description(this.head.description);
             }
-        }
+        },
 
         /**
          * Set the head title.
@@ -49,25 +50,25 @@
                 this.$head.title(this.head.title);
             }
         }
+    },
 
-        beforeRouteEnter(to: Route, from: Route, next: Function) {
-            next((vm: Headful) => {
-                vm.refreshHead();
-            });
-        }
+    beforeRouteEnter(to: Route, from: Route, next: Function) {
+        next((vm: Headful) => {
+            vm.refreshHead();
+        });
+    },
 
-        beforeRouteUpdate(to: Route, from: Route, next: Function) {
-            this.refreshHead();
-            next();
-        }
+    beforeRouteUpdate(to: Route, from: Route, next: Function) {
+        this.refreshHead();
+        next();
+    },
 
-        @Watch('head')
-        onHeadChange()
+    watch: {
+        head()
         {
             this.refreshHead();
         }
     }
-
-    export default Headful;
+}
 
 </script>

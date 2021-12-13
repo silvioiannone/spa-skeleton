@@ -12,22 +12,22 @@
 
 <script lang="ts">
 
-    import { Component, Vue } from 'vue-property-decorator';
-    import ErrorMain from './Main.vue';
+import ErrorMain from './Main.vue';
 
-    @Component({
-        components: {
-            ErrorMain
-        }
-    })
-    export class ErrorServerError extends Vue
-    {
-        get config()
+export default {
+
+    name: 'ErrorServerError',
+
+    components: {
+        ErrorMain
+    },
+
+    computed: {
+        config()
         {
             return this.$store.getters.app.config;
         }
     }
-
-    export default ErrorServerError;
+}
 
 </script>

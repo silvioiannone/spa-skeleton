@@ -1,12 +1,13 @@
 <script lang="ts">
 
-    import Vue, { VNode } from 'vue';
-    import { Component }  from 'vue-property-decorator';
+import { VNode } from 'vue';
 
-    @Component
-    export class ResponsiveContainer extends Vue
-    {
-        get attrs(): any
+export default {
+
+    name: 'ResponsiveContainer',
+
+    computed: {
+        attrs(): any
         {
             return Object.keys(this.$attrs).filter((key: string) =>
             {
@@ -18,9 +19,9 @@
 
                 return value || typeof value === 'string';
             });
-        }
+        },
 
-        get class(): any
+        class(): any
         {
             let classes = {
                 'container': true,
@@ -38,16 +39,15 @@
 
             return classes;
         }
+    },
 
-        render(createElement: Function): VNode
-        {
-            return createElement('v-container', {
-                class: this.class,
-                attrs: this.attrs
-            }, this.$slots.default);
-        }
+    render(createElement: Function): VNode
+    {
+        return createElement('v-container', {
+            class: this.class,
+            attrs: this.attrs
+        }, this.$slots.default);
     }
-
-    export default ResponsiveContainer;
+}
 
 </script>

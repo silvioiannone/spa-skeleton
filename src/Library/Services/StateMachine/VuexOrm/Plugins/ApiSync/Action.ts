@@ -1,8 +1,8 @@
-import { ApiFactory, ApiClient } from 'spa-skeleton/src/Library/Api';
+import { ApiFactory, ApiClient } from '../../../../../Api';
 import { Store, ActionObject }   from 'vuex';
 import Pluralize                 from 'pluralize';
-import { ApiResource }           from 'spa-skeleton/src/Library/Api/Resources/ApiResource';
-import { ResponseInterface }     from 'spa-skeleton/src/Library/Api/ResponseInterface';
+import { ApiResource }           from '../../../../../Api/Resources/ApiResource';
+import { ResponseInterface }     from '../../../../../Api/ResponseInterface';
 
 /**
  * An action.

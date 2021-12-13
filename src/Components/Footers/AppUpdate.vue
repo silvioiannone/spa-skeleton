@@ -19,18 +19,18 @@
 
 <script lang="ts">
 
-    import { Vue, Component } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class FooterAppUpdate extends Vue
-    {
+    name: 'FooterAppUpdate',
+
+    methods: {
         /**
          * Update the app.
          */
         update(): void
         {
             location.reload();
-        }
+        },
 
         /**
          * Dismiss the footer.
@@ -43,7 +43,6 @@
             });
         }
     }
-
-    export default FooterAppUpdate;
+}
 
 </script>

@@ -4,7 +4,7 @@ import { Logger }  from './Logger';
 
 import '../ComponentHooks';
 
-import AppComponents from '../../../../../resources/ts/App/Components';
+import AppComponents from '@/ts/App/Components';
 
 // Skeleton components
 import AlertMain from '../../Components/Alerts/Main.vue';
