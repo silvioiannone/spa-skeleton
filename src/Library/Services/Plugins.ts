@@ -6,14 +6,14 @@ import { Logger }       from './Logger'
 import { Translator }   from './Translator';
 import { Config }       from '../../Config';
 import AppPlugins       from '@/ts/App/Plugins';
+import Bugsnag          from '@bugsnag/js';
+import Vuetify          from 'vuetify';
+import VueI18N          from 'vue-i18n';
+import VueRouter        from 'vue-router';
+import VueTheMask       from 'vue-the-mask';
+import Vue2Filters      from 'vue2-filters';
 
 // Skeleton plugins
-import Bugsnag                    from '@bugsnag/js';
-import Vuetify                    from 'vuetify';
-import VueI18N                    from 'vue-i18n';
-import VueRouter                  from 'vue-router';
-import VueTheMask                 from 'vue-the-mask';
-import Vue2Filters                from 'vue2-filters';
 import { Api }                    from '../App/Plugins/Api';
 import { Config as ConfigPlugin } from '../App/Plugins/Config';
 import { EventHub }               from '../App/Plugins/EventHub';
@@ -64,7 +64,7 @@ export class Plugins extends Service
     /**
      * Bind the plugins.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         let availablePlugins = {...SkeletonPlugins, ...AppPlugins};
 
