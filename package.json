@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
@@ -23,7 +22,6 @@
     "node-env-file": "^0.1.8",
     "pluralize": "^8.0.0",
     "push.js": "^1.0.12",
-    "qs": "^6.10.1",
     "socket.io": "^4.4.0",
     "superagent": "^6.1.0",
     "tiptap": "^1.32.2",
@@ -75,7 +73,7 @@
   },
   "homepage": "https://github.com/silvioiannone/spa-skeleton#readme",
   "license": "ISC",
-  "main": "index.js",
+  "main": "src/index.ts",
   "name": "spa-skeleton",
   "repository": {
     "type": "git",
