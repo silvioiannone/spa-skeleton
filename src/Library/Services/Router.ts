@@ -53,7 +53,7 @@ export class Router extends Service
     /**
      * Boot the router.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         let guard = new Guard;
         let scrollPromise = new Promise((resolve: Function): void => {
