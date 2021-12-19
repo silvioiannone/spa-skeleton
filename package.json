@@ -58,7 +58,7 @@
     "@types/socket.io-client": "^3.0.0",
     "@types/superagent": "^4.1.13",
     "@types/urijs": "^1.19.17",
-    "@types/vue-markdown": "^2.2.1",
+    "@types/vue-markdown": "^2.2.1"
   },
   "homepage": "https://github.com/silvioiannone/spa-skeleton#readme",
   "license": "ISC",
