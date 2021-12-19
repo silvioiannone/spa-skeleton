@@ -192,7 +192,7 @@ export abstract class AbstractApiDriver
      */
     public getURIEncodedParameters(): string
     {
-        return QS.stringify(this.parameters);
+        return new URLSearchParams(this.parameters).toString();
     }
 
     /**
