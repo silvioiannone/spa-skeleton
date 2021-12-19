@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import { Pagination } from '../../../Library/Interfaces/Pagination';
-import { Config, Model } from '../../../../index';
+import { Config, Model } from '../../../index';
 import { Query } from '@vuex-orm/core';
 
 /**

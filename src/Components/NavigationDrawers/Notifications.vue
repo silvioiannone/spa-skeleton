@@ -61,7 +61,7 @@
 
 <script lang="ts">
 
-import { ResponseInterface, Notification } from '../../../index';
+import { ResponseInterface, Notification } from '../../index';
 import _ from 'lodash';
 import PushJS from 'push.js';
 
