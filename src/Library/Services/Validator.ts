@@ -31,10 +31,10 @@ export class Validator extends Service
      */
     public static async boot(): Promise<void>
     {
-        let messages = await import(`./../../../../bloomestate/node_modules/vee-validate/dist/locale/${Config.locale}.json`);
-        let translator = Translator.get();
+        Vue.component('validation-provider', ValidationProvider);
+        Vue.component('validation-observer', ValidationObserver);
 
-        Translator.merge(messages.messages, 'validations.vendor');
+        let translator = Translator.get();
 
         configure({
             defaultMessage: (field: string, values: any): any => {
@@ -79,7 +79,7 @@ export class Validator extends Service
             extend(ruleName, rule.get());
         }
 
-        Vue.component('validation-provider', ValidationProvider);
-        Vue.component('validation-observer', ValidationObserver);
+        let messages = await import(`./../../../../bloomestate/node_modules/vee-validate/dist/locale/${Config.locale}.json`);
+        Translator.merge(messages.messages, 'validations.vendor');
     }
 }
