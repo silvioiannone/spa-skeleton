@@ -44,7 +44,7 @@ export { Notification } from './Library/App/State/Models/Notification';
  */
 export { AbstractChannel as Channel } from './Library/WebSocket/AbstractChannel';
 export { AbstractHandler as EventHandler } from './Library/Events/AbstractHandler';
-export { PushNotification } from 'spa-skeleton/src/Library/Notifications/PushNotification';
+export { PushNotification } from './Library/Notifications/PushNotification';
 
 /*
  * Mixins
