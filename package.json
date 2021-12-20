@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
