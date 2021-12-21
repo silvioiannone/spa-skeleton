@@ -1,8 +1,8 @@
 {
-  "type": "module",
   "bugs": {
     "url": "https://github.com/silvioiannone/spa-skeleton/issues"
   },
+  "bundleDependencies": [],
   "dependencies": {
     "@bugsnag/js": "^7.14.1",
     "@bugsnag/plugin-vue": "^7.14.1",
@@ -48,6 +48,7 @@
     "vuex": "^3.6.2",
     "vuex-router-sync": "^5.0.0"
   },
+  "deprecated": false,
   "description": "A VueJS based SPA skeleton",
   "devDependencies": {
     "@types/chrome": "^0.0.165",
@@ -61,7 +62,7 @@
   },
   "homepage": "https://github.com/silvioiannone/spa-skeleton#readme",
   "license": "ISC",
-  "main": "src/index.ts",
+  "main": "src/index.js",
   "name": "spa-skeleton",
   "repository": {
     "type": "git",
