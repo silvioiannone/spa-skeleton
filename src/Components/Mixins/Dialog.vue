@@ -72,7 +72,7 @@ export default {
         computedProps()
         {
             return {
-                fullscreen: this._fullscreen
+                fullscreen: this.internalFullscreen
             }
         }
     },

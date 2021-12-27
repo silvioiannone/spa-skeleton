@@ -14,8 +14,8 @@ export default {
         {
             return {
                 ...this.$props,
-                label: this._label,
-                outlined: this._outlined
+                label: this.internalLabel,
+                outlined: this.internalOutlined
             };
         }
     },

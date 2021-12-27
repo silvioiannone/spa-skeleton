@@ -86,14 +86,14 @@ export default {
                 footerProps: {
                     itemsPerPageOptions: this.itemsPerPageOptions
                 },
-                headers: this._headers
+                headers: this.internalHeaders
             };
 
             if (! this.hasCustomSort()) {
                 props = {
                     ...props,
                     ...this.getVuePaginationProps(this.pagination),
-                    serverItemsLength: this._serverItemLength
+                    serverItemsLength: this.internalServerItemLength
                 }
             }
 

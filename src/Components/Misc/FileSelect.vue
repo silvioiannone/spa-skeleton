@@ -67,7 +67,7 @@ export default {
         {
             this.loading = true;
 
-            this._getEndpoint
+            this.internalGetEndpoint
                 .then((response: any) => {
                     this.loading = false;
 

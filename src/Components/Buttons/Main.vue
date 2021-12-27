@@ -63,7 +63,7 @@ export default {
                 props: this.$props,
                 on: {
                     ...this.$listeners,
-                    click: this._onClick
+                    click: this.internalOnClick
                 }
             },
             this.$slots.default

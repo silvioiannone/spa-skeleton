@@ -84,13 +84,6 @@ export default {
         left: { type: Boolean, default: false }
     },
 
-    computed: {
-        internalOnClick(): void
-        {
-            this.onClick();
-        }
-    },
-
     methods: {
         /**
          * Handle `click` event.
@@ -98,8 +91,8 @@ export default {
         handleClick(event: any): any
         {
             this.$emit('click', event);
-            this._onClick(event);
-        }
+            this.onClick();
+        },
     },
 
     render(createElement: Function): VNode

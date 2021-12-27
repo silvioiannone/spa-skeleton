@@ -1,5 +1,5 @@
 <template>
-    <v-card v-bind="$props" v-on="$listeners" :outlined="this._outlined">
+    <v-card v-bind="$props" v-on="$listeners" :outlined="this.internalOutlined">
         <v-card-title v-if="title.length || $scopedSlots.title" class="text-h5 d-flex"
                       style="flex-flow: row nowrap">
             <div class="flex-grow-1">

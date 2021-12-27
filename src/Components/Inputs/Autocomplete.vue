@@ -141,12 +141,12 @@ export default {
 
         let autocompleteProps = {
             ...this.$props,
-            label: this._label,
+            label: this.internalLabel,
             value: this.value,
             items,
             loading: this.$data._loading,
             searchInput: this.searchQuery,
-            outlined: this._outlined
+            outlined: this.internalOutlined
         };
 
         // The rules are only passed to the `validation-provider` component.

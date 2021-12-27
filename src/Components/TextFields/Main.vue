@@ -23,8 +23,8 @@ export default {
         {
             let props = {
                 ...this.$props,
-                label: this._label,
-                outlined: this._outlined || this.outlined,
+                label: this.internalLabel,
+                outlined: this.internalOutlined || this.outlined,
                 value: this.value,
             };
 

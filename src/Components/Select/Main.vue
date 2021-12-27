@@ -15,7 +15,7 @@ export default {
         {
             let props = {
                 ...this.$props,
-                outlined: this._outlined
+                outlined: this.internalOutlined
             };
 
             // The rules will only be passed to the `validation-provider` component.

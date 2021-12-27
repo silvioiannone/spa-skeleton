@@ -179,13 +179,13 @@ export default {
                 return;
             }
 
-            this.$data._items = this.items.map((item: any) => this._transformItem(item));
+            this.$data._items = this.items.map((item: any) => this.internalTransformItem(item));
         },
 
         /**
          * Transform a item so that it can be used by the select box.
          */
-        _transformItem(item: any)
+        internalTransformItem(item: any)
         {
             let localItem = {...item};
 
@@ -204,7 +204,7 @@ export default {
                         this.$data._items.find((item: any) => item.id === selected.id) || selected);
             } else {
                 if (typeof this.value !== 'undefined') {
-                    this.$data._selected = this._transformItem(this.value);
+                    this.$data._selected = this.internalTransformItem(this.value);
                 }
             }
         },
