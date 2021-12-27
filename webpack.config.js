@@ -2,7 +2,6 @@
 const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
-const { VuetifyLoaderPlugin } = require('vuetify-loader');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 let config = {
@@ -50,7 +49,6 @@ let config = {
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
         }),
-        new VuetifyLoaderPlugin(),
         new ForkTsCheckerWebpackPlugin()
     ],
     watchOptions: {
@@ -66,13 +64,14 @@ if (process.env.APP_URL.startsWith('https') && process.argv.includes('--hot')) {
     config.output = {
         publicPath: public
     };
+
     config.devServer = {
-        // public,
         https: {
             key: fs.readFileSync(process.env.APP_SSL_KEY),
             cert: fs.readFileSync(process.env.APP_SSL_CERT)
         }
     };
+
     // Override Laravel Mix's `http()` function in HotReloading. We need to override this
     // function because by default Laravel Mix looks at the presence of the `--https` cli
     // option. This causes the webpack dev server to create its own certificates and to ignore

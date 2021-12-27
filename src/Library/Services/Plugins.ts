@@ -5,13 +5,13 @@ import { Service }      from './Service';
 import { Logger }       from './Logger'
 import { Translator }   from './Translator';
 import { Config }       from '../../Config';
-import AppPlugins       from '../../../../../resources/ts/App/Plugins';
 import Bugsnag          from '@bugsnag/js';
 import Vuetify          from 'vuetify';
 import VueI18N          from 'vue-i18n';
 import VueRouter        from 'vue-router';
 import VueTheMask       from 'vue-the-mask';
 import Vue2Filters      from 'vue2-filters';
+import AppPlugins       from '../../../../../resources/ts/App/Plugins';
 
 // Skeleton plugins
 import { Api }                    from '../App/Plugins/Api';
