@@ -7,44 +7,47 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class ButtonToolbar extends Vue
-    {
+    name: 'ButtonToolbar',
+
+    props: {
+
         /**
          * Display a smaller button.
          */
-        @Prop({ type: Boolean, default: false }) small: boolean;
+        small: { type: Boolean, default: false },
 
         /**
          * Button's value
          */
-        @Prop({ type: Number, default: null }) value: number;
+        value: { type: Number, default: null },
 
         /**
          * Icon displayed in the button.
          */
-        @Prop({ type: String, default: '' }) icon: string;
+        icon: { type: String, default: '' },
 
         /**
          * Whether the button should be active.
          */
-        @Prop({ type: Boolean, default: false }) active: boolean;
+        active: { type: Boolean, default: false },
 
         /**
          * Whether the button is disabled.
          */
-        @Prop({ type: Boolean, default: false }) disabled: boolean;
+        disabled: { type: Boolean, default: false }
+    },
 
-        get classes()
+    computed: {
+
+        classes()
         {
             return {
                 'v-btn--active': this.active
             }
         }
     }
-
-    export default ButtonToolbar;
+}
 
 </script>

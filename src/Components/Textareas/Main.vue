@@ -8,20 +8,23 @@
 
 <script lang="ts">
 
-    import { Config } from '../../Config';
-    import { Component, Mixins } from 'vue-property-decorator';
-    import Textarea from '../Mixins/Textarea.vue';
-    import Validatable from '../Mixins/Components/Validatable.vue';
+import { Config } from '../../Config';
+import Textarea from '../Mixins/Textarea.vue';
+import Validatable from '../Mixins/Components/Validatable.vue';
 
-    @Component
-    export class TextareaMain extends Mixins(Textarea, Validatable)
-    {
-        get _outlined(): boolean
+export default {
+
+    name: 'TextareaMain',
+
+    mixins: [Textarea, Validatable],
+
+    computed: {
+        _outlined(): boolean
         {
             return Config.ui.components.textarea.defaultStyle === 'outlined';
-        }
+        },
 
-        get textareaProps(): any
+        textareaProps(): any
         {
             let props = { ...this.$props };
 
@@ -31,7 +34,6 @@
             return props;
         }
     }
-
-    export default TextareaMain;
+}
 
 </script>

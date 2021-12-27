@@ -22,22 +22,24 @@
 
 <script lang="ts">
 
-    import { Config } from 'spa-skeleton/src/Config';
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Config } from '../../Config';
 
-    @Component
-    export class CardMain extends Vue
-    {
+export default {
+
+    name: 'CardMain',
+
+    props: {
+
         /**
          * Display a close button.
          */
-        @Prop({ type: Boolean }) closable: boolean;
+        closable: Boolean,
 
         /**
          * Applies specified color to the control - it can be the name of material color (for
          * example success or purple) or css color (#033 or rgba(255, 0, 0, 0.5)).
          */
-        @Prop({ type: String, default: '' }) color: string;
+        color: { type: String, default: '' },
 
         /**
          * Displays linear progress bar. Can either be a String which specifies which color is
@@ -45,34 +47,37 @@
          * success, info, warning, error) or a Boolean which uses the component color (set by color
          * prop - if it's supported by the component) or the primary color.
          */
-        @Prop({ type: Boolean, default: false }) loading: boolean;
+        loading: { type: Boolean, default: false },
 
         /**
          * Removes card elevation shadow and adds a thin border.
          */
-        @Prop({ type: Boolean, default: undefined }) outlined: boolean;
+        outlined: { type: Boolean, default: undefined },
 
         /**
          * Removes the card's elevation.
          */
-        @Prop({ type: Boolean, default: false }) flat: boolean;
+        flat: { type: Boolean, default: false },
 
         /**
          * Removes the component's border-radius.
          */
-        @Prop({ type: Boolean, default: false }) tile: boolean;
+        tile: { type: Boolean, default: false },
 
         /**
          * Card title.
          */
-        @Prop({ type: String, default: '' }) title: string;
+        title: { type: String, default: '' },
 
         /**
          * Card subtitle.
          */
-        @Prop({ type: String, default: '' }) subtitle: string;
+        subtitle: { type: String, default: '' }
+    },
 
-        get _outlined(): boolean
+    computed: {
+
+        _outlined(): boolean
         {
             if (this.outlined === undefined) {
                 return Config.ui.components.card.defaultStyle === 'outlined';
@@ -81,7 +86,6 @@
             return this.outlined;
         }
     }
-
-    export default CardMain;
+}
 
 </script>

@@ -59,38 +59,48 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
-    import { Token }                from '../../Library/Api/Token';
-    import VueDropzone              from 'vue2-dropzone';
-    import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+import { Token } from '../../Library/Api/Token';
+import VueDropzone from 'vue2-dropzone';
 
-    @Component({
-        components: {
-            VueDropzone
-        }
-    })
-    export class FileUpload extends Vue
-    {
+import 'vue2-dropzone/dist/vue2Dropzone.min.css';
+
+export default {
+
+    name: 'FileUpload',
+
+    components: {
+        VueDropzone
+    },
+
+    props: {
         /**
          * Additional data to send to the server.
          */
-        @Prop({ type: Object, default: () => ({}) }) data: any;
+        data: { type: Object, default: () => ({}) },
 
         /**
          * Dropzone options object that will be merged with the default one.
          */
-        @Prop({ type: Object, default: () => ({}) }) options: any;
+        options: { type: Object, default: () => ({}) },
+    },
 
-        errorMessage: string = '';
-        previewTemplate: string|null = null;
-        uploading: boolean = false;
+    data()
+    {
+        return {
+            errorMessage: '',
+            previewTemplate: null,
+            uploading: false
+        }
+    },
 
-        get config(): any
+    computed: {
+
+        config(): any
         {
             return this.$store.getters.app.config;
-        }
+        },
 
-        get dropzoneOptions(): any
+        dropzoneOptions(): any
         {
             return {
                 autoProcessQueue: false,
@@ -105,14 +115,16 @@
                 ...this.options,
             }
         }
+    },
 
+    methods: {
         /**
          * Cancel the upload.
          */
         cancel(): void
         {
             this.$emit('cancel')
-        }
+        },
 
         /**
          * Generate the thumbnail.
@@ -135,7 +147,7 @@
                 }
                 return setTimeout((() => file.previewElement.classList.add("dz-image-preview")), 1);
             }
-        }
+        },
 
         /**
          * Handle the error event.
@@ -149,7 +161,7 @@
             let response = JSON.parse(xhr.response);
 
             this.errorMessage = response.errors[0].title;
-        }
+        },
 
         /**
          * Handle the success event.
@@ -157,7 +169,7 @@
         handleSuccess(file: any, response: any)
         {
             this.$emit('uploaded', response);
-        }
+        },
 
         /**
          * Handle the queue complete event.
@@ -165,7 +177,7 @@
         handleQueueComplete(): void
         {
             this.$emit('uploadComplete');
-        }
+        },
 
         /**
          * Upload the files.
@@ -175,14 +187,13 @@
             let dropzone: any = this.$refs.dropzone;
             dropzone.processQueue();
         }
+    },
 
-        mounted()
-        {
-            let templateEl: Element|null = this.$el.querySelector('#previewTemplate');
-            this.previewTemplate = templateEl ? templateEl.innerHTML : '';
-        }
+    mounted(): void
+    {
+        let templateEl: Element|null = this.$el.querySelector('#previewTemplate');
+        this.previewTemplate = templateEl ? templateEl.innerHTML : '';
     }
-
-    export default FileUpload;
+}
 
 </script>

@@ -18,40 +18,53 @@
 
 <script lang="ts">
 
-    import { Config } from '../../Config';
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Autocomplete from '../Mixins/Autocomplete.vue';
-    import Countries from '../../Assets/Json/CountryPhonePrefixes.json';
+import { Config } from '../../Config';
+import Autocomplete from '../Mixins/Autocomplete.vue';
+import Countries from '../../Assets/Json/CountryPhonePrefixes.json';
 
-    @Component
-    export class AutocompleteCountry extends Mixins(Autocomplete)
-    {
+export default {
+    name: 'AutocompleteCountry',
+
+    mixins: [Autocomplete],
+
+    props: {
         /**
          * Name of the input element.
          */
-        @Prop({ type: String, default: 'country' }) name: string;
+        name: { type: String, default: 'country' },
 
         /**
          * Label of the input element.
          */
-        @Prop({ type: String, default: 'Country' }) label: string;
+        label: { type: String, default: 'Country' },
 
         /**
          * Perform local search.
          */
-        @Prop({ type: Boolean, default: true }) local: boolean;
+        local: { type: Boolean, default: true },
 
         /**
          * Changes the selection behavior to return the object directly rather than the value
          * specified with item-value.
          */
-        @Prop({ type: Boolean, default: false }) returnObject: boolean;
+        returnObject: { type: Boolean, default: false }
+    },
 
-        get _outlined(): boolean
+    data() {
+        return {
+            countries: Countries || []
+        }
+    },
+
+    computed: {
+
+        _outlined(): boolean
         {
             return Config.ui.components.textField.defaultStyle === 'outlined';
         }
+    },
 
+    methods: {
         /**
          * Filter the autocomplete items when typing.
          */
@@ -60,16 +73,13 @@
             let searchSubject = item.name.toLowerCase();
 
             return searchSubject.indexOf(query.toLowerCase()) > -1;
-        }
+        },
 
         handleInput(value: any): void
         {
             this.$emit('input', value);
         }
-
-        countries: Array<{ name: string, iso: string }> = Countries || [];
     }
-
-    export default AutocompleteCountry;
+}
 
 </script>

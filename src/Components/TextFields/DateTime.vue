@@ -24,161 +24,166 @@
 <script lang="ts">
 
 import DayJS from 'dayjs';
-import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
 import TextFieldMain from './Main.vue';
 
-@Component
-export class TextFieldDateTime extends Mixins(TextFieldMain)
-{
-    /**
-     * Specify the allowed dates.
-     */
-    @Prop({ type: Function }) allowedDates: (value: any) => boolean
+export default {
 
-    partialHour: number;
+    name: 'TextFieldDateTime',
 
-    date: string = '';
+    mixins: [TextFieldMain],
 
-    dateMenu: boolean = false;
+    props: {
+        /**
+         * Specify the allowed dates.
+         */
+        allowedDates: { type: Function },
+    },
 
-    time: string = '';
-
-    stepperStep: string = '1';
-
-    get textFieldDateTime(): string
+    data()
     {
-        if (! this.dateTime.length) {
-            return '';
+        return {
+            partialHour: null,
+            date: '',
+            dateMenu: false,
+            time: '',
+            stepperStep: '1'
         }
+    },
 
-        let string = '';
-
-        if (this.date) {
-            string += (this.$options.filters as any).readableDate(this.date);
-        }
-
-        if (this.time) {
-            string += ' at ' + this.time;
-        }
-
-        return string;
-    }
-
-    get dateTime(): string
-    {
-        let string = '';
-
-        if (this.date) {
-            string += this.date;
-        }
-
-        if (this.time) {
-
-            if (this.date) {
-                string += ' ';
+    computed: {
+        textFieldDateTime(): string
+        {
+            if (! this.dateTime.length) {
+                return '';
             }
 
-            string += this.time + ':00';
+            let string = '';
+
+            if (this.date) {
+                string += (this.$options.filters as any).readableDate(this.date);
+            }
+
+            if (this.time) {
+                string += ' at ' + this.time;
+            }
+
+            return string;
+        },
+
+        dateTime(): string
+        {
+            let string = '';
+
+            if (this.date) {
+                string += this.date;
+            }
+
+            if (this.time) {
+
+                if (this.date) {
+                    string += ' ';
+                }
+
+                string += this.time + ':00';
+            }
+
+            return string;
         }
+    },
 
-        return string;
-    }
+    methods: {
+        /**
+         * Specify the allowed dates.
+         */
+        _allowedDates(value: any): boolean
+        {
+            if (this.allowedDates) {
+                return this.allowedDates(value);
+            }
 
-    /**
-     * Specify the allowed dates.
-     */
-    _allowedDates(value: any): boolean
-    {
-        if (this.allowedDates) {
-            return this.allowedDates(value);
-        }
+            return DayJS(value).isSameOrAfter(DayJS().startOf('day'));
+        },
 
-        return DayJS(value).isSameOrAfter(DayJS().startOf('day'));
-    }
+        allowedHours(value: any): boolean
+        {
+            if (! this.date) {
+                return false;
+            }
 
-    allowedHours(value: any): boolean
-    {
-        if (! this.date) {
-            return false;
-        }
+            if (DayJS(this.date).isSame(DayJS(), 'date')) {
+                return value >= DayJS().hour();
+            }
 
-        if (DayJS(this.date).isSame(DayJS(), 'date')) {
-            return value >= DayJS().hour();
-        }
+            return true;
+        },
 
-        return true;
-    }
+        allowedMinutes(value: any): boolean
+        {
+            if (! this.date && ! this.partialHour) {
+                return false;
+            }
 
-    allowedMinutes(value: any): boolean
-    {
-        if (! this.date && ! this.partialHour) {
-            return false;
-        }
+            if (
+                DayJS(this.date).isSame(DayJS(), 'date') &&
+                this.partialHour === DayJS(DayJS()).hour()
+            ) {
+                return value > DayJS().minute();
+            }
 
-        if (
-            DayJS(this.date).isSame(DayJS(), 'date') &&
-            this.partialHour === DayJS(DayJS()).hour()
-        ) {
-            return value > DayJS().minute();
-        }
+            return true;
+        },
 
-        return true;
-    }
+        handleTimePickerClickMinute(): void
+        {
+            setTimeout(() => {
+                (this.$refs.timePicker as any).selecting = 1;
+            });
 
-    handleTimePickerClickMinute(): void
-    {
-        setTimeout(() => {
-            (this.$refs.timePicker as any).selecting = 1;
-        });
-
-        this.stepperStep = '1';
-        this.dateMenu = false;
-    }
-
-    setPartialHour(value: number)
-    {
-        this.partialHour = value;
-    }
-
-    @Watch('date')
-    onDateUpdate(): void
-    {
-        this.$emit('input', this.dateTime);
-    }
-
-    @Watch('dateMenu')
-    onDateMenuUpdate(): void
-    {
-        if (! this.dateMenu) {
             this.stepperStep = '1';
+            this.dateMenu = false;
+        },
+
+        setPartialHour(value: number)
+        {
+            this.partialHour = value;
         }
-    }
+    },
 
-    @Watch('time')
-    onTimeUpdate(): void
-    {
-        this.$emit('input', this.dateTime);
-    }
+    watch: {
+        date()
+        {
+            this.$emit('input', this.dateTime);
+        },
 
-    @Watch('value', { immediate: true })
-    onValueChange(): void
-    {
-        let result = /(\d{4}-[01]\d-[0-3]\d) ([0-2]\d:[0-5]\d):[0-5]\d/.exec(this.value);
+        dateMenu()
+        {
+            if (! this.dateMenu) {
+                this.stepperStep = '1';
+            }
+        },
 
-        if (! result) {
-            return;
-        }
+        time()
+        {
+            this.$emit('input', this.dateTime);
+        },
 
-        if (result[1]) {
-            this.date = result[1];
-        }
+        value()
+        {
+            let result = /(\d{4}-[01]\d-[0-3]\d) ([0-2]\d:[0-5]\d):[0-5]\d/.exec(this.value);
 
-        if (result[2]) {
-            this.time = result[2];
+            if (! result) {
+                return;
+            }
+
+            if (result[1]) {
+                this.date = result[1];
+            }
+
+            if (result[2]) {
+                this.time = result[2];
+            }
         }
     }
 }
-
-export default TextFieldDateTime;
 
 </script>

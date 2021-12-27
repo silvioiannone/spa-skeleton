@@ -1,128 +1,136 @@
 <script lang="ts">
 
-    import { Config }                         from '../../Config';
-    import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-    import Input from './Input.vue';
+import { Config } from '../../Config';
+import Input from './Input.vue';
 
-    /**
-     * This mixin can be used in order to bootstrap the creation of a select box.
-     *
-     * If the items that you want to be available in the selectbox do not have a value/text
-     * properties you can create a `transformItem` in the component using this mixin that will
-     * add those two properties to each item. For example:
-     *
-     *     transformItem(item)
-     *     {
-     *         item.text = item.first_name + ' ' + item.last_name;
-     *         item.value = item.id;
-     *
-     *         return item;
-     *     }
-     */
-    @Component
-    export class Select extends Mixins(Input)
-    {
+/**
+ * This mixin can be used in order to bootstrap the creation of a select box.
+ *
+ * If the items that you want to be available in the selectbox do not have a value/text
+ * properties you can create a `transformItem` in the component using this mixin that will
+ * add those two properties to each item. For example:
+ *
+ *     transformItem(item)
+ *     {
+ *         item.text = item.first_name + ' ' + item.last_name;
+ *         item.value = item.id;
+ *
+ *         return item;
+ *     }
+ */
+export default {
+
+    mixins: [Input],
+
+    props: {
         /**
          * Display chips in the selectbox.
          */
-        @Prop({ type: Boolean, default: false }) chips: boolean;
+        chips: { type: Boolean, default: false },
 
         /**
          * Whether to display a button to clean the selectbox.
          */
-        @Prop({ type: Boolean, default: false }) clearable: boolean;
+        clearable: { type: Boolean, default: false },
 
         /**
          * Reduces the input height
          */
-        @Prop({ type: Boolean, default: false }) dense: boolean;
+        dense: { type: Boolean, default: false },
 
         /**
          * Tagging functionality, allows you to enter/navigate/delete items.
          */
-        @Prop({ type: Boolean, default: false }) tags: boolean;
+        tags: { type: Boolean, default: false },
 
         /**
-         * Items that will be available in the selectbox.
+         * Items that will be available in the select-box.
          */
-        @Prop({ type: Array, default: () => [] }) items: any[];
+        items: { type: Array, default: () => ([]) },
 
         /**
          * Pass props through to the v-menu component. Accepts either a string for boolean props
          * `menu-props="auto, overflowY"`, or an object
          * `:menu-props="{ auto: true, overflowY: true }`.
          */
-        @Prop({ type: Object, default: () => ({
+        menuProps: { type: Object, default: () => ({
             closeOnClick: false,
             closeOnContentClick: false,
             openOnClick: false,
             maxHeight: 300
-        })}) menuProps: object;
+        })},
 
         /**
          * Already selected subjects.
          *
          * If it is an array then multiple elements will be allowed to be selected.
          */
-        @Prop({ }) value: any;
+        value: {},
 
         /**
          * Item transformation function.
          */
-        @Prop({ type: Function, default: () => {} }) transformation: (item: any) => any;
+        transformation: { type: Function, default: () => ({}) },
 
         /**
          * Changes the style of the input
          */
-        @Prop({ type: Boolean, default: false }) solo: boolean;
+        solo: { type: Boolean, default: false },
 
         /**
          * Applies the alternate outline input style.
          */
-        @Prop({ type: Boolean, default: undefined }) outlined: boolean;
+        outlined: { type: Boolean, default: undefined },
 
         /**
          * Changes select to multiple. Accepts array for value.
          */
-        @Prop({ type: Boolean, default: false }) multiple: boolean;
+        multiple: { type: Boolean, default: false },
 
         /**
          * Changes the selection behavior to return the object directly rather than the value
          * specified with item-value.
          */
-        @Prop({ type: Boolean, default: true }) returnObject: boolean;
+        returnObject: { type: Boolean, default: true },
 
         /**
          * Hides hint, validation errors.
          */
-        @Prop({ type: Boolean, default: false }) hideDetails: boolean;
+        hideDetails: { type: Boolean, default: false },
 
         /**
-         * Set property of items's value - must be primative. Dot notation is supported.
+         * Set property of item's value - must be primitive. Dot notation is supported.
          */
-        @Prop({ type: String, default: 'value' }) itemValue: Array<any> | String | Function;
+        itemValue: { type: String, default: 'value' },
 
         /**
          * Appends an icon to the component, uses the same syntax as v-icon.
          */
-        @Prop({ type: String, default: () => '$vuetify.icons.dropdown' }) appendIcon: string;
+        appendIcon: { type: String, default: () => '$vuetify.icons.dropdown' },
+    },
 
-        /**
-         * Contains the list of the manually newly created tags.
-         */
-        addedTags: Array<any> = [];
+    data()
+    {
+        return {
+            /**
+             * Contains the list of the manually newly created tags.
+             */
+            addedTags: [],
 
-        /**
-         * Selected items.
-         */
-        _selected: Array<any> = [];
+            /**
+             * Selected items.
+             */
+            _selected: [],
 
-        /**
-         * Items available for selection.
-         */
-        _items: Array<any> = [];
+            /**
+             * Items available for selection.
+             */
+            _items: [],
+        }
+    },
 
-        get _outlined(): boolean
+    computed: {
+        _outlined(): boolean
         {
             if (this.outlined === undefined) {
                 return Config.ui.components.textField.defaultStyle === 'outlined';
@@ -130,7 +138,9 @@
 
             return this.outlined;
         }
+    },
 
+    methods: {
         /**
          * Fire the needed event.
          */
@@ -158,7 +168,7 @@
             }
 
             this.$emit('input', selected);
-        }
+        },
 
         /**
          * Transform the items.
@@ -170,7 +180,7 @@
             }
 
             this.$data._items = this.items.map((item: any) => this._transformItem(item));
-        }
+        },
 
         /**
          * Transform a item so that it can be used by the select box.
@@ -180,7 +190,7 @@
             let localItem = {...item};
 
             return this.transformItem(localItem);
-        }
+        },
 
         /**
          * Init the selected items.
@@ -197,7 +207,7 @@
                     this.$data._selected = this._transformItem(this.value);
                 }
             }
-        }
+        },
 
         /**
          * Override this function if the item should be transformed.
@@ -206,26 +216,21 @@
         {
             return item;
         }
+    },
 
-        created()
-        {
-            this.transformItem = this.transformation;
-        }
+    created()
+    {
+        this.transformItem = this.transformation;
 
-        @Watch('items', { immediate: true })
-        onItemsChange()
-        {
+        this.$watch('items', () => {
             this.transformItems();
-        }
+        }, { immediate: true });
 
-        @Watch('selected', { immediate: true })
-        onSelectedChange()
-        {
+        this.$watch('selected', () => {
             this.transformItems();
             this.initSelected();
-        }
+        }, { immediate: true });
     }
-
-    export default Select;
+}
 
 </script>

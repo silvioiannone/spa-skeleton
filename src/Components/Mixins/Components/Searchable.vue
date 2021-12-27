@@ -1,18 +1,23 @@
 <script lang="ts">
 
-    import { Component, Watch, Mixins } from 'vue-property-decorator';
-    import RequestParametersWatcher from './RequestParametersWatcher.vue';
+import RequestParametersWatcher from './RequestParametersWatcher.vue';
 
-    /**
-     * This mixin handles searches performed by a component that can search for data.
-     */
-    @Component
-    export class Searchable extends Mixins(RequestParametersWatcher)
+/**
+ * This mixin handles searches performed by a component that can search for data.
+ */
+export default {
+
+    mixins: [RequestParametersWatcher],
+
+    data()
     {
-        timeout: NodeJS.Timeout;
+        return {
+            timeout: null as NodeJS.Timeout,
+            searchQuery: ''
+        }
+    },
 
-        searchQuery: string = '';
-
+    methods: {
         /**
          * Get the searched data.
          */
@@ -36,21 +41,22 @@
                 this.mergeParameters(parameters);
             }, 500);
         }
+    },
 
-        created(): void
-        {
-            this.mergeParameters({
-                search: null
-            });
-        }
+    created(): void
+    {
+        this.mergeParameters({
+            search: null
+        });
+    },
 
-        @Watch('searchQuery')
-        onSearchQueryChange()
+    watch: {
+
+        searchQuery(): void
         {
             this.localGetSearchedData();
         }
     }
-
-    export default Searchable;
+}
 
 </script>

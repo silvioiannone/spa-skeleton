@@ -1,21 +1,18 @@
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class Breadcrumbs extends Vue
-    {
+    props: {
         /**
          * An array containing the items that will be displayed.
          */
-        @Prop({ type: Array, default: () => []}) items: Array<any>
+        items: { type: Array, default: () => ([]) },
 
         /**
          * Specifies the dividing character.
          */
-        @Prop({ type: String, default: '/' }) divider: string;
+        divider: { type: String, default: '/' }
     }
-
-    export default Breadcrumbs;
+}
 
 </script>

@@ -30,48 +30,54 @@
 
 <script lang="ts">
 
-    import { Config }                    from '../../Config';
-    import { Component, Mixins, Watch }  from 'vue-property-decorator';
-    import CountryPhonePrefixes          from '../../Assets/Json/CountryPhonePrefixes.json';
-    import Input from '../Mixins/Input.vue';
-    import Validatable from '../Mixins/Components/Validatable.vue';
-    import {
-        CountryCallingCode, parseNumber, ParsedNumber
-    } from 'libphonenumber-js';
+import _ from 'lodash';
+import { CountryCallingCode, parseNumber, ParsedNumber } from 'libphonenumber-js';
+import { Config } from '../../Config';
+import Input from '../Mixins/Input.vue';
+import Validatable from '../Mixins/Components/Validatable.vue';
+import CountryPhonePrefixes from '../../Assets/Json/CountryPhonePrefixes.json';
 
-    interface PrefixDescription {
-        name: string,
-        iso: string,
-        prefix: string,
-        mask?: string
-    }
+interface PrefixDescription {
+    name: string,
+    iso: string,
+    prefix: string,
+    mask?: string
+}
 
-    @Component
-    export class InputPhone extends Mixins(Input, Validatable)
+export default {
+
+    name: 'InputPhone',
+
+    mixins: [Input, Validatable],
+
+    data()
     {
-        countryPhonePrefixes: Array<PrefixDescription> = CountryPhonePrefixes || [];
+        return {
+            countryPhonePrefixes: CountryPhonePrefixes || [] as Array<PrefixDescription>,
+            phoneNumber: '',
+            countryPrefix: '',
+            selectedCountryPhonePrefix: {
+                name: '',
+                iso: '',
+                prefix: '',
+                mask: '## ## ## ###'
+            } as PrefixDescription
+        }
+    },
 
-        phoneNumber: string = '';
-
-        countryPrefix: string = '';
-
-        selectedCountryPhonePrefix: PrefixDescription = {
-            name: '',
-            iso: '',
-            prefix: '',
-            mask: '## ## ## ###'
-        };
-
-        get _outlined(): boolean
+    computed: {
+        _outlined(): boolean
         {
             return Config.ui.components.textField.defaultStyle === 'outlined';
-        }
+        },
 
-        get e164FormattedNumber(): string
+        e164FormattedNumber(): string
         {
             return '+' + this.countryPrefix + this.phoneNumber;
         }
+    },
 
+    methods: {
         /**
          * Filter the autocomplete items when typing.
          */
@@ -82,7 +88,7 @@
             const searchText = queryText.toLowerCase();
 
             return textOne.indexOf(searchText) > -1 || textTwo.indexOf(searchText) > -1
-        }
+        },
 
         /**
          * Init the phone number.
@@ -98,7 +104,7 @@
             // First try to parse the phone number and init the component data accordingly.
             let parsedNumber = parseNumber(this.value, { extended: true });
 
-            if (parsedNumber === {}) {
+            if (_.isEmpty(parsedNumber)) {
                 return;
             }
 
@@ -130,7 +136,7 @@
             if ((parsedNumber as ParsedNumber).phone) {
                 this.phoneNumber = (parsedNumber as ParsedNumber).phone.toString();
             }
-        }
+        },
 
         /**
          * Stop the propagation of the enter keypress event.
@@ -142,31 +148,29 @@
         {
             event.preventDefault();
         }
+    },
 
-        @Watch('countryPrefix', { immediate: true })
-        onCountryPrefixChange()
-        {
+    mounted()
+    {
+        this.$watch('countryPrefix', () => {
             let result = this.countryPhonePrefixes
                 .find((item: PrefixDescription) => item.prefix === this.countryPrefix);
 
             if (result) {
                 this.selectedCountryPhonePrefix = result;
             }
-        }
+        });
 
-        @Watch('e164FormattedNumber')
-        onE164FormattedNumberChange()
-        {
+        this.$watch('value', () => {
+            this.init();
+        });
+    },
+
+    watch: {
+        e164FormattedNumber() {
             this.$emit('input', this.e164FormattedNumber);
         }
-
-        @Watch('value', { immediate: true })
-        onValueChange()
-        {
-            this.init();
-        }
     }
-
-    export default InputPhone;
+}
 
 </script>

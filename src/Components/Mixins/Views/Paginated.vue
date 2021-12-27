@@ -1,66 +1,74 @@
 <script lang="ts">
 
-    import _                  from 'lodash';
-    import { Vue, Component } from 'vue-property-decorator';
-    import { Pagination }     from 'spa-skeleton/src/Library/Interfaces/Pagination';
-    import { Config, Model }  from 'spa-skeleton';
-    import { Query }          from '@vuex-orm/core';
+import _ from 'lodash';
+import { Pagination } from '../../../Library/Interfaces/Pagination';
+import { Config, Model } from '../../../index';
+import { Query } from '@vuex-orm/core';
 
-    /*
-     * This mixin can be used by all the views that need to display paginated data. E.g.: a view
-     * displaying a table with a list of users.
-     */
-    @Component
-    export class ViewPaginated extends Vue
-    {
-        leaving: boolean = false;
+/**
+ * This mixin can be used by all the views that need to display paginated data. E.g.: a view
+ * displaying a table with a list of users.
+ */
+export default {
 
-        initialized: boolean = false;
+    name: 'ViewPaginated',
 
-        get pagination(): any
-        {
-            return this.$store.getters.app.ui.pagination;
+    data() {
+        return {
+            leaving: false,
+            initialized: false
         }
+    },
 
-        set pagination(value)
-        {
-            let newPagination = {
-                ...this.$store.getters.app.ui.pagination,
-                ...value
-            };
+    computed: {
 
-            let oldPagination = this.$store.getters.app.ui.pagination;
+        pagination: {
+            get(): any
+            {
+                return this.$store.getters.app.ui.pagination;
+            },
+            set(value)
+            {
+                let newPagination = {
+                    ...this.$store.getters.app.ui.pagination,
+                    ...value
+                };
 
-            // Vuetify can set the sort to an empty string. We set it back to null if that's the
-            // case so that the next comparison executes properly.
-            if (newPagination.sort === '') {
-                newPagination.sort = null;
-            }
+                let oldPagination = this.$store.getters.app.ui.pagination;
 
-            if (oldPagination.sort === '') {
-                oldPagination.sort = null;
-            }
-
-            // We need to compare the old and the new pagination with lodash because, even if the
-            // value of each key in the pagination object is equivalent, there could be differences
-            // (such as a key with an observer in the new pagination but no observer in the old one)
-            // that have caused this function to trigger. We want to update the route only if the
-            // pagination has actually changed.
-            if (this.initialized) {
-                if (_.isEqual(oldPagination, newPagination)) {
-                    return;
+                // Vuetify can set the sort to an empty string. We set it back to null if that's the
+                // case so that the next comparison executes properly.
+                if (newPagination.sort === '') {
+                    newPagination.sort = null;
                 }
 
-                this.$store.commit('app/INSERT', {
-                    ui: {
-                        pagination: newPagination
-                    }
-                });
+                if (oldPagination.sort === '') {
+                    oldPagination.sort = null;
+                }
 
-                setTimeout(() => this.updateRoute(newPagination));
+                // We need to compare the old and the new pagination with lodash because, even if the
+                // value of each key in the pagination object is equivalent, there could be differences
+                // (such as a key with an observer in the new pagination but no observer in the old one)
+                // that have caused this function to trigger. We want to update the route only if the
+                // pagination has actually changed.
+                if (this.initialized) {
+                    if (_.isEqual(oldPagination, newPagination)) {
+                        return;
+                    }
+
+                    this.$store.commit('app/INSERT', {
+                        ui: {
+                            pagination: newPagination
+                        }
+                    });
+
+                    setTimeout(() => this.updateRoute(newPagination));
+                }
             }
         }
+    },
 
+    methods: {
         /**
          * Update the route based on the pagination.
          */
@@ -89,7 +97,7 @@
             await this.$navigator.push({ query });
 
             window.scrollTo(0, 0);
-        }
+        },
 
         /**
          * Get the paginated resource.
@@ -119,7 +127,7 @@
             }
 
             return query.get();
-        }
+        },
 
         /**
          * Initialize the pagination in the state machine.
@@ -151,27 +159,26 @@
 
             setTimeout(() => this.initialized = true);
         }
+    },
 
-        beforeRouteLeave(to, from, next): void
-        {
-            this.leaving = true;
+    beforeRouteLeave(to, from, next): void
+    {
+        this.leaving = true;
 
-            next();
-        }
+        next();
+    },
 
-        beforeRouteUpdate(to, from, next): void
-        {
-            this.leaving = false;
+    beforeRouteUpdate(to, from, next): void
+    {
+        this.leaving = false;
 
-            next();
-        }
+        next();
+    },
 
-        created(): void
-        {
-            this.initPagination();
-        }
+    created(): void
+    {
+        this.initPagination();
     }
-
-    export default ViewPaginated;
+}
 
 </script>

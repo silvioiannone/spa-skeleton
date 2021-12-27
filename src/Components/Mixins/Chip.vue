@@ -1,52 +1,49 @@
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class Chip extends Vue
-    {
+    props: {
         /**
          * Adds remove button.
          */
-        @Prop({ type: Boolean, default: false }) close: boolean;
+        close: { type: Boolean, default: false },
 
         /**
          * Removes circle edges.
          */
-        @Prop({ type: Boolean, default: false }) label: boolean;
+        label: { type: Boolean, default: false },
 
         /**
          * Removes background and applies border and text color.
          */
-        @Prop({ type: Boolean, default: false }) outlined: boolean;
+        outlined: { type: Boolean, default: false },
 
         /**
          * Decreases the chip size.
          */
-        @Prop({ type: Boolean, default: false }) small: boolean;
+        small: { type: Boolean, default: false },
 
         /**
          * Decreases the chip size.
          */
-        @Prop({ type: Boolean, default: false }) xSmall: boolean;
+        xSmall: { type: Boolean, default: false },
 
         /**
          * Makes the component large.
          */
-        @Prop({ type: Boolean, default: false }) large: boolean;
+        large: { type: Boolean, default: false },
 
         /**
          * Makes the component extra large.
          */
-        @Prop({ type: Boolean, default: false }) xLarge: boolean;
+        xLarge: { type: Boolean, default: false },
 
         /**
          * Applies specified color to the control - it can be the name of material color (for
          * example `success` or `purple`) or css color (`#033` or `rgba(255, 0, 0, 0.5)`).
          */
-        @Prop({ type: String }) color: string;
+        color: { type: String }
     }
-
-    export default Chip;
+}
 
 </script>

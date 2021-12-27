@@ -1,8 +1,8 @@
 <template>
     <v-toolbar :fixed="fixed" app clipped-left :color="color" clipped-right :tabs="tabs"
                :scroll-off-screen="$vuetify.breakpoint.mdAndDown">
-        <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
-                             v-if="navigationDrawer" aria-label="Toggle sidebar"/>
+        <!-- <v-toolbar-side-icon @click.stop="toggleNavigationDrawer" class="hidden-lg-and-up"
+                             v-if="navigationDrawer" aria-label="Toggle sidebar"/> -->
         <v-toolbar-title v-if="showingTitle" class="mr-3">
             <router-link :to="toolbarTitleRedirectUrl" v-if="!!$slots['title']">
                 <slot name="title"/>
@@ -33,79 +33,87 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-    import { Config }                      from '../../Config';
-    import BreadcrumbsMain from '../Breadcrumbs/Main.vue';
-    import TextFieldSearch from '../TextFields/Search.vue';
+import { Config } from '../../Config';
+import BreadcrumbsMain from '../Breadcrumbs/Main.vue';
+import TextFieldSearch from '../TextFields/Search.vue';
 
-    @Component({
-        components: {
-            BreadcrumbsMain,
-            TextFieldSearch
-        }
-    })
-    export class ToolbarMain extends Vue
-    {
+export default {
+
+    name: 'ToolbarMain',
+
+    components: {
+        BreadcrumbsMain,
+        TextFieldSearch
+    },
+
+    props: {
+
         /**
          * Toolbar's color.
          */
-        @Prop({type: String, default: ''}) color: string;
+        color: { type: String, default: '' },
 
         /**
          * Whether the toolbar should be fixed.
          */
-        @Prop({type: Boolean, default: true}) fixed: boolean;
+        fixed: { type: Boolean, default: true },
 
         /**
          * Whether or not there is a navigationDrawer. If there is no navigationDrawer (false)
          * the navigationDrawer menu icon is hidden.
          */
-        @Prop({type: Boolean, default: true}) navigationDrawer: boolean;
+        navigationDrawer: { type: Boolean, default: true },
 
         /**
          * Whether or not the search button should be displayed.
          */
-        @Prop({type: Boolean, default: false}) search: boolean;
+        search: { type: Boolean, default: false },
 
         /**
          * Toolbar title link.
          */
-        @Prop({type: String, default: ''}) titleTo: string;
+        titleTo: { type: String, default: '' },
 
         /**
          * Toolbar title.
          */
-        @Prop({type: String, default: Config.app.name}) title: string;
+        title: { type: String, default: Config.app.name },
 
         /**
          * Display a toolbar with tabs.
          */
-        @Prop({type: Boolean, default: false}) tabs: boolean;
+        tabs: { type: Boolean, default: false }
+    },
 
-        protected showingSearch: boolean = false;
+    data()
+    {
+        return {
+            showingSearch: false,
+            searchQuery: ''
+        }
+    },
 
-        protected searchQuery: string | (string | null)[] = '';
-
-        get searchCallback(): Function | null
+    computed: {
+        searchCallback(): Function | null
         {
             return this.$store.getters.app.ui.search;
-        }
+        },
 
-        get breadcrumbs(): Array<any>
+        breadcrumbs(): Array<any>
         {
             return this.$store.getters.app.ui.toolbar.breadcrumbs;
-        }
+        },
 
-        get toolbarTitleRedirectUrl(): string
+        toolbarTitleRedirectUrl(): string
         {
             if (this.titleTo.length) {
                 return this.titleTo;
             }
 
             return (this.$user.id) ? '/home' : '/';
-        }
+        },
 
-        get showingTitle(): boolean
+        showingTitle(): boolean
         {
             if (this.$vuetify.breakpoint.xs) {
                 return false;
@@ -116,12 +124,15 @@
             } else {
                 return !(this.showingSearch && window.innerWidth <= 576);
             }
-        }
+        },
 
-        get ui(): any
+        ui(): any
         {
             return this.$store.getters.app.ui;
-        }
+        },
+    },
+
+    methods: {
 
         /**
          * Expand the navigationDrawer.
@@ -132,7 +143,7 @@
                 'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
                 !this.ui.navigationDrawers.leftVisible
             );
-        }
+        },
 
         /**
          * Hide the search box.
@@ -141,7 +152,7 @@
         {
             this.showingSearch = false;
             this.searchQuery = '';
-        }
+        },
 
         /**
          * Hide the search box if it's empty.
@@ -151,7 +162,7 @@
             if (!this.searchQuery || this.searchQuery.length === 0) {
                 this.hideSearch();
             }
-        }
+        },
 
         /**
          * Show the search box.
@@ -167,26 +178,27 @@
                 }
             });
         }
+    },
 
-        mounted(): void
-        {
-            this.searchQuery = this.$route.query.search;
+    mounted(): void
+    {
+        this.searchQuery = this.$route.query.search;
 
-            if (this.searchQuery) {
-                this.showSearch();
-            }
+        if (this.searchQuery) {
+            this.showSearch();
         }
+    },
 
-        @Watch('searchQuery')
-        onSearchQueryChanged()
+    watch: {
+        searchQuery()
         {
             this.$emit('search:update', this.searchQuery);
+
             if (this.searchCallback) {
                 this.searchCallback(this.searchQuery);
             }
         }
     }
-
-    export default ToolbarMain;
+}
 
 </script>

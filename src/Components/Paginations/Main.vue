@@ -5,16 +5,20 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
-    import { Pagination } from '../../Library/Interfaces/Pagination';
+import { Pagination } from '../../Library/Interfaces/Pagination';
 
-    @Component
-    export class PaginationMain extends Vue
-    {
+export default {
+
+    name: 'PaginationMain',
+
+    props: {
         /**
          * Pagination object.
          */
-        @Prop({type: Object, required: true}) pagination: Pagination;
+        pagination: {type: Object, required: true} as Pagination
+    },
+
+    methods: {
 
         /**
          * Handle the `input` event fired by the `v-pagination` component.
@@ -27,7 +31,6 @@
             });
         }
     }
-
-    export default PaginationMain;
+}
 
 </script>

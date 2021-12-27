@@ -6,14 +6,14 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop} from 'vue-property-decorator';
+export default {
 
-    @Component({
-        inheritAttrs: false
-    })
-    export class AlertMain extends Vue
-    {
-        get props(): any
+    name: 'AlertMain',
+
+    inheritAttrs: false,
+
+    computed: {
+        props(): any
         {
             if (this.$attrs.type === 'info') {
                 this.$attrs.color = 'primary';
@@ -25,7 +25,6 @@
             }
         }
     }
-
-    export default AlertMain;
+}
 
 </script>

@@ -29,31 +29,33 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+interface Resource {
+    id: string;
+}
 
-    interface Resource {
-        id: string;
-    }
+export default {
 
-    @Component
-    export class MenuCrud extends Vue
-    {
+    name: 'MenuCrud',
+
+    props: {
         /**
          * Resource prefix.
          */
-        @Prop({ type: String }) prefix: string|undefined;
+        prefix: { type: String },
 
         /**
          * Make the button small.
          */
-        @Prop({ type: Boolean, default: false }) small: boolean;
+        small: { type: Boolean, default: false },
 
         /**
          * Resource.
          */
-        @Prop({ type: Object }) resource: Resource|undefined;
+        resource: { type: Object }
+    },
 
-        get deleteTileProps(): any
+    computed: {
+        deleteTileProps(): any
         {
             let props: any = {};
 
@@ -62,9 +64,9 @@
             }
 
             return props;
-        }
+        },
 
-        get updateTileProps(): any
+        updateTileProps(): any
         {
             let props: any = {};
 
@@ -74,14 +76,16 @@
 
             return props;
         }
+    },
 
+    methods: {
         /**
          * Handle the `click` event on the delete tile.
          */
         handleDeleteTileClick(): void
         {
             this.$emit('click:delete');
-        }
+        },
 
         /**
          * Handle the `click` event on the update tile.
@@ -91,7 +95,6 @@
             this.$emit('click:update');
         }
     }
-
-    export default MenuCrud;
+}
 
 </script>

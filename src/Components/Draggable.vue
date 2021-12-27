@@ -7,83 +7,91 @@
 
 <script lang="ts">
 
-    import _                        from 'lodash';
-    import { Component, Prop, Vue } from 'vue-property-decorator';
-    import VueDraggable             from 'vuedraggable';
+import _ from 'lodash';
+import VueDraggable from 'vuedraggable';
 
-    /**
-     * This component allows you to sort the contained elements.
-     *
-     * It operates in two modes:
-     *
-     * - "index" mode: the items are sorted using their indexes in the `value` array. In simpler
-     *                 words: the items in the `value` prop are re-ordered by changing their
-     *                 position and no changes is made to the item's data.
-     * - "key" mode: the elements are sorted using a property on each item. This property (defaults
-     *               to `position`) is updated in order to keep track of item's position.
-     */
-    @Component({
-        components: {
-            VueDraggable
-        }
-    })
-    export class Draggable extends Vue
-    {
+/**
+ * This component allows you to sort the contained elements.
+ *
+ * It operates in two modes:
+ *
+ * - "index" mode: the items are sorted using their indexes in the `value` array. In simpler
+ *                 words: the items in the `value` prop are re-ordered by changing their
+ *                 position and no changes is made to the item's data.
+ * - "key" mode: the elements are sorted using a property on each item. This property (defaults
+ *               to `position`) is updated in order to keep track of item's position.
+ */
+export default {
+
+    name: 'Draggable',
+
+    components: {
+        VueDraggable
+    },
+
+    props: {
+
         /**
          * Class that will be used to identify the handle.
          */
-        @Prop({ type: String, default: '' }) handle: Array<any>;
+        handle: { type: String, default: '' },
 
         /**
          * Enable the key-based mode.
          */
-        @Prop({ type: Boolean, default: false }) keyMode: boolean;
+        keyMode: { type: Boolean, default: false },
 
         /**
          * Key that denotes the key holding the position index. It can be a string with dot-sperated
          * keys.
          */
-        @Prop({ type: String, default: 'position' }) positionKey: string;
+        positionKey: { type: String, default: 'position' },
 
         /**
          * The items that will be ordered.
          */
-        @Prop({ type: Array, default: () => [] }) value: Array<any>;
+        value: { type: Array, default: () => ([]) },
 
         /**
          * Object of options.
          *
          * See: https://github.com/RubaXa/Sortable#options
          */
-        @Prop({
-            type: Object, default: () => {
+        options: {
+            type: Object,
+            default: () => {
                 scrollSensitivity: 120
             }
-        }) options: any;
+        }
+    },
 
-        get _class(): string
+    computed: {
+
+        _class(): string
         {
             return this.$attrs.class || 'draggable';
-        }
+        },
 
-        get model(): Array<any>
-        {
-            return this.value;
-        }
+        model: {
+            get(): Array<any>
+            {
+                return this.value;
+            },
+            set(value: Array<any>)
+            {
+                if (this.keyMode) {
+                    return;
+                }
 
-        set model(value: Array<any>)
-        {
-            if (this.keyMode) {
-                return;
+                this.$emit('input', value);
             }
-
-            this.$emit('input', value);
         }
+    },
+
+    methods: {
 
         /**
          * Move the item to the new position.
-         *
-         * @param movement
          */
         moveItem(movement: any): void
         {
@@ -134,7 +142,7 @@
             }
 
             this.$emit('input', this.model);
-        }
+        },
 
         /**
          * Get the position of an item.
@@ -142,7 +150,7 @@
         getPosition(item: any): number
         {
             return _.get(item, this.positionKey);
-        }
+        },
 
         /**
          * Set the position of an item.
@@ -152,7 +160,6 @@
             return _.set(item, this.positionKey, position);
         }
     }
-
-    export default Draggable;
+}
 
 </script>

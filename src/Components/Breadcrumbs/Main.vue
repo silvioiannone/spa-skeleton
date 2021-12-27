@@ -4,24 +4,24 @@
 
 <script lang="ts">
 
-    import { Component, Mixins } from 'vue-property-decorator';
-    import Breadcrumbs from '../Mixins/Breadcrumbs.vue';
+import Breadcrumbs from '../Mixins/Breadcrumbs.vue';
 
-    @Component
-    export class BreadcrumbsMain extends Mixins(Breadcrumbs)
-    {
-        get _items()
+export default {
+
+    name: 'BreadcrumbsMain',
+
+    mixins: [Breadcrumbs],
+
+    computed: {
+        _items(): any
         {
-            return this.items.map(item => {
-                return {
-                    disabled: ! item.to,
-                    exact: true,
-                    ...item,
-                }
-            });
+            return this.items.map(item => ({
+                disabled: !item.to,
+                exact: true,
+                ...item,
+            }));
         }
     }
-
-    export default BreadcrumbsMain;
+}
 
 </script>

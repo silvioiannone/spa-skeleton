@@ -38,24 +38,29 @@
 
 <script lang="ts">
 
-    import { Component, Prop, Vue } from 'vue-property-decorator';
-    import AvatarUser from '../Avatars/User.vue';
-    import NavigationDrawerMain from './Main.vue';
+import AvatarUser from '../Avatars/User.vue';
+import NavigationDrawerMain from './Main.vue';
 
-    @Component({
-        components: {
-            AvatarUser,
-            NavigationDrawerMain
-        }
-    })
-    export class NavigationDrawerHome extends Vue
-    {
-        @Prop({
+export default {
+
+    name: 'NavigationDrawerHome',
+
+    components: {
+        AvatarUser,
+        NavigationDrawerMain
+    },
+
+    props: {
+
+        quit: {
             validator(value: any): boolean
             {
                 return typeof value === 'function'
             }
-        }) quit: Function;
+        }
+    },
+
+    methods: {
 
         /**
          * Quit from the application.
@@ -67,11 +72,9 @@
                 return;
             }
 
-            this.$ws.disconnect();
             this.$navigator.push('/login');
         }
     }
-
-    export default NavigationDrawerHome;
+}
 
 </script>

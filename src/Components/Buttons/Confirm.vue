@@ -26,42 +26,50 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Button from '../Mixins/Button.vue';
+import Button from '../Mixins/Button.vue';
 
-    @Component
-    export class ButtonConfirm extends Mixins(Button)
-    {
+export default {
+
+    name: 'ButtonConfirm',
+
+    mixins: [Button],
+
+    props: {
         /**
          * What to do once the action is confirmed. It should be a function returning a Promise.
          */
-        @Prop({ type: Function }) afterConfirmation: () => Promise<any>;
+        afterConfirmation: Function,
 
         /**
          * Text that will be displayed on the button after the first click.
          */
-        @Prop({ type: String }) verificationText: string;
+        verificationText: String,
 
         /**
          * Abort button timeout (in seconds).
          */
-        @Prop({ type: Number, default: 10 }) timeout: number;
+        timeout: { type: Number, default: 10 }
+    },
 
-        confirmed = false;
+    data()
+    {
+        return {
+            confirmed: false,
+            countdown: this.timeout,
+            progress: 100,
+            showConfirmation: false,
+            abortCountdown: null,
+        }
+    },
 
-        countdown = this.timeout;
-
-        progress = 100;
-
-        showConfirmation = false;
-
-        abortCountdown = null;
-
-        get _verificationText(): string
+    computed: {
+        _verificationText(): string
         {
             return this.verificationText || this.$t('phrases.are_you_sure') as string;
         }
+    },
 
+    methods: {
         /**
          * Abort the action.
          */
@@ -70,21 +78,18 @@
             this.reset();
 
             clearInterval(<any>this.abortCountdown);
-        };
+        },
 
-        reset()
+        reset(): void
         {
             this.confirmed = false;
             this.showConfirmation = false;
             this.progress = 100;
             this.countdown = this.timeout;
-        }
+        },
 
         /**
          * Handles the click on the button.
-         *
-         * @param resolve
-         * @param reject
          */
         async verificationClick(resolve: Function, reject: Function): Promise<any>
         {
@@ -95,8 +100,7 @@
                 this.countdown--;
                 this.progress = this.countdown / this.timeout * 100;
 
-                if(this.countdown === 0)
-                {
+                if (this.countdown === 0) {
                     clearInterval(<any>this.abortCountdown);
 
                     let error;
@@ -114,7 +118,7 @@
                     }
                 }
             }, 1000);
-        }
+        },
 
         /**
          * Handles the confirmation.
@@ -124,14 +128,12 @@
             this.showConfirmation = true;
 
             setTimeout(() => {
-                if(!this.confirmed)
-                {
+                if (!this.confirmed) {
                     this.showConfirmation = false;
                 }
             }, 3000)
         }
     }
-
-    export default ButtonConfirm;
+}
 
 </script>

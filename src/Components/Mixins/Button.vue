@@ -1,95 +1,97 @@
 <script lang="ts">
 
-    import { VNode }                   from 'vue';
-    import { Component, Prop, Mixins } from 'vue-property-decorator';
-    import MixinComponent from './Component.vue';
+import { VNode } from 'vue';
+import MixinComponent from './Component.vue';
 
-    /**
-     * This mixin can be used in order to create buttons.
-     */
-    @Component
-    export class Button extends Mixins(MixinComponent)
-    {
+export default {
+
+    mixins: [MixinComponent],
+
+    props: {
         /**
          * Applies specified color to the control.
          */
-        @Prop({ type: String, default: '' }) color: string;
+        color: { type: String, default: '' },
 
         /**
          * Designates the button as icon - round and flat.
          */
-        @Prop({ type: Boolean, default: false }) icon: boolean;
+        icon: { type: Boolean, default: false },
 
         /**
          * Makes the background transparent and applies a thin border.
          */
-        @Prop({ type: Boolean, default: false }) outlined: boolean;
+        outlined: { type: Boolean, default: false },
 
         /**
          * Designates the button as icon - round and flat.
          */
-        @Prop({ type: Boolean, default: false }) small: boolean;
+        small: { type: Boolean, default: false },
 
         /**
          * Display a large button.
          */
-        @Prop({ type: Boolean, default: false }) large: boolean;
+        large: { type: Boolean, default: false },
 
         /**
          * Makes the component extra large.
          */
-         @Prop({ type: Boolean, default: false }) xLarge: boolean;
+        xLarge: { type: Boolean, default: false },
 
         /**
          * Display the button in a loading state.
          */
-        @Prop({ type: Boolean, default: false }) loading: boolean;
+        loading: { type: Boolean, default: false },
 
         /**
          * Makes the background transparent.
          */
-        @Prop({ type: Boolean, default: false }) text: boolean;
+        text: { type: Boolean, default: false },
 
         /**
          * Whether or not the button should be disabled.
          */
-        @Prop({ type: Boolean, default: false }) disabled: boolean;
+        disabled: { type: Boolean, default: false },
 
         /**
          * Designates the button as a floating-action-button - round.
          */
-        @Prop({ type: Boolean, default: false }) fab: boolean;
+        fab: { type: Boolean, default: false },
 
         /**
          * Applies position: fixed to the component.
          */
-        @Prop({ type: Boolean, default: false }) fixed: boolean;
+        fixed: { type: Boolean, default: false },
 
         /**
          * Aligns the component towards the bottom.
          */
-        @Prop({ type: Boolean, default: false }) bottom: boolean;
+        bottom: { type: Boolean, default: false },
 
         /**
          * Aligns the component to the right
          */
-        @Prop({ type: Boolean, default: false }) right: boolean;
+        right: { type: Boolean, default: false },
 
         /**
          * Aligns the component towards the top.
          */
-        @Prop({ type: Boolean, default: false }) top: boolean;
+        top: { type: Boolean, default: false },
 
         /**
          * Aligns the component to the left.
          */
-        @Prop({ type: Boolean, default: false }) left: boolean;
+        left: { type: Boolean, default: false }
+    },
 
-        _onClick(event: any): void
+    computed: {
+        _onClick(): void
         {
             this.onClick();
         }
+    },
 
+    methods: {
         /**
          * Handle `click` event.
          */
@@ -98,19 +100,18 @@
             this.$emit('click', event);
             this._onClick(event);
         }
+    },
 
-        render(createElement: Function): VNode
-        {
-            return createElement('v-btn', {
-                props: this.$props,
-                on: {
-                    ...this.$listeners,
-                    click: (event: any) => this.handleClick(event),
-                }
-            }, this.$slots.default);
-        }
+    render(createElement: Function): VNode
+    {
+        return createElement('v-btn', {
+            props: this.$props,
+            on: {
+                ...this.$listeners,
+                click: (event: any) => this.handleClick(event),
+            }
+        }, this.$slots.default);
     }
-
-    export default Button;
+}
 
 </script>

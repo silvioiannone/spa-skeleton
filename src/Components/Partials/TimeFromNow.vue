@@ -10,26 +10,34 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
-    import DayJS from 'dayjs';
+import DayJS from 'dayjs';
 
-    let interval: any = null;
+let interval: any = null;
 
-    @Component
-    export class TimeFromNow extends Vue
-    {
+export default {
+
+    name: 'TimeFromNow',
+
+    props: {
         /**
          * The time that will be displayed in a human readable format.
          */
-        @Prop({ type: String, required: true }) time: string;
+        time: { type: String, required: true },
 
         /**
          * Display a tooltip that will show the exact time.
          */
-        @Prop({ type: Boolean, required: false }) tooltip: boolean;
+        tooltip: { type: Boolean, required: false }
+    },
 
-        _time: string = '';
+    data()
+    {
+        return {
+            _time: ''
+        }
+    },
 
+    methods: {
         /**
          * Update the time.
          */
@@ -40,25 +48,25 @@
                 .local()
                 .fromNow();
         }
+    },
 
-        @Watch('time')
-        onTimeChange()
+    mounted()
+    {
+        this.update();
+        interval = setInterval(this.update, 1000);
+    },
+
+    destroyed()
+    {
+        clearInterval(interval);
+    },
+
+    watch: {
+        time(): void
         {
             this.update();
-        }
-
-        mounted()
-        {
-            this.update();
-            interval = setInterval(this.update, 1000);
-        }
-
-        destroyed()
-        {
-            clearInterval(interval);
         }
     }
-
-    export default TimeFromNow;
+}
 
 </script>

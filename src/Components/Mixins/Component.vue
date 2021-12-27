@@ -1,21 +1,28 @@
 <script lang="ts">
 
-    import Vue, { VNode } from 'vue';
-    import { Component }  from 'vue-property-decorator';
+import { VNode } from 'vue';
 
-    @Component
-    export class MixinComponent extends Vue
+export default {
+
+    data()
     {
-        // Use this in order to override the value of a prop.
-        __props = {};
+        return {
+            // Use this in order to override the value of a prop.
+            __props: {}
+        }
+    },
 
+    computed: {
         /**
          * Use this computed prop in order to set props reactive default values.
          */
-        get computedProps(): any
+        computedProps(): any
         {
             return {};
         }
+    },
+
+    methods: {
 
         /**
          * Get the props.
@@ -34,7 +41,7 @@
                 ...this.computedProps,
                 ...this.$data.__props
             }
-        }
+        },
 
         /**
          * Get the selected slot.
@@ -44,7 +51,6 @@
             return this.$slots[slot];
         }
     }
-
-    export default MixinComponent;
+}
 
 </script>

@@ -61,52 +61,57 @@
 
 <script lang="ts">
 
-    import { ResponseInterface, Notification } from 'spa-skeleton';
-    import { Vue, Component }                  from 'vue-property-decorator';
-    import _                                   from 'lodash';
-    import PushJS                              from 'push.js';
+import { ResponseInterface, Notification } from '../../index';
+import _ from 'lodash';
+import PushJS from 'push.js';
 
-    @Component
-    export class NavigationDrawerNotifications extends Vue
-    {
+export default {
+
+    name: 'NavigationDrawerNotifications',
+
+    computed: {
         get notifications(): any[]
         {
             return Notification.all();
-        }
+        },
 
         get unreadNotifications(): any[]
         {
             return this.notifications
                 .filter((notification: any) => notification.read_at === null)
-        }
+        },
 
-        get visible(): boolean
-        {
-            return this.$store.getters.app.ui.navigationDrawers.notificationsVisible;
-        }
+        visible: {
+            get(): boolean
+            {
+                return this.$store.getters.app.ui.navigationDrawers.notificationsVisible;
+            },
+            set(value)
+            {
+                this.$store.commit('ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY', value);
+            }
+        },
 
-        set visible(value)
-        {
-            this.$store.commit('ui/SET_NOTIFICATIONS_DRAWER_VISIBILITY', value);
+        desktopNotifications: {
+            get(): boolean
+            {
+                return _.get(
+                    this.$store.getters.app,
+                    'user.settings.notifications.desktopNotifications'
+                ) || false;
+            },
+            set(value: boolean)
+            {
+                this.$store.commit('user/CHANGE_SETTING', {
+                    notifications: {
+                        desktopNotifications: value
+                    }
+                });
+            }
         }
+    },
 
-        get desktopNotifications(): boolean
-        {
-            return _.get(
-                this.$store.getters.app,
-                'user.settings.notifications.desktopNotifications'
-            ) || false;
-        }
-
-        set desktopNotifications(value: boolean)
-        {
-            this.$store.commit('user/CHANGE_SETTING', {
-                notifications: {
-                    desktopNotifications: value
-                }
-            });
-        }
-
+    methods: {
         /**
          * Enable the desktop notifications.
          */
@@ -139,7 +144,7 @@
                     settings: this.$user.settings
                 });
             }
-        }
+        },
 
         /**
          * Mark all the notifications as read.
@@ -154,14 +159,12 @@
                             include: 'unread_notifications'
                         })
                         .find('me')
-                        .then((response: ResponseInterface) =>
-                        {
+                        .then((response: ResponseInterface) => {
                             Notification.create({data: []});
                         });
                 });
         }
     }
-
-    export default NavigationDrawerNotifications;
+}
 
 </script>

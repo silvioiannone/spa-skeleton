@@ -6,26 +6,38 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Watch, Prop } from 'vue-property-decorator';
-    import Dialog from '../Mixins/Dialog.vue';
-    import DialogMain from './Main.vue';
+import Dialog from '../Mixins/Dialog.vue';
+import DialogMain from './Main.vue';
 
-    /**
-     * This is a dialog that can hold a form in it.
-     */
-    @Component({
-        components: {
-            DialogMain
-        }
-    })
-    export class DialogForm extends Mixins(Dialog)
-    {
+export default {
+
+    name: 'DialogForm',
+
+    mixins: [Dialog],
+
+    components: {
+        DialogMain
+    },
+
+    props: {
         /**
          * The dialog will be persistent and that will prevent it from closing when clicking on
          * the backdrop.
          */
-        @Prop({ type: Boolean, default: true }) persistent: boolean;
+        persistent: { type: Boolean, default: true }
+    },
 
+    computed: {
+        on(): { [key: string]: Function }
+        {
+            return {
+                cancel: this.handleCancel,
+                submit: this.handleSubmit
+            }
+        }
+    },
+
+    methods: {
         /**
          * Focus the first input of the dialog.
          */
@@ -43,15 +55,7 @@
 
                 setTimeout(() => firstFormInput.focus());
             });
-        }
-
-        get on(): { [key: string]: Function }
-        {
-            return {
-                cancel: this.handleCancel,
-                submit: this.handleSubmit
-            }
-        }
+        },
 
         /**
          * Propagates the cancel form event to the parent.
@@ -61,7 +65,7 @@
             this.$emit('cancel', event);
             this.$emit('hidden');
             this.$emit('input', false);
-        }
+        },
 
         /**
          * Propagates the submit form event to the parent.
@@ -72,17 +76,17 @@
             this.$emit('hidden');
             this.$emit('input', false);
         }
+    },
 
-        @Watch('value', { immediate: true })
-        onValueChange(): void
-        {
+    mounted(): void
+    {
+        this.$watch('value', () => {
             // Focus the first form element as soon as the dialog is displayed.
             if (this.value) {
                 this.focus();
             }
-        }
+        }, { immediate: true });
     }
-
-    export default DialogForm;
+}
 
 </script>

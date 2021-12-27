@@ -9,20 +9,19 @@
 
 <script lang="ts">
 
-    import { Component, Mixins } from 'vue-property-decorator';
-    import ButtonToolbar from '../Buttons/Toolbar.vue';
-    import EditorCommand from '../Mixins/EditorCommand.vue';
-    import ToolbarGroup from '../Mixins/ToolbarGroup.vue';
+import ButtonToolbar from '../Buttons/Toolbar.vue';
+import EditorCommand from '../Mixins/EditorCommand.vue';
+import ToolbarGroup from '../Mixins/ToolbarGroup.vue';
 
-    @Component({
-        components: {
-            ButtonToolbar
-        }
-    })
-    export class InputEditorButtonsLists extends Mixins(EditorCommand, ToolbarGroup)
-    {
+export default {
+
+    name: 'InputEditorButtonsLists',
+
+    mixins: [EditorCommand, ToolbarGroup],
+
+    components: {
+        ButtonToolbar
     }
-
-    export default InputEditorButtonsLists;
+}
 
 </script>

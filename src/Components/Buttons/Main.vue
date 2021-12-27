@@ -1,33 +1,40 @@
 <script lang="ts">
 
-    import { VNode }                   from 'vue';
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import Button from '../Mixins/Button.vue';
-    import MixinComponent from '../Mixins/Component.vue';
+import { VNode } from 'vue';
+import Button from '../Mixins/Button.vue';
+import MixinComponent from '../Mixins/Component.vue';
 
-    @Component
-    export class ButtonMain extends Mixins(Button, MixinComponent)
-    {
-        @Prop({
-            validator(value: any): boolean
-            {
-                return typeof value === 'function'
-            }
-        }) action: Function;
+export default {
 
-        _loading: boolean = false;
+    name: 'ButtonMain',
 
-        get propLoading(): boolean
+    mixins: [Button, MixinComponent],
+
+    props: {
+        action: Function
+    },
+
+    data() {
+        return {
+            _loading: false
+        }
+    },
+
+    computed: {
+        propLoading(): boolean
         {
             return this.$data._loading;
-        }
+        },
 
-        get computedProps(): any
+        computedProps(): any
         {
             return {
                 loading: this.propLoading
             }
         }
+    },
+
+    methods: {
 
         /**
          * React to `click` event.
@@ -46,23 +53,22 @@
 
             this.$emit('click', event);
         }
+    },
 
-        render(createElement: Function): VNode
-        {
-            return createElement(
-                'v-btn',
-                {
-                    props: this.$props,
-                    on: {
-                        ...this.$listeners,
-                        click: this._onClick
-                    }
-                },
-                this.$slots.default
-            );
-        }
+    render(createElement: Function): VNode
+    {
+        return createElement(
+            'v-btn',
+            {
+                props: this.$props,
+                on: {
+                    ...this.$listeners,
+                    click: this._onClick
+                }
+            },
+            this.$slots.default
+        );
     }
-
-    export default ButtonMain;
+}
 
 </script>

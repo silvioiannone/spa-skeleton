@@ -9,57 +9,57 @@
 
 <script lang="ts">
 
-    import Vue           from 'vue';
-    import { Component } from 'vue-property-decorator';
+interface SnackbarEvent {
+    message: string;
+    multiLine: boolean;
+    color: string;
+    timeout: number;
+}
 
-    interface SnackbarEvent {
-        message: string;
-        multiLine: boolean;
-        color: string;
-        timeout: number;
-    }
+export default {
 
-    @Component
-    export class SnackbarGlobal extends Vue
+    name: 'SnackbarGlobal',
+
+    data()
     {
-        /**
-         * The color of the message.
-         */
-        color: string = 'primary';
+        return {
+            /**
+             * The color of the message.
+             */
+            color: 'primary',
 
-        /**
-         * Message.
-         */
-        message: string = '';
+            /**
+             * Message.
+             */
+            message: '',
 
-        /**
-         * Makes the snackbar higher (mobile).
-         */
-         multiLine: boolean = false;
+            /**
+             * Makes the snackbar higher (mobile).
+             */
+            multiLine: false,
 
-        /**
-         * Visibility timeout.
-         */
-        timeout: number = 5000;
+            /**
+             * Visibility timeout.
+             */
+            timeout: 5000,
 
-        /**
-         * Controls the snackbar visibilty.
-         */
-        visible: boolean = false;
-
-        mounted()
-        {
-            this.$eh.$on('SnackbarDisplayMessage', (event: SnackbarEvent) =>
-            {
-                this.message = typeof event === 'string' ? event: event.message;
-                this.color = event.color || 'primary';
-                this.timeout = event.timeout || 5000;
-                this.visible = true;
-                this.multiLine = event.multiLine;
-            });
+            /**
+             * Controls the snackbar visibility.
+             */
+            visible: false,
         }
-    }
+    },
 
-    export default SnackbarGlobal;
+    mounted()
+    {
+        this.$eh.$on('SnackbarDisplayMessage', (event: SnackbarEvent) => {
+            this.message = typeof event === 'string' ? event: event.message;
+            this.color = event.color || 'primary';
+            this.timeout = event.timeout || 5000;
+            this.visible = true;
+            this.multiLine = event.multiLine;
+        });
+    }
+}
 
 </script>

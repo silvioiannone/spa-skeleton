@@ -1,41 +1,49 @@
 <script lang="ts">
 
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import TextField from '../Mixins/TextField.vue';
+import TextField from '../Mixins/TextField.vue';
 
-    @Component
-    export class TextFieldSearch extends Mixins(TextField)
-    {
+export default {
+
+    name: 'TextFieldSearch',
+
+    mixins: [TextField],
+
+    props: {
+
         /**
          * Append an icon to the text field.
          */
-        @Prop({ type: String, default: 'search' }) appendIcon: string;
+        appendIcon: { type: String, default: 'search' },
 
         /**
          * Make the text field clearable.
          */
-        @Prop({ type: Boolean, default: true }) clearable: boolean;
+        clearable: { type: Boolean, default: true },
 
         /**
          * Value of the name attribute.
          */
-        @Prop({ type: String, default: 'search' }) name: string;
+        name: { type: String, default: 'search' },
 
         /**
          * Hides hint, validation errors.
          */
-        @Prop({ type: Boolean, default: true }) hideDetails: string;
+        hideDetails: { type: Boolean, default: true },
 
         /**
          * Display the text field with a "solo" style.
          */
-        @Prop({ type: Boolean, default: true }) solo: boolean;
+        solo: { type: Boolean, default: true }
+    },
 
-        __props = {
-            placeholder: this.$t('actions.search') + '...'
-        };
+    data()
+    {
+        return {
+            __props: {
+                placeholder: this.$t('actions.search') + '...'
+            }
+        }
     }
-
-    export default TextFieldSearch;
+}
 
 </script>

@@ -1,66 +1,67 @@
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
-    import { ResponseInterface }    from '../../Library/Api/ResponseInterface';
+import { ResponseInterface } from '../../Library/Api/ResponseInterface';
 
-    /**
-     * This mixin can be used in order to create new forms.
-     */
-    @Component
-    export class Form extends Vue
-    {
+export default {
+
+    props: {
         /**
          * Whether or not the cancel button should be displayed.
          */
-        @Prop({ type: Boolean, default: false }) cancellable: boolean;
+        cancellable: { type: Boolean, default: false },
 
         /**
          * Whether the buttons should be centered or not.
          */
-        @Prop({ type: Boolean, default: false }) centerActions: boolean;
+        centerActions: { type: Boolean, default: false },
 
         /**
          * Submit action.
          *
          * It needs to be a function returning a promise.
          */
-        @Prop({ type: Function }) submit: Function;
+        submit: { type: Function },
 
         /**
          * Text for the submit button.
          */
-        @Prop({ type: String, default: 'Submit' }) submitText: String;
+        submitText: { type: String, default: 'Submit' },
 
         /**
          * Allow batch submission of the form.
          *
          * Once the form is submitted it will be made ready for a new submission.
          */
-        @Prop({ type: Boolean, default: false }) batch: boolean;
+        batch: { type: Boolean, default: false },
 
         /**
          * Disable the submit button.
          */
-        @Prop({ type: Boolean, default: false }) disabled: boolean;
+        disabled: { type: Boolean, default: false },
 
         /**
          * Form model value.
          */
-        @Prop() value: any;
+        value: {}
+    },
 
-        initialModel: any = {};
+    data()
+    {
+        return {
+            initialModel: {},
+            serverError: null as { message: string } | null,
+            fieldServerErrors: [],
+        }
+    },
 
-        serverError: { message: string } | null = null;
-
-        fieldServerErrors: any[] = [];
-
+    methods: {
         /**
          * Cancel the form.
          */
         cancel(): void
         {
             this.$emit('cancel', null);
-        }
+        },
 
         /**
          * Handle the form submission.
@@ -80,7 +81,7 @@
             this.resetForm();
             this.$emit('submit', response);
             return response;
-        }
+        },
 
         /**
          * Handle errors.
@@ -113,7 +114,7 @@
             }
 
             (this.$refs.validationObserver as any).setErrors(validationObserverErrors);
-        }
+        },
 
         /**
          * Focus the form.
@@ -128,7 +129,7 @@
             }
 
             firstFormInput.focus();
-        }
+        },
 
         /**
          * Reset the form to its original state.
@@ -145,16 +146,15 @@
                 });
             }
         }
+    },
 
-        mounted(): void
-        {
-            if (this.value) {
-                let parent = (this.$parent as any)
-                parent.model = { ...parent.model, ...this.value };
-            }
+    mounted(): void
+    {
+        if (this.value) {
+            let parent = (this.$parent as any)
+            parent.model = { ...parent.model, ...this.value };
         }
     }
-
-    export default Form;
+}
 
 </script>

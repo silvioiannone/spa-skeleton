@@ -11,37 +11,36 @@
 
 <script lang="ts">
 
-    import { Vue, Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class ListItemNav extends Vue
-    {
+    name: 'ListItemNav',
+
+    props: {
         /**
          * Whether the path shoulud be appended to the current route.
          */
-        @Prop({ type: Boolean, default: false }) append: boolean;
+        append: { type: Boolean, default: false },
 
         /**
          * Highlight the list item if the route (`to` prop) matches exactly.
          */
-        @Prop({ type: Boolean, default: false }) exact: boolean;
+        exact: { type: Boolean, default: false },
 
         /**
          * Icon.
          */
-        @Prop({ type: String, default: '' }) icon: string;
+        icon: { type: String, default: '' },
 
         /**
          * Title.
          */
-        @Prop({ type: String, default: '' }) title: string;
+        title: { type: String, default: '' },
 
         /**
          * To link destination.
          */
-        @Prop({ type: String, default: '' }) to: string;
+        to: { type: String, default: '' },
     }
-
-    export default ListItemNav;
+}
 
 </script>

@@ -14,24 +14,25 @@
 
 <script lang="ts">
 
-    import { Component, Mixins, Prop } from 'vue-property-decorator';
-    import DialogMain from './Main.vue';
+import DialogMain from './Main.vue';
 
-    @Component({
-        components: {
-            DialogMain
-        }
-    })
-    export class DialogCard extends Mixins(DialogMain)
-    {
+export default {
+
+    name: 'DialogCard',
+
+    mixins: [DialogMain],
+
+    components: {
+        DialogMain
+    },
+
+    props: {
+
         /**
          * Title displayed by the dialog.
          */
-        @Prop({ type: String, default: '' }) title: string;
-
-        __component = DialogMain;
+        title: { type: String, default: '' }
     }
-
-    export default DialogCard;
+}
 
 </script>

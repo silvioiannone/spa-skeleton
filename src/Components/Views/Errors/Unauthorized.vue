@@ -12,19 +12,15 @@
 
 <script lang="ts">
 
-    import Vue           from 'vue';
-    import { Component } from 'vue-property-decorator';
-    import ErrorMain from './Main.vue';
+import ErrorMain from './Main.vue';
 
-    @Component({
-        components: {
-            ErrorMain
-        }
-    })
-    export class ErrorUnauthorized extends Vue
-    {
+export default {
+
+    name: 'ErrorUnauthorized',
+
+    components: {
+        ErrorMain
     }
-
-    export default ErrorUnauthorized;
+}
 
 </script>

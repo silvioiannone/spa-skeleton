@@ -9,28 +9,27 @@
 
 <script lang="ts">
 
-    import Vue from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class AnimatedRouterView extends Vue
-    {
+    name: 'AnimatedRouterView',
+
+    props: {
         /**
          * Animation mode.
          */
-        @Prop({ type: String, default: 'out-in'}) mode: string;
+        mode: { type: String, default: 'out-in' },
 
         /**
          * Name of the router view.
          */
-        @Prop({ type: String, default: 'default' }) name: string;
+        name: { type: String, default: 'default' },
 
         /**
-         * The transition that should be applied. Only supports 'slide-x' and 'fade' at the moment.
+         * The transition that should be applied. Only supports 'slide-x' and 'fade' at the
+         * moment.
          */
-        @Prop({ type: String, default: 'fade' }) transition: string;
+        transition: { type: String, default: 'fade' }
     }
-
-    export default AnimatedRouterView;
+}
 
 </script>

@@ -1,12 +1,14 @@
 <script lang="ts">
 
-    import { Vue, Component } from 'vue-property-decorator';
+export default {
 
-    @Component
-    export class Searchable extends Vue
-    {
-        timeout: NodeJS.Timeout;
+    data() {
+        return {
+            timeout: undefined as NodeJS.Timeout
+        }
+    },
 
+    methods: {
         /**
          * Perform a server-side search.
          */
@@ -36,24 +38,23 @@
                 this.$navigator.push({ path: this.$route.path, query });
             }, 500)
         }
+    },
 
-        mounted(): void
-        {
-            this.$store.commit('app/SET', {
-                key: 'ui.search',
-                value: this.search
-            });
-        }
+    mounted(): void
+    {
+        this.$store.commit('app/SET', {
+            key: 'ui.search',
+            value: this.search
+        });
+    },
 
-        beforeDestroy(): void
-        {
-            this.$store.commit('app/SET', {
-                key: 'ui.search',
-                value: null
-            });
-        }
+    beforeDestroy(): void
+    {
+        this.$store.commit('app/SET', {
+            key: 'ui.search',
+            value: null
+        });
     }
-
-    export default Searchable;
+}
 
 </script>
