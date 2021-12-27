@@ -24,7 +24,7 @@ export default {
         async language(): Promise<void>
         {
             // Request a new locale file from the server...
-            let messages = await this.$api.app.getLocale(this.language);
+            let messages = (await this.$api.app.getLocale(this.language)).body;
 
             // ... and then switch the locale.
             // Translator.get().setLocaleMessage(this.language, response.body);
