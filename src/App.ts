@@ -1,3 +1,4 @@
+import State from '../../../resources/ts/App/State';
 import { Config }  from './Config';
 import { Service } from './Library/Services/Service';
 import { Logger }  from './Library/Services/Logger';
@@ -30,20 +31,12 @@ export class App
     protected static bootCallbacks: Function[] = [];
 
     /**
-     * App's mandatory services.
-     *
-     * These services are booted regardless and are required by the app.
-     */
-    protected static readonly mandatoryServices: typeof Service[] = [
-        Logger
-    ];
-
-    /**
      * App's services.
      *
      * Order is important.
      */
     protected static readonly services: typeof Service[] = [
+        Logger,
         Directives,
         Components,
         StateMachine,
@@ -63,14 +56,18 @@ export class App
     {
         let t0 = performance.now();
 
-        App.mandatoryServices.forEach((service): void => App.bootService(service));
-
         App.prepare();
+
+        // Register the services.
+        App.services.forEach(async (service: typeof Service): Promise<void> => {
+            service.register();
+        });
 
         Logger.info(`Starting the application...`);
 
-        App.services.forEach((service: typeof Service): void => {
-            App.bootService(service);
+        // Boot the services.
+        App.services.forEach(async (service: typeof Service): Promise<void> => {
+            await App.bootService(service);
             Logger.debug(`Service ${service.name} booted.`);
         });
 
@@ -101,9 +98,9 @@ export class App
     /**
      * Boot a service.
      */
-    protected static bootService(service: typeof Service): void
+    protected static async bootService(service: typeof Service): Promise<void>
     {
-        service.boot();
+        await service.boot();
     }
 
     /**

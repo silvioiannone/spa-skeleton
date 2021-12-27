@@ -24,7 +24,7 @@ export class Directives extends Service
     /**
      * Boot the service.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         let availableDirectives = {...SkeletonDirectives, ...DirectivesList};
 

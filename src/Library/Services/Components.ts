@@ -49,7 +49,7 @@ export class Components extends Service
     /**
      * Register the components.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         // Register the skeleton components
         let availableComponents = {...SkeletonComponents, ...AppComponents};

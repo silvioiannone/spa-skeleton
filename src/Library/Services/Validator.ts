@@ -29,12 +29,12 @@ export class Validator extends Service
     /**
      * Boot the validator.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
-        let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
-        let translator = Translator.get();
+        Vue.component('validation-provider', ValidationProvider);
+        Vue.component('validation-observer', ValidationObserver);
 
-        Translator.merge(messages.messages, 'validations.vendor');
+        let translator = Translator.get();
 
         configure({
             defaultMessage: (field: string, values: any): any => {
@@ -79,7 +79,7 @@ export class Validator extends Service
             extend(ruleName, rule.get());
         }
 
-        Vue.component('validation-provider', ValidationProvider);
-        Vue.component('validation-observer', ValidationObserver);
+        let messages = require(`../../../../vee-validate/dist/locale/${Config.locale}.json`); // eslint-disable-line @typescript-eslint/no-var-requires
+        Translator.merge(messages.messages, 'validations.vendor');
     }
 }

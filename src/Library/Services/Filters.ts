@@ -44,7 +44,7 @@ export class Filters extends Service
     /**
      * Boot the service.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         let availableFilters = {... SkeletonFilters, ...AppFilters};
         let store = StateMachine.getStore();

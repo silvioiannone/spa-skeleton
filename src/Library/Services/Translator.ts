@@ -41,32 +41,27 @@ export class Translator extends Service
     /**
      * Boot the translator.
      */
-    public static boot(): typeof Translator
+    public static async boot(): Promise<void>
     {
         Log.debug('Loading language...');
 
-        let locale = Config.locale;
-        let appLocale = require('./../../../../../resources/locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
-        let skeletonLocale = require('./../../Assets/Locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
-
-        let messages = {};
-
-        messages[locale] = _.merge(
-            skeletonLocale,
-            appLocale,
-            { $vuetify: VuetifyLocale[locale] }
-        );
-
-        Log.debug(`Locale set to "${locale}".`);
-        Log.debug('Language loaded.');
+        const locale = Config.locale;
 
         Translator.instance = new VueI18N({
             locale,
             fallbackLocale: 'en',
-            messages,
+            messages: {},
             silentTranslationWarn: Config.app.services.translator.hideWarnings
         });
 
-        return Translator;
+        const skeletonLocale = require('./../../Assets/Locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
+        const appLocale = require('./../../../../../resources/locales/' + locale + '.json'); // eslint-disable-line @typescript-eslint/no-var-requires
+
+        Translator.merge(skeletonLocale, '', locale);
+        Translator.merge(appLocale, '', locale);
+        Translator.merge(VuetifyLocale[locale], '$vuetify', locale);
+
+        Log.debug(`Locale set to "${locale}".`);
+        Log.debug('Language loaded.');
     }
 }

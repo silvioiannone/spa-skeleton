@@ -1,13 +1,11 @@
-import _                     from 'lodash';
-import Router, {
-    RouteConfig,
-    Route,
-    RouteRecord }            from 'vue-router';
-import { Store }             from 'vuex';
-import { VueRouterNext }     from './Types/VueRouterNext';
-import { Logger as Log }     from './Services/Logger';
-import Guards                from '../../../../resources/ts/App/Guards';
-import Routes                from '../../../../resources/ts/App/Routes';
+import _ from 'lodash';
+import Router, { RouteConfig, Route, RouteRecord } from 'vue-router';
+import { Store } from 'vuex';
+import { VueRouterNext } from './Types/VueRouterNext';
+import { StateMachine } from './Services/StateMachine';
+import { Logger as Log } from './Services/Logger';
+import Guards from '../../../../resources/ts/App/Guards';
+import Routes from '../../../../resources/ts/App/Routes';
 import { ResponseInterface } from './Api/ResponseInterface';
 
 // Skeleton guards
@@ -68,11 +66,11 @@ export class Guard
     /**
      * Initializes the guard.
      */
-    public init(router: Router, store: Store<any>): Guard
+    public init(router: Router): Guard
     {
         this.router = router;
         this.routes = Routes;
-        this.store = store;
+        this.store = StateMachine.getStore();
 
         return this;
     }

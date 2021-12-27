@@ -40,7 +40,7 @@ export class StateMachine extends Service
     /**
      * Boot the state machine.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         Vue.use(Vuex);
 

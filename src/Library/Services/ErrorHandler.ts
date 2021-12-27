@@ -20,7 +20,7 @@ export class ErrorHandler extends Service
     /**
      * Boot the service.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
         Guard.afterError((response): void => {
             (new GuardHandler(response)).handle();

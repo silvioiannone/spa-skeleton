@@ -86,7 +86,7 @@ export class Navigator
     public refresh(): void
     {
         // In order to refresh the current route we just need to execute the view actions.
-        (new Guard).init(this.router, StateMachine.getStore())
+        (new Guard).init(this.router)
             .refresh(this.route);
     }
 
