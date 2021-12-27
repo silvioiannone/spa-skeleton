@@ -2,20 +2,19 @@
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "../..",
-        "module": "ESNext",
-        "moduleResolution": "Node",
-        "strict": true,
-        "target": "ES6",
+        "esModuleInterop": true,
         "lib": [
             "ESNext",
             "ESNext.AsyncIterable",
             "DOM"
         ],
-        "esModuleInterop": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
         "noEmit": true,
-        "experimentalDecorators": true,
-        "resolveJsonModule": true,
         "noImplicitAny": false,
+        "resolveJsonModule": true,
+        "strict": true,
+        "target": "ES6"
     },
     "include": [
         "../../resources/ts/**/*",
