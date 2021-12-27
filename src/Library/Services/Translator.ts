@@ -1,8 +1,8 @@
-import { Logger as Log }  from "./Logger";
-import _                  from "lodash";
+import { Logger as Log }  from './Logger';
+import { set }            from 'lodash';
 import VueI18N            from 'vue-i18n';
 import { Service }        from './Service';
-import { Config }         from "../../Config";
+import { Config }         from '../../Config';
 import * as VuetifyLocale from 'vuetify/src/locale';
 
 /**
@@ -33,7 +33,7 @@ export class Translator extends Service
      */
     public static merge(messages: any, key: string, locale: string = Config.locale): void
     {
-        let messagesToMerge = key.length ? _.set({}, key, messages) : messages;
+        let messagesToMerge = key.length ? set({}, key, messages) : messages;
 
         Translator.get().mergeLocaleMessage(locale, messagesToMerge);
     }

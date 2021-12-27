@@ -1,4 +1,4 @@
-import _                     from 'lodash';
+import { merge, set }        from 'lodash';
 import { Store }             from 'vuex';
 import { Config }            from '../../../../Config';
 import { ResponseInterface } from '../../../Api/ResponseInterface';
@@ -42,7 +42,7 @@ export class App extends Module
             'app/USER_SETTINGS_UPDATE':
                 async (store: Store<any>, payload: any): Promise<ResponseInterface> => {
                     let user = store.getters.app.user;
-                    let settings = _.set(user.settings, payload.key, payload.value);
+                    let settings = set(user.settings, payload.key, payload.value);
 
                     let response = await this.api.users.update({
                         id: user.id,
@@ -112,7 +112,7 @@ export class App extends Module
              */
             'app/INSERT'(state: any, newState: any): void
             {
-                state = _.merge(state, newState);
+                state = merge(state, newState);
             },
 
             /**
@@ -120,7 +120,7 @@ export class App extends Module
              */
             'app/SET'(state: any, payload: { key: string; value: any }): void
             {
-                state = _.set(state, payload.key, payload.value);
+                state = set(state, payload.key, payload.value);
             },
 
             /**

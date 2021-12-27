@@ -7,7 +7,7 @@
 
 <script lang="ts">
 
-import _ from 'lodash';
+import { get, set } from 'lodash';
 import VueDraggable from 'vuedraggable';
 
 /**
@@ -149,7 +149,7 @@ export default {
          */
         getPosition(item: any): number
         {
-            return _.get(item, this.positionKey);
+            return get(item, this.positionKey);
         },
 
         /**
@@ -157,7 +157,7 @@ export default {
          */
         setPosition(item: any, position: number)
         {
-            return _.set(item, this.positionKey, position);
+            return set(item, this.positionKey, position);
         }
     }
 }

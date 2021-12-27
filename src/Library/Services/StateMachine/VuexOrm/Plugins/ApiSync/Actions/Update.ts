@@ -1,4 +1,4 @@
-import _                                from 'lodash';
+import { get }                          from 'lodash';
 import { ExtendedModel }                from '../../../Support/ExtendedModel';
 import { ResponseInterface }            from '../../../../../../Api/ResponseInterface';
 import { Action }                       from '../Action';
@@ -46,12 +46,12 @@ export class Update extends Action
             data: response.body.data
         };
 
-        if (_.get(params, 'options.vuex.insert')) {
-            payload['insert'] = _.get(params, 'options.vuex.insert');
+        if (get(params, 'options.vuex.insert')) {
+            payload['insert'] = get(params, 'options.vuex.insert');
         }
 
-        if (_.get(params, 'options.vuex.create')) {
-            payload['create'] = _.get(params, 'options.vuex.create');
+        if (get(params, 'options.vuex.create')) {
+            payload['create'] = get(params, 'options.vuex.create');
         }
 
         params.model.insert(payload);

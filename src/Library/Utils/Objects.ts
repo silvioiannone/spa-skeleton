@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { compact, map, values, flatten, uniqBy } from 'lodash';
 
 /**
  * Object utilities.
@@ -12,19 +12,18 @@ let Objects = {
      */
     pluckUnique(subject: any[], key: string): any
     {
-        let uniques = _(_.map(subject, key)).compact();
+        let uniques = compact(map(subject, key));
 
-        if (Array.isArray(uniques.value()[0])) {
-            uniques = uniques.flatten();
+        if (Array.isArray(values(uniques)[0])) {
+            uniques = flatten(uniques);
         }
 
-        return uniques.uniqBy((item): any => {
+        return uniqBy(uniques, (item): any => {
             if (typeof item !== 'object') {
                 return item;
             }
             return item.id;
-        })
-            .value();
+        });
     },
 
     /**

@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import _ from 'lodash';
+import { isEqual } from 'lodash';
 import { ResponseInterface } from '../../../Library/Api/ResponseInterface';
 
 /**
@@ -107,7 +107,7 @@ export default {
         // parameters with the old ones in order to determine if something changed.
         this.$watch('parameters', (): void => {
             // No need to fetch the data again if the parameters haven't changed.
-            if (_.isEqual(this.parameters, this.previousParameters)) {
+            if (isEqual(this.parameters, this.previousParameters)) {
                 return;
             }
 

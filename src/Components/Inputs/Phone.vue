@@ -30,7 +30,7 @@
 
 <script lang="ts">
 
-import _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { CountryCallingCode, parseNumber, ParsedNumber } from 'libphonenumber-js';
 import { Config } from '../../Config';
 import Input from '../Mixins/Input.vue';
@@ -104,7 +104,7 @@ export default {
             // First try to parse the phone number and init the component data accordingly.
             let parsedNumber = parseNumber(this.value, { extended: true });
 
-            if (_.isEmpty(parsedNumber)) {
+            if (isEmpty(parsedNumber)) {
                 return;
             }
 

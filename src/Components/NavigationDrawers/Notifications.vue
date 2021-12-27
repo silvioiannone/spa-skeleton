@@ -62,7 +62,7 @@
 <script lang="ts">
 
 import { ResponseInterface, Notification } from '../../index';
-import _ from 'lodash';
+import { get } from 'lodash';
 import PushJS from 'push.js';
 
 export default {
@@ -95,7 +95,7 @@ export default {
         desktopNotifications: {
             get(): boolean
             {
-                return _.get(
+                return get(
                     this.$store.getters.app,
                     'user.settings.notifications.desktopNotifications'
                 ) || false;

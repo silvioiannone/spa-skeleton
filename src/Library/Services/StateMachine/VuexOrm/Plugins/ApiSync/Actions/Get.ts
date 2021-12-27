@@ -3,7 +3,7 @@ import { ResponseInterface } from '../../../../../../Api/ResponseInterface';
 import { Action }            from '../Action';
 import { Store }             from 'vuex';
 import { Pagination }        from '../../../../../../Utils/Pagination';
-import _ from 'lodash';
+import { cloneDeep, get }    from 'lodash';
 
 /**
  * Get ($get) action.
@@ -64,15 +64,15 @@ export class Get extends Action
         let payload = {
             // Vuex-orm makes changes to the data object so in order to prevent those changes to end
             // up in the response object we make a copy of the data.
-            data: _.cloneDeep(response.body.data)
+            data: cloneDeep(response.body.data)
         };
 
-        if (_.get(params, 'options.vuex.insert')) {
-            payload['insert'] = _.get(params, 'options.vuex.insert');
+        if (get(params, 'options.vuex.insert')) {
+            payload['insert'] = get(params, 'options.vuex.insert');
         }
 
-        if (_.get(params, 'options.vuex.create')) {
-            payload['create'] = _.get(params, 'options.vuex.create');
+        if (get(params, 'options.vuex.create')) {
+            payload['create'] = get(params, 'options.vuex.create');
         }
 
         params.model[method](payload);

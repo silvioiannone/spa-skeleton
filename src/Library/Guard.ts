@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { isEqual } from 'lodash';
 import Router, { RouteConfig, Route, RouteRecord } from 'vue-router';
 import { Store } from 'vuex';
 import { VueRouterNext } from './Types/VueRouterNext';
@@ -246,7 +246,7 @@ export class Guard
                     // ...or if it's the last action that was executed in the previous route but
                     // now we're executing it with different parameters.
                     (fromActions.indexOf(action) === actions.length - 1 &&
-                        ! _.isEqual(to.query, from.query))
+                        ! isEqual(to.query, from.query))
             });
         }
 

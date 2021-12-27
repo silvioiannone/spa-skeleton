@@ -1,7 +1,7 @@
 <script lang="ts">
 
 import { ResponseInterface } from '../../Library/Api/ResponseInterface';
-import _ from 'lodash';
+import { set } from 'lodash';
 
 /**
  * This mixin should be used by all the components that needs to access and set the application
@@ -23,15 +23,12 @@ export default {
     methods: {
         /**
          * Set an order setting.
-         *
-         * @param path {String}
-         * @param value
          */
         setSetting(path: string, value: any): void
         {
             let settings = { ...this.settings };
 
-            _.set(settings, path, value);
+            set(settings, path, value);
 
             this.$store.commit('app/SET_SETTINGS', settings);
         },
@@ -41,8 +38,7 @@ export default {
          */
         save(): Promise<any>
         {
-            return new Promise((resolve: Function, reject: Function) =>
-            {
+            return new Promise((resolve: Function, reject: Function) => {
                 this.$api.app.saveSettings(this.settings)
                     .then((response: ResponseInterface) =>
                     {

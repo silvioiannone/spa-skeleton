@@ -1,6 +1,6 @@
 <script lang="ts">
 
-import _ from 'lodash';
+import { isEqual } from 'lodash';
 import { Pagination } from '../../../Library/Interfaces/Pagination';
 import { Config, Model } from '../../../index';
 import { Query } from '@vuex-orm/core';
@@ -52,7 +52,7 @@ export default {
                 // that have caused this function to trigger. We want to update the route only if the
                 // pagination has actually changed.
                 if (this.initialized) {
-                    if (_.isEqual(oldPagination, newPagination)) {
+                    if (isEqual(oldPagination, newPagination)) {
                         return;
                     }
 

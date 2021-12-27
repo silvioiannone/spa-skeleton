@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { capitalize } from 'lodash';
 import DayJS from 'dayjs';
 
 /**
@@ -11,7 +11,7 @@ export class String
      */
     public static capitalize(string: string): string
     {
-        return _.capitalize(string);
+        return capitalize(string);
     }
 
     /**

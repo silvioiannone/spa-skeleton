@@ -1,5 +1,5 @@
 import BugsnagPluginVue from '@bugsnag/plugin-vue';
-import _                from 'lodash';
+import { merge }        from 'lodash';
 import Vue              from 'vue';
 import { Service }      from './Service';
 import { Logger }       from './Logger'
@@ -75,7 +75,7 @@ export class Plugins extends Service
             if (Plugins.beforeActions[key]) {
                 Plugins.beforeActions[key].forEach((action: Function): void => {
                     let actionSettings = action();
-                    settings = _.merge(settings, actionSettings)
+                    settings = merge(settings, actionSettings)
                 });
             }
 

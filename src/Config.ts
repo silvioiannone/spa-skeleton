@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { merge } from 'lodash';
 
 // App configuration.
 import AppConfig from '../../../resources/ts/Config';
@@ -246,6 +246,6 @@ const defaultConfig = {
     }
 };
 
-let Config: any = _.merge(defaultConfig, AppConfig);
+let Config: any = merge(defaultConfig, AppConfig);
 
 export { Config };
