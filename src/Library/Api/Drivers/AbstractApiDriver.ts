@@ -1,4 +1,3 @@
-import QS                    from 'qs';
 import { Token }             from '../Token';
 import { ResponseInterface } from '../ResponseInterface';
 import { Config }            from '../../../Config';
@@ -192,7 +191,7 @@ export abstract class AbstractApiDriver
      */
     public getURIEncodedParameters(): string
     {
-        return QS.stringify(this.parameters);
+        return new URLSearchParams(this.parameters).toString();
     }
 
     /**
