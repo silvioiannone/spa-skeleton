@@ -88,7 +88,7 @@ module.exports = {
              let scssLoader = sassOneOf.use.find((use) => /sass-loader/.test(use.loader));
 
              [sassLoader, scssLoader].forEach(loader => {
-                 loader.options.additionalData = '@import "resources/sass/app.sass"';
+                 loader.options.additionalData = '@import "resources/sass/variables.sass"';
                  loader.options.sassOptions.indentedSyntax = true;
              })
          });
