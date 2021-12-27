@@ -45,7 +45,7 @@ export default {
     },
 
     computed: {
-        _getEndpoint(): any
+        internalGetEndpoint(): any
         {
             let parameters = Pagination.makeQueryParamsFromPagination(this.pagination);
 

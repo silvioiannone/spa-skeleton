@@ -1,6 +1,6 @@
 <template>
     <vue-draggable v-model="model" @change="moveItem" v-bind="options" :handle="handle"
-                   :class="[_class]">
+                   :class="[internalClass]">
         <slot/>
     </vue-draggable>
 </template>
@@ -67,7 +67,7 @@ export default {
 
     computed: {
 
-        _class(): string
+        internalClass(): string
         {
             return this.$attrs.class || 'draggable';
         },

@@ -2,7 +2,7 @@
     <v-row>
         <v-col xl="3" @keydown.enter="stopEnterPropagation">
             <v-autocomplete :items="countryPhonePrefixes" v-model="countryPrefix"
-                            :outlined="_outlined" item-value="prefix" :filter="filter"
+                            :outlined="internalOutlined" item-value="prefix" :filter="filter"
                             :disabled="disabled">
                 <template #item="props">
                     <v-list-item-avatar>
@@ -66,7 +66,7 @@ export default {
     },
 
     computed: {
-        _outlined(): boolean
+        internalOutlined(): boolean
         {
             return Config.ui.components.textField.defaultStyle === 'outlined';
         },

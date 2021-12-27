@@ -58,13 +58,13 @@ export default {
     },
 
     computed: {
-        _fullscreen()
+        internalFullscreen()
         {
             // Make the dialog fullscreen on extra-small devices.
             return this.fullscreen || this.$vuetify.breakpoint.xs;
         },
 
-        _closable()
+        internalClosable()
         {
             return this.closable || this.$vuetify.breakpoint.smAndDown;
         },

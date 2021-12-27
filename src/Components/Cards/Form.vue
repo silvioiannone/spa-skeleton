@@ -36,7 +36,7 @@ export default {
     },
 
     computed: {
-        _closable(): boolean
+        internalClosable(): boolean
         {
             if (this.closable) {
                 return true;

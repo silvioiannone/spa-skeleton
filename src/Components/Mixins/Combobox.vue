@@ -126,9 +126,8 @@ export default {
                 clearTimeout(this.timeout);
             }
 
-            this.timeout = setTimeout(() =>
-            {
-                this._search();
+            this.timeout = setTimeout(() => {
+                this.internalSearch();
             }, 250);
         },
 
@@ -152,7 +151,7 @@ export default {
         /**
          * Override this method in order to define what to do when querying the search.
          */
-        _search() {},
+        internalSearch() {},
 
         /**
          * Stop the propagation of the enter keypress event.

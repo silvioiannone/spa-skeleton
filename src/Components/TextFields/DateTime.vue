@@ -8,7 +8,7 @@
         <v-stepper v-model="stepperStep">
             <v-stepper-items>
                 <v-stepper-content step="1" class="pa-0">
-                    <v-date-picker v-model="date" no-title :allowed-dates="_allowedDates"
+                    <v-date-picker v-model="date" no-title :allowed-dates="internalAllowedDates"
                                    @input="stepperStep++"/>
                 </v-stepper-content>
                 <v-stepper-content step="2" class="pa-0">
@@ -95,7 +95,7 @@ export default {
         /**
          * Specify the allowed dates.
          */
-        _allowedDates(value: any): boolean
+        internalAllowedDates(value: any): boolean
         {
             if (this.allowedDates) {
                 return this.allowedDates(value);

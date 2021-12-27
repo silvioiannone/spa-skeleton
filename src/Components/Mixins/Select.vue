@@ -130,7 +130,7 @@ export default {
     },
 
     computed: {
-        _outlined(): boolean
+        internalOutlined(): boolean
         {
             if (this.outlined === undefined) {
                 return Config.ui.components.textField.defaultStyle === 'outlined';

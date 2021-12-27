@@ -33,7 +33,7 @@ export default {
         /**
          * Perform the search.
          */
-        async _search(): Promise<any>
+        async internalSearch(): Promise<any>
         {
             this.$data._loading = true;
 

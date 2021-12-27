@@ -70,12 +70,12 @@ export default {
     name: 'NavigationDrawerNotifications',
 
     computed: {
-        get notifications(): any[]
+        notifications(): any[]
         {
             return Notification.all();
         },
 
-        get unreadNotifications(): any[]
+        unreadNotifications(): any[]
         {
             return this.notifications
                 .filter((notification: any) => notification.read_at === null)

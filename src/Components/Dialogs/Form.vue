@@ -1,6 +1,6 @@
 <template>
     <dialog-main v-bind="$props" v-on="$listeners">
-        <slot :on="on" :closable="_closable"/>
+        <slot :on="on" :closable="internalClosable"/>
     </dialog-main>
 </template>
 

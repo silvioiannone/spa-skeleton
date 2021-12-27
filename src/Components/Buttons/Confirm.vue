@@ -11,7 +11,7 @@
         </v-btn>
         <button-submit v-if="showConfirmation && !confirmed" :on-click="verificationClick"
                        :text="text" color="warning" :large="large" :x-large="xLarge">
-            {{ _verificationText }}
+            {{ internalVerificationText }}
         </button-submit>
     </div>
 </template>
@@ -63,7 +63,7 @@ export default {
     },
 
     computed: {
-        _verificationText(): string
+        internalVerificationText(): string
         {
             return this.verificationText || this.$t('phrases.are_you_sure') as string;
         }

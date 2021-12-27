@@ -2,7 +2,7 @@
     <validation-provider #default="{ errors }" :rules="rules" :name="name" ref="validationProvider"
                          slim>
         <v-textarea v-bind="textareaProps" v-on="$listeners" :error-messages="errors" :value="value"
-                    :outlined="_outlined || outlined" :label="_label" @blur="handleBlur"/>
+                    :outlined="internalOutlined || outlined" :label="_label" @blur="handleBlur"/>
     </validation-provider>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     mixins: [Textarea, Validatable],
 
     computed: {
-        _outlined(): boolean
+        internalOutlined(): boolean
         {
             return Config.ui.components.textarea.defaultStyle === 'outlined';
         },

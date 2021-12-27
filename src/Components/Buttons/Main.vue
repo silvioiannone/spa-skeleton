@@ -39,7 +39,7 @@ export default {
         /**
          * React to `click` event.
          */
-        async _onClick(event: any): Promise<void>
+        async internalOnClick(event: any): Promise<void>
         {
             if (this.action) {
                 this.$data._loading = true;

@@ -21,7 +21,7 @@
                             <v-list-item to="/settings/account">
                                 <v-list-item-title>{{ $t('menu.settings') }}</v-list-item-title>
                             </v-list-item>
-                            <v-list-item @click.stop="_quit">
+                            <v-list-item @click.stop="internalQuit">
                                 <v-list-item-title>{{ $t('menu.quit') }}</v-list-item-title>
                             </v-list-item>
                         </v-list>
@@ -65,7 +65,7 @@ export default {
         /**
          * Quit from the application.
          */
-        _quit(): void
+        internalQuit(): void
         {
             if (this.quit) {
                 this.quit();

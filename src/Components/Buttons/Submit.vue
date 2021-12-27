@@ -1,7 +1,7 @@
 <template>
     <v-btn v-bind="props" :loading="status === 'loading'" type="submit" :aria-label="ariaLabel"
            :disabled="disabled || status === 'loading'" v-on="this.$listeners"
-           @click="internal_onClick">
+           @click="internalOnClick">
         <slot/>
     </v-btn>
 </template>
@@ -52,7 +52,7 @@ export default {
         /**
          * Handle the button click event.
          */
-        async internal_onClick(): Promise<any>
+        async internalOnClick(): Promise<any>
         {
             this.status = 'loading';
 

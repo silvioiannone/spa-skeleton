@@ -31,7 +31,7 @@ export default {
     },
 
     computed: {
-        _validation(): any
+        internalValidation(): any
         {
             if (typeof this.rules === 'string') {
                 return this.rules.concat('|', 'swedishSsn');

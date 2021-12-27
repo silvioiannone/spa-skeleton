@@ -52,7 +52,7 @@ export default {
     },
 
     computed: {
-        _label(): string
+        internalLabel(): string
         {
             return this.label.charAt(0).toUpperCase() + this.label.slice(1, this.label.length);
         }

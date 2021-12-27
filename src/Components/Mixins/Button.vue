@@ -85,7 +85,7 @@ export default {
     },
 
     computed: {
-        _onClick(): void
+        internalOnClick(): void
         {
             this.onClick();
         }

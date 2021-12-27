@@ -100,7 +100,7 @@ export default {
             return props;
         },
 
-        _headers(): any[]
+        internalHeaders(): any[]
         {
             return this.headers.map((header: any): any => {
                 if (header.text) {
@@ -111,7 +111,7 @@ export default {
             });
         },
 
-        _serverItemLength(): number
+        internalServerItemLength(): number
         {
             return this.getVuePaginationProps(this.pagination).serverItemsLength
                 || this.items.length;

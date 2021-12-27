@@ -1,6 +1,6 @@
 <template>
-    <v-autocomplete v-bind="$props" :items="countries" :outlined="outlined || _outlined"
-                    item-value="name" :filter="_filter" v-on="$listeners">
+    <v-autocomplete v-bind="$props" :items="countries" :outlined="outlined || internalOutlined"
+                    item-value="name" :filter="internalFilter" v-on="$listeners">
         <template #item="{ item }">
             <v-list-item-avatar>
                 <span :class="'flag-icon flag-icon-' + item.iso"/>
@@ -58,7 +58,7 @@ export default {
 
     computed: {
 
-        _outlined(): boolean
+        internalOutlined(): boolean
         {
             return Config.ui.components.textField.defaultStyle === 'outlined';
         }
@@ -68,7 +68,7 @@ export default {
         /**
          * Filter the autocomplete items when typing.
          */
-        _filter(item: { name: string, iso: string }, query: string)
+        internalFilter(item: { name: string, iso: string }, query: string)
         {
             let searchSubject = item.name.toLowerCase();
 

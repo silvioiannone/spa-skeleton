@@ -28,12 +28,12 @@ export default {
 
     computed: {
 
-        _outlined(): boolean
+        internalOutlined(): boolean
         {
             return Config.ui.components.textField.defaultStyle === 'outlined';
         },
 
-        _label(): string
+        internalLabel(): string
         {
             return this.$utils.string.capitalize(this.label);
         }
