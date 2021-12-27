@@ -170,6 +170,51 @@ export default {
             if (! this.routeSearchParameter?.length) {
                 this.hideSearch();
             }
+        },
+
+        /**
+         * Show the search box.
+         */
+        showSearch(): void
+        {
+            this.showingSearch = true;
+
+            setTimeout(() => {
+                let input = this.$el.querySelector('input');
+                if (input) {
+                    input.focus();
+                }
+            });
+        },
+
+        /**
+         * Expand the navigationDrawer.
+         */
+        toggleNavigationDrawer(): void
+        {
+            this.$store.commit(
+                'ui/SET_NAVIGATION_DRAWER_VISIBILITY',
+                ! this.ui.navigationDrawers.leftVisible
+            );
+        }
+    },
+
+    created(): void
+    {
+        this.$watch('routeSearchParameter', () => {
+            if (this.routeSearchParameter?.length) {
+                this.showSearch();
+            }
+        }, { immediate: true });
+    },
+
+    watch: {
+
+        onSearchCallbackChange(): void
+        {
+            if (! this.searchCallback) {
+                this.hideSearch();
+            }
         }
     }
 }
