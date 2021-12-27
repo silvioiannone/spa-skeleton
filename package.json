@@ -14,7 +14,6 @@
     "@types/urijs": "^1.19.17",
     "@types/vue-markdown": "^2.2.1",
     "@vuex-orm/core": "^0.36.4",
-    "axios": "^0.24.0",
     "babel-preset-env": "^1.7.0",
     "country-json": "^1.1.2",
     "cross-env": "^7.0.3",
