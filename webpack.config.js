@@ -2,6 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const Webpack = require('webpack');
+const { VuetifyLoaderPlugin } = require('vuetify-loader');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 let config = {
@@ -49,6 +50,7 @@ let config = {
             WEB_CLIENT_ID: JSON.stringify(process.env.WEB_CLIENT_ID),
             WEB_CLIENT_SECRET: JSON.stringify(process.env.WEB_CLIENT_SECRET),
         }),
+        new VuetifyLoaderPlugin(),
         new ForkTsCheckerWebpackPlugin()
     ],
     watchOptions: {
