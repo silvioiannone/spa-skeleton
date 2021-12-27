@@ -2,8 +2,6 @@ import Vue         from 'vue';
 import { Service } from './Service';
 import { Logger }  from './Logger';
 
-import '../ComponentHooks';
-
 import AppComponents from '../../../../../resources/ts/App/Components';
 
 // Skeleton components

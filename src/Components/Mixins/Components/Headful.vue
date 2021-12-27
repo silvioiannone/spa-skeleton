@@ -2,8 +2,6 @@
 
 import { Route } from 'vue-router';
 
-import '../../../Library/ComponentHooks';
-
 interface Head {
     title?: null | string,
     description?: null | string
