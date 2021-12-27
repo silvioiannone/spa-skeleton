@@ -32,7 +32,7 @@ module.exports = {
 
         mix.copy('node_modules/material-design-icons/iconfont', 'public/css');
         mix.copy('node_modules/@mdi/font/fonts', 'public/fonts');
-        mix.copy('node_modules/flag-icon-css/flags', 'public/images/flags');
+        mix.copy('node_modules/flag-icons/flags', 'public/images/flags');
 
         this.buildTS();
         this.buildStyles();
