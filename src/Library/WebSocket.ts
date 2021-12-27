@@ -278,19 +278,12 @@ export class WebSocket
 
         let callbacks = this.echo.connector.socket._callbacks;
 
-        callbacks.$connect.push((): void =>
-        {
+        callbacks.$reconnect.push((): void => {
             // Set the socket ID in the API
             ApiFactory.setSocketId(this.echo.socketId());
             this.isConnected = true;
             Log.debug('Connected to the WebSocket server (ID: ' + this.echo.socketId() + ')');
         });
-
-        if (! callbacks.$reconnect) {
-            callbacks.$reconnect = [];
-        }
-
-        callbacks.$reconnect.push((): void => Log.debug('Reconnecting to the WebSocket server...'));
 
         return this;
     }
