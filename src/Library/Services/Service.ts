@@ -11,8 +11,16 @@ export class Service
     /**
      * Boot the application service.
      */
-    public static boot(): void
+    public static async boot(): Promise<void>
     {
-        throw `Implement the service!`;
+    }
+
+    /**
+     * Perform in here all the necessary operations to register the service with the application.
+     *
+     * At this point the other services are not available yet.
+     */
+    public static register(): void
+    {
     }
 }
