@@ -1,17 +1,17 @@
-import Echo, { Channel as EchoChannel } from 'laravel-echo';
-import IO                               from 'socket.io-client';
-import { Logger as Log }                from './Services/Logger';
-import Vue                              from 'vue';
-import { Config }                       from '../Config';
-import Subscriptions                    from '../../../../resources/ts/App/Subscriptions';
-import { ApiFactory }                   from './Api';
-import { App as AppChannel }            from './WebSocket/Channels/App';
-import { AppHandler }                   from './Events/AppHandler';
-import { ModelHandler }                 from './Events/ModelHandler';
-import { Token }                        from './Api/Token';
-import { Subscription }                 from './Interfaces/Subscription';
-import { Channel }                      from './Types/Channel';
-import { Channel as ChannelInterface }  from './Interfaces/Channel';
+import Echo, { SocketIoConnector, Channel as EchoChannel } from 'laravel-echo';
+import IO from 'socket.io-client';
+import { Logger as Log } from './Services/Logger';
+import Vue from 'vue';
+import { Config } from '../Config';
+import Subscriptions from '../../../../resources/ts/App/Subscriptions';
+import { ApiFactory } from './Api';
+import { App as AppChannel } from './WebSocket/Channels/App';
+import { AppHandler } from './Events/AppHandler';
+import { ModelHandler } from './Events/ModelHandler';
+import { Token } from './Api/Token';
+import { Subscription } from './Interfaces/Subscription';
+import { Channel } from './Types/Channel';
+import { Channel as ChannelInterface } from './Interfaces/Channel';
 
 /**
  * This class enables real time communication between the SPA and the server.
@@ -47,7 +47,7 @@ export class WebSocket
     /**
      * The Laravel echo server.
      */
-    protected echo: Echo;
+    protected echo: Echo | undefined;
 
     /**
      * Pending subscriptions.
@@ -134,7 +134,9 @@ export class WebSocket
             // This will remove the event callbacks.
             this.activeSubscriptions[index].channels.forEach((channel) => {
                 let channelInstance = WebSocket.makeChannel(channel);
-                this.makeEchoChannel(channelInstance).stopListening(subscription.event);
+
+                this.makeEchoChannel(channelInstance)
+                    ?.stopListening(subscription.event);
             });
 
             // Remove teh subscription.
@@ -172,7 +174,7 @@ export class WebSocket
             }
         });
 
-        if (! channelInUse) {
+        if (! channelInUse && this.echo) {
             this.echo.leave(channel.name());
             Log.debug('Channel ' + channel.name() + ' left.');
         }
@@ -193,7 +195,7 @@ export class WebSocket
         Log.info('Listening to ' + event + ' in the ' + channelInstance.name() + ' room.');
 
         this.makeEchoChannel(channelInstance)
-            .listen(event, (payload: any): void => {
+            ?.listen(event, (payload: any): void => {
                 if (event === '.Bloom\\Cluster\\Kernel\\App\\Events\\NotificationSent') {
                     Log.debug('Notification received: ' + payload.response.type + '.');
                 }
@@ -205,8 +207,12 @@ export class WebSocket
     /**
      * Create an Echo Channel instance.
      */
-    protected makeEchoChannel(channel: ChannelInterface): EchoChannel
+    protected makeEchoChannel(channel: ChannelInterface): EchoChannel | void
     {
+        if (! this.echo) {
+            return;
+        }
+
         return channel.isPrivate() ?
             this.echo.private(channel.name()) :
             this.echo.channel(channel.name());
@@ -276,9 +282,13 @@ export class WebSocket
         });
         this.updateEchoHeaders();
 
-        let callbacks = this.echo.connector.socket._callbacks;
+        let connector: SocketIoConnector = this.echo.connector;
 
-        callbacks.$reconnect.push((): void => {
+        connector.socket._callbacks.$reconnect.push((): void => {
+            if (! this.echo) {
+                return;
+            }
+
             // Set the socket ID in the API
             ApiFactory.setSocketId(this.echo.socketId());
             this.isConnected = true;
@@ -293,6 +303,10 @@ export class WebSocket
      */
     public updateEchoHeaders(): void
     {
+        if (! this.echo) {
+            return;
+        }
+
         this.echo.connector.options.auth.headers['Authorization'] = `Bearer ` +
             Token.getAccessToken();
     }

@@ -1,1 +1,1 @@
-export * from 'spa-skeleton/Definitions/laravel-echo/util/event-formatter';
+export * from 'spa-skeleton/src/Types/laravel-echo/util/event-formatter';

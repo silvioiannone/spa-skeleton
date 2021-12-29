@@ -1,5 +1,5 @@
-import { Connector } from 'spa-skeleton/Definitions/laravel-echo/connector/connector';
-import { SocketIoChannel, SocketIoPrivateChannel, SocketIoPresenceChannel } from 'spa-skeleton/Definitions/laravel-echo/channel';
+import { Connector } from 'spa-skeleton/src/Types/laravel-echo/connector/connector';
+import { SocketIoChannel, SocketIoPrivateChannel, SocketIoPresenceChannel } from 'laravel-echo';
 /**
  * This class creates a connnector to a Socket.io server.
  */
